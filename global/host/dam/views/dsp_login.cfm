@@ -56,7 +56,7 @@ Page output starts here
 						<cfelse>
 							<cfset loginvalue = cookie.loginname>
 						</cfif>
-			       	 	<div id="login_name"><input type="text" name="name" id="name" style="width:280px;" value="#loginvalue#" placeholder="Username" /></div>
+			       	 	<div id="login_name"><input type="text" name="name" id="name" style="width:280px;" value="#loginvalue#" placeholder="#myFusebox.getApplicationData().defaults.trans("username")#" /></div>
 					</td>
 			    </tr>
 			   <!---  <tr>
@@ -65,7 +65,7 @@ Page output starts here
 				<tr>
 			        <td style="padding-bottom:10px;">
 				        <label for="pass" class="error" style="display:none;">Enter a password!</label>
-				    	<div id="login_password"><input type="password" name="pass" id="pass" style="width:280px;" value="#cookie.loginpass#" placeholder="Password" /></div>
+				    	<div id="login_password"><input type="password" name="pass" id="pass" style="width:280px;" value="#cookie.loginpass#" placeholder="#myFusebox.getApplicationData().defaults.trans("password")#" /></div>
 					</td>
 			    </tr>
 			    <tr>
