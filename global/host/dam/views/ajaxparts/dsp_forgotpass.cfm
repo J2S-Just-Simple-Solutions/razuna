@@ -34,7 +34,7 @@
 	        <td>#myFusebox.getApplicationData().defaults.trans("youremail")#</td>
 		</tr> --->
 		<tr>
-	        <td><label for="email" class="error" style="display:none;">Enter a valid eMail address!</label><div id="pf_email"><input type="text" name="email" id="email" style="width:280px;" placeholder="Your email address" /></div></td>
+	        <td><label for="email" class="error" style="display:none;">Enter a valid eMail address!</label><div id="pf_email"><input type="text" name="email" id="email" style="width:280px;" placeholder="#myFusebox.getApplicationData().defaults.trans("youremail")#" /></div></td>
 	    </tr>
 	    <tr>
 	        <td style="padding:10px 0px 10px 0px;">
