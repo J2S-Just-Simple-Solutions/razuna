@@ -53,16 +53,16 @@
 	<div id="tab_detail#attributes.file_id#">
 		<!--- Tabs --->
 		<ul>
+			<!--- Metadata tabs  --->
+			<cfif cs.tab_metadata>
+				<li><a href="##meta">#myFusebox.getApplicationData().defaults.trans('metadata')#</a></li>
+			</cfif>
 			<!--- Info --->
 			<li><a href="##detailinfo">#myFusebox.getApplicationData().defaults.trans("asset_information")#</a></li>
 			<!--- Renditions --->
 			<!--- RAZ-549: Added in condition to not show renditions, versions and sharing tabs when asset has expired --->
 			<cfif qry_detail.detail.link_kind NEQ "url" AND cs.tab_convert_files AND iif(isdate(qry_detail.detail.expiry_date) AND qry_detail.detail.expiry_date LT now(), false, true)>
 				<li><a href="##convertt" onclick="loadren();return false;">#myFusebox.getApplicationData().defaults.trans("convert")#</a></li>
-			</cfif>
-			<!--- Metadata tabs  --->
-			<cfif cs.tab_metadata>
-				<li><a href="##meta">#myFusebox.getApplicationData().defaults.trans('metadata')#</a></li>
 			</cfif>
 			<!--- Comments --->
 			<cfif cs.tab_comments>
