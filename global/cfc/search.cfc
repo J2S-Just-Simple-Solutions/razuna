@@ -24,10 +24,30 @@
 *
 --->
 <cfcomponent extends="extQueryCaching">
-	
+
+	<cffunction name="searchforthesaurus" access="remote" returntype="string">
+		<!--- If no total search or multi search --->
+		<cfif search_value NEQ "*" and find(' OR ', search_value) eq 0>
+			<!--- Get thesaurus data --->
+			<cfhttp url="http://ima.j2s.net/thesaurus_ws/ForSearch.php?uniterm=#search_value#" method="post" result="result" charset="utf-8"/>
+			<cfset response = deserializeJSON(result.filecontent)> 
+			<!--- I got response --->
+			<cfif response.err EQ 200>
+				<cfset str="">
+				<!--- Construct and return fomatted search value --->
+				<cfloop array=#response.values# index="name">
+					<cfif str eq ""><cfset str="'#name#'" ></cfif>
+					<cfelse><cfset str="#str# OR '#name#'" >
+				</cfloop>
+				<cfreturn str/>
+			</cfif>	
+		</cfif>
+		<cfreturn search_value/>
+	</cffunction>
+
 	<cffunction name="search_all">
 		<cfargument name="thestruct" type="struct">
-		
+
 		<!--- Get the cachetoken for here --->
 		<cfset variables.cachetoken = getcachetoken("search")>
 		<cfset variables.cachetokenlogs = getcachetoken("logs")>
@@ -70,6 +90,13 @@
 		<cfif arguments.thestruct.searchtext EQ "">
 			<cfset arguments.thestruct.searchtext = "*">
 		</cfif>
+
+		<cfif TRUE>
+			<!---<cflog file="razunaAppLog" text="original:#arguments.thestruct.searchtext#" />--->
+			<cfset arguments.thestruct.searchtext = searchforthesaurus(search_value=thestruct.searchtext)>
+			<!---<cflog file="razunaAppLog" text="modified:#arguments.thestruct.searchtext#" />--->	
+		</cfif>
+
 		<cfset var sqlInCluseLimit = 990>
 		<cfset var q_end = sqlInCluseLimit>
 		<!--- Search in Lucene  --->

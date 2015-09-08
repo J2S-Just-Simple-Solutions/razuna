@@ -24,6 +24,27 @@
 *
 --->
 <cfcomponent output="false" extends="authentication">
+
+	<!--- Modifie la valeur de la recherche via les synonymes de la table thesaurus --->
+	<cffunction name="searchforthesaurus" access="remote" returntype="string">
+		<!--- If no total search or multi search --->
+		<cfif search_value NEQ "*" and find(' OR ', search_value) eq 0>
+			<!--- Get thesaurus data --->
+			<cfhttp url="http://ima.j2s.net/thesaurus_ws/ForSearch.php?uniterm=#search_value#" method="post" result="result" charset="utf-8"/>
+			<cfset response = deserializeJSON(result.filecontent)> 
+			<!--- I got response --->
+			<cfif response.err EQ 200>
+				<cfset str="">
+				<!--- Construct and return fomatted search value --->
+				<cfloop array=#response.values# index="name">
+					<cfif str eq ""><cfset str="'#name#'" ></cfif>
+					<cfelse><cfset str="#str# OR '#name#'" >
+				</cfloop>
+				<cfreturn str/>
+			</cfif>	
+		</cfif>
+		<cfreturn search_value/>
+	</cffunction>
 	
 	<!--- Retrieve assets from a folder --->
 	<cffunction name="searchassets" access="remote" output="false" returntype="query" returnformat="json">
@@ -47,6 +68,11 @@
 		<cfargument name="available" type="string" required="false" default="1">
 		<!--- Check key --->
 		<cfset var thesession = checkdb(arguments.api_key)>
+
+		<cfif TRUE>
+			<cfset arguments.searchfor = searchforthesaurus(search_value=searchfor)>
+		</cfif>
+		
 		<cfset var thexml ="">
 		<!--- Check to see if session is valid --->
 		<cfif thesession>
