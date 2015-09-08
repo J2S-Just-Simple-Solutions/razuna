@@ -24,6 +24,25 @@
 *
 --->
 <cfoutput>
+	<cffunction name="searchforthesaurus" access="remote" returntype="string">
+		<!--- If no total search or multi search --->
+		<cfif search_value NEQ "*" and find(' OR ', search_value) eq 0>
+			<!--- Get thesaurus data --->
+			<cfhttp url="http://ima.j2s.net/thesaurus_ws/ForSearch.php?uniterm=#search_value#" method="post" result="result" charset="utf-8"/>
+			<cfset response = deserializeJSON(result.filecontent)> 
+			<!--- I got response --->
+			<cfif response.err EQ 200>
+				<cfset str="">
+				<!--- Construct and return fomatted search value --->
+				<cfloop array=#response.values# index="name">
+					<cfif str eq ""><cfset str="'#name#'" ></cfif>
+					<cfelse><cfset str="#str# OR '#name#'" >
+				</cfloop>
+				<cfreturn str/>
+			</cfif>	
+		</cfif>
+		<cfreturn search_value/>
+	</cffunction>
 	<!---RAZ-2834:: Assign the custom field customized --->
 	<cfset custom_fields = "">
 	<cfif !structKeyExists(variables,"cf_inline")><table border="0" cellpadding="0" cellspacing="0" width="450" class="grid"></cfif>
@@ -330,7 +349,141 @@
 									categoryChangeHandler();
 								})(this);
 							</script>
+						</cfoutput>
+					<!--- Descripteur --->
+					<cfelseif cf_type EQ "descriptor">
+						<!--- Variable --->
+						<cfset allowed = false>
+						<!--- Check for Groups --->
+						<cfloop list="#session.thegroupofuser#" index="i">
+							<cfif listfind(cf_edit,i)>
+								<cfset allowed = true>
+								<cfbreak>
+							</cfif>
+						</cfloop>
+						<!--- Check for users --->
+						<cfloop list="#session.theuserid#" index="i">
+							<cfif listfind(cf_edit,i)>
+								<cfset allowed = true>
+								<cfbreak>
+							</cfif>
+						</cfloop>
+						<cfif !isnumeric(cf_edit) AND cf_edit EQ "true">
+							<cfset allowed = true>
+						</cfif>
+						<input type="text" style="width:300px;" id="cf_descriptor_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
+						<select multiple type="descriptor" descriptor="cf_#cf_id#" id="cf_select_descriptor_#listlast(cf_id,'-')#" value="#cf_value#" style="width:300px;" <cfif !allowed> disabled="disabled"</cfif>>
+							<option value=""></option>
+							<cfloop list="#ltrim(replace(cf_value,', ',',','ALL'))#" index="i">
+								<option value="#i#" <cfif listContains("#cf_value#", #i#, ",")> selected="selected"</cfif>>#i#</option>
+							</cfloop>						
+						</select>						
+						<cfoutput>
+							<!--- JS --->
+							<script language="JavaScript" type="text/javascript">
+								(function(self){
+									var input = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+									var descriptor = $("select[descriptor='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+
+									descriptor.chosen().change(function(){
+										var values = []; 
+										$.each(descriptor[0].selectedOptions, function(index, item){values.push(item.text)})
+										input.val(values.join(","));
+									});
+
+									//Sur le changement dans la recherche, je diffre pour n'avoir qu'une demande
+									var inputChangeTimer = null;
+									descriptor.next(".chosen-container").find("input").unbind().on("keyup", function(){	
+										clearTimeout(inputChangeTimer);
+										inputChangeTimer = setTimeout(inputChange, 100);								
+									});
+
+									var inputChange = function(){
+										var input = descriptor.next(".chosen-container").find("input");
+										input.css("width", "auto");
+										//$.ajax({"type": 'POST', "url": ​"http://ima.j2s.net/thesaurus_ws/ForDescriptor.php?uniterm=DOCUMENT","dataType": 'json'});
+										$.getJSON(
+										"http://ima.j2s.net/thesaurus_ws/ForDescriptor.php?uniterm="+input.val(), 
+										function(result){
+											if(result.value){
+												descriptor.append('<option value="'+result.value+'">'+result.value+'</option>');								
+												descriptor.trigger("chosen:updated");
+												descriptor.trigger("chosen:activate");
+												input.trigger("click");
+											}
+										}
+									);
+									}
+	
+								})(this);
+							</script>
 						</cfoutput>	
+					<!--- Candidat descripteur --->
+					<cfelseif cf_type EQ "candidate-descriptor">
+						<!--- Variable --->
+						<cfset allowed = false>
+						<!--- Check for Groups --->
+						<cfloop list="#session.thegroupofuser#" index="i">
+							<cfif listfind(cf_edit,i)>
+								<cfset allowed = true>
+								<cfbreak>
+							</cfif>
+						</cfloop>
+						<!--- Check for users --->
+						<cfloop list="#session.theuserid#" index="i">
+							<cfif listfind(cf_edit,i)>
+								<cfset allowed = true>
+								<cfbreak>
+							</cfif>
+						</cfloop>
+						<cfif !isnumeric(cf_edit) AND cf_edit EQ "true">
+							<cfset allowed = true>
+						</cfif>
+						<select name="cf_#cf_id#" id="cf_select_#listlast(cf_id,'-')#" style="width:300px;"<cfif !allowed> disabled="disabled"</cfif>>
+							<option value=""></option>
+							<cfloop list="#ltrim(ListSort(REReplace(cf_select_list, ",(?![^()]+\))\s?" ,';','ALL'), 'text', 'asc', ';'))#" index="i" delimiters=";">
+								<option value="#i#"<cfif i EQ "#cf_value#"> selected="selected"</cfif>>#i#</option>
+							</cfloop>
+						</select>
+						<cfoutput>
+							<!--- JS --->
+							<script language="JavaScript" type="text/javascript">
+								(function(self){
+									var prefix = "<cfoutput>#session.hostdbprefix#</cfoutput>";
+									var select = $("td select[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+									select.chosen({add_contains: true});		
+
+									var chosen = select.next(".chosen-container");
+									//Sur entrée
+									chosen.find("input").on("keyup", function(ev){	
+										//J'ajoute à la liste							
+										if(ev.keyCode === 13 && chosen.find(".chosen-results .active-result").length === 0){
+											//Je mets à jour ma liste
+											var currentValue = $(this).val();
+											select.append('<option value="'+currentValue+'">'+currentValue+'</option>');								
+											select.trigger("chosen:updated");
+											//Je met à jour le serveur
+											var values = [];
+											$.each(select.find("option"), function(index, item){
+												if($(item).html().length > 0)
+													values.push($(item).html())
+											})
+											var self = this;
+											$.get(
+												"../../global/api2/J2S.cfc?method=updateCustomField&select_list=" + values.join(",") + "&cf_id=" + "#qry_cf.cf_id#" + "&prefix=" + prefix + "&user_id=#session.theuserid#", 
+													// NITA Modif ajout du user id
+												function(result){}
+											);
+											//Je trigger l'event à nouveau
+											$(this).val(currentValue).trigger("keyup").trigger(ev);					
+										}
+										else {
+											chosen.find(".chosen-results .no-results").append(". Press enter to add and select");
+										}
+									})
+								})(this);
+							</script>
+						</cfoutput>			
 					</cfif>
 				</td>
 			</tr>

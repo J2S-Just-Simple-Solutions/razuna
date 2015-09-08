@@ -83,6 +83,8 @@
 									<option value="select-search"<cfif qry_field.cf_type EQ "select-search"> selected="true"</cfif>>#myFusebox.getApplicationData().defaults.trans("select-search")#</option>
 									<option value="select-category"<cfif qry_field.cf_type EQ "select-category"> selected="true"</cfif>>#myFusebox.getApplicationData().defaults.trans("select-category")#</option>
 									<option value="select-sub-category"<cfif qry_field.cf_type EQ "select-sub-category"> selected="true"</cfif>>#myFusebox.getApplicationData().defaults.trans("select-sub-category")#</option>
+									<option value="descriptor"<cfif qry_field.cf_type EQ "descriptor"> selected="true"</cfif>>#myFusebox.getApplicationData().defaults.trans("descriptor")#</option>
+									<option value="candidate-descriptor"<cfif qry_field.cf_type EQ "candidate-descriptor"> selected="true"</cfif>>#myFusebox.getApplicationData().defaults.trans("candidate-descriptor")#</option>
 								</select>
 							</td>
 						</tr>

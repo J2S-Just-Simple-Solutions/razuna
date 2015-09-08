@@ -83,6 +83,8 @@
 										<option value="select-search">#myFusebox.getApplicationData().defaults.trans("select-search")#</option>
 										<option value="select-category">#myFusebox.getApplicationData().defaults.trans("select-category")#</option>
 										<option value="select-sub-category">#myFusebox.getApplicationData().defaults.trans("select-sub-category")#</option>
+										<option value="descriptor">#myFusebox.getApplicationData().defaults.trans("descriptor")#</option>
+										<option value="candidate-descriptor">#myFusebox.getApplicationData().defaults.trans("candidate-descriptor")#</option>
 									</select>
 								</td>
 							</tr>
