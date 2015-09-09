@@ -188,8 +188,10 @@ $('##uploader').pluploadQueue().bind('QueueChanged',
 			<select id="upl_template_chooser">
 				<option value="0" selected="selected">#myFusebox.getApplicationData().defaults.trans("choose_rend_template")#</option>
 				<option value="0">---</option>
-				<cfloop query="qry_templates">
-					<option value="#upl_temp_id#">#upl_name#</option>
+				<cfset index=0 />
+				<cfloop query="qry_templates" >
+					<option value="#upl_temp_id#" <cfif index EQ 0> selected="selected"</cfif>>#upl_name#</option>
+					<cfset index=1 />
 				</cfloop>
 			</select>
 		</div>
