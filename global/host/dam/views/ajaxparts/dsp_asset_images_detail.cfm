@@ -304,7 +304,7 @@
 				<a href="##" onclick="$('##detaildesc').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("asset_desc")#</div></a>
 				<div id="detaildesc" style="padding-top:10px;">
 					<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
-												<tr>
+						<tr style="width: 100%;">
 							<td align="center" style="padding-top:20px;padding-right:10px;" valign="top">
 								<cfif qry_detail.detail.link_kind NEQ "url">
 									<cfset thestorage = "#cgi.context_path#/assets/#session.hostid#/">
@@ -313,9 +313,9 @@
 										<a href="#session.thehttp##cgi.http_host##cgi.script_name#?#theaction#=c.si&f=#attributes.file_id#&v=p" target="_blank">
 									</cfif>
 									<cfif application.razuna.storage EQ "amazon" OR application.razuna.storage EQ "nirvanix">
-										<img src="#qry_detail.detail.cloud_url#" border="0">
+										<img src="#qry_detail.detail.cloud_url#" border="0" style="width:380px;">
 									<cfelse>
-										<img src="#thestorage##qry_detail.detail.path_to_asset#/thumb_#attributes.file_id#.#qry_detail.detail.thumb_extension#?#qry_detail.detail.hashtag#&#uniqueid#" border="0">
+										<img src="#thestorage##qry_detail.detail.path_to_asset#/thumb_#attributes.file_id#.#qry_detail.detail.thumb_extension#?#qry_detail.detail.hashtag#&#uniqueid#" border="0"  style="width:380px;">
 									</cfif>
 									<cfif qry_detail.detail.link_kind NEQ "lan"></a></cfif>
 									<cfif qry_detail.detail.link_kind NEQ "">

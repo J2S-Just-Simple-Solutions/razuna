@@ -81,6 +81,7 @@
 									<option value="radio"<cfif qry_field.cf_type EQ "radio"> selected="true"</cfif>>#myFusebox.getApplicationData().defaults.trans("radio_btn")#</option>
 									<option value="select"<cfif qry_field.cf_type EQ "select"> selected="true"</cfif>>#myFusebox.getApplicationData().defaults.trans("select")#</option>
 									<option value="select-search"<cfif qry_field.cf_type EQ "select-search"> selected="true"</cfif>>#myFusebox.getApplicationData().defaults.trans("select-search")#</option>
+									<option value="select-search-multi"<cfif qry_field.cf_type EQ "select-search-multi"> selected="true"</cfif>>#myFusebox.getApplicationData().defaults.trans("select-search-multi")#</option>
 									<option value="select-category"<cfif qry_field.cf_type EQ "select-category"> selected="true"</cfif>>#myFusebox.getApplicationData().defaults.trans("select-category")#</option>
 									<option value="select-sub-category"<cfif qry_field.cf_type EQ "select-sub-category"> selected="true"</cfif>>#myFusebox.getApplicationData().defaults.trans("select-sub-category")#</option>
 									<option value="descriptor"<cfif qry_field.cf_type EQ "descriptor"> selected="true"</cfif>>#myFusebox.getApplicationData().defaults.trans("descriptor")#</option>

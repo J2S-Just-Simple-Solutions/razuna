@@ -516,6 +516,81 @@
 								})(this);
 							</script>
 						</cfoutput>			
+					<!--- select avec search et choix multiple --->
+					<cfelseif cf_type EQ "select-search-multi">
+						<!--- Variable --->
+						<cfset allowed = false>
+						<!--- Check for Groups --->
+						<cfloop list="#session.thegroupofuser#" index="i">
+							<cfif listfind(cf_edit,i)>
+								<cfset allowed = true>
+								<cfbreak>
+							</cfif>
+						</cfloop>
+						<!--- Check for users --->
+						<cfloop list="#session.theuserid#" index="i">
+							<cfif listfind(cf_edit,i)>
+								<cfset allowed = true>
+								<cfbreak>
+							</cfif>
+						</cfloop>
+						<cfif !isnumeric(cf_edit) AND cf_edit EQ "true">
+							<cfset allowed = true>
+						</cfif>
+						<input type="text" style="width:300px;" id="cf_thesaurus_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
+						<select multiple selecSearchMulti="cf_#cf_id#" id="cf_select_#listlast(cf_id,'-')#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
+							<option value="" data-placeholder="test"></option>
+							<cfloop list="#ltrim(ListSort(REReplace(cf_select_list, ",(?![^()]+\))\s?" ,';','ALL'), 'text', 'asc', ';'))#" index="i" delimiters=";">
+								<option value="#i#" <cfif listContains("#cf_value#", #i#, ",")> selected="selected"</cfif>>#i#</option>
+							</cfloop>
+						</select>
+						<cfoutput>
+							<!--- JS --->
+							<script language="JavaScript" type="text/javascript">
+								(function(self){
+									var prefix = "<cfoutput>#session.hostdbprefix#</cfoutput>";
+									var input = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+									var select = $("td select[selecSearchMulti='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+
+									select.chosen({add_contains: true, no_results_text : ""}).change(function(){
+										var values = []; 
+										$.each(select[0].selectedOptions, function(index, item){values.push(item.text)})
+										console.log(values)
+										input.val(values.join(","));
+									});		
+
+									var chosen = select.next(".chosen-container");
+									//Sur entrée
+									chosen.find("input").on("keyup", function(ev){	
+										//J'ajoute à la liste							
+										if(ev.keyCode === 13 && (chosen.find(".chosen-results .active-result").length === 0) ){
+											//Je mets à jour ma liste
+											var currentValue = $(this).val();
+											var current = $('<option value="'+currentValue+'" selected>'+currentValue+'</option>');
+											select.append(current);								
+											select.trigger("chosen:updated");
+											select.trigger("chosen:activate");
+											//Je met à jour le serveur
+											var values = [];
+											$.each(select.find("option"), function(index, item){
+												if($(item).html().length > 0)
+													values.push($(item).html())
+											})
+											var self = this;
+											$.get(
+												"../../global/api2/J2S.cfc?method=updateCustomField&select_list=" + values.join(",") + "&cf_id=" + "#qry_cf.cf_id#" + "&prefix=" + prefix + "&user_id=#session.theuserid#", 
+													// NITA Modif ajout du user id
+												function(result){}
+											);
+											select.trigger("change")	
+										}
+										else {
+											chosen.find(".chosen-results .no-results").html("<cfoutput>#myFusebox.getApplicationData().defaults.trans("select_no_match")#</cfoutput>");
+										}
+									})
+								})(this);
+							</script>
+						</cfoutput>
 					</cfif>
 				</td>
 			</tr>
