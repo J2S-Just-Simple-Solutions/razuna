@@ -31,7 +31,7 @@
 				<input type="hidden" name="mini" value="T">
 			    <h1>#myFusebox.getApplicationData().defaults.trans("sign_in")#</h1>
 			    <input type="text" name="theemail" id="theemail" value="#cookie.loginname#" placeholder="Username" />
-			    <input type="password" name="pass" id="pass" value="#cookie.loginpass#" placeholder="Password" />
+			    <input type="password" name="pass" id="pass" value="#cookie.loginpass#" placeholder="#myFusebox.getApplicationData().defaults.trans("password")#" />
 			    <p>
 			    	<input type="submit" name="submitbutton" id="submitbutton" value="#myFusebox.getApplicationData().defaults.trans("button_login")#" class="awesome big green" style="width:300px;height:50px;font-size:22px;" />
 			    </p>
