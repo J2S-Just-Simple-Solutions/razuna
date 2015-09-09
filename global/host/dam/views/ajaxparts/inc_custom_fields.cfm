@@ -177,7 +177,7 @@
 						<cfif !isnumeric(cf_edit) AND cf_edit EQ "true">
 							<cfset allowed = true>
 						</cfif>
-						<select name="cf_#cf_id#" id="cf_select_#listlast(cf_id,'-')#" style="width:300px;"<cfif !allowed> disabled="disabled"</cfif>>
+						<select name="cf_#cf_id#" id="cf_select_#listlast(cf_id,'-')#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_an_option")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<option value=""></option>
 							<cfloop list="#ltrim(ListSort(REReplace(cf_select_list, ",(?![^()]+\))\s?" ,';','ALL'), 'text', 'asc', ';'))#" index="i" delimiters=";">
 								<option value="#i#"<cfif i EQ "#cf_value#"> selected="selected"</cfif>>#i#</option>
@@ -216,7 +216,7 @@
 											$(this).val(currentValue).trigger("keyup").trigger(ev);					
 										}
 										else {
-											chosen.find(".chosen-results .no-results").append(". Press enter to add and select");
+											chosen.find(".chosen-results .no-results").html("<cfoutput>#myFusebox.getApplicationData().defaults.trans("select_no_match")#</cfoutput>");
 										}
 									})
 								})(this);
@@ -244,7 +244,7 @@
 							<cfset allowed = true>
 						</cfif>
 						<input type="text" style="width:300px;" id="cf_thesaurus_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
-						<select multiple type="category" category="cf_#cf_id#" id="cf_select_category_#listlast(cf_id,'-')#" value="#cf_value#" style="width:300px;" <cfif !allowed> disabled="disabled"</cfif>>
+						<select multiple type="category" category="cf_#cf_id#" id="cf_select_category_#listlast(cf_id,'-')#" value="#cf_value#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<cfset x = ["mars","earth", "venus", "jupiter"]>
 							<option value=""></option>
 							<cfloop list="#ltrim(replace(cf_select_list,', ',',','ALL'))#" index="i">
@@ -288,7 +288,7 @@
 							<cfset allowed = true>
 						</cfif>
 						<input type="text" style="width:300px;" id="cf_thesaurus_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
-						<select  multiple type="sub-category" sub-category="cf_#cf_id#" id="cf_select_sub_category_#listlast(cf_id,'-')#" value="#cf_value#" style="width:300px;" <cfif !allowed> disabled="disabled"</cfif>>
+						<select  multiple type="sub-category" sub-category="cf_#cf_id#" id="cf_select_sub_category_#listlast(cf_id,'-')#" value="#cf_value#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<cfset list = "#cf_select_list#"> 
 							<cfset category = listToArray(list, ";", true)>							
 							<cfloop array=#category# index="i" delimiters=";" item="name">								
@@ -372,7 +372,7 @@
 							<cfset allowed = true>
 						</cfif>
 						<input type="text" style="width:300px;" id="cf_descriptor_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
-						<select multiple type="descriptor" descriptor="cf_#cf_id#" id="cf_select_descriptor_#listlast(cf_id,'-')#" value="#cf_value#" style="width:300px;" <cfif !allowed> disabled="disabled"</cfif>>
+						<select multiple type="descriptor" descriptor="cf_#cf_id#" id="cf_select_descriptor_#listlast(cf_id,'-')#" value="#cf_value#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<option value=""></option>
 							<cfloop list="#ltrim(replace(cf_value,', ',',','ALL'))#" index="i">
 								<option value="#i#" <cfif listContains("#cf_value#", #i#, ",")> selected="selected"</cfif>>#i#</option>
@@ -463,8 +463,8 @@
 							<cfset allowed = true>
 						</cfif>
 						<input type="text" style="width:300px;" id="cf_thesaurus_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
-						<select multiple candidate="cf_#cf_id#" id="cf_select_#listlast(cf_id,'-')#" style="width:300px;"<cfif !allowed> disabled="disabled"</cfif>>
-							<option value=""></option>
+						<select multiple candidate="cf_#cf_id#" id="cf_select_#listlast(cf_id,'-')#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
+							<option value="" data-placeholder="test"></option>
 							<cfloop list="#ltrim(ListSort(REReplace(cf_select_list, ",(?![^()]+\))\s?" ,';','ALL'), 'text', 'asc', ';'))#" index="i" delimiters=";">
 								<option value="#i#" <cfif listContains("#cf_value#", #i#, ",")> selected="selected"</cfif>>#i#</option>
 							</cfloop>
@@ -477,7 +477,7 @@
 									var input = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 									var select = $("td select[candidate='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 
-									select.chosen({add_contains: true}).change(function(){
+									select.chosen({add_contains: true, no_results_text : ""}).change(function(){
 										var values = []; 
 										$.each(select[0].selectedOptions, function(index, item){values.push(item.text)})
 										console.log(values)
@@ -510,7 +510,7 @@
 											select.trigger("change")	
 										}
 										else {
-											chosen.find(".chosen-results .no-results").append(". Press enter to add and select");
+											chosen.find(".chosen-results .no-results").html("<cfoutput>#myFusebox.getApplicationData().defaults.trans("select_no_match")#</cfoutput>");
 										}
 									})
 								})(this);
