@@ -385,12 +385,14 @@
 									var input = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 									var descriptor = $("select[descriptor='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 
+									//Je construit mon Cchamp multiple avec les valeurs initiale
 									descriptor.chosen().change(function(){
 										input.val(getSelected().join(","));
 									});
 
 									var inputChangeTimer = null;
 									descriptor.next(".chosen-container").find("input").unbind()
+										//Sur "Enter", je valide la sélection
 										.on("keydown", function(ev){
 											if(ev.keyCode===13){
 												ev.stopPropagation();
@@ -398,24 +400,28 @@
 												descriptor.next(".chosen-container").find(".highlighted").trigger("mousedown").trigger("mouseup");
 											}
 										})
+										//Sur la pression d'une touche, j'intérroge le thesaurus
 										.on("keyup", function(ev){	
 											clearTimeout(inputChangeTimer);
 											inputChangeTimer = setTimeout(function(){inputChange(ev)}, 200);								
 										});
 
+									//gestion thésaurus
 									var inputChange = function(ev){
 										var input = descriptor.next(".chosen-container").find("input");
 										input.css("width", "auto");
-										//$.ajax({"type": 'POST', "url": ​"http://ima.j2s.net/thesaurus_ws/ForDescriptor.php?uniterm=DOCUMENT","dataType": 'json'});
 										$.getJSON(
 										"http://ima.j2s.net/thesaurus_ws/ForDescriptor.php?uniterm="+input.val(), 
 										function(result){
+											//J'ai un résultat
 											if(result.value){
 												var values = getSelected();
+												//je nettoie les options qui ne sont plus nécessaire
 												$.each(descriptor.find("option"), function(index, item){
 													if(values.indexOf(item.text) === -1)
-													$(item).remove()
+														$(item).remove()
 												})
+												//J'ajoute la nouvelle option
 												if(descriptor.find("option[value='"+result.value+"']").length == 0)
 													descriptor.append('<option value="'+result.value+'">'+result.value+'</option>');								
 												descriptor.trigger("chosen:updated");
@@ -425,6 +431,7 @@
 										});
 									};
 
+									//Demande la sélection
 									var getSelected = function() {
 										var values = []; 
 										$.each(descriptor[0].selectedOptions, function(index, item){values.push(item.text)});
