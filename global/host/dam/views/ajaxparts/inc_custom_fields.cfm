@@ -386,19 +386,24 @@
 									var descriptor = $("select[descriptor='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 
 									descriptor.chosen().change(function(){
-										var values = []; 
-										$.each(descriptor[0].selectedOptions, function(index, item){values.push(item.text)})
-										input.val(values.join(","));
+										input.val(getSelected().join(","));
 									});
 
-									//Sur le changement dans la recherche, je diffre pour n'avoir qu'une demande
 									var inputChangeTimer = null;
-									descriptor.next(".chosen-container").find("input").unbind().on("keyup", function(){	
-										clearTimeout(inputChangeTimer);
-										inputChangeTimer = setTimeout(inputChange, 100);								
-									});
+									descriptor.next(".chosen-container").find("input").unbind()
+										.on("keydown", function(ev){
+											if(ev.keyCode===13){
+												ev.stopPropagation();
+												ev.preventDefault();
+												descriptor.next(".chosen-container").find(".highlighted").trigger("mousedown").trigger("mouseup");
+											}
+										})
+										.on("keyup", function(ev){	
+											clearTimeout(inputChangeTimer);
+											inputChangeTimer = setTimeout(function(){inputChange(ev)}, 200);								
+										});
 
-									var inputChange = function(){
+									var inputChange = function(ev){
 										var input = descriptor.next(".chosen-container").find("input");
 										input.css("width", "auto");
 										//$.ajax({"type": 'POST', "url": ​"http://ima.j2s.net/thesaurus_ws/ForDescriptor.php?uniterm=DOCUMENT","dataType": 'json'});
@@ -406,13 +411,24 @@
 										"http://ima.j2s.net/thesaurus_ws/ForDescriptor.php?uniterm="+input.val(), 
 										function(result){
 											if(result.value){
-												descriptor.append('<option value="'+result.value+'">'+result.value+'</option>');								
+												var values = getSelected();
+												$.each(descriptor.find("option"), function(index, item){
+													if(values.indexOf(item.text) === -1)
+													$(item).remove()
+												})
+												if(descriptor.find("option[value='"+result.value+"']").length == 0)
+													descriptor.append('<option value="'+result.value+'">'+result.value+'</option>');								
 												descriptor.trigger("chosen:updated");
 												descriptor.trigger("chosen:activate");
 												input.trigger("click");
 											}
-										}
-									);
+										});
+									};
+
+									var getSelected = function() {
+										var values = []; 
+										$.each(descriptor[0].selectedOptions, function(index, item){values.push(item.text)});
+										return values;
 									}
 	
 								})(this);
