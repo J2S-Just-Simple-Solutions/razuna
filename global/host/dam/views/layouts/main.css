@@ -1057,3 +1057,13 @@ font-weight: bold;
 .ltgrey{color:#666666;}
 a:link .nolink{text-decoration: none;}
 
+.j2s-meta {
+	display: inline-block !important;
+    border-width: 0;
+    padding: 1em 1.4em;
+    background: none;
+    width: 556px;
+    height: 500px;
+    overflow: auto;
+    overflow-x: hidden;
+}

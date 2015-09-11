@@ -340,60 +340,52 @@
 		<div id="divcomments"></div>
 		<!--- Meta Data --->
 		<cfif cs.tab_metadata>
-			<div id="meta" class="collapsable">
+			<!--- Show the thumbnail --->
+			<cfset thethumb = replacenocase(qry_detail.detail.file_name_org, ".#qry_detail.detail.file_extension#", ".jpg", "all")>
+			<cfif application.razuna.storage EQ "amazon" AND qry_detail.detail.cloud_url NEQ "">
+				<img src="#qry_detail.detail.cloud_url#" border="0" img-tt="img-tt" style="width: 380px;">
+			<cfelseif application.razuna.storage EQ "local" AND FileExists("#attributes.assetpath#/#session.hostid#/#qry_detail.detail.path_to_asset#/#thethumb#") >
+				<img src="#cgi.context_path#/assets/#session.hostid#/#qry_detail.detail.path_to_asset#/#thethumb#?#uniqueid#" border="0"  style="width: 380px;">
+			<cfelse>
+				<img src="#dynpath#/global/host/dam/images/icons/icon_#qry_detail.detail.file_extension#.png" width="128" height="128" border="0" onerror = "this.src='#dynpath#/global/host/dam/images/icons/icon_txt.png'"  style="width: 380px;">
+			</cfif>
+
+			<cfif qry_detail.detail.link_kind EQ "url">
+				<br /><a href="#qry_detail.detail.link_path_url#" target="_blank">#qry_detail.detail.link_path_url#</a>
+			<cfelseif qry_detail.detail.link_kind EQ "lan">
+				<br />#qry_detail.detail.link_path_url#
+			</cfif>
+			<div id="meta" class="collapsable j2s-meta">
 				<!--- Description & Keywords --->
 				<a href="##" onclick="$('##detaildesc').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("asset_desc")#</div></a>
 					<div id="detaildesc" style="padding-top:10px;">
 						<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
 							<tr style="width: 100%;">
 								<td>
-									<div style="float:left;">
+									<div >
 										<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
+											<!--- Filename --->
 											<tr>
-												<td align="center" style="padding-top:20px;padding-right:10px;width:450px;" valign="top">
-													<!--- Show the thumbnail --->
-													<cfset thethumb = replacenocase(qry_detail.detail.file_name_org, ".#qry_detail.detail.file_extension#", ".jpg", "all")>
-													<cfif application.razuna.storage EQ "amazon" AND qry_detail.detail.cloud_url NEQ "">
-														<img src="#qry_detail.detail.cloud_url#" border="0" img-tt="img-tt">
-													<cfelseif application.razuna.storage EQ "local" AND FileExists("#attributes.assetpath#/#session.hostid#/#qry_detail.detail.path_to_asset#/#thethumb#") >
-														<img src="#cgi.context_path#/assets/#session.hostid#/#qry_detail.detail.path_to_asset#/#thethumb#?#uniqueid#" border="0">
-													<cfelse>
-														<img src="#dynpath#/global/host/dam/images/icons/icon_#qry_detail.detail.file_extension#.png" width="128" height="128" border="0" onerror = "this.src='#dynpath#/global/host/dam/images/icons/icon_txt.png'">
-													</cfif>
-
-													<cfif qry_detail.detail.link_kind EQ "url">
-														<br /><a href="#qry_detail.detail.link_path_url#" target="_blank">#qry_detail.detail.link_path_url#</a>
-													<cfelseif qry_detail.detail.link_kind EQ "lan">
-														<br />#qry_detail.detail.link_path_url#
-													</cfif>
-												</td>
-												<td align="center" style="padding-top:20px;padding-right:10px;" valign="top">
-													<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
-														<!--- Filename --->
-														<tr>
-															<td width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("file_name")#</strong></td>
-															<td width="100%"><input type="text" style="width:280px;" name="file_name" value="#qry_detail.detail.file_name#" onchange="document.form#attributes.file_id#.fname.value = document.form#attributes.file_id#.file_name.value;"> <cfif cs.show_favorites_part><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=doc');flash_footer('#myFusebox.getApplicationData().defaults.trans("item_favorite")#');return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></cfif>
-															</td>
-														</tr>
-														<cfloop query="qry_langs">
-															<cfset thisid = lang_id>
-															<tr>
-																<td class="td2" valign="top" width="1%" nowrap="true"><strong><cfif qry_langs.recordcount NEQ 1>#lang_name#: </cfif>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
-																<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>file_</cfif>desc_#thisid#" class="text" style="width:300px;height:40px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.file_desc_#thisid#.value = document.form#attributes.file_id#.desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#file_desc#</cfif></cfloop></textarea></td>
-															</tr>
-															<tr>
-																<td class="td2" valign="top" width="1%" nowrap="true"><strong><cfif qry_langs.recordcount NEQ 1>#lang_name#: </cfif>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
-																<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>file_</cfif>keywords_#thisid#" class="text" style="width:300px;height:40px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.file_keywords_#thisid#.value = document.form#attributes.file_id#.keywords_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#file_keywords#</cfif></cfloop></textarea></td>
-															</tr>
-														</cfloop>
-													</table>
+												<td width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("file_name")#</strong></td>
+												<td width="100%"><input type="text" style="width:280px;" name="file_name" value="#qry_detail.detail.file_name#" onchange="document.form#attributes.file_id#.fname.value = document.form#attributes.file_id#.file_name.value;"> <cfif cs.show_favorites_part><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=doc');flash_footer('#myFusebox.getApplicationData().defaults.trans("item_favorite")#');return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></cfif>
 												</td>
 											</tr>
+											<cfloop query="qry_langs">
+												<cfset thisid = lang_id>
+												<tr>
+													<td class="td2" valign="top" width="1%" nowrap="true"><strong><cfif qry_langs.recordcount NEQ 1>#lang_name#: </cfif>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
+													<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>file_</cfif>desc_#thisid#" class="text" style="width:335px;height:40px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.file_desc_#thisid#.value = document.form#attributes.file_id#.desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#file_desc#</cfif></cfloop></textarea></td>
+												</tr>
+												<tr>
+													<td class="td2" valign="top" width="1%" nowrap="true"><strong><cfif qry_langs.recordcount NEQ 1>#lang_name#: </cfif>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
+													<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>file_</cfif>keywords_#thisid#" class="text" style="width:335px;height:40px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.file_keywords_#thisid#.value = document.form#attributes.file_id#.keywords_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#file_keywords#</cfif></cfloop></textarea></td>
+												</tr>
+											</cfloop>
 										</table>
 									</div>
 									<!--- If we are a PDF we show additional XMP fields --->
 									<cfif qry_detail.detail.file_extension EQ "PDF">
-										<div style="float:right;">
+										<div >
 											<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
 												<tr>
 													<td><strong>Author</strong></td>
