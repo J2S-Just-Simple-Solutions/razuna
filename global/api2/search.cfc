@@ -30,7 +30,7 @@
 		<!--- If no total search or multi search --->
 		<cfif search_value NEQ "*" and find(' OR ', search_value) eq 0>
 			<!--- Get thesaurus data --->
-			<cfhttp url="http://ima.j2s.net/thesaurus_ws/ForSearch.php?uniterm=#search_value#" method="post" result="result" charset="utf-8"/>
+			<cfhttp url="http://ima.j2s.net/Thesaurus_WS/ForSearch.php?uniterm=#search_value#" method="post" result="result" charset="utf-8"/>
 			<cfset response = deserializeJSON(result.filecontent)> 
 			<!--- I got response --->
 			<cfif response.err EQ 200>
