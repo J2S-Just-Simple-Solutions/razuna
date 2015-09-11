@@ -384,10 +384,15 @@
 								(function(self){
 									var input = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 									var descriptor = $("select[descriptor='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
-
+									var tgGroup = $('<optgroup label="TG" >');
+									var taGroup = $('<optgroup label="TA" >');
+									var tsGroup = $('<optgroup label="TS" >');
+									descriptor.append(tgGroup, taGroup, tsGroup);
 									//Je construit mon Cchamp multiple avec les valeurs initiale
-									descriptor.chosen().change(function(){
+									descriptor.chosen().change(function(event, params){
 										input.val(getSelected().join(","));
+										/*if(params.deselected)setTimeout(function(){descriptor.next(".chosen-container").find("ul").trigger("mousedown").trigger("click");},0);
+										else*/ descriptor.next(".chosen-container").find("ul").trigger("mousedown").trigger("click");									
 									});
 
 									var inputChangeTimer = null;
@@ -411,22 +416,42 @@
 										var input = descriptor.next(".chosen-container").find("input");
 										input.css("width", "auto");
 										$.getJSON(
-										"http://ima.j2s.net/thesaurus_ws/ForDescriptor.php?uniterm="+input.val(), 
+										"http://ima.j2s.net/Thesaurus_WS/ForDescriptor.php?uniterm="+input.val(), 
 										function(result){
 											//J'ai un résultat
-											if(result.value){
-												var values = getSelected();
-												//je nettoie les options qui ne sont plus nécessaire
-												$.each(descriptor.find("option"), function(index, item){
-													if(values.indexOf(item.text) === -1)
-														$(item).remove()
-												})
-												//J'ajoute la nouvelle option
-												if(descriptor.find("option[value='"+result.value+"']").length == 0)
-													descriptor.append('<option value="'+result.value+'">'+result.value+'</option>');								
-												descriptor.trigger("chosen:updated");
-												descriptor.trigger("chosen:activate");
-												input.trigger("click");
+											if(result.err === 200){
+												if(result.TG.length > 0 || result.TA.length > 0 || result.TS.length > 0) {
+													var values = getSelected();
+													//je nettoie les options qui ne sont plus nécessaire
+													$.each(descriptor.find("option"), function(index, item){
+														if(values.indexOf(item.text) === -1) {
+															$(item).remove();
+														}
+														else{
+															$(item).css("display", "none").detach().appendTo(descriptor);
+														}
+													});
+													//J'ajoute la nouvelle option
+													//TG
+													if(result.TG.length > 0){
+														tgGroup.append('<option value="'+result.TG+'">'+result.TG+'</option>');
+													}
+													//TA
+													if(result.TA.length > 0){
+														$.each(result.TA, function(i,TA){
+															taGroup.append('<option value="'+TA+'">'+TA+'</option>');
+														});
+													}
+													//TS
+													if(result.TS.length > 0){
+														$.each(result.TS, function(i,TS){
+															tsGroup.append('<option value="'+TS+'">'+TS+'</option>');
+														});
+													}
+													descriptor.trigger("chosen:updated");
+													descriptor.trigger("chosen:activate");
+													input.trigger("click");
+												}
 											}
 										});
 									};
