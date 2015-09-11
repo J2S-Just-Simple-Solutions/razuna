@@ -1057,7 +1057,10 @@ font-weight: bold;
 .ltgrey{color:#666666;}
 a:link .nolink{text-decoration: none;}
 
-.j2s-meta {
+.j2s-metadata {
+	padding-right: 0 !important
+}
+.j2s-metadata-fields {
 	display: inline-block !important;
     border-width: 0;
     padding: 1em 1.4em;
@@ -1066,4 +1069,18 @@ a:link .nolink{text-decoration: none;}
     height: 500px;
     overflow: auto;
     overflow-x: hidden;
+}
+.j2s-preview{
+	width: 360px;
+    display: inline-block;
+    float: left;
+}
+.j2s-preview a{
+    display: block;
+    line-height: 500px;
+}
+.j2s-preview img{
+    width: 100%;
+    height: auto;
+    vertical-align: middle;
 }
