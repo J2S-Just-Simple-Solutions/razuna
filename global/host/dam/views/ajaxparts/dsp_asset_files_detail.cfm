@@ -345,11 +345,11 @@
 					<!--- Show the thumbnail --->
 					<cfset thethumb = replacenocase(qry_detail.detail.file_name_org, ".#qry_detail.detail.file_extension#", ".jpg", "all")>
 					<cfif application.razuna.storage EQ "amazon" AND qry_detail.detail.cloud_url NEQ "">
-						<img src="#qry_detail.detail.cloud_url#" border="0" img-tt="img-tt" style="width: 380px;">
+						<img src="#qry_detail.detail.cloud_url#" border="0" img-tt="img-tt" style="width: 360px;">
 					<cfelseif application.razuna.storage EQ "local" AND FileExists("#attributes.assetpath#/#session.hostid#/#qry_detail.detail.path_to_asset#/#thethumb#") >
-						<img src="#cgi.context_path#/assets/#session.hostid#/#qry_detail.detail.path_to_asset#/#thethumb#?#uniqueid#" border="0"  style="width: 380px;">
+						<img src="#cgi.context_path#/assets/#session.hostid#/#qry_detail.detail.path_to_asset#/#thethumb#?#uniqueid#" border="0"  style="width: 360px;">
 					<cfelse>
-						<img src="#dynpath#/global/host/dam/images/icons/icon_#qry_detail.detail.file_extension#.png" width="128" height="128" border="0" onerror = "this.src='#dynpath#/global/host/dam/images/icons/icon_txt.png'"  style="width: 380px;">
+						<img src="#dynpath#/global/host/dam/images/icons/icon_#qry_detail.detail.file_extension#.png" width="128" height="128" border="0" onerror = "this.src='#dynpath#/global/host/dam/images/icons/icon_txt.png'"  style="width: 360px;">
 					</cfif>
 
 					<cfif qry_detail.detail.link_kind EQ "url">
