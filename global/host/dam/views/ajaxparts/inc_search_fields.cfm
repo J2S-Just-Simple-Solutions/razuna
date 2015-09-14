@@ -104,16 +104,16 @@
 				<td>
 					<cfset cfid = replace(cf_id,"-","","all")>
 					<!--- For text --->
-					<cfif cf_type EQ "text" OR cf_type EQ "textarea">
+					<cfif cf_type EQ "text" OR cf_type EQ "textarea" OR cf_type EQ "descriptor" >
 						<input type="text" style="width:300px;" name="cf#cfid#" >
 					<!--- Radio --->
 					<cfelseif cf_type EQ "radio">
 						<input type="radio" name="cf#cfid#" value="T">#myFusebox.getApplicationData().defaults.trans("yes")# <input type="radio" name="cf#cfid#" value="F">#myFusebox.getApplicationData().defaults.trans("no")#
 					<!--- Select --->
-					<cfelseif cf_type EQ "select">
+					<cfelseif cf_type EQ "select" OR cf_type EQ "select-search" OR cf_type EQ "select-category" OR cf_type EQ "candidate-descriptor" OR cf_type EQ "select-search-multi" OR cf_type EQ "candidate-descriptor"  OR cf_type EQ "select-sub-category">
 						<select name="cf#cfid#" style="width:300px;">
 							<option value="" selected="selected"></option>
-							<cfloop list="#ListSort(cf_select_list, 'text', 'asc', ',')#" index="i">
+							<cfloop list="#ltrim(ListSort(REReplace(cf_select_list, ",(?![^()]+\))\s?" ,';','ALL'), 'text', 'asc', ';'))#" index="i" delimiters=";">
 								<option value="#i#">#i#</option>
 							</cfloop>
 						</select>
