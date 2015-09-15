@@ -45,9 +45,9 @@
 				<cfif isadmin>
 					<p><hr></p>
 					<cfif session.showmyfolder EQ "F">
-						<p><a href="##" onclick="loadcontent('explorer','#myself#c.explorer&showmyfolder=T');return false;" title="Click here to show the personal folders of your users">#myFusebox.getApplicationData().defaults.trans("show_all_folders")#</a></p>
+						<p><a href="##" onclick="loadcontent('explorer','#myself#c.explorer&showmyfolder=T');return false;" title="#myFusebox.getApplicationData().defaults.trans("show_all_folders_title")#">#myFusebox.getApplicationData().defaults.trans("show_all_folders")#</a></p>
 					<cfelse>
-						<p><a href="##" onclick="loadcontent('explorer','#myself#c.explorer&showmyfolder=F');return false;" title="Click here to hide the personal folders of your users">#myFusebox.getApplicationData().defaults.trans("show_my_folders")#</a></p>
+						<p><a href="##" onclick="loadcontent('explorer','#myself#c.explorer&showmyfolder=F');return false;" title="#myFusebox.getApplicationData().defaults.trans("show_my_folders_title")#">#myFusebox.getApplicationData().defaults.trans("show_my_folders")#</a></p>
 					</cfif>
 					<!--- <p><hr></p> --->
 				</cfif>
