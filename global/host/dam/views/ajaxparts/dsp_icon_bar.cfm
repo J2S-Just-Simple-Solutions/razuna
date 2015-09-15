@@ -109,7 +109,7 @@
 				<cfif attributes.folderaccess NEQ "R">
 					<!--- More actions menu --->	
 					<div>
-						<div id="drop#thediv#" class="ddselection_header" style="width:200px;z-index:100;position:absolute;top:100px;left:<cfif attributes.folderaccess NEQ "R">358<cfelse>251</cfif>px;">
+						<div id="drop#thediv#" class="ddselection_header" style="width:230px;z-index:100;position:absolute;top:100px;left:<cfif attributes.folderaccess NEQ "R">358<cfelse>251</cfif>px;">
 							<!--- Add Subfolder --->
 							<cfif attributes.folderaccess NEQ "R" AND cs.icon_create_subfolder>
 								<p>
