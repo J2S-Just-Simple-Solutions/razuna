@@ -384,10 +384,11 @@
 								(function(self){
 									var input = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 									var descriptor = $("select[descriptor='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
-									var tgGroup = $('<optgroup label="TG" >');
-									var taGroup = $('<optgroup label="TA" >');
-									var tsGroup = $('<optgroup label="TS" >');
-									descriptor.append(tgGroup, taGroup, tsGroup);
+									var tdGroup = $('<optgroup label="<cfoutput>#myFusebox.getApplicationData().defaults.trans("DESCRIPTEUR")#</cfoutput>" >');
+									var tgGroup = $('<optgroup label="<cfoutput>#myFusebox.getApplicationData().defaults.trans("TG")#</cfoutput>" >');
+									var taGroup = $('<optgroup label="<cfoutput>#myFusebox.getApplicationData().defaults.trans("TA")#</cfoutput>" >');
+									var tsGroup = $('<optgroup label="<cfoutput>#myFusebox.getApplicationData().defaults.trans("TS")#</cfoutput>" >');
+									descriptor.append(tdGroup, tgGroup, taGroup, tsGroup);
 									//Je construit mon Cchamp multiple avec les valeurs initiale
 									descriptor.chosen().change(function(event, params){
 										input.val(getSelected().join(","));
@@ -420,7 +421,7 @@
 										function(result){
 											//J'ai un résultat
 											if(result.err === 200){
-												if(result.TG.length > 0 || result.TA.length > 0 || result.TS.length > 0) {
+												if(result.TG.length > 0 || result.TA.length > 1 || result.TS.length > 0 ) {
 													var values = getSelected();
 													//je nettoie les options qui ne sont plus nécessaire
 													$.each(descriptor.find("option"), function(index, item){
@@ -432,6 +433,10 @@
 														}
 													});
 													//J'ajoute la nouvelle option
+													//DESCRIPTEUR
+													if(result.DESCRIPTEUR && result.DESCRIPTEUR.length > 0){
+														tdGroup.append('<option value="'+result.DESCRIPTEUR+'">'+result.DESCRIPTEUR+'</option>');
+													}
 													//TG
 													if(result.TG.length > 0){
 														tgGroup.append('<option value="'+result.TG+'">'+result.TG+'</option>');
