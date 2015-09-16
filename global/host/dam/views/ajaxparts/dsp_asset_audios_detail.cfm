@@ -54,7 +54,7 @@
 		<ul>
 			<!--- Metadata --->
 			<cfif cs.tab_metadata>
-				<li><a href="##meta">Meta Data</a></li>
+				<li><a href="##meta">#myFusebox.getApplicationData().defaults.trans("metadata")#</a></li>
 			</cfif>
 			<li><a href="##detailinfo" onclick="loadcontent('relatedaudios','#myself#c.audios_detail_related&file_id=#attributes.file_id#&what=audios&loaddiv=#attributes.loaddiv#&folder_id=#qry_detail.detail.folder_id_r#&s=#qry_detail.detail.shared#');loadcontent('additionalversions','#myself#c.av_load&file_id=#attributes.file_id#&folder_id=#qry_detail.detail.folder_id_r#');">#myFusebox.getApplicationData().defaults.trans("asset_information")#</a></li>
 			<!--- Convert --->
@@ -82,7 +82,7 @@
 			<!--- Hide these for R-groups --->
 			<cfif attributes.folderaccess NEQ "R">
 				<cfif cs.tab_history>
-					<li><a href="##history" onclick="loadcontent('history','#myself#c.log_history&id=#attributes.file_id#');">History</a></li>
+					<li><a href="##history" onclick="loadcontent('history','#myself#c.log_history&id=#attributes.file_id#');">#myFusebox.getApplicationData().defaults.trans("tab_history")#</a></li>
 				</cfif>
 				<!--- Aliases'd --->
 				<cfif qry_aliases.recordcount NEQ 0>

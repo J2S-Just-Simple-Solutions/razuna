@@ -77,7 +77,7 @@
 			<!--- Hide these for R-groups --->
 			<cfif attributes.folderaccess NEQ "R">
 				<cfif cs.tab_history>
-					<li><a href="##history" onclick="loadcontent('history','#myself#c.log_history&id=#attributes.file_id#');">History</a></li>
+					<li><a href="##history" onclick="loadcontent('history','#myself#c.log_history&id=#attributes.file_id#');">#myFusebox.getApplicationData().defaults.trans("tab_history")#</a></li>
 				</cfif>
 				<!--- Aliases'd --->
 				<cfif qry_aliases.recordcount NEQ 0>

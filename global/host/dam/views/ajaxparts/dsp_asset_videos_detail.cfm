@@ -64,7 +64,7 @@
 	<div id="tab_detail#attributes.file_id#">
 		<ul>
 			<cfif cs.tab_metadata>
-				<li><a href="##meta">Metadata</a></li>
+				<li><a href="##meta">#myFusebox.getApplicationData().defaults.trans("metadata")#</a></li>
 			</cfif>
 			<li><a href="##detailinfo">#myFusebox.getApplicationData().defaults.trans("asset_information")#</a></li>
 			<!--- RAZ-549: Added in condition to not show renditions, versions and sharing tabs when asset has expired --->
@@ -93,7 +93,7 @@
 			<!--- Hide these for R-groups --->
 			<cfif attributes.folderaccess NEQ "R">
 				<cfif cs.tab_history>
-					<li><a href="##history" onclick="loadcontent('history','#myself#c.log_history&id=#attributes.file_id#');">History</a></li>
+					<li><a href="##history" onclick="loadcontent('history','#myself#c.log_history&id=#attributes.file_id#');">#myFusebox.getApplicationData().defaults.trans("tab_history")#</a></li>
 				</cfif>
 				<!--- Aliases'd --->
 				<cfif qry_aliases.recordcount NEQ 0>
