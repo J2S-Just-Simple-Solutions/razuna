@@ -50,7 +50,7 @@
 	<div id="tab_detail#file_id#">
 		<ul>
 			<cfif cs.tab_metadata>
-				<li><a href="##meta">Metadata</a></li>
+				<li><a href="##meta">#myFusebox.getApplicationData().defaults.trans("metadata")#</a></li>
 			</cfif>
 			<li><a href="##detailinfo" onclick="loadcontent('additionalversions','#myself#c.av_load&file_id=#attributes.file_id#&folder_id=#attributes.folder_id#&isdoc=yes');">#myFusebox.getApplicationData().defaults.trans("asset_information")#</a></li>
 			<!--- Comments --->
