@@ -1084,3 +1084,49 @@ a:link .nolink{text-decoration: none;}
     height: auto;
     vertical-align: middle;
 }
+
+.thesaurus-drop{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1010;
+    width: 300px;
+    border: 1px solid #aaa;
+    background: #fff;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
+    display: none;
+}
+.thesaurus-drop * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.thesaurus-results{
+    color: #444;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin: 0 4px 4px 0;
+    padding: 0 0 0 4px;
+    max-height: 240px;
+}
+.thesaurus-results li {
+	margin: 0;
+    padding: 5px 6px;
+    list-style: none;
+    line-height: 15px;
+    word-wrap: break-word;
+}
+.thesaurus-result{
+    padding-left : 15px;
+}
+.thesaurus-result:hover{
+    background-color: #3875d7;
+    color: white;
+}
+.thesaurus-result-group{
+	display: list-item;
+    font-weight: bold;
+    cursor: default;
+    
+}

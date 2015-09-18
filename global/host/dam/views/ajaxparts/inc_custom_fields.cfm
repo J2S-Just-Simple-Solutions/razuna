@@ -373,6 +373,138 @@
 						</cfif>
 						<input type="text" style="width:300px;" id="cf_descriptor_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
 						<select multiple type="descriptor" descriptor="cf_#cf_id#" id="cf_select_descriptor_#listlast(cf_id,'-')#" value="#cf_value#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
+							<option value=""></option>					
+						</select>						
+						<cfoutput>
+							<!--- JS --->
+							<script language="JavaScript" type="text/javascript">
+								(function(self){
+									var input = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+									var descriptor = $("select[descriptor='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+									var tgGroup = $('<optgroup label="<cfoutput>#myFusebox.getApplicationData().defaults.trans("TG")#</cfoutput>" >');
+									var taGroup = $('<optgroup label="<cfoutput>#myFusebox.getApplicationData().defaults.trans("TA")#</cfoutput>" >');
+									var tsGroup = $('<optgroup label="<cfoutput>#myFusebox.getApplicationData().defaults.trans("TS")#</cfoutput>" >');
+
+									//Je construit mon champ multiple avec les valeurs initiale
+									descriptor.chosen()
+										//Changement
+										.change(function(event, params){
+											input.val(getSelected().join(","));	
+											drop.css("display", "none");
+											setTimeout(hoverListener,100);								
+										})
+										//Le composant est prêt
+										.ready(function(){
+											$.getJSON(
+											"http://ima.j2s.net/Thesaurus_WS/AllTerms.php", 
+											function(result){
+												if(result.err === 200){
+													var selectedList = "<cfoutput>#cf_value#</cfoutput>"	
+													$.each(result.values.sort(), function(index, item){
+														if(selectedList.split(",").indexOf(item) > -1) {descriptor.append("<option value='"+item+"' selected=selected>"+item+"</option>");}
+														else {descriptor.append("<option value='"+item+"'>"+item+"</option>");}
+													});
+													descriptor.trigger("chosen:updated");
+													setTimeout(hoverListener,100);	
+												}
+											});
+										})
+										//J'affiche la liste
+										.on("chosen:showing_dropdown", function(){setTimeout(hoverListener,100);	});
+
+									//Je tape des caractères, j'écoute le hover sur les éléments
+									descriptor.next(".chosen-container").find("input").keyup(function(){setTimeout(hoverListener,100);});
+									$("body").click(function(){drop.css("display", "none");})
+
+									var drop = $(
+										'<div class="thesaurus-drop"><ul class="thesaurus-results">'+
+										'<li class="thesaurus-result-group tg"><cfoutput>#myFusebox.getApplicationData().defaults.trans("TG")#</cfoutput></li>'+
+										'<li class="thesaurus-result-group ta"><cfoutput>#myFusebox.getApplicationData().defaults.trans("TA")#</cfoutput></li>'+
+										'<li class="thesaurus-result-group ts"><cfoutput>#myFusebox.getApplicationData().defaults.trans("TS")#</cfoutput></li>'+
+										'</ul></div>');
+									var hovered = null;
+									var hoverTimer = null;
+									var hoverHandler = function(ev){
+										cleartHoverTimer();
+										hovered = this;
+										drop.css("display", "none");
+										hoverTimer = setTimeout(function(){hoverShow(ev);}, 1000);
+									}
+									var hoverListener = function(){descriptor.next(".chosen-container").find("li").unbind().hover(hoverHandler, cleartHoverTimer);}
+									var cleartHoverTimer = function(ev){if(hoverTimer){clearTimeout(hoverTimer);}}
+
+									var hoverShow = function(ev){
+										$("body").append(drop);
+										drop.find(".thesaurus-result").remove();
+										$.getJSON(
+										"http://ima.j2s.net/Thesaurus_WS/ForDescriptor.php?uniterm="+hovered.innerText, 
+										function(result){
+											//J'ai un résultat
+											if(result.err === 200){
+												if(result.TG.length > 0 || result.TA.length > 1 || result.TS.length > 0 ) {
+													drop.css("display", "block").css("top", ev.pageY).css("left", ev.pageX-300);
+													//TG
+													if(result.TG.length > 0){
+														drop.find(".tg").after('<li class="thesaurus-result" value="'+result.TG+'">'+result.TG+'</li>');
+													}
+													//TA
+													if(result.TA.length > 0){
+														$.each(result.TA.reverse(), function(i,TA){
+															drop.find(".ta").after('<li class="thesaurus-result" value="'+TA+'">'+TA+'</li>');
+														});
+													}
+													//TS
+													if(result.TS.length > 0){
+														$.each(result.TS.reverse(), function(i,TS){
+															drop.find(".ts").after('<li class="thesaurus-result" value="'+TS+'">'+TS+'</li>');
+														});
+													}
+												}
+												//J'écoute la sélection
+												drop.find(".thesaurus-result").click(function(){
+													descriptor.find("option[value='"+hovered.innerText+"']").removeProp("selected");
+													descriptor.find("option[value='"+this.innerText+"']").prop("selected", true);
+													descriptor.trigger("chosen:updated");
+													drop.css("display", "none");
+													setTimeout(hoverListener,100);
+												})
+											}
+										});
+
+									}
+
+									//Demande la sélection
+									var getSelected = function() {
+										var values = []; 
+										$.each(descriptor[0].selectedOptions, function(index, item){values.push(item.text)});
+										return values;
+									}
+	
+								})(this);
+							</script>
+						</cfoutput>	
+<!---				<cfelseif cf_type EQ "descriptor">
+						<!--- Variable --->
+						<cfset allowed = false>
+						<!--- Check for Groups --->
+						<cfloop list="#session.thegroupofuser#" index="i">
+							<cfif listfind(cf_edit,i)>
+								<cfset allowed = true>
+								<cfbreak>
+							</cfif>
+						</cfloop>
+						<!--- Check for users --->
+						<cfloop list="#session.theuserid#" index="i">
+							<cfif listfind(cf_edit,i)>
+								<cfset allowed = true>
+								<cfbreak>
+							</cfif>
+						</cfloop>
+						<cfif !isnumeric(cf_edit) AND cf_edit EQ "true">
+							<cfset allowed = true>
+						</cfif>
+						<input type="text" style="width:300px;" id="cf_descriptor_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
+						<select multiple type="descriptor" descriptor="cf_#cf_id#" id="cf_select_descriptor_#listlast(cf_id,'-')#" value="#cf_value#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<option value=""></option>
 							<cfloop list="#ltrim(replace(cf_value,', ',',','ALL'))#" index="i">
 								<option value="#i#" <cfif listContains("#cf_value#", #i#, ",")> selected="selected"</cfif>>#i#</option>
@@ -471,6 +603,7 @@
 								})(this);
 							</script>
 						</cfoutput>	
+--->
 					<!--- Candidat descripteur --->
 					<cfelseif cf_type EQ "candidate-descriptor">
 						<!--- Variable --->
