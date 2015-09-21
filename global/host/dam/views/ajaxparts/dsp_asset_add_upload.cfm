@@ -40,6 +40,10 @@
 <script type="text/javascript" src="#dynpath#/global/js/plupload/plupload.full.js?_v=#attributes.cachetag#"></script>
 <script type="text/javascript" src="#dynpath#/global/js/plupload/jquery.plupload.queue/jquery.plupload.queue.js?_v=#attributes.cachetag#"></script>
 <script type="text/javascript" src="#dynpath#/global/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js?_v=#attributes.cachetag#"></script>
+<!-- activate EN translation -->
+<script type="text/javascript" src="#dynpath#/global/js/plupload/i18n/en.js"></script>
+<!-- activate FR translation -->
+<script type="text/javascript" src="#dynpath#/global/js/plupload/i18n/fr.js"></script>
 <style type="text/css">
 body {
 	background: white;
