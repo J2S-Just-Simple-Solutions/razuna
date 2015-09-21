@@ -69,7 +69,7 @@
 	    	var pass = $('##ftp_pass').val();
 	    	var passive = $('##ftp_passive:checked').val();
 	    	// Change Button
-		   	$('##ftplogin').html('#myFusebox.getApplicationData().defaults.trans("please_wait")#...(sometimes minutes)');
+		   	$('##ftplogin').html('#myFusebox.getApplicationData().defaults.trans("please_wait")#...()#myFusebox.getApplicationData().defaults.trans("sometimes_minutes")#)');
 	    	// Load the FTP site
 	    	$('##addftp').load('#myself#c.asset_add_ftp_show', { folder_id:"#attributes.folder_id#", ftp_server: server, ftp_user: user, ftp_pass: pass, ftp_passive: passive } );
 	    	return false;

@@ -36,8 +36,8 @@
 				<cfset str="">
 				<!--- Construct and return fomatted search value --->
 				<cfloop array=#response.values# index="name">
-					<cfif str eq ""><cfset str="'#name#'" ></cfif>
-					<cfelse><cfset str="#str# OR '#name#'" >
+					<cfif str eq ""><cfset str="'#name#'" >
+					<cfelse><cfset str="#str# OR '#name#'" ></cfif>
 				</cfloop>
 				<cfreturn str/>
 			</cfif>	
@@ -91,10 +91,10 @@
 			<cfset arguments.thestruct.searchtext = "*">
 		</cfif>
 
-		<cfif TRUE>
-			<!---<cflog file="razunaAppLog" text="original:#arguments.thestruct.searchtext#" />--->
+		<cfif FALSE>
+			<!--<cflog file="J2S" text="original:#arguments.thestruct.searchtext#" />-->
 			<cfset arguments.thestruct.searchtext = searchforthesaurus(search_value=thestruct.searchtext)>
-			<!---<cflog file="razunaAppLog" text="modified:#arguments.thestruct.searchtext#" />--->	
+			<!--<cflog file="J2S" text="modified:#arguments.thestruct.searchtext#" />-->
 		</cfif>
 
 		<cfset var sqlInCluseLimit = 990>
