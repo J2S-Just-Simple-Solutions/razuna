@@ -128,7 +128,7 @@
 										<div style="float:left;padding-right:5px;">
 											<img src="#dynpath#/global/host/dam/images/folder-favorites.png" width="16" height="16" border="0" />
 										</div>
-										<div style="padding-top:2px;">Add folder to favorites</div>
+										<div style="padding-top:2px;">#myFusebox.getApplicationData().defaults.trans("add_folder_to_favorites")#</div>
 									</a>
 								</p>
 							</cfif>
