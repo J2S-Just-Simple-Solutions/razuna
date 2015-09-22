@@ -104,7 +104,7 @@
 				<td>
 					<cfset cfid = replace(cf_id,"-","","all")>
 					<!--- For text --->
-					<cfif cf_type EQ "text" OR cf_type EQ "textarea" OR cf_type EQ "descriptor" >
+					<cfif cf_type EQ "text" OR cf_type EQ "textarea" >
 						<input type="text" style="width:300px;" name="cf#cfid#" >
 					<!--- Radio --->
 					<cfelseif cf_type EQ "radio">
@@ -117,6 +117,35 @@
 								<option value="#i#">#i#</option>
 							</cfloop>
 						</select>
+					<!--- Descriptot --->
+					<cfelseif cf_type EQ "descriptor">
+						<select name="cf#cfid#" descriptor style="width:300px;">
+									
+						</select>
+						<cfoutput>
+							<!--- JS --->
+							<script language="JavaScript" type="text/javascript">
+								var descriptorSearch = $("select[name='cf"+"<cfoutput>#cfid#</cfoutput>"+"']");
+								descriptorSearch.ready(function(){
+									if(!descriptorSearch.prop("ready")) {
+										descriptorSearch.prop("ready", true);
+										descriptorSearch.chosen();
+										$.getJSON(
+										"http://ima.j2s.net/Thesaurus_WS/AllTerms.php", 
+										function(result){
+											if(result.err === 200){
+												descriptorSearch.append("<option value=''></option>");
+												$.each(result.values.sort(), function(index, item){
+													descriptorSearch.append("<option value='"+item+"'>"+item+"</option>");
+												});
+												descriptorSearch.trigger("chosen:updated");
+											}
+										});
+									}
+								})
+
+							</script>
+						</cfoutput>
 					</cfif>
 				</td>
 			</tr>

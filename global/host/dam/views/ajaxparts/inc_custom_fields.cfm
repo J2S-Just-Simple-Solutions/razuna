@@ -24,25 +24,6 @@
 *
 --->
 <cfoutput>
-	<cffunction name="searchforthesaurus" access="remote" returntype="string">
-		<!--- If no total search or multi search --->
-		<cfif search_value NEQ "*" and find(' OR ', search_value) eq 0>
-			<!--- Get thesaurus data --->
-			<cfhttp url="http://ima.j2s.net/thesaurus_ws/ForSearch.php?uniterm=#search_value#" method="post" result="result" charset="utf-8"/>
-			<cfset response = deserializeJSON(result.filecontent)> 
-			<!--- I got response --->
-			<cfif response.err EQ 200>
-				<cfset str="">
-				<!--- Construct and return fomatted search value --->
-				<cfloop array=#response.values# index="name">
-					<cfif str eq ""><cfset str="'#name#'" ></cfif>
-					<cfelse><cfset str="#str# OR '#name#'" >
-				</cfloop>
-				<cfreturn str/>
-			</cfif>	
-		</cfif>
-		<cfreturn search_value/>
-	</cffunction>
 	<!---RAZ-2834:: Assign the custom field customized --->
 	<cfset custom_fields = "">
 	<cfif !structKeyExists(variables,"cf_inline")><table border="0" cellpadding="0" cellspacing="0" width="450" class="grid"></cfif>
@@ -379,6 +360,7 @@
 							<!--- JS --->
 							<script language="JavaScript" type="text/javascript">
 								(function(self){
+									$(document).ready(function(){
 									var input = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 									var descriptor = $("select[descriptor='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 									var tgGroup = $('<optgroup label="<cfoutput>#myFusebox.getApplicationData().defaults.trans("TG")#</cfoutput>" >');
@@ -437,33 +419,34 @@
 										$("body").append(drop);
 										drop.find(".thesaurus-result").remove();
 										$.getJSON(
-										"http://ima.j2s.net/Thesaurus_WS/ForDescriptor.php?uniterm="+hovered.innerText, 
+										"http://ima.j2s.net/Thesaurus_WS/ForDescriptor.php?uniterm="+ $(hovered).text(), 
 										function(result){
 											//J'ai un résultat
 											if(result.err === 200){
 												if(result.TG.length > 0 || result.TA.length > 1 || result.TS.length > 0 ) {
 													drop.css("display", "block").css("top", ev.pageY).css("left", ev.pageX-300);
+													drop.find(".ta,.tg,.ts").hide();
 													//TG
 													if(result.TG.length > 0){
-														drop.find(".tg").after('<li class="thesaurus-result" value="'+result.TG+'">'+result.TG+'</li>');
+														drop.find(".tg").show().after('<li class="thesaurus-result" value="'+result.TG+'">'+result.TG+'</li>');
 													}
 													//TA
 													if(result.TA.length > 0){
 														$.each(result.TA.reverse(), function(i,TA){
-															drop.find(".ta").after('<li class="thesaurus-result" value="'+TA+'">'+TA+'</li>');
+															drop.find(".ta").show().after('<li class="thesaurus-result" value="'+TA+'">'+TA+'</li>');
 														});
 													}
 													//TS
 													if(result.TS.length > 0){
 														$.each(result.TS.reverse(), function(i,TS){
-															drop.find(".ts").after('<li class="thesaurus-result" value="'+TS+'">'+TS+'</li>');
+															drop.find(".ts").show().after('<li class="thesaurus-result" value="'+TS+'">'+TS+'</li>');
 														});
 													}
 												}
 												//J'écoute la sélection
 												drop.find(".thesaurus-result").click(function(){
-													descriptor.find("option[value='"+hovered.innerText+"']").removeProp("selected");
-													descriptor.find("option[value='"+this.innerText+"']").prop("selected", true);
+													descriptor.find("option[value='"+$(hovered).text()+"']").removeProp("selected");
+													descriptor.find("option[value='"+$(this).text()+"']").prop("selected", true);
 													descriptor.trigger("chosen:updated");
 													drop.css("display", "none");
 													setTimeout(hoverListener,100);
@@ -479,7 +462,7 @@
 										$.each(descriptor[0].selectedOptions, function(index, item){values.push(item.text)});
 										return values;
 									}
-	
+									});
 								})(this);
 							</script>
 						</cfoutput>	

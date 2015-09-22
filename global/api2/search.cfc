@@ -27,23 +27,37 @@
 
 	<!--- Modifie la valeur de la recherche via les synonymes de la table thesaurus --->
 	<cffunction name="searchforthesaurus" access="remote" returntype="string">
-		<!--- If no total search or multi search --->
-		<cfif search_value NEQ "*" and find(' OR ', search_value) eq 0>
-			<!--- Get thesaurus data --->
-			<cfhttp url="http://ima.j2s.net/Thesaurus_WS/ForSearch.php?uniterm=#search_value#" method="post" result="result" charset="utf-8"/>
-			<cfset response = deserializeJSON(result.filecontent)> 
-			<!--- I got response --->
-			<cfif response.err EQ 200>
-				<cfset str="">
-				<!--- Construct and return fomatted search value --->
-				<cfloop array=#response.values# index="name">
-					<cfif str eq ""><cfset str="'#name#'" ></cfif>
-					<cfelse><cfset str="#str# OR '#name#'" >
+	<!--- If no total search or multi search --->
+		<cfif search_value NEQ "*">
+			<!--- On traite l'encoding --->
+			<cfset search_value = "#URLDecode(search_value)#">
+			<!--- On ne traite pas ce qui est entre double quote --->
+			<cfset search_value_copy = "#REReplace(URLDecode(search_value), '"[^"]+?"', "", "all")#">
+			<!--- On uniformise les séparateurs --->
+			<cfset search_value_copy = "#REReplace(search_value_copy, "\sOR\s|\sAND\s|\sNOT\s|\s\&\&\s|\s", "%%", "all")#">
+			<!--- Si ma chaine ne contient plus de séparateur non uniformisé, --->
+			<cfif find('\sOR\s|\sAND\s|\sNOT\s|\s\&\&\s|\s', search_value_copy) eq 0 >
+				<cfloop list="#search_value_copy#" delimiters="%%" index="item">
+					<!--- Get thesaurus data --->
+					<cfhttp url="http://ima.j2s.net/Thesaurus_WS/ForSearch.php?uniterm=#item#" method="post" result="result" charset="utf-8"/>
+					<cfset response = deserializeJSON(result.filecontent)> 
+					<!--- I got response --->
+					<cfif response.err EQ 200>
+						<cfif ArrayLen(response.values) neq 0>
+							<cfset str="">
+							<!--- Construct and return fomatted search value --->
+							<cfloop array=#response.values# index="name">
+								<cfif find(' ', name) neq 0><cfset name='"#name#"' ></cfif>
+								<cfif str eq ""><cfset str="#name#" ><cfelse><cfset str="#str# OR #name#" ></cfif>
+							</cfloop>
+							<cfset str="(#str#)" >
+							<cfset search_value="#reReplace(search_value, '#item#(?=\s)|#item#$', '#str#')#" >
+						</cfif>
+					</cfif>
 				</cfloop>
-				<cfreturn str/>
-			</cfif>	
-		</cfif>
-		<cfreturn search_value/>
+			</cfif>					
+			<cfreturn search_value/>
+		</cfif>	
 	</cffunction>
 	
 	<!--- Retrieve assets from a folder --->

@@ -1094,7 +1094,6 @@ a:link .nolink{text-decoration: none;}
     border: 1px solid #aaa;
     background: #fff;
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
-    display: none;
 }
 .thesaurus-drop * {
     -webkit-box-sizing: border-box;
