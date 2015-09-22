@@ -38,9 +38,12 @@
 	</cfif>
 </cfoutput>
 <hr>
+
+<cfoutput>
 <!---<p align="right"><input type="radio" checked="checked" name="insert_type" value="replace"> replace or <input type="radio" name="insert_type" value="append"> append to existing records.&nbsp;   
 <input type="submit" name="submit" disabled="true" id="apply" value="Apply" onclick="completed();"></p>--->
-<p align="right"><input type="radio" checked="checked" name="insert_type" value="replace" hidden> <input type="submit" name="submit" disabled="true" id="apply" value="Apply" onclick="completed();"></p>
+<p align="right"><input type="radio" checked="checked" name="insert_type" value="replace" hidden> <input type="submit" name="submit" disabled="true" id="apply" value="#myFusebox.getApplicationData().defaults.trans("apply")#" onclick="completed();"></p>
+</cfoutput>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('.idList').click(function(){
@@ -61,7 +64,7 @@
 				// Apply Disable
 				$('#apply').attr('disabled', 'true');
 				// Change link
-				$('#selectallcm').text('Select all');
+				$('#selectallcm').text("<cfoutput>#myFusebox.getApplicationData().defaults.trans("select_all")#</cfoutput>");
 			}
 			else {
 				// select all
@@ -69,7 +72,7 @@
 				//Apply Enable
 				$('#apply').removeAttr('disabled');
 				// Change link
-				$('#selectallcm').text('Select none');
+				$('#selectallcm').text("<cfoutput>#myFusebox.getApplicationData().defaults.trans("select_none")#</cfoutput>");
 			}		
 		})
 	};
