@@ -2416,12 +2416,12 @@
 		<cfloop list="#arguments.thestruct.idList#" index="id" delimiters=",">
 			<cfloop query = "select_custom">
 				<cfquery name="count_custom" datasource="#application.razuna.datasource#">
-					SELECT COUNT(1) AS count FROM #session.hostdbprefix#custom_fields_values 
+					SELECT asset_id_r FROM #session.hostdbprefix#custom_fields_values 
 					WHERE asset_id_r = <cfqueryparam value="#id#" cfsqltype="cf_sql_varchar">
 					AND cf_id_r = <cfqueryparam value="#select_custom.cf_id_r#" cfsqltype="cf_sql_varchar">
 					AND host_id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#session.hostid#">
 				</cfquery>
-				<cfif count_custom.count EQ 1>
+				<cfif count_custom.RecordCount>
 					<cfquery name="updateimges_text" datasource="#application.razuna.datasource#">
 						UPDATE #session.hostdbprefix#custom_fields_values SET 
 						cf_value = <cfqueryparam value="#select_custom.cf_value#" cfsqltype="cf_sql_varchar">
