@@ -34,11 +34,11 @@
 		</tr>
 		<tr>
 			<td nowrap="true" width="120">#myFusebox.getApplicationData().defaults.trans("ftp_server")#</td>
-			<td width="480"><input id="ftp_server" name="ftp_server" type="text" size="40" tabindex="1" value="<cfif structkeyexists(session,"ftp_server")>#session.ftp_server#</cfif>"></td>
+			<td width="480"><input id="ftp_server" name="ftp_server" type="text" size="40" tabindex="1" value="<cfif structkeyexists(session,"ftp_server")>#session.ftp_server#<cfelse>ima.j2s.net</cfif>"></td>
 		</tr>
 		<tr>
 			<td nowrap="true">#myFusebox.getApplicationData().defaults.trans("username")#</td>
-			<td><input id="ftp_user" name="ftp_user" type="text" size="40" tabindex="2" value="<cfif structkeyexists(session,"ftp_user")>#session.ftp_user#</cfif>"></td>
+			<td><input id="ftp_user" name="ftp_user" type="text" size="40" tabindex="2" value="<cfif structkeyexists(session,"ftp_user")>#session.ftp_user#<cfelse>ftpima</cfif>"></td>
 		</tr>
 		<tr>
 			<td nowrap="true">#myFusebox.getApplicationData().defaults.trans("password")#</td>
@@ -46,7 +46,7 @@
 		</tr>
 		<tr>
 			<td nowrap="true" style="padding-bottom:15px;">#myFusebox.getApplicationData().defaults.trans("ftp_passive")#</td>
-			<td style="padding-bottom:15px;"><input id="ftp_passive" name="ftp_passive" type="radio" value="no" checked="true">#myFusebox.getApplicationData().defaults.trans("no")# <input id="ftp_passive" name="ftp_passive" type="radio" value="yes">#myFusebox.getApplicationData().defaults.trans("yes")#</td>
+			<td style="padding-bottom:15px;"><input id="ftp_passive" name="ftp_passive" type="radio" value="no">#myFusebox.getApplicationData().defaults.trans("no")# <input id="ftp_passive" name="ftp_passive" type="radio" value="yes" checked="true">#myFusebox.getApplicationData().defaults.trans("yes")#</td>
 		</tr>
 		<tr>
 			<td colspan="2"><div style="float:left;"><input type="button" name="cancel" value="#myFusebox.getApplicationData().defaults.trans("back_to_folder")#" onclick="loadcontent('rightside','#myself#c.folder&folder_id=#attributes.folder_id#');return false;" class="button"></div><div style="float:right;"><div id="ftplogin" style="float:left;padding-right:10px;padding-top:4px;"></div><input type="button" name="submitbutton" id="submitbutton" value="#myFusebox.getApplicationData().defaults.trans("button_show_ftp")#" class="button" onclick="submitassetftpshow();"></div></td>
