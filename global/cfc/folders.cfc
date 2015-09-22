@@ -4211,8 +4211,7 @@
 <cffunction name="getfoldersfortree" access="public" output="true">
 	<cfargument name="thestruct" type="struct" required="true">
 	<cfargument name="id" type="string" required="true">
-	<cfargument name="col" type="string" required="true">
-	
+	<cfargument name="col" type="string" required="true">	
 	<!--- If col is T or the id contains col- --->
 	<cfif arguments.col EQ "T" or arguments.id CONTAINS "col-">
 		<cfset var iscol = "T">
@@ -4517,7 +4516,7 @@
 						<a href="##" onclick="loadcontent('win_choosefolder_#session.tmpid#','index.cfm?fa=#session.savehere#&folder_id=#folder_id#&folder_name=#URLEncodedFormat(folder_name)#');" style="white-space:normal;">
 					<!--- upload --->
 					<cfelseif session.type EQ "uploadinto">
-						<a href="##" onclick="showwindow('index.cfm?fa=c.asset_add&folder_id=#folder_id#','Add your files',650,1);return false;" style="white-space:normal;">
+						<a href="##" onclick="showwindow('index.cfm?fa=c.asset_add&folder_id=#folder_id#','Ajouter vos fichier(s)',650,1);return false;" style="white-space:normal;">
 					<!--- customization --->
 					<cfelseif session.type EQ "customization">
 						<a href="##" onclick="javascript:document.form_admin_custom.folder_redirect.value = '#folder_id#'; document.form_admin_custom.folder_name.value = '#folder_name#';destroywindow(1);" style="white-space:normal;">

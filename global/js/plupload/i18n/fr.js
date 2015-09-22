@@ -20,6 +20,6 @@ plupload.addI18n({
     'IO error.': 'Erreur E/S.',
     'Stop Upload': 'Arrêter les envois.',
     'Add Files': 'Ajouter des fichiers',
-    'Start Upload': 'Démarrer les envois.',
+    'Start Upload': 'Démarrer les envois',
     '%d files queued': '%d fichiers en attente.'
 });
