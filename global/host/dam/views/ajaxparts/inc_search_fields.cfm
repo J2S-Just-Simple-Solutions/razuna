@@ -119,7 +119,7 @@
 						</select>
 					<!--- Descriptot --->
 					<cfelseif cf_type EQ "descriptor">
-						<select name="cf#cfid#" descriptor style="width:300px;">
+						<select name="cf#cfid#" descriptor style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#">
 									
 						</select>
 						<cfoutput>
