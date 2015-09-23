@@ -56,7 +56,8 @@
 					</cfif>
 				</cfloop>
 			</cfif>					
-			<cfreturn search_value/>
+			<cfinvoke component="global.api2.J2S" method="encodeURIComponent" stringToEncode="#search_value#" returnvariable="search_value_encoded" />				
+			<cfreturn search_value_encoded/>
 		</cfif>	
 	</cffunction>
 	
