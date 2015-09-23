@@ -49,7 +49,8 @@
 						<cfif application.razuna.isp>
 							<option value="http://#host_name##thehostpath#/">
 						<cfelse>
-							<option value="../#host_path#/dam">
+							<!--<option value="../#host_path#/dam/"> FL: add automatically swith lang to French-->
+							<option value="../#host_path#/dam/index.cfm?fa=c.switchlang&thelang=French">
 						</cfif>
 						#ucase(host_name)#</option>
 					</cfloop>
