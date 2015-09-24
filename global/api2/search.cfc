@@ -84,7 +84,7 @@
 		<!--- Check key --->
 		<cfset var thesession = checkdb(arguments.api_key)>
 
-		<cfif TRUE>
+		<cfif FALSE>
 			<cfset arguments.searchfor = searchforthesaurus(search_value=searchfor)>
 		</cfif>
 		

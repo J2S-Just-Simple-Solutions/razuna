@@ -107,7 +107,7 @@
 			<cfset arguments.thestruct.searchtext = "*">
 		</cfif>
 
-		<cfif TRUE>
+		<cfif FALSE>
 			<cflog file="razunaAppLog" text="original:#arguments.thestruct.searchtext#" />
 			<cfset arguments.thestruct.searchtext = searchforthesaurus(search_value=thestruct.searchtext)>
 			<cflog file="razunaAppLog" text="modified:#arguments.thestruct.searchtext#" />
