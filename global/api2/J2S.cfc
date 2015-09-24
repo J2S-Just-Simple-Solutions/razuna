@@ -2,6 +2,7 @@
 
 
 	<cffunction name="checkuser" access="remote" output="false" returntype="query" returnformat="json"  >
+		
 		<!--- Je récupère mes arguments --->
 		<cfargument name="api_key" required="true" type="string">
 		<cfargument name="user" required="true">
@@ -46,13 +47,13 @@
 					<cfset thexml = querynew("user_name,api_key,host_id,host_name")>
 					<cfloop query="qry" >
 						<cfset sub_user = arguments.user & "_" & qry.CT_U_H_HOST_ID>
-						<!--- Pour chaque tenants, je recherche le user + tenant et remonte l'api-key --->
+						<!--- Pour chaque tenant, je recherche le user + tenant et remonte l'api-key --->
 						<cfquery datasource="#application.razuna.api.dsn#" name="user_query">
 							SELECT u.USER_API_KEY
 							FROM users u
 							WHERE lower(u.user_login_name) = <cfqueryparam value="#lcase(sub_user)#" cfsqltype="cf_sql_varchar">
 						</cfquery>
-						<!--- J'ai un résultat, je contruit ma boulette de retour --->
+ 				 	   <!--- J'ai un résultat, je contruis ma boulette de retour --->
 						<cfif user_query.recordcount NEQ 0>
 							<cfset queryaddrow(thexml,1)>
 							<cfset querysetcell(thexml,"user_name",sub_user)>
@@ -227,7 +228,7 @@
 	<cffunction name="manipulate" access="remote" output="false" returntype="query" returnformat="json"  >
 		<cfset var thexml = "">
 
-		<!--- Je détruit --->
+		<!--- Je détruis --->
 		<cfquery datasource="#application.razuna.api.dsn#" name="thexml">
 			DROP TABLE IF EXISTS raz1_thesaurus
 		</cfquery>
