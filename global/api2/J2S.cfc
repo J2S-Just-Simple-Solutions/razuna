@@ -23,6 +23,8 @@
 				<cfset var pass = hash(arguments.pass, "MD5", "UTF-8")>
 			</cfif>
 
+			<cflog file="J2S" text="#pass#" />
+			
 		 	<!--- Le couple user mot de passe correspond? --->
 			<cfquery datasource="#application.razuna.api.dsn#" name="thexml">
 				SELECT u.USER_API_KEY, u.USER_ID
@@ -30,7 +32,7 @@
 				WHERE lower(u.user_login_name) = <cfqueryparam value="#lcase(arguments.user)#" cfsqltype="cf_sql_varchar">
 				AND lower(u.user_pass) = <cfqueryparam value="#lcase(pass)#" cfsqltype="cf_sql_varchar">
 			</cfquery>
-				
+
 			<!--- J'ai une réponse ou pas --->
 			<cfif thexml.recordcount NEQ 0>
 
