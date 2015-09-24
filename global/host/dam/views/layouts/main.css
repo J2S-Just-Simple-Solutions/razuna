@@ -1129,3 +1129,6 @@ a:link .nolink{text-decoration: none;}
     cursor: default;
     
 }
+input[disabled]{
+	opacity:.5;
+}

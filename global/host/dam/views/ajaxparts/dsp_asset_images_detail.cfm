@@ -428,8 +428,8 @@
 						<!--- copy metadata link --->
 						<div style="float:left;padding-top:25px;">
 							<button onclick="showwindow('#myself#c.copy_metaData&what=#attributes.what#&file_id=#attributes.file_id#','#JSStringFormat(myFusebox.getApplicationData().defaults.trans("add_file"))#',650,1);return false;" class="button" title="#myFusebox.getApplicationData().defaults.trans("copy_meta_data_title")#" >#myFusebox.getApplicationData().defaults.trans("copy_meta_data")#</button>
-							<button id="cMetadata" onclick="copyMetadata(); return false;"  class="button">#myFusebox.getApplicationData().defaults.trans("copy")#</button>
-							<button id="pMetadata" onclick="pasteMetadata(); return false;" class="button">#myFusebox.getApplicationData().defaults.trans("paste")#</button>
+							<input type="submit" id="cMetadata" onclick="copyMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("copy")#"></input>
+							<input type="submit" id="pMetadata" onclick="pasteMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("paste")#"></input>
 						</div>
 						<div style="float:right;padding-top:25px;">
 							<input type="submit" name="submit" value="#myFusebox.getApplicationData().defaults.trans("button_save")#" class="button">
@@ -467,12 +467,6 @@
 	<script language="JavaScript" type="text/javascript">
 	jqtabs("tab_detail#attributes.file_id#");
 
-	$(document).ready(function(){
-		if(localStorage.getItem("file_id") && localStorage.getItem("file_id").length > 0)
-			$("##pMetadata").removeProp("disabled");
-		else
-			$("##pMetadata").prop("disabled", "disabled");
-	})
 	// Load renditions
 	function loadren(){
 		<cfif qry_detail.detail.link_kind NEQ "url">
@@ -577,13 +571,20 @@
 		});
 	};
 
+	$("##pMetadata").ready(function(){
+		if(localStorage.getItem("file_id") && localStorage.getItem("file_id").length > 0)
+			$("##pMetadata").removeProp("disabled");
+		else
+			$("##pMetadata").prop("disabled", "disabled");
+	});
+
 	function copyMetadata(){
 		localStorage.setItem("file_id", "#file_id#");
 		$("##pMetadata").removeProp("disabled");
 	};
 
 	function pasteMetadata(){
-		$(this).load("index.cfm?fa=c.copy_metadata_image_do&file_id="+localStorage.getItem("file_id")+"&idList=#file_id#&insert_type=replace")
+		$(this).load("index.cfm?fa=c.copy_metadata_image_do&file_id="+localStorage.getItem("file_id")+"&idList=#file_id#&insert_type=replace");
 		localStorage.removeItem("file_id");
 		$("##pMetadata").prop("disabled", "disabled");
 		showwindow('/razuna-dev/raz1/dam/index.cfm?fa=c.images_detail&file_id=#file_id#&what=images&loaddiv=content&folder_id=#folder_id#&showsubfolders=F&row=3&filecount=10','',1000,1);

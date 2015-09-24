@@ -2344,7 +2344,6 @@
 				WHERE id_r IN (<cfqueryparam value="#arguments.thestruct.idList#" cfsqltype="cf_sql_varchar" list="true">)
 				AND host_id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#session.hostid#">
 		</cfquery>
-		<cfset resetcachetoken("images")>
 	<cfelse>
 		<cfloop list="#arguments.thestruct.idList#" index="theidtoupdate" >
 			<cfloop query = "select_images_text">
