@@ -38,7 +38,7 @@
 					SELECT distinct uh.CT_U_H_HOST_ID, h.HOST_NAME
 					FROM ct_users_hosts uh
 					INNER JOIN hosts h on h.HOST_ID = uh.CT_U_H_HOST_ID
-					WHERE uh.CT_U_H_USER_ID = <cfqueryparam value="#lcase(thexml.USER_ID)#" cfsqltype="cf_sql_varchar">
+					WHERE lower(uh.CT_U_H_USER_ID) = <cfqueryparam value="#lcase(thexml.USER_ID)#" cfsqltype="cf_sql_varchar">
 				</cfquery>
 
 				<!--- J'ai des tenants --->
