@@ -2,6 +2,7 @@
 
 
 	<cffunction name="checkuser" access="remote" output="false" returntype="query" returnformat="json"  >
+		
 		<!--- Je récupère mes arguments --->
 		<cfargument name="api_key" required="true" type="string">
 		<cfargument name="user" required="true">
@@ -30,13 +31,10 @@
 				AND lower(u.user_pass) = <cfqueryparam value="#lcase(pass)#" cfsqltype="cf_sql_varchar">
 			</cfquery>
 				
-			<cflog file="J2S" type="error" text="J'ai #thexml.recordcount# record(s)"  >
-
 			<!--- J'ai une réponse ou pas --->
 			<cfif thexml.recordcount NEQ 0>
 
 				<!--- Je demande tous les tenants --->
-				<cflog file="J2S" type="error" text="Je demande tous les tenants" >
 				<cfquery datasource="#application.razuna.api.dsn#" name="qry">
 					SELECT distinct uh.CT_U_H_HOST_ID, h.HOST_NAME
 					FROM ct_users_hosts uh
@@ -46,7 +44,6 @@
 
 				<!--- J'ai des tenants --->
 				<cfif qry.recordcount NEQ 0>
-					<cflog file="J2S" type="error" text="J'ai #qry.recordcount# tenant(s)" >
 					<cfset thexml = querynew("user_name,api_key,host_id,host_name")>
 					<cfloop query="qry" >
 						<cfset sub_user = arguments.user & "_" & qry.CT_U_H_HOST_ID>
@@ -56,8 +53,7 @@
 							FROM users u
 							WHERE lower(u.user_login_name) = <cfqueryparam value="#lcase(sub_user)#" cfsqltype="cf_sql_varchar">
 						</cfquery>
- 				 	    <cflog file="J2S" type="error" text="Authenticate: #sub_user#, #user_query.USER_API_KEY#, #qry.CT_U_H_HOST_ID#, #qry.HOST_NAME#" >
-						<!--- J'ai un résultat, je contruis ma boulette de retour --->
+ 				 	   <!--- J'ai un résultat, je contruis ma boulette de retour --->
 						<cfif user_query.recordcount NEQ 0>
 							<cfset queryaddrow(thexml,1)>
 							<cfset querysetcell(thexml,"user_name",sub_user)>
