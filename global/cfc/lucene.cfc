@@ -970,6 +970,10 @@
 		<cfargument name="criteria" type="string">
 		<cfargument name="category" type="string">
 		<cfargument name="hostid" type="numeric">
+
+		<!-- FL: Add log to check lucene search -->
+		<cflog file="razunaAppLog" text="lucene->search; hostid=#hostid# category=:#category# criteria=#criteria# " />
+
 		<!--- Write dummy record (this fixes issues with collection not written to lucene!!!) --->
 		<!--- Commented this out cause we fixed it and second it slows down the search coniderably!!!!!! --->
 		<!--- <cftry>
