@@ -111,6 +111,7 @@
 			<cflog file="razunaAppLog" text="original:#arguments.thestruct.searchtext#" />
 			<cfset arguments.thestruct.searchtext = searchforthesaurus(search_value=thestruct.searchtext)>
 			<cflog file="razunaAppLog" text="modified:#arguments.thestruct.searchtext#" />
+			<cfset arguments.thestruct.descriptor = false />
 		</cfif>
 
 		<cfset var sqlInCluseLimit = 990>
