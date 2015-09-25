@@ -117,7 +117,7 @@
 		<cfset var q_end = sqlInCluseLimit>
 		<!--- Search in Lucene  --->
 		<cfif arguments.thestruct.thetype EQ "all">
-			<cfinvoke component="lucene" method="search" criteria="(#arguments.thestruct.searchtext#)" category="doc,vid,img,aud" hostid="#session.hostid#" returnvariable="qryluceneAll">
+			<cfinvoke component="lucene" method="search" criteria="#arguments.thestruct.searchtext#" category="doc,vid,img,aud" hostid="#session.hostid#" returnvariable="qryluceneAll">
 			<cfif qryluceneAll.recordcount NEQ "0">
 				<cfset var assetTypesArr = ["doc","img","aud","vid"]>
 				<cfloop array="#assetTypesArr#" index="assetType">
@@ -156,7 +156,7 @@
 				<cfset var proceedToSQL = 0>
 			</cfif>	
 		<cfelse>
-			<cfinvoke component="lucene" method="search" criteria="(#arguments.thestruct.searchtext#)" category="#arguments.thestruct.thetype#" hostid="#session.hostid#" returnvariable="qrylucene">
+			<cfinvoke component="lucene" method="search" criteria="#arguments.thestruct.searchtext#" category="#arguments.thestruct.thetype#" hostid="#session.hostid#" returnvariable="qrylucene">
 			
 			<cfset var catTreeArg = { qrylucene = qrylucene, 
 									iscol = arguments.thestruct.iscol,
