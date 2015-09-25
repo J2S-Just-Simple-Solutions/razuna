@@ -34,7 +34,7 @@
 <!--- </cfif> --->
 <cfoutput>
 	<cfif qry_basket.recordcount EQ 0>
-		<div style="text-align:center;width:100%;color:grey;"><h2>Drag asset here to add to your basket</h2></div>
+		<div style="text-align:center;width:100%;color:grey;"><h2>#myFusebox.getApplicationData().defaults.trans("drag_asset_here_to_add_to_your_basket")#</h2></div>
 	<cfelse>
 		<div style="padding-top:5px;">
 			<a href="##" onclick="tooglefooter('0');loadcontent('rightside','#myself#c.basket_full');$('##footer_drop').css('height','30px');">#myFusebox.getApplicationData().defaults.trans("checkout_basket")#</a> | <a href="##" onclick="loadcontent('thedropbasket','#myself#c.basket_full_remove_all_footer');">#myFusebox.getApplicationData().defaults.trans("clear_basket")#</a> | <a href="##" onclick="loadcontent('thedropbasket','#myself#c.basket');">#myFusebox.getApplicationData().defaults.trans("reload_basket")#</a>
