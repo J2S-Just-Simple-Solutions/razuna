@@ -566,7 +566,7 @@
 	};
 
 	$(document).ready(function(){
-		if(localStorage.getItem("file_id") && localStorage.getItem("file_id").length > 0)
+		if(localStorage.getItem("file_id") && localStorage.getItem("file_id").length > 0 && localStorage.getItem("file_id") !== "#file_id#")
 			$("##pMetadata").removeProp("disabled");
 		else
 			$("##pMetadata").prop("disabled", "disabled");
@@ -574,13 +574,13 @@
 
 	function copyMetadata(){
 		localStorage.setItem("file_id", "#file_id#");
-		$("##pMetadata").removeProp("disabled");
 	};
 
 	function pasteMetadata(){
 		$(this).load("index.cfm?fa=c.copy_metadata_file_do&file_id="+localStorage.getItem("file_id")+"&idList=#file_id#&insert_type=replace")
 		localStorage.removeItem("file_id");
 		$("##pMetadata").prop("disabled", "disabled");
+		$(this).load("index.cfm?fa=c.admin_flush_db");
 		showwindow('/razuna-dev/raz1/dam/index.cfm?fa=c.files_detail&file_id=#file_id#&what=files&loaddiv=content&folder_id=#folder_id#&showsubfolders=F&row=3&filecount=10','',1000,1);
 	};
 
