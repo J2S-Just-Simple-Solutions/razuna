@@ -64,6 +64,9 @@
 	<cffunction name="search_all">
 		<cfargument name="thestruct" type="struct">
 
+		<!--- J2S: Add log to check lucene search--->
+		<cflog file="SearchLog" text="1-search.cfc arguments.thestruct.searchtext=#arguments.thestruct.searchtext# " /> 
+
 		<!--- Get the cachetoken for here --->
 		<cfset variables.cachetoken = getcachetoken("search")>
 		<cfset variables.cachetokenlogs = getcachetoken("logs")>
@@ -116,6 +119,11 @@
 
 		<cfset var sqlInCluseLimit = 990>
 		<cfset var q_end = sqlInCluseLimit>
+
+
+		<!--- J2S: Add log to check lucene search --->
+		<cflog file="SearchLog" text="2-search.cfc arguments.thestruct.searchtext=#arguments.thestruct.searchtext# " />
+
 		<!--- Search in Lucene  --->
 		<cfif arguments.thestruct.thetype EQ "all">
 			<cfinvoke component="lucene" method="search" criteria="#arguments.thestruct.searchtext#" category="doc,vid,img,aud" hostid="#session.hostid#" returnvariable="qryluceneAll">

@@ -7,7 +7,7 @@
 * Razuna is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Affero Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
+* (at your option) any later version.ccf
 *
 * Razuna is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -971,8 +971,8 @@
 		<cfargument name="category" type="string">
 		<cfargument name="hostid" type="numeric">
 
-		<!-- FL: Add log to check lucene search -->
-		<cflog file="razunaAppLog" text="lucene->search; hostid=#hostid# category=:#category# criteria=#criteria# " />
+		<!--- J2S: Add log to check lucene search --->
+		<cflog file="SearchLog" text="3-lucene.cfc criteria=#arguments.criteria# " />
 
 		<!--- Write dummy record (this fixes issues with collection not written to lucene!!!) --->
 		<!--- Commented this out cause we fixed it and second it slows down the search coniderably!!!!!! --->
@@ -986,6 +986,10 @@
 		 Do not use escape(deprecated) or encodeURI (doesn't encode '+' sign) methods to encode. Use the encodeURIComponent javascript method only.
 		--->
 		<cfset arguments.criteria = replace(urlDecode(replace(arguments.criteria,"+","PLUSSIGN","ALL")),"PLUSSIGN","+","ALL")>
+
+		<!--- J2S: Add log to check lucene search --->
+		<cflog file="SearchLog" text="4-lucene.cfc after urlDecode criteria=#arguments.criteria# " />
+
 		<!--- If criteria is empty --->
 		<cfif arguments.criteria EQ "">
 			<cfset arguments.criteria = "">
@@ -1005,6 +1009,12 @@
 			</cfif>
 			<cfset arguments.criteria = '(' & arguments.criteria_sp  & ') ' & arguments.criteria & ' keywords:(#arguments.criteria_sp#) description:(#arguments.criteria_sp#) id:(#arguments.criteria_sp#) labels:(#arguments.criteria_sp#) customfieldvalue:(#arguments.criteria_sp#)'>
 		</cfif>
+
+
+		<!--- J2S: Add log to check lucene search --->
+		<cflog file="SearchLog" text="5-lucene.cfc criteria=#arguments.criteria# " />
+
+
 		<cftry>
 			<cfsearch collection='#arguments.hostid#' criteria='#arguments.criteria#' name='qrylucene' category='#arguments.category#'>
 			<cfcatch type="any">
@@ -1012,8 +1022,10 @@
 			</cfcatch>
 		</cftry>
 
-		<!-- FL: Add log to check lucene request -->
-		<cflog file="razunaAppLog" text="lucene->search; arguments.criteria=#arguments.criteria# " />
+
+		<!--- J2S: Add log to check lucene search 
+		<cflog file="SearchLog" text="6-lucene.cfc qrylucene=#qrylucene# " />--->
+
 
 		<!--- <cfset console(arguments.criteria)> --->
 		<!--- Return --->
