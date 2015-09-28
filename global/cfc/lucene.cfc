@@ -1011,6 +1011,10 @@
 				<cfset qrylucene = querynew("x")>
 			</cfcatch>
 		</cftry>
+
+		<!-- FL: Add log to check lucene request -->
+		<cflog file="razunaAppLog" text="lucene->search; arguments.criteria=#arguments.criteria# " />
+
 		<!--- <cfset console(arguments.criteria)> --->
 		<!--- Return --->
 		<cfreturn qrylucene>
