@@ -1014,9 +1014,12 @@
 		<!--- J2S: Add log to check lucene search --->
 		<cflog file="SearchLog" text="5-lucene.cfc criteria=#arguments.criteria# " />
 
-
 		<cftry>
 			<cfsearch collection='#arguments.hostid#' criteria='#arguments.criteria#' name='qrylucene' category='#arguments.category#'>
+
+			<!--- J2S: Add log to check lucene search --->
+			<cflog file="SearchLog" text="6-lucene.cfc qrylucene.recordCount=#qrylucene.recordCount# " />
+
 			<cfcatch type="any">
 				<cfset qrylucene = querynew("x")>
 			</cfcatch>
