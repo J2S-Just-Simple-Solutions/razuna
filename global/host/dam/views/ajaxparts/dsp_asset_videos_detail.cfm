@@ -382,7 +382,8 @@
 					<cfif attributes.folderaccess NEQ "R">
 						<!--- copy metadata link --->
 						<div style="float:left;padding-top:25px;">
-							<button onclick="showwindow('#myself#c.copy_metaData&what=#attributes.what#&file_id=#attributes.file_id#','#JSStringFormat(myFusebox.getApplicationData().defaults.trans("add_file"))#',650,1);return false;" class="button"  title="#myFusebox.getApplicationData().defaults.trans("copy_meta_data_title")#">#myFusebox.getApplicationData().defaults.trans("copy_meta_data")#</button>
+							<!--- http://wiki.dev.j2s.net/ticket/5515
+							<button onclick="showwindow('#myself#c.copy_metaData&what=#attributes.what#&file_id=#attributes.file_id#','#JSStringFormat(myFusebox.getApplicationData().defaults.trans("add_file"))#',650,1);return false;" class="button"  title="#myFusebox.getApplicationData().defaults.trans("copy_meta_data_title")#">#myFusebox.getApplicationData().defaults.trans("copy_meta_data")#</button>--->
 							<input type="submit" id="cMetadata" onclick="copyMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("copy")#"></input>
 							<input type="submit" id="pMetadata" onclick="pasteMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("paste")#"></input>
 						</div>
@@ -533,12 +534,13 @@
 		});
 	};
 
-	$(document).ready(function(){
+	/* http://wiki.dev.j2s.net/ticket/5515
+	$("##pMetadata").ready(function(){
 		if(localStorage.getItem("file_id") && localStorage.getItem("file_id").length > 0 && localStorage.getItem("file_id") !== "#file_id#")
 			$("##pMetadata").removeProp("disabled");
 		else
 			$("##pMetadata").prop("disabled", "disabled");
-	});
+	});*/
 
 	function copyMetadata(){
 		localStorage.setItem("file_id", "#file_id#");
@@ -547,7 +549,7 @@
 	function pasteMetadata(){
 		$(this).load("index.cfm?fa=c.copy_metadata_video_do&file_id="+localStorage.getItem("file_id")+"&idList=#file_id#&insert_type=replace")
 		localStorage.removeItem("file_id");
-		$("##pMetadata").prop("disabled", "disabled");
+		//$("##pMetadata").prop("disabled", "disabled"); http://wiki.dev.j2s.net/ticket/5515
 		$(this).load("index.cfm?fa=c.admin_flush_db");
 		showwindow('index.cfm?fa=c.videos_detail&file_id=#file_id#&what=videos&loaddiv=content&folder_id=#folder_id#&showsubfolders=F&row=3&filecount=10','',1070,1);
 	};
