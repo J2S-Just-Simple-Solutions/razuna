@@ -136,7 +136,8 @@
 								<td width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("file_name")#</strong></td>
 								<td width="1%" nowrap="true"><input type="text" style="width:400px;" name="fname" id="fname" value="#qry_detail.detail.aud_name#" onchange="document.form#attributes.file_id#.file_name.value = document.form#attributes.file_id#.fname.value;<cfif prefs.set2_upc_enabled>if (!isNaN(document.form#attributes.file_id#.fname.value.substr(0,6))) {document.form#attributes.file_id#.aud_upc.value = document.form#attributes.file_id#.fname.value.split('.')[0];}</cfif>"> <cfif cs.show_favorites_part><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=aud');flash_footer('#myFusebox.getApplicationData().defaults.trans("item_favorite")#');return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></cfif></td>
 							</tr>
-							<!--- Desc --->
+							<!--- Description dans chaque langue 
+							FL: http://wiki.dev.j2s.net/ticket/5512
 							<cfloop query="qry_langs">
 								<cfif lang_id EQ 1>
 									<cfset thisid = lang_id>
@@ -149,7 +150,7 @@
 										<td width="100%"><textarea name="aud_keywords_#thisid#" id="aud_keywords_#thisid#" class="text" style="width:400px;height:30px;" <cfif cs.tab_metadata>onchange="document.form#attributes.file_id#.keywords_#thisid#.value = document.form#attributes.file_id#.aud_keywords_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#aud_keywords#</cfif></cfloop></textarea></td>
 									</tr>
 								</cfif>
-							</cfloop>
+							</cfloop>--->
 							<cfif cs.tab_labels>
 								<tr>
 									<td valign="top"><strong>#myFusebox.getApplicationData().defaults.trans("labels")#</strong></td>
@@ -288,7 +289,7 @@
 				</div>
 				<div class="j2s-metadata-fields">
 					<!--- Description & Keywords --->
-					<a href="##" onclick="$('##detaildesc').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("asset_desc")#</div></a>
+					<a href="##" onclick="$('##detaildesc').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("asset_desc2")#</div></a>
 					<div id="detaildesc">
 						<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
 							<!--- Filename --->

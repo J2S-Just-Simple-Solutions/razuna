@@ -148,7 +148,8 @@
 								<td width="1%" nowrap="true" style="font-weight:bold;">#myFusebox.getApplicationData().defaults.trans("file_name")#</td>
 								<td width="100%" nowrap="true"><input type="text" style="width:400px;" name="fname" id="fname" value="#qry_detail.detail.img_filename#" onchange="document.form#attributes.file_id#.file_name.value = document.form#attributes.file_id#.fname.value; <cfif prefs.set2_upc_enabled>if (!isNaN(document.form#attributes.file_id#.fname.value.substr(0,6))) {document.form#attributes.file_id#.img_upc.value = document.form#attributes.file_id#.fname.value.split('.')[0];}</cfif>"> <cfif cs.show_favorites_part><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=img');flash_footer('#myFusebox.getApplicationData().defaults.trans("item_favorite")#');return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></cfif></td>
 							</tr>
-							<!--- Description & Keywords --->
+							<!--- Description & Keywords 
+							FL: http://wiki.dev.j2s.net/ticket/5512
 							<cfloop query="qry_langs">
 								<cfif lang_id EQ 1>
 									<cfset thisid = lang_id>
@@ -163,7 +164,7 @@
 										<cfif qry_detail.detail.link_kind EQ ''>document.form#attributes.file_id#.iptc_content_keywords_#thisid#.value = document.form#attributes.file_id#.img_keywords_#thisid#.value;</cfif>"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#img_keywords#</cfif></cfloop></textarea></td>
 									</tr>
 								</cfif>
-							</cfloop>
+							</cfloop >--->
 							<!--- Labels --->
 							<cfif cs.tab_labels>
 								<tr>
@@ -322,8 +323,8 @@
 					</cfif>
 				</div>
 				<div class="j2s-metadata-fields">
-					<!--- Description & Keywords --->
-					<a href="##" onclick="$('##detaildesc').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("asset_desc")#</div></a>
+					<!--- Description & Keywords  --->
+					<a href="##" onclick="$('##detaildesc').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("asset_desc2")#</div></a>
 					<div id="detaildesc" style="padding-top:10px;">
 						<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
 							<!--- Filename --->
@@ -333,7 +334,8 @@
 									<input type="text" style="width:400px;" name="file_name" value="#qry_detail.detail.img_filename#" onchange="document.form#attributes.file_id#.fname.value = document.form#attributes.file_id#.file_name.value;"> <cfif cs.show_favorites_part><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=img');flash_footer();return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></cfif>
 								</td>
 							</tr>
-							<!--- Desc --->
+							<!--- Description dans chaque langue 
+							FL: http://wiki.dev.j2s.net/ticket/5512
 							<cfloop query="qry_langs">
 								<cfset thisid = lang_id>
 								<tr>
@@ -348,7 +350,7 @@
 							<tr>
 								<td class="td2"></td>
 								<td class="td2">#myFusebox.getApplicationData().defaults.trans("comma_seperated")#</td>
-							</tr>
+							</tr> --->
 						</table>
 					</div>
 					<div stlye="clear:both;"></div>
