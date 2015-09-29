@@ -149,22 +149,22 @@
 								<td width="100%" nowrap="true"><input type="text" style="width:400px;" name="fname" id="fname" value="#qry_detail.detail.img_filename#" onchange="document.form#attributes.file_id#.file_name.value = document.form#attributes.file_id#.fname.value; <cfif prefs.set2_upc_enabled>if (!isNaN(document.form#attributes.file_id#.fname.value.substr(0,6))) {document.form#attributes.file_id#.img_upc.value = document.form#attributes.file_id#.fname.value.split('.')[0];}</cfif>"> <cfif cs.show_favorites_part><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=img');flash_footer('#myFusebox.getApplicationData().defaults.trans("item_favorite")#');return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></cfif></td>
 							</tr>
 							<!--- Description & Keywords 
-							FL: http://wiki.dev.j2s.net/ticket/5512
+							FL: http://wiki.dev.j2s.net/ticket/5512 --->
 							<cfloop query="qry_langs">
 								<cfif lang_id EQ 1>
 									<cfset thisid = lang_id>
-									<tr>
+									<tr style="display: none;">
 										<td valign="top" width="1%" nowrap="true" style="font-weight:bold;">#myFusebox.getApplicationData().defaults.trans("description")#</td>
 										<td ><textarea name="img_desc_#thisid#" id="img_desc_#thisid#" class="text" style="width:400px;height:60px;" <cfif cs.tab_metadata>onchange="document.form#attributes.file_id#.desc_#thisid#.value = document.form#attributes.file_id#.img_desc_#thisid#.value;
 										<cfif qry_detail.detail.link_kind EQ ''>document.form#attributes.file_id#.iptc_content_description_#thisid#.value = document.form#attributes.file_id#.desc_#thisid#.value;</cfif>"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#img_description#</cfif></cfloop></textarea></td>
 									</tr>
-									<tr>
+									<tr style="display: none;">
 										<td valign="top" width="1%" nowrap="true" style="font-weight:bold;">#myFusebox.getApplicationData().defaults.trans("keywords")#</td>
 										<td><textarea name="img_keywords_#thisid#" id="img_keywords_#thisid#" class="text" style="width:400px;height:30px;" <cfif cs.tab_metadata>onchange="document.form#attributes.file_id#.keywords_#thisid#.value = document.form#attributes.file_id#.img_keywords_#thisid#.value;
 										<cfif qry_detail.detail.link_kind EQ ''>document.form#attributes.file_id#.iptc_content_keywords_#thisid#.value = document.form#attributes.file_id#.img_keywords_#thisid#.value;</cfif>"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#img_keywords#</cfif></cfloop></textarea></td>
 									</tr>
 								</cfif>
-							</cfloop >--->
+							</cfloop >
 							<!--- Labels --->
 							<cfif cs.tab_labels>
 								<tr>
@@ -335,22 +335,22 @@
 								</td>
 							</tr>
 							<!--- Description dans chaque langue 
-							FL: http://wiki.dev.j2s.net/ticket/5512
+							FL: http://wiki.dev.j2s.net/ticket/5512 --->
 							<cfloop query="qry_langs">
 								<cfset thisid = lang_id>
-								<tr>
+								<tr style="display: none;">
 									<td class="td2" valign="top" width="1%" nowrap="true"><strong><cfif qry_langs.recordcount NEQ 1>#lang_name#: </cfif>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
 									<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>img_</cfif>desc_#thisid#" class="text" style="width:400px;height:50px;" <cfif lang_id EQ 1>onchange="<cfif qry_detail.detail.link_kind EQ ''>document.form#attributes.file_id#.iptc_content_description_#thisid#.value = document.form#attributes.file_id#.<cfif lang_id NEQ 1>img_</cfif>desc_#thisid#.value;</cfif>document.form#attributes.file_id#.img_desc_#thisid#.value = document.form#attributes.file_id#.<cfif lang_id NEQ 1>img_</cfif>desc_#thisid#.value"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#img_description#</cfif></cfloop></textarea></td>
 								</tr>
-								<tr>
+								<tr style="display: none;">
 									<td class="td2" valign="top" width="1%" nowrap="true"><strong><cfif qry_langs.recordcount NEQ 1>#lang_name#: </cfif>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
 									<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>img_</cfif>keywords_#thisid#" class="text" style="width:400px;height:50px;" <cfif lang_id EQ 1>onchange="<cfif qry_detail.detail.link_kind EQ ''>document.form#attributes.file_id#.iptc_content_keywords_#thisid#.value = document.form#attributes.file_id#.<cfif lang_id NEQ 1>img_</cfif>keywords_#thisid#.value;</cfif>document.form#attributes.file_id#.img_keywords_#thisid#.value = document.form#attributes.file_id#.<cfif lang_id NEQ 1>img_</cfif>keywords_#thisid#.value"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#img_keywords#</cfif></cfloop></textarea></td>
 								</tr>
 							</cfloop>
-							<tr>
+							<tr style="display: none;">
 								<td class="td2"></td>
 								<td class="td2">#myFusebox.getApplicationData().defaults.trans("comma_seperated")#</td>
-							</tr> --->
+							</tr>
 						</table>
 					</div>
 					<div stlye="clear:both;"></div>
