@@ -577,7 +577,7 @@
 	};
 
 	function pasteMetadata(){
-		$(this).load("index.cfm?fa=c.copy_metadata_file_do&file_id="+localStorage.getItem("file_id")+"&idList=#file_id#&insert_type=replace")
+		$(this).load("index.cfm?fa=c.copy_metadata_files_do&file_id="+localStorage.getItem("file_id")+"&idList=#file_id#&insert_type=replace")
 		localStorage.removeItem("file_id");
 		$("##pMetadata").prop("disabled", "disabled");
 		$(this).load("index.cfm?fa=c.admin_flush_db");
