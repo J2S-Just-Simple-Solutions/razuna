@@ -175,7 +175,7 @@
 								</cfquery>
 								<!--- Display all thumbs first--->
 								<cfloop query="getimg">
-									<cfif attributes.fromshare EQ "F"><a href="##" onclick="showwindow('#myself##xfa.imagedetail#&file_id=#img_id#&what=images&loaddiv=&folder_id=#folder_id_r#&basketview=yes','#Jsstringformat(filename)#',1000,1);return false;"></cfif>
+									<cfif attributes.fromshare EQ "F"><a href="##" onclick="showwindow('#myself##xfa.imagedetail#&file_id=#img_id#&what=images&loaddiv=&folder_id=#folder_id_r#&basketview=yes','#Jsstringformat(filename)#',1070,1);return false;"></cfif>
 										<cfif link_kind NEQ "url">
 											<cfif application.razuna.storage EQ "amazon" OR application.razuna.storage EQ "nirvanix">
 												<img src="#cloud_url#" border="0">
@@ -194,7 +194,7 @@
 										<cfif myid EQ img_id>
 											<tr>
 												<td colspan="2" style="padding-bottom:7px;">
-													<cfif attributes.fromshare EQ "F"><a href="##" onclick="showwindow('#myself##xfa.imagedetail#&file_id=#img_id#&what=images&loaddiv=&folder_id=#folder_id_r#&basketview=yes','#Jsstringformat(filename)#',1000,1);return false;"></cfif>
+													<cfif attributes.fromshare EQ "F"><a href="##" onclick="showwindow('#myself##xfa.imagedetail#&file_id=#img_id#&what=images&loaddiv=&folder_id=#folder_id_r#&basketview=yes','#Jsstringformat(filename)#',1070,1);return false;"></cfif>
 													<strong>#filename#</strong>
 													<cfif attributes.fromshare EQ "F"></a></cfif>
 													<span style="padding-left:30px">
@@ -327,7 +327,7 @@
 							<td width="1%" nowrap="true" valign="top">
 								<cfloop query="qry_thevideo">
 									<cfif myid EQ vid_id>
-										<cfif attributes.fromshare EQ "F"><a href="##" onclick="showwindow('#myself##xfa.videodetail#&file_id=#vid_id#&what=files&loaddiv=&folder_id=#folder_id_r#&basketview=yes','#Jsstringformat(filename)#',1000,1);return false;"></cfif>
+										<cfif attributes.fromshare EQ "F"><a href="##" onclick="showwindow('#myself##xfa.videodetail#&file_id=#vid_id#&what=files&loaddiv=&folder_id=#folder_id_r#&basketview=yes','#Jsstringformat(filename)#',1070,1);return false;"></cfif>
 											<cfif link_kind NEQ "url">
 												<cfif application.razuna.storage EQ "amazon" OR application.razuna.storage EQ "nirvanix">
 													<img src="#cloud_url#" border="0" width="120">
@@ -347,7 +347,7 @@
 										<cfif myid EQ vid_id>
 											<tr>
 												<td colspan="2" style="padding-bottom:7px;">
-													<cfif attributes.fromshare EQ "F"><a href="##" onclick="showwindow('#myself##xfa.videodetail#&file_id=#vid_id#&what=files&loaddiv=&folder_id=#folder_id_r#&basketview=yes','#Jsstringformat(filename)#',1000,1);return false;"></cfif>
+													<cfif attributes.fromshare EQ "F"><a href="##" onclick="showwindow('#myself##xfa.videodetail#&file_id=#vid_id#&what=files&loaddiv=&folder_id=#folder_id_r#&basketview=yes','#Jsstringformat(filename)#',1070,1);return false;"></cfif>
 													<strong>#filename#</strong>
 													<cfif attributes.fromshare EQ "F"></a></cfif>
 													<span style="padding-left:30px">
@@ -451,7 +451,7 @@
 							<td width="1%" nowrap="true" valign="top">
 								<cfloop query="qry_theaudio">
 									<cfif myid EQ aud_id>
-										<cfif attributes.fromshare EQ "F"><a href="##" onclick="showwindow('#myself##xfa.audiodetail#&file_id=#aud_id#&what=audios&loaddiv=&folder_id=#folder_id_r#&basketview=yes','#Jsstringformat(filename)#',1000,1);return false;"></cfif>
+										<cfif attributes.fromshare EQ "F"><a href="##" onclick="showwindow('#myself##xfa.audiodetail#&file_id=#aud_id#&what=audios&loaddiv=&folder_id=#folder_id_r#&basketview=yes','#Jsstringformat(filename)#',1070,1);return false;"></cfif>
 											<img src="#dynpath#/global/host/dam/images/icons/icon_<cfif aud_extension EQ "mp3" OR aud_extension EQ "wav">#aud_extension#<cfelse>aud</cfif>.png" width="120" border="0">
 										<cfif attributes.fromshare EQ "F"></a></cfif>
 									</cfif>
@@ -463,7 +463,7 @@
 										<cfif myid EQ aud_id>
 											<tr>
 												<td colspan="2" style="padding-bottom:7px;">
-													<cfif attributes.fromshare EQ "F"><a href="##" onclick="showwindow('#myself##xfa.audiodetail#&file_id=#aud_id#&what=audios&loaddiv=&folder_id=#folder_id_r#&basketview=yes','#Jsstringformat(filename)#',1000,1);return false;"></cfif>
+													<cfif attributes.fromshare EQ "F"><a href="##" onclick="showwindow('#myself##xfa.audiodetail#&file_id=#aud_id#&what=audios&loaddiv=&folder_id=#folder_id_r#&basketview=yes','#Jsstringformat(filename)#',1070,1);return false;"></cfif>
 													<strong>#filename#</strong>
 													<cfif attributes.fromshare EQ "F"></a></cfif>
 													<span style="padding-left:30px">
@@ -567,7 +567,7 @@
 							<td width="1%" nowrap="true" valign="top" align="center">
 								<cfloop query="qry_thefile">
 									<cfif myid EQ file_id>
-										<cfif attributes.fromshare EQ "F"><a href="##" onclick="showwindow('#myself##xfa.filedetail#&file_id=#file_id#&what=files&loaddiv=&folder_id=#folder_id_r#&basketview=yes','#Jsstringformat(filename)#',1000,1);return false;"></cfif>
+										<cfif attributes.fromshare EQ "F"><a href="##" onclick="showwindow('#myself##xfa.filedetail#&file_id=#file_id#&what=files&loaddiv=&folder_id=#folder_id_r#&basketview=yes','#Jsstringformat(filename)#',1070,1);return false;"></cfif>
 											<!---Show the thumbnail --->
 											<cfset thethumb = replacenocase(file_name_org, ".#file_extension#", ".jpg", "all")>
 											<cfif application.razuna.storage EQ "amazon" AND cloud_url NEQ "">
@@ -587,7 +587,7 @@
 										<cfif myid EQ file_id>
 											<tr>
 												<td width="100%" colspan="2" valign="top">
-													<cfif attributes.fromshare EQ "F"><a href="##" onclick="showwindow('#myself##xfa.filedetail#&file_id=#file_id#&what=files&loaddiv=&folder_id=#folder_id_r#&basketview=yes','#Jsstringformat(filename)#',1000,1);return false;"></cfif>
+													<cfif attributes.fromshare EQ "F"><a href="##" onclick="showwindow('#myself##xfa.filedetail#&file_id=#file_id#&what=files&loaddiv=&folder_id=#folder_id_r#&basketview=yes','#Jsstringformat(filename)#',1070,1);return false;"></cfif>
 													<strong>#filename#</strong>
 													<cfif attributes.fromshare EQ "F"></a></cfif>
 													<span style="padding-left:30px">

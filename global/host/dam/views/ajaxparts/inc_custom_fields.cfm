@@ -24,6 +24,11 @@
 *
 --->
 <cfoutput>
+
+<!---
+	<cfsearch collection="#session.hostid#" criteria="000" name="results" />
+	<cfdump var="#results.recordCount#" />--->
+
 	<!---RAZ-2834:: Assign the custom field customized --->
 	<cfset custom_fields = "">
 	<cfif !structKeyExists(variables,"cf_inline")><table border="0" cellpadding="0" cellspacing="0" width="450" class="grid"></cfif>

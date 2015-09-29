@@ -581,7 +581,7 @@
 		localStorage.removeItem("file_id");
 		$("##pMetadata").prop("disabled", "disabled");
 		$(this).load("index.cfm?fa=c.admin_flush_db");
-		showwindow('index.cfm?fa=c.files_detail&file_id=#file_id#&what=files&loaddiv=content&folder_id=#folder_id#&showsubfolders=F&row=3&filecount=10','',1000,1);
+		showwindow('index.cfm?fa=c.files_detail&file_id=#file_id#&what=files&loaddiv=content&folder_id=#folder_id#&showsubfolders=F&row=3&filecount=10','',1070,1);
 	};
 
 	// Activate Chosen

@@ -49,7 +49,7 @@
 								<cfcase value="img">
 									<cfloop query="qry_theimage">
 										<cfif myid EQ img_id>
-											<a href="##" onclick="showwindow('#myself##xfa.imagedetail#&file_id=#img_id#&what=images&loaddiv=&folder_id=#folder_id_r#','#Jsstringformat(filename)#',1000,1);return false;">
+											<a href="##" onclick="showwindow('#myself##xfa.imagedetail#&file_id=#img_id#&what=images&loaddiv=&folder_id=#folder_id_r#','#Jsstringformat(filename)#',1070,1);return false;">
 												<cfif link_kind NEQ "url">
 													<cfif application.razuna.storage EQ "amazon" OR application.razuna.storage EQ "nirvanix">
 														<img src="#cloud_url#" border="0">
@@ -66,7 +66,7 @@
 								<cfcase value="vid">
 									<cfloop query="qry_thevideo">
 										<cfif myid EQ vid_id>
-											<a href="##" onclick="showwindow('#myself##xfa.videodetail#&file_id=#vid_id#&what=videos&loaddiv=&folder_id=#folder_id_r#','#Jsstringformat(filename)#',1000,1);return false;">
+											<a href="##" onclick="showwindow('#myself##xfa.videodetail#&file_id=#vid_id#&what=videos&loaddiv=&folder_id=#folder_id_r#','#Jsstringformat(filename)#',1070,1);return false;">
 												<cfif link_kind NEQ "url">
 													<cfif application.razuna.storage EQ "amazon" OR application.razuna.storage EQ "nirvanix">
 														<img src="#cloud_url#" border="0" width="120">
@@ -83,7 +83,7 @@
 								<cfcase value="aud">
 									<cfloop query="qry_theaudio">
 										<cfif myid EQ aud_id>
-											<a href="##" onclick="showwindow('#myself##xfa.audiodetail#&file_id=#aud_id#&what=audios&loaddiv=&folder_id=#folder_id_r#','#Jsstringformat(filename)#',1000,1);return false;">
+											<a href="##" onclick="showwindow('#myself##xfa.audiodetail#&file_id=#aud_id#&what=audios&loaddiv=&folder_id=#folder_id_r#','#Jsstringformat(filename)#',1070,1);return false;">
 												<img src="#dynpath#/global/host/dam/images/icons/icon_<cfif aud_extension EQ "mp3" OR aud_extension EQ "wav">#aud_extension#<cfelse>aud</cfif>.png" width="120" border="0">
 											</a>
 										</cfif>
@@ -92,7 +92,7 @@
 								<cfdefaultcase>
 									<cfloop query="qry_thefile">
 										<cfif myid EQ file_id>
-											<a href="##" onclick="showwindow('#myself##xfa.filedetail#&file_id=#file_id#&what=files&loaddiv=&folder_id=#folder_id_r#','#Jsstringformat(filename)#',1000,1);return false;">
+											<a href="##" onclick="showwindow('#myself##xfa.filedetail#&file_id=#file_id#&what=files&loaddiv=&folder_id=#folder_id_r#','#Jsstringformat(filename)#',1070,1);return false;">
 												<!--- Show the thumbnail --->
 												<cfset thethumb = replacenocase(file_name_org, ".#file_extension#", ".jpg", "all")>
 												<cfif application.razuna.storage EQ "amazon" AND cloud_url NEQ "">
