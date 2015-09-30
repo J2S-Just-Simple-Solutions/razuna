@@ -188,7 +188,7 @@
 										<div style="clear:both;"></div>
 									</cfif>
 								<cfelse>
-									The upload of "#aud_name#" is still in progress!
+									"#aud_name#" en cours de traitement !
 									<br /><br>
 									#myFusebox.getApplicationData().defaults.trans("date_created")#:<br>
 									#dateformat(aud_create_date, "#myFusebox.getApplicationData().defaults.getdateformat()#")# #timeformat(aud_create_date, "HH:mm")#
@@ -246,7 +246,7 @@
 									<div style="clear:both;"></div>
 								</cfif>
 							<cfelse>
-								The upload of "#aud_name#" is still in progress!
+								"#aud_name#" en cours de traitement !
 								<br /><br>
 								#myFusebox.getApplicationData().defaults.trans("date_created")#:<br>
 								#dateformat(aud_create_date, "#myFusebox.getApplicationData().defaults.getdateformat()#")# #timeformat(aud_create_date, "HH:mm")#
@@ -357,7 +357,7 @@
 									<div style="clear:both;"></div>
 								</cfif>
 							<cfelse>
-								The upload of "#aud_name#" is still in progress!
+								"#aud_name#" en cours de traitement !
 								<br />
 							</cfif>
 						</td>

@@ -146,7 +146,7 @@
 									<br>
 									<strong>#left(filename,50)#</strong>
 								<cfelse>
-									The upload of "#left(filename,50)#" is still in progress!
+									"#left(filename,50)#" en cours de traitement !
 								</cfif>
 							<!--- Videos --->
 							<cfelseif kind EQ "vid">
@@ -168,7 +168,7 @@
 									<br>
 									<strong>#left(filename,50)#</strong>
 								<cfelse>
-									The upload of "#left(filename,50)#" is still in progress!
+									"#left(filename,50)#" en cours de traitement !
 								</cfif>
 							<!--- Audios --->
 							<cfelseif kind EQ "aud">
@@ -188,7 +188,7 @@
 									<br>
 									<strong>#left(filename,50)#</strong>
 								<cfelse>
-									The upload of "#left(filename,50)#" is still in progress!
+									"#left(filename,50)#" en cours de traitement !
 								</cfif>
 							<!--- All other files --->
 							<cfelse>
@@ -215,7 +215,7 @@
 									<br>
 									<strong>#left(filename,50)#</strong>
 								<cfelse>
-									The upload of "#left(filename,50)#" is still in progress!
+									"#left(filename,50)#" en cours de traitement !
 								</cfif>
 							</cfif>
 						</div>

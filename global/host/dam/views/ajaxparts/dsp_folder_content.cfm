@@ -284,7 +284,7 @@
 									<div style="clear:both;"></div>
 								</cfif>
 							<cfelse>
-								The upload of "#filename#" is still in progress!
+								"#filename#" en cours de traitement !
 								<br /><br>
 								#myFusebox.getApplicationData().defaults.trans("date_created")#:<br>
 								#dateformat(date_create, "#myFusebox.getApplicationData().defaults.getdateformat()#")# #timeformat(date_create, "HH:mm")#
@@ -447,7 +447,7 @@
 									<div style="clear:both;"></div>
 								</cfif>
 							<cfelse>
-								The upload of "#filename#" is still in progress!
+								"#filename#" en cours de traitement !
 								<br /><br>
 								#myFusebox.getApplicationData().defaults.trans("date_created")#:<br>
 								#dateformat(date_create, "#myFusebox.getApplicationData().defaults.getdateformat()#")# #timeformat(date_create, "HH:mm")#
@@ -592,7 +592,7 @@
 									<div style="clear:both;"></div>
 								</cfif>
 							<cfelse>
-								The upload of "#filename#" is still in progress!
+								"#filename#" en cours de traitement !
 								<br /><br>
 								#myFusebox.getApplicationData().defaults.trans("date_created")#:<br>
 								#dateformat(date_create, "#myFusebox.getApplicationData().defaults.getdateformat()#")# #timeformat(date_create, "HH:mm")#
@@ -750,7 +750,7 @@
 									<div style="clear:both;"></div>
 								</cfif>
 							<cfelse>
-								The upload of "#filename#" is still in progress!
+								"#filename#" en cours de traitement !
 								<br /><br>
 								#myFusebox.getApplicationData().defaults.trans("date_created")#:<br>
 								#dateformat(date_create, "#myFusebox.getApplicationData().defaults.getdateformat()#")# #timeformat(date_create, "HH:mm")#
@@ -820,7 +820,7 @@
 									</div>
 								</a>
 							<cfelse>
-								The upload of "#filename#" is still in progress!
+								"#filename#" en cours de traitement !
 								<br /><br>
 								#myFusebox.getApplicationData().defaults.trans("date_created")#:<br>
 								#dateformat(date_create, "#myFusebox.getApplicationData().defaults.getdateformat()#")# #timeformat(date_create, "HH:mm")#
@@ -931,7 +931,7 @@
 									</div>
 								</a>
 							<cfelse>
-								The upload of "#filename#" is still in progress!
+								"#filename#" en cours de traitement !
 								<br /><br>
 								#myFusebox.getApplicationData().defaults.trans("date_created")#:<br>
 								#dateformat(date_create, "#myFusebox.getApplicationData().defaults.getdateformat()#")# #timeformat(date_create, "HH:mm")#
@@ -1029,7 +1029,7 @@
 									</div>
 								</a>
 							<cfelse>
-								The upload of "#filename#" is still in progress!
+								"#filename#" en cours de traitement !
 								<br /><br>
 								#myFusebox.getApplicationData().defaults.trans("date_created")#:<br>
 								#dateformat(date_create, "#myFusebox.getApplicationData().defaults.getdateformat()#")# #timeformat(date_create, "HH:mm")#
@@ -1134,7 +1134,7 @@
 									</div>
 								</a>
 							<cfelse>
-								The upload of "#filename#" is still in progress!
+								"#filename#" en cours de traitement !
 								<br /><br>
 								#myFusebox.getApplicationData().defaults.trans("date_created")#:<br>
 								#dateformat(date_create, "#myFusebox.getApplicationData().defaults.getdateformat()#")# #timeformat(date_create, "HH:mm")#
@@ -1271,7 +1271,7 @@
 									<div style="clear:both;"></div>
 								</cfif>
 							<cfelse>
-								The upload of "#filename#" is still in progress!
+								"#filename#" en cours de traitement !
 								<br />
 							</cfif>
 						</td>
@@ -1365,7 +1365,7 @@
 									<div style="clear:both;"></div>
 								</cfif>
 							<cfelse>
-								The upload of "#filename#" is still in progress!
+								"#filename#" en cours de traitement !
 								<br />
 							</cfif>
 						</td>
@@ -1446,7 +1446,7 @@
 									<div style="clear:both;"></div>
 								</cfif>
 							<cfelse>
-								The upload of "#filename#" is still in progress!
+								"#filename#" en cours de traitement !
 								<br />
 							</cfif>
 						</td>
@@ -1535,7 +1535,7 @@
 									<div style="clear:both;"></div>
 								</cfif>
 							<cfelse>
-								The upload of "#filename#" is still in progress!
+								"#filename#" en cours de traitement !
 								<br />
 							</cfif>
 						</td>

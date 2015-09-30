@@ -177,7 +177,7 @@
 									<a href="##" onclick="window.open('#myself#c.widget_download&file_id=#id#&wid=#session.widget_id#&kind=img&jsessionid=#session.SessionID#','dl#theid#','left=20,top=20,width=500,height=500,toolbar=0,resizable=1,location=0,status=0,menubar=0,history=0');">#myFusebox.getApplicationData().defaults.trans("download")#</a>
 								</cfif>
 							<cfelse>
-								The upload of "#filename#" is still in progress!
+								"#filename#" en cours de traitement !
 							</cfif>
 						<!--- Videos --->
 						<cfelseif kind EQ "vid">
@@ -208,7 +208,7 @@
 									<a href="##" onclick="window.open('#myself#c.widget_download&file_id=#id#&wid=#session.widget_id#&kind=vid&jsessionid=#session.SessionID#','dl#theid#','left=20,top=20,width=500,height=500,toolbar=0,resizable=1,location=0,status=0,menubar=0,history=0');">#myFusebox.getApplicationData().defaults.trans("download")#</a>
 								</cfif>
 							<cfelse>
-								The upload of "#filename#" is still in progress!
+								"#filename#" en cours de traitement !
 							</cfif>
 						<!--- Audios --->
 						<cfelseif kind EQ "aud">
@@ -229,7 +229,7 @@
 									<a href="##" onclick="window.open('#myself#c.widget_download&file_id=#id#&wid=#session.widget_id#&kind=aud&jsessionid=#session.SessionID#','dl#theid#','left=20,top=20,width=500,height=500,toolbar=0,resizable=1,location=0,status=0,menubar=0,history=0');">#myFusebox.getApplicationData().defaults.trans("download")#</a>
 								</cfif>
 							<cfelse>
-								The upload of "#filename#" is still in progress!
+								"#filename#" en cours de traitement !
 							</cfif>
 						<!--- All other files --->
 						<cfelse>
@@ -253,7 +253,7 @@
 									</cfif>
 								<!--- </cfif> --->
 							<cfelse>
-								The upload of "#filename#" is still in progress!
+								"#filename#" en cours de traitement !
 							</cfif>
 						</cfif>
 					</div>
