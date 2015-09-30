@@ -345,10 +345,10 @@
 								<td width="1%" nowrap="true"><input type="text" style="width:400px;" name="file_name" value="#qry_detail.detail.vid_filename#" onchange="document.form#attributes.file_id#.fname.value = document.form#attributes.file_id#.file_name.value;"> <cfif cs.show_favorites_part><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=vid');flash_footer('#myFusebox.getApplicationData().defaults.trans("item_favorite")#');return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></cfif>
 								</td>
 							</tr>
-							<!--- Description dans chaque langue 
-							FL: http://wiki.dev.j2s.net/ticket/5512 --->
+							<!--- Description dans chaque langue --->
 							<cfloop query="qry_langs">
 								<cfset thisid = lang_id>
+								<!--- FL: http://wiki.dev.j2s.net/ticket/5512 
 								<tr>
 						 			<td class="td2" valign="top" width="1%" nowrap="true"><strong><cfif qry_langs.recordcount NEQ 1>#lang_name#: </cfif>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
 						 			<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>vid_</cfif>desc_#thisid#" class="text" style="width:400px;height:50px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.vid_desc_#thisid#.value = document.form#attributes.file_id#.desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#vid_description#</cfif></cfloop></textarea></td>
@@ -356,8 +356,19 @@
 								<tr>
 						 			<td class="td2" valign="top" width="1%" nowrap="true"><strong><cfif qry_langs.recordcount NEQ 1>#lang_name#: </cfif>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
 						 			<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>vid_</cfif>keywords_#thisid#" class="text" style="width:400px;height:50px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.vid_keywords_#thisid#.value = document.form#attributes.file_id#.keywords_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#vid_keywords#</cfif></cfloop></textarea></td>
-						 		</tr>							
-							</cfloop>			
+						 		</tr>--->	
+						 		<tr style="<cfif thisid NEQ 1>display:none;</cfif>">
+						 			<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
+						 			<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>vid_</cfif>desc_#thisid#" class="text" style="width:400px;height:50px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.vid_desc_#thisid#.value = document.form#attributes.file_id#.desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#vid_description#</cfif></cfloop></textarea></td>
+						 		</tr>
+								<tr style="<cfif thisid NEQ 1>display:none;</cfif>">
+						 			<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
+						 			<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>vid_</cfif>keywords_#thisid#" class="text" style="width:400px;height:50px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.vid_keywords_#thisid#.value = document.form#attributes.file_id#.keywords_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#vid_keywords#</cfif></cfloop></textarea></td>
+						 		</tr>				
+							</cfloop>	
+							<tr>
+								<td class="td2"></td><td class="td2">#myFusebox.getApplicationData().defaults.trans("comma_seperated")#</td>
+							</tr>			
 						</table>
 					</div>
 					<div stlye="clear:both;"></div>
