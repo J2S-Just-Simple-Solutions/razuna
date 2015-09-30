@@ -167,7 +167,7 @@
 							<!--- Description & Keywords 
 							FL: http://wiki.dev.j2s.net/ticket/5512 --->
 							<cfloop query="qry_langs">
-								<cfif lang_id EQ 1>
+								<cfif lang_id EQ 3>
 									<cfset thisid = lang_id>
 									<tr>
 										<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
@@ -346,11 +346,11 @@
 								</td>
 							</tr>
 							<!--- Description dans chaque langue 
-							FL: http://wiki.dev.j2s.net/ticket/5512 
+							FL: http://wiki.dev.j2s.net/ticket/5512 --->
 							<cfloop query="qry_langs">
-								<cfset thisid = lang_id> --->				
-								<cfset lang_id = 1>
-								<cfset thisid = 1>
+								<cfset thisid = lang_id>			
+								<!---<cfset lang_id = 3>
+								<cfset thisid = 3>--->
 								<tr>
 									<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
 									<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>vid_</cfif>desc_#thisid#" class="text" style="width:400px;height:50px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.vid_desc_#thisid#.value = document.form#attributes.file_id#.desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#vid_description#</cfif></cfloop></textarea></td>
@@ -359,7 +359,7 @@
 									<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
 									<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>vid_</cfif>keywords_#thisid#" class="text" style="width:400px;height:50px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.vid_keywords_#thisid#.value = document.form#attributes.file_id#.keywords_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#vid_keywords#</cfif></cfloop></textarea></td>
 								</tr>
-							<!---</cfloop>--->				
+							</cfloop>			
 						</table>
 					</div>
 					<div stlye="clear:both;"></div>
