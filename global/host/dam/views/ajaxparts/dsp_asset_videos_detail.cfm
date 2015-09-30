@@ -167,8 +167,7 @@
 							<!--- Description & Keywords 
 							FL: http://wiki.dev.j2s.net/ticket/5512 --->
 							<cfloop query="qry_langs">
-								<!--- <cfif lang_id EQ 1> --->
-								<cfif lang_id EQ 3>
+								<cfif lang_id EQ 1>
 									<cfset thisid = lang_id>
 									<tr style="display: none;">
 										<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
