@@ -574,22 +574,22 @@
 	};
 
 	$("##pMetadata").ready(function(){
-		if(localStorage.getItem("file_id") && localStorage.getItem("file_id").length > 0 && localStorage.getItem("file_id") !== "#file_id#")
+		if(localStorage.getItem("file_id") && localStorage.getItem("file_id").length > 0 && localStorage.getItem("file_id") !== "#attributes.file_id#")
 			$("##pMetadata").removeProp("disabled");
 		else
 			$("##pMetadata").prop("disabled", "disabled");
 	});
 
 	function copyMetadata(){
-		localStorage.setItem("file_id", "#file_id#");
+		localStorage.setItem("file_id", "#attributes.file_id#");
 	};
 
 	function pasteMetadata(){
-		$(this).load("index.cfm?fa=c.copy_metadata_image_do&file_id="+localStorage.getItem("file_id")+"&idList=#file_id#&insert_type=replace");
+		$(this).load("index.cfm?fa=c.copy_metadata_image_do&file_id="+localStorage.getItem("file_id")+"&idList=#attributes.file_id#&insert_type=replace");
 		localStorage.removeItem("file_id");
 		$("##pMetadata").prop("disabled", "disabled");
 		$(this).load("index.cfm?fa=c.admin_flush_db");
-		showwindow('index.cfm?fa=c.images_detail&file_id=#file_id#&what=images&loaddiv=content&folder_id=#folder_id#&showsubfolders=F&row=3&filecount=10','',1070,1);
+		showwindow('index.cfm?fa=c.images_detail&file_id=#attributes.file_id#&what=images&loaddiv=content&folder_id=#folder_id#&showsubfolders=F&row=3&filecount=10','',1070,1);
 	};
 
 	// Activate Chosen
