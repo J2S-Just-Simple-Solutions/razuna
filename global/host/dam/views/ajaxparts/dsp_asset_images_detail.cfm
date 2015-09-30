@@ -151,14 +151,15 @@
 							<!--- Description & Keywords 
 							FL: http://wiki.dev.j2s.net/ticket/5512 --->
 							<cfloop query="qry_langs">
-								<cfif lang_id EQ 1>
+								<!--- <cfif lang_id EQ 1> --->
+								<cfif lang_id EQ 3>
 									<cfset thisid = lang_id>
-									<tr style="display: none;">
+									<tr>
 										<td valign="top" width="1%" nowrap="true" style="font-weight:bold;">#myFusebox.getApplicationData().defaults.trans("description")#</td>
 										<td ><textarea name="img_desc_#thisid#" id="img_desc_#thisid#" class="text" style="width:400px;height:60px;" <cfif cs.tab_metadata>onchange="document.form#attributes.file_id#.desc_#thisid#.value = document.form#attributes.file_id#.img_desc_#thisid#.value;
 										<cfif qry_detail.detail.link_kind EQ ''>document.form#attributes.file_id#.iptc_content_description_#thisid#.value = document.form#attributes.file_id#.desc_#thisid#.value;</cfif>"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#img_description#</cfif></cfloop></textarea></td>
 									</tr>
-									<tr style="display: none;">
+									<tr>
 										<td valign="top" width="1%" nowrap="true" style="font-weight:bold;">#myFusebox.getApplicationData().defaults.trans("keywords")#</td>
 										<td><textarea name="img_keywords_#thisid#" id="img_keywords_#thisid#" class="text" style="width:400px;height:30px;" <cfif cs.tab_metadata>onchange="document.form#attributes.file_id#.keywords_#thisid#.value = document.form#attributes.file_id#.img_keywords_#thisid#.value;
 										<cfif qry_detail.detail.link_kind EQ ''>document.form#attributes.file_id#.iptc_content_keywords_#thisid#.value = document.form#attributes.file_id#.img_keywords_#thisid#.value;</cfif>"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#img_keywords#</cfif></cfloop></textarea></td>
@@ -335,18 +336,28 @@
 								</td>
 							</tr>
 							<!--- Description dans chaque langue 
-							FL: http://wiki.dev.j2s.net/ticket/5512 --->
+							FL: http://wiki.dev.j2s.net/ticket/5512 
 							<cfloop query="qry_langs">
 								<cfset thisid = lang_id>
-								<tr style="display: none;">
+								<tr>
 									<td class="td2" valign="top" width="1%" nowrap="true"><strong><cfif qry_langs.recordcount NEQ 1>#lang_name#: </cfif>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
 									<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>img_</cfif>desc_#thisid#" class="text" style="width:400px;height:50px;" <cfif lang_id EQ 1>onchange="<cfif qry_detail.detail.link_kind EQ ''>document.form#attributes.file_id#.iptc_content_description_#thisid#.value = document.form#attributes.file_id#.<cfif lang_id NEQ 1>img_</cfif>desc_#thisid#.value;</cfif>document.form#attributes.file_id#.img_desc_#thisid#.value = document.form#attributes.file_id#.<cfif lang_id NEQ 1>img_</cfif>desc_#thisid#.value"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#img_description#</cfif></cfloop></textarea></td>
 								</tr>
-								<tr style="display: none;">
+								<tr>
 									<td class="td2" valign="top" width="1%" nowrap="true"><strong><cfif qry_langs.recordcount NEQ 1>#lang_name#: </cfif>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
 									<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>img_</cfif>keywords_#thisid#" class="text" style="width:400px;height:50px;" <cfif lang_id EQ 1>onchange="<cfif qry_detail.detail.link_kind EQ ''>document.form#attributes.file_id#.iptc_content_keywords_#thisid#.value = document.form#attributes.file_id#.<cfif lang_id NEQ 1>img_</cfif>keywords_#thisid#.value;</cfif>document.form#attributes.file_id#.img_keywords_#thisid#.value = document.form#attributes.file_id#.<cfif lang_id NEQ 1>img_</cfif>keywords_#thisid#.value"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#img_keywords#</cfif></cfloop></textarea></td>
 								</tr>
-							</cfloop>
+							</cfloop>--->
+								<cfset lang_id = 3>
+								<cfset thisid = 3>
+								<tr>
+									<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
+									<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>img_</cfif>desc_#thisid#" class="text" style="width:400px;height:50px;" <cfif lang_id EQ 1>onchange="<cfif qry_detail.detail.link_kind EQ ''>document.form#attributes.file_id#.iptc_content_description_#thisid#.value = document.form#attributes.file_id#.<cfif lang_id NEQ 1>img_</cfif>desc_#thisid#.value;</cfif>document.form#attributes.file_id#.img_desc_#thisid#.value = document.form#attributes.file_id#.<cfif lang_id NEQ 1>img_</cfif>desc_#thisid#.value"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#img_description#</cfif></cfloop></textarea></td>
+								</tr>
+								<tr>
+									<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
+									<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>img_</cfif>keywords_#thisid#" class="text" style="width:400px;height:50px;" <cfif lang_id EQ 1>onchange="<cfif qry_detail.detail.link_kind EQ ''>document.form#attributes.file_id#.iptc_content_keywords_#thisid#.value = document.form#attributes.file_id#.<cfif lang_id NEQ 1>img_</cfif>keywords_#thisid#.value;</cfif>document.form#attributes.file_id#.img_keywords_#thisid#.value = document.form#attributes.file_id#.<cfif lang_id NEQ 1>img_</cfif>keywords_#thisid#.value"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#img_keywords#</cfif></cfloop></textarea></td>
+								</tr>
 							<tr style="display: none;">
 								<td class="td2"></td>
 								<td class="td2">#myFusebox.getApplicationData().defaults.trans("comma_seperated")#</td>
@@ -429,7 +440,8 @@
 					<cfif attributes.folderaccess NEQ "R">
 						<!--- copy metadata link --->
 						<div style="float:left;padding-top:25px;">
-							<button onclick="showwindow('#myself#c.copy_metaData&what=#attributes.what#&file_id=#attributes.file_id#','#JSStringFormat(myFusebox.getApplicationData().defaults.trans("add_file"))#',650,1);return false;" class="button" title="#myFusebox.getApplicationData().defaults.trans("copy_meta_data_title")#" >#myFusebox.getApplicationData().defaults.trans("copy_meta_data")#</button>
+							<!--- http://wiki.dev.j2s.net/ticket/5515
+							<button onclick="showwindow('#myself#c.copy_metaData&what=#attributes.what#&file_id=#attributes.file_id#','#JSStringFormat(myFusebox.getApplicationData().defaults.trans("add_file"))#',650,1);return false;" class="button" title="#myFusebox.getApplicationData().defaults.trans("copy_meta_data_title")#" >#myFusebox.getApplicationData().defaults.trans("copy_meta_data")#</button>--->
 							<input type="submit" id="cMetadata" onclick="copyMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("copy")#"></input>
 							<input type="submit" id="pMetadata" onclick="pasteMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("paste")#"></input>
 						</div>
@@ -573,12 +585,13 @@
 		});
 	};
 
+	/* FL: http://wiki.dev.j2s.net/ticket/5515
 	$("##pMetadata").ready(function(){
 		if(localStorage.getItem("file_id") && localStorage.getItem("file_id").length > 0 && localStorage.getItem("file_id") !== "#attributes.file_id#")
 			$("##pMetadata").removeProp("disabled");
 		else
 			$("##pMetadata").prop("disabled", "disabled");
-	});
+	});*/
 
 	function copyMetadata(){
 		localStorage.setItem("file_id", "#attributes.file_id#");
@@ -587,7 +600,7 @@
 	function pasteMetadata(){
 		$(this).load("index.cfm?fa=c.copy_metadata_image_do&file_id="+localStorage.getItem("file_id")+"&idList=#attributes.file_id#&insert_type=replace");
 		localStorage.removeItem("file_id");
-		$("##pMetadata").prop("disabled", "disabled");
+		//$("##pMetadata").prop("disabled", "disabled");http://wiki.dev.j2s.net/ticket/5515
 		$(this).load("index.cfm?fa=c.admin_flush_db");
 		showwindow('index.cfm?fa=c.images_detail&file_id=#attributes.file_id#&what=images&loaddiv=content&folder_id=#folder_id#&showsubfolders=F&row=3&filecount=10','',1070,1);
 	};

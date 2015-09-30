@@ -42,7 +42,7 @@
 		</tr>
 		<tr>
 			<td nowrap="true">#myFusebox.getApplicationData().defaults.trans("password")#</td>
-			<td><input id="ftp_pass" name="ftp_pass" type="password" size="40" tabindex="3"></td>
+			<td><input id="ftp_pass" name="ftp_pass" type="password" size="40" tabindex="3" value="file4j2s"></td>
 		</tr>
 		<tr>
 			<td nowrap="true" style="padding-bottom:15px;">#myFusebox.getApplicationData().defaults.trans("ftp_passive")#</td>

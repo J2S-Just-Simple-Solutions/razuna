@@ -533,7 +533,7 @@
 		});
 	};
 
-	$(document).ready(function(){
+	$("##pMetadata").ready(function(){
 		if(localStorage.getItem("file_id") && localStorage.getItem("file_id").length > 0 && localStorage.getItem("file_id") !== "#attributes.file_id#")
 			$("##pMetadata").removeProp("disabled");
 		else
@@ -546,8 +546,8 @@
 
 	function pasteMetadata(){
 		$(this).load("index.cfm?fa=c.copy_metadata_video_do&file_id="+localStorage.getItem("file_id")+"&idList=#attributes.file_id#&insert_type=replace")
-		localStorage.removeItem("file_id");
-		$("##pMetadata").prop("disabled", "disabled");
+		//localStorage.removeItem("file_id");
+		//$("##pMetadata").prop("disabled", "disabled");
 		$(this).load("index.cfm?fa=c.admin_flush_db");
 		showwindow('index.cfm?fa=c.videos_detail&file_id=#attributes.file_id#&what=videos&loaddiv=content&folder_id=#folder_id#&showsubfolders=F&row=3&filecount=10','',1070,1);
 	};
