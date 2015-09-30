@@ -195,16 +195,15 @@
 											<td width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("file_name")#</strong></td>
 											<td width="100%"><input type="text" style="width:400px;" name="fname" id="fname" value="#qry_detail.detail.file_name#" onchange="document.form#attributes.file_id#.file_name.value = document.form#attributes.file_id#.fname.value;<cfif prefs.set2_upc_enabled>if (!isNaN(document.form#attributes.file_id#.fname.value.substr(0,6))) {document.form#attributes.file_id#.file_upc.value = document.form#attributes.file_id#.file_name.value.split('.')[0];}</cfif>"></td><cfif cs.show_favorites_part><td><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=doc');flash_footer('#myFusebox.getApplicationData().defaults.trans("item_favorite")#');return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></td></cfif>
 										</tr>
-										<!--- Description & Keywords
-										FL: http://wiki.dev.j2s.net/ticket/5512 --->
+										<!--- Description & Keywords --->
 										<cfloop query="qry_langs">
 											<cfif lang_id EQ 1>
 												<cfset thisid = lang_id>
-												<tr style="display: none;">
+												<tr>
 													<td valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
 													<td width="100%"><textarea name="file_desc_#thisid#" id="file_desc_#thisid#" class="text" style="width:400px;height:60px;" <cfif cs.tab_metadata>onchange="document.form#attributes.file_id#.desc_#thisid#.value = document.form#attributes.file_id#.file_desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#file_desc#</cfif></cfloop></textarea></td>
 												</tr>
-												<tr style="display: none;">
+												<tr>
 													<td valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
 													<td width="100%"><textarea name="file_keywords_#thisid#" id="file_keywords_#thisid#" class="text" style="width:400px;height:30px;" <cfif cs.tab_metadata>onchange="document.form#attributes.file_id#.keywords_#thisid#.value = document.form#attributes.file_id#.file_keywords_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#file_keywords#</cfif></cfloop></textarea></td>
 												</tr>
@@ -374,10 +373,10 @@
 													<td width="100%"><input type="text" style="width:280px;" name="file_name" value="#qry_detail.detail.file_name#" onchange="document.form#attributes.file_id#.fname.value = document.form#attributes.file_id#.file_name.value;"> <cfif cs.show_favorites_part><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=doc');flash_footer('#myFusebox.getApplicationData().defaults.trans("item_favorite")#');return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></cfif>
 													</td>
 												</tr>
-												<!--- Description dans chaque langue 
-												FL http://wiki.dev.j2s.net/ticket/5512
+												<!--- Description dans chaque langue --->
 												<cfloop query="qry_langs">
 													<cfset thisid = lang_id>
+													<!--- FL http://wiki.dev.j2s.net/ticket/5512
 													<tr>
 														<td class="td2" valign="top" width="1%" nowrap="true"><strong><cfif qry_langs.recordcount NEQ 1>#lang_name#: </cfif>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
 														<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>file_</cfif>desc_#thisid#" class="text" style="width:335px;height:40px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.file_desc_#thisid#.value = document.form#attributes.file_id#.desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#file_desc#</cfif></cfloop></textarea></td>
@@ -385,8 +384,16 @@
 													<tr>
 														<td class="td2" valign="top" width="1%" nowrap="true"><strong><cfif qry_langs.recordcount NEQ 1>#lang_name#: </cfif>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
 														<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>file_</cfif>keywords_#thisid#" class="text" style="width:335px;height:40px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.file_keywords_#thisid#.value = document.form#attributes.file_id#.keywords_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#file_keywords#</cfif></cfloop></textarea></td>
+													</tr>--->
+													<tr style="<cfif thisid NEQ 1>display:none;</cfif>">
+														<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
+														<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>file_</cfif>desc_#thisid#" class="text" style="width:335px;height:40px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.file_desc_#thisid#.value = document.form#attributes.file_id#.desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#file_desc#</cfif></cfloop></textarea></td>
 													</tr>
-												</cfloop>--->
+													<tr style="<cfif thisid NEQ 1>display:none;</cfif>">
+														<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
+														<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>file_</cfif>keywords_#thisid#" class="text" style="width:335px;height:40px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.file_keywords_#thisid#.value = document.form#attributes.file_id#.keywords_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#file_keywords#</cfif></cfloop></textarea></td>
+													</tr>
+												</cfloop>
 											</table>
 										</div>
 										<!--- If we are a PDF we show additional XMP fields --->
