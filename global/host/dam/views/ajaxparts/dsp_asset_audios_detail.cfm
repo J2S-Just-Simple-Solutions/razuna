@@ -139,13 +139,14 @@
 							<!--- Description dans chaque langue 
 							FL: http://wiki.dev.j2s.net/ticket/5512 --->
 							<cfloop query="qry_langs">
-								<cfif lang_id EQ 1>
+								<!--- <cfif lang_id EQ 1> --->
+								<cfif lang_id EQ 3>
 									<cfset thisid = lang_id>
-									<tr style="display: none;">
+									<tr>
 										<td valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
 										<td width="100%"><textarea name="aud_desc_#thisid#" id="aud_desc_#thisid#" class="text" style="width:400px;height:60px;" <cfif cs.tab_metadata>onchange="document.form#attributes.file_id#.desc_#thisid#.value = document.form#attributes.file_id#.aud_desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#aud_description#</cfif></cfloop></textarea></td>
 									</tr>
-									<tr style="display: none;">
+									<tr>
 										<td valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
 										<td width="100%"><textarea name="aud_keywords_#thisid#" id="aud_keywords_#thisid#" class="text" style="width:400px;height:30px;" <cfif cs.tab_metadata>onchange="document.form#attributes.file_id#.keywords_#thisid#.value = document.form#attributes.file_id#.aud_keywords_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#aud_keywords#</cfif></cfloop></textarea></td>
 									</tr>
@@ -298,6 +299,8 @@
 								<td width="1%" nowrap="true"><input type="text" style="width:400px;" name="file_name" value="#qry_detail.detail.aud_name#" onchange="document.form#attributes.file_id#.fname.value = document.form#attributes.file_id#.file_name.value;"> <cfif cs.show_favorites_part><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=aud');flash_footer('#myFusebox.getApplicationData().defaults.trans("item_favorite")#');return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></cfif>
 								</td>
 							</tr>
+							<!--- Description dans chaque langue 
++							FL http://wiki.dev.j2s.net/ticket/5512
 							<cfloop query="qry_langs">
 								<cfset thisid = lang_id>
 								<tr>
@@ -308,7 +311,18 @@
 									<td valign="top" width="1%" nowrap="true"><strong><cfif qry_langs.recordcount NEQ 1>#lang_name#: </cfif>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
 									<td width="100%"><textarea name="<cfif lang_id NEQ 1>aud_</cfif>keywords_#thisid#" class="text" style="width:400px;height:30px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.aud_keywords_#thisid#.value = document.form#attributes.file_id#.keywords_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#aud_keywords#</cfif></cfloop></textarea></td>
 								</tr>
-							</cfloop>									
+							</cfloop>--->
+								<cfset lang_id = 3>
+								<cfset thisid = 3>
+								<tr>
+									<td valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
+									<td width="100%"><textarea name="<cfif lang_id NEQ 1>aud_</cfif>desc_#thisid#" class="text" style="width:400px;height:30px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.aud_desc_#thisid#.value = document.form#attributes.file_id#.desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#aud_description#</cfif></cfloop></textarea></td>
+								</tr>
+								<tr>
+									<td valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
+									<td width="100%"><textarea name="<cfif lang_id NEQ 1>aud_</cfif>keywords_#thisid#" class="text" style="width:400px;height:30px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.aud_keywords_#thisid#.value = document.form#attributes.file_id#.keywords_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#aud_keywords#</cfif></cfloop></textarea></td>
+								</tr>	
+
 						</table>
 					</div>
 					<div stlye="clear:both;"></div>
@@ -333,7 +347,7 @@
 					<cfif attributes.folderaccess NEQ "R">
 						<!--- copy metadata link --->
 						<div style="float:left;padding-top:25px;">
-							<button onclick="showwindow('#myself#c.copy_metaData&what=#attributes.what#&file_id=#attributes.file_id#','#JSStringFormat(myFusebox.getApplicationData().defaults.trans("add_file"))#',650,1);return false;" class="button" title="#myFusebox.getApplicationData().defaults.trans("copy_meta_data_title")#">#myFusebox.getApplicationData().defaults.trans("copy_meta_data")#</button>
+							<!--- http://wiki.dev.j2s.net/ticket/5515 <button onclick="showwindow('#myself#c.copy_metaData&what=#attributes.what#&file_id=#attributes.file_id#','#JSStringFormat(myFusebox.getApplicationData().defaults.trans("add_file"))#',650,1);return false;" class="button" title="#myFusebox.getApplicationData().defaults.trans("copy_meta_data_title")#">#myFusebox.getApplicationData().defaults.trans("copy_meta_data")#</button> --->
 							<input type="submit" id="cMetadata" onclick="copyMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("copy")#"></input>
 							<input type="submit" id="pMetadata" onclick="pasteMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("paste")#"></input>
 						</div>

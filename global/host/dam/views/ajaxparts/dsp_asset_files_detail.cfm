@@ -394,29 +394,29 @@
 											<div >
 												<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
 													<tr>
-														<td><strong>Author</strong></td>
-														<td><input type="text" style="width:330px;" name="author" value="#qry_detail.pdfxmp.author#"></td>
-													</tr>
+														<td><strong>#myFusebox.getApplicationData().defaults.trans("author")#</strong></td>
+ 														<td><input type="text" style="width:330px;" name="author" value="#qry_detail.pdfxmp.author#"></td>
+ 													</tr>
+ 													<tr>
+														<td><strong>#myFusebox.getApplicationData().defaults.trans("author_title")#</strong></td>
+ 														<td><input type="text" style="width:330px;" name="authorsposition" value="#qry_detail.pdfxmp.authorsposition#"></td>
+ 													</tr>
+ 													<tr>
+														<td nowrap="nowrap"><strong>#myFusebox.getApplicationData().defaults.trans("description_writer")#</strong></td>
+ 														<td><input type="text" style="width:330px;" name="captionwriter" value="#qry_detail.pdfxmp.captionwriter#"></td>
+ 													</tr>
+ 													<tr>
+														<td nowrap="nowrap"><strong>#myFusebox.getApplicationData().defaults.trans("copyright_status")#</strong></td>
+ 														<td>
+ 														<select name="rightsmarked">
+															<option value=""<cfif qry_detail.pdfxmp.rightsmarked EQ ""> selected="selected"</cfif>>#myFusebox.getApplicationData().defaults.trans("unknown")#</option>
+															<option value="true"<cfif qry_detail.pdfxmp.rightsmarked EQ "true"> selected="selected"</cfif>>#myFusebox.getApplicationData().defaults.trans("copyrighted")#</option>
+															<option value="false"<cfif qry_detail.pdfxmp.rightsmarked EQ "false"> selected="selected"</cfif>>#myFusebox.getApplicationData().defaults.trans("public_domain")#</option>
+ 														</select>
+ 														</td>
+ 													</tr>
 													<tr>
-														<td><strong>Author Title</strong></td>
-														<td><input type="text" style="width:330px;" name="authorsposition" value="#qry_detail.pdfxmp.authorsposition#"></td>
-													</tr>
-													<tr>
-														<td nowrap="nowrap"><strong>Description Writer</strong></td>
-														<td><input type="text" style="width:330px;" name="captionwriter" value="#qry_detail.pdfxmp.captionwriter#"></td>
-													</tr>
-													<tr>
-														<td nowrap="nowrap"><strong>Copyright Status</strong></td>
-														<td>
-														<select name="rightsmarked">
-															<option value=""<cfif qry_detail.pdfxmp.rightsmarked EQ ""> selected="selected"</cfif>>Unknown</option>
-															<option value="true"<cfif qry_detail.pdfxmp.rightsmarked EQ "true"> selected="selected"</cfif>>Copyrighted</option>
-															<option value="false"<cfif qry_detail.pdfxmp.rightsmarked EQ "false"> selected="selected"</cfif>>Public Domain</option>
-														</select>
-														</td>
-													</tr>
-													<tr>
-														<td nowrap="nowrap" valign="top"><strong>Copyright Notice</strong></td>
+														<td nowrap="nowrap" valign="top"><strong>#myFusebox.getApplicationData().defaults.trans("copyright_notice")#</strong></td>
 														<td><textarea name="rights" class="text" style="width:330px;height:40px;">#qry_detail.pdfxmp.rights#</textarea></td>
 													</tr>
 													<tr>
@@ -452,7 +452,7 @@
 					<cfif attributes.folderaccess NEQ "R">
 						<!--- copy metadata link --->
 						<div style="float:left;padding-top:25px;">
-							<button onclick="showwindow('#myself#c.copy_metaData&what=#attributes.what#&file_id=#attributes.file_id#','#JSStringFormat(myFusebox.getApplicationData().defaults.trans("add_file"))#',650,1);return false;" class="button" title="#myFusebox.getApplicationData().defaults.trans("copy_meta_data_title")#">#myFusebox.getApplicationData().defaults.trans("copy_meta_data")#</button>
+							<!--- http://wiki.dev.j2s.net/ticket/5515 <button onclick="showwindow('#myself#c.copy_metaData&what=#attributes.what#&file_id=#attributes.file_id#','#JSStringFormat(myFusebox.getApplicationData().defaults.trans("add_file"))#',650,1);return false;" class="button" title="#myFusebox.getApplicationData().defaults.trans("copy_meta_data_title")#">#myFusebox.getApplicationData().defaults.trans("copy_meta_data")#</button> --->
 							<input type="submit" id="cMetadata" onclick="copyMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("copy")#"></input>
 							<input type="submit" id="pMetadata" onclick="pasteMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("paste")#"></input>
 						</div>
