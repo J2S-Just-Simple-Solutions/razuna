@@ -201,7 +201,7 @@
 												<cfset thisid = lang_id>
 												<tr>
 													<td valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
-													<td width="100%"><textarea name="file_desc_#thisid#" id="file_desc_#thisid#" class="text" style="width:400px;height:60px;" <cfif cs.tab_metadata>onchange="document.form#attributes.file_id#.desc_#thisid#.value = document.form#attributes.file_id#.file_desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#file_desc#</cfif></cfloop></textarea></td>
+													<td width="100%"><textarea dir="auto"author name="file_desc_#thisid#" id="file_desc_#thisid#" class="text" style="width:400px;height:60px;" <cfif cs.tab_metadata>onchange="document.form#attributes.file_id#.desc_#thisid#.value = document.form#attributes.file_id#.file_desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#file_desc#</cfif></cfloop></textarea></td>
 												</tr>
 												<tr>
 													<td valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
@@ -402,15 +402,15 @@
 												<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
 													<tr>
 														<td><strong>#myFusebox.getApplicationData().defaults.trans("author")#</strong></td>
- 														<td><input type="text" style="width:330px;" name="author" value="#qry_detail.pdfxmp.author#"></td>
+ 														<td><input type="text" dir="auto" style="width:330px;" name="author" value="#qry_detail.pdfxmp.author#"></td>
  													</tr>
  													<tr>
 														<td><strong>#myFusebox.getApplicationData().defaults.trans("author_title")#</strong></td>
- 														<td><input type="text" style="width:330px;" name="authorsposition" value="#qry_detail.pdfxmp.authorsposition#"></td>
+ 														<td><input type="text" dir="auto" style="width:330px;" name="authorsposition" value="#qry_detail.pdfxmp.authorsposition#"></td>
  													</tr>
  													<tr>
 														<td nowrap="nowrap"><strong>#myFusebox.getApplicationData().defaults.trans("description_writer")#</strong></td>
- 														<td><input type="text" style="width:330px;" name="captionwriter" value="#qry_detail.pdfxmp.captionwriter#"></td>
+ 														<td><input type="text" dir="auto" style="width:330px;" name="captionwriter" value="#qry_detail.pdfxmp.captionwriter#"></td>
  													</tr>
  													<tr>
 														<td nowrap="nowrap"><strong>#myFusebox.getApplicationData().defaults.trans("copyright_status")#</strong></td>
