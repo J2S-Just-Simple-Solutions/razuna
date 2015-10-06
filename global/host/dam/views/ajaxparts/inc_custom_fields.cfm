@@ -69,7 +69,7 @@
 						<cfif !isnumeric(cf_edit) AND cf_edit EQ "true">
 							<cfset allowed = true>
 						</cfif>
-						<input type="text" style="width:300px;" id="cf_text_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" <cfif listFindNoCase(custom_fields,'#qry_cf.cf_id#',',')>onchange="document.form#attributes.file_id#.cf_meta_text_#listlast(cf_id,'-')#.value = document.form#attributes.file_id#.cf_text_#listlast(cf_id,'-')#.value;" </cfif>  <cfif structKeyExists(variables,"cf_inline")> placeholder="#cf_text#"</cfif><cfif !allowed> disabled="disabled"</cfif>>
+						<input type="text" dir="auto" style="width:300px;" id="cf_text_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" <cfif listFindNoCase(custom_fields,'#qry_cf.cf_id#',',')>onchange="document.form#attributes.file_id#.cf_meta_text_#listlast(cf_id,'-')#.value = document.form#attributes.file_id#.cf_text_#listlast(cf_id,'-')#.value;" </cfif>  <cfif structKeyExists(variables,"cf_inline")> placeholder="#cf_text#"</cfif><cfif !allowed> disabled="disabled"</cfif>>
 					<!--- Radio --->
 					<cfelseif cf_type EQ "radio">
 						<!--- Variable --->
@@ -114,7 +114,7 @@
 						<cfif !isnumeric(cf_edit) AND cf_edit EQ "true">
 							<cfset allowed = true>
 						</cfif>
-						<textarea name="cf_#cf_id#" id="cf_textarea_#listlast(cf_id,'-')#" <cfif listFindNoCase(custom_fields,'#qry_cf.cf_id#',',')> onchange="document.form#attributes.file_id#.cf_meta_textarea_#listlast(cf_id,'-')#.value = document.form#attributes.file_id#.cf_textarea_#listlast(cf_id,'-')#.value;" </cfif> style="width:310px;height:60px;"<cfif structKeyExists(variables,"cf_inline")> placeholder="#cf_text#"</cfif><cfif !allowed> disabled="disabled"</cfif>>#cf_value#</textarea>
+						<textarea name="cf_#cf_id#" dir="auto" id="cf_textarea_#listlast(cf_id,'-')#" <cfif listFindNoCase(custom_fields,'#qry_cf.cf_id#',',')> onchange="document.form#attributes.file_id#.cf_meta_textarea_#listlast(cf_id,'-')#.value = document.form#attributes.file_id#.cf_textarea_#listlast(cf_id,'-')#.value;" </cfif> style="width:310px;height:60px;"<cfif structKeyExists(variables,"cf_inline")> placeholder="#cf_text#"</cfif><cfif !allowed> disabled="disabled"</cfif>>#cf_value#</textarea>
 					<!--- Select --->
 					<cfelseif cf_type EQ "select">
 						<!--- Variable --->
@@ -229,7 +229,7 @@
 						<cfif !isnumeric(cf_edit) AND cf_edit EQ "true">
 							<cfset allowed = true>
 						</cfif>
-						<input type="text" style="width:300px;" id="cf_thesaurus_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
+						<input type="text" dir="auto" style="width:300px;" id="cf_thesaurus_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
 						<select multiple type="category" category="cf_#cf_id#" id="cf_select_category_#listlast(cf_id,'-')#" value="#cf_value#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<cfset x = ["mars","earth", "venus", "jupiter"]>
 							<option value=""></option>
@@ -273,7 +273,7 @@
 						<cfif !isnumeric(cf_edit) AND cf_edit EQ "true">
 							<cfset allowed = true>
 						</cfif>
-						<input type="text" style="width:300px;" id="cf_thesaurus_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
+						<input type="text" dir="auto" style="width:300px;" id="cf_thesaurus_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
 						<select  multiple type="sub-category" sub-category="cf_#cf_id#" id="cf_select_sub_category_#listlast(cf_id,'-')#" value="#cf_value#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<cfset list = "#cf_select_list#"> 
 							<cfset category = listToArray(list, ";", true)>							
@@ -357,7 +357,7 @@
 						<cfif !isnumeric(cf_edit) AND cf_edit EQ "true">
 							<cfset allowed = true>
 						</cfif>
-						<input type="text" style="width:300px;" id="cf_descriptor_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
+						<input type="text" dir="auto" style="width:300px;" id="cf_descriptor_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
 						<select multiple type="descriptor" descriptor="cf_#cf_id#" id="cf_select_descriptor_#listlast(cf_id,'-')#" value="#cf_value#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<option value=""></option>					
 						</select>						
@@ -613,7 +613,7 @@
 						<cfif !isnumeric(cf_edit) AND cf_edit EQ "true">
 							<cfset allowed = true>
 						</cfif>
-						<input type="text" style="width:300px;" id="cf_thesaurus_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
+						<input type="text" dir="auto" style="width:300px;" id="cf_thesaurus_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
 						<select multiple candidate="cf_#cf_id#" id="cf_select_#listlast(cf_id,'-')#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<option value="" data-placeholder="test"></option>
 							<cfloop list="#ltrim(ListSort(REReplace(cf_select_list, ",(?![^()]+\))\s?" ,';','ALL'), 'text', 'asc', ';'))#" index="i" delimiters=";">
@@ -688,7 +688,7 @@
 						<cfif !isnumeric(cf_edit) AND cf_edit EQ "true">
 							<cfset allowed = true>
 						</cfif>
-						<input type="text" style="width:300px;" id="cf_thesaurus_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
+						<input type="text" dir="auto" style="width:300px;" id="cf_thesaurus_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
 						<select multiple selecSearchMulti="cf_#cf_id#" id="cf_select_#listlast(cf_id,'-')#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<option value="" data-placeholder="test"></option>
 							<cfloop list="#ltrim(ListSort(REReplace(cf_select_list, ",(?![^()]+\))\s?" ,';','ALL'), 'text', 'asc', ';'))#" index="i" delimiters=";">
