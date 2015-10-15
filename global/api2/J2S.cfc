@@ -197,80 +197,28 @@
 	</cffunction/>
 
 
-	<cffunction name="getThesaurus" access="remote" output="false" returntype="string" >
-		<!--- Je récupère mes arguments --->
+	<!--- getMandatoryFields
+
+		EXAMPLE:
+		http://ima-dam.j2s.net/razuna/global/api2/J2S.cfc?method=getMandatoryFields&prefix=raz1_&host_id=5
+		Response:
+			"COLUMNS": ["mf_value"],
+			"DATA":[["MF_META_FIELD_1:3A5A7EB0-F844-4B14-83A6DF40AF5C4EC2;1;MF_META_FIELD_REQ_1:true;1;"]]}
+ 	--->
+	<cffunction name="getMandatoryFields" access="remote" output="false" returntype="array" returnformat="json"  >
+		<cfargument name="host_id" required="true" type="numeric">
 		<cfargument name="prefix" required="true" type="string">
-		<cfargument name="cf_id" required="true" type="string">
-		<cfargument name="search_value" required="true" type="string">
-
-		<cfset var result = "">
-
-		<cfset result = "">
-		<cfif LEN(search_value) GTE 2>
-	 		<!--- requete --->
-			<cfquery datasource="#application.razuna.api.dsn#" name="qry">
-				SELECT DISTINCT t.ASSOCIATEDVALUE
-				FROM #prefix#thesaurus t
-				WHERE lower(t.value) LIKE <cfqueryparam value="%#lcase(search_value)#%" cfsqltype="cf_sql_varchar">
+			<cfquery datasource="#application.razuna.api.dsn#" name="mfqry">
+				SELECT mf_value
+				FROM #prefix#metaform m
+				WHERE mf_type = "mf_meta_field_1" AND host_id = #host_id#
 			</cfquery>
-			<!--- J'ai des valeurs --->
-			<cfif qry.recordcount NEQ 0>
-				<cfloop query="qry" >
-					<cfset result = result&","&#ASSOCIATEDVALUE#>
-				</cfloop>
-			</cfif>
-		</cfif>
-
-		<!--- Return --->
+		<cfset result=ArrayNew(#mfqry.RecordCount#)>
+		<cfloop query="mfqry" >
+			<cfset cf_id = REFind("MF_META_FIELD_1:(*);*", mfqry.mf_value, 1, "TRUE")> 
+			<cfoutput>#ArrayAppend(result, "#mfqry.mf_value#, position:#cd_id.pos[1]#, len:#cd_id.len[1]#,")#</cfoutput>			
+		</cfloop>		
 		<cfreturn result>
-	</cffunction/>
-
-	<cffunction name="manipulate" access="remote" output="false" returntype="query" returnformat="json"  >
-		<cfset var thexml = "">
-
-		<!--- Je détruis --->
-		<cfquery datasource="#application.razuna.api.dsn#" name="thexml">
-			DROP TABLE IF EXISTS raz1_thesaurus
-		</cfquery>
-
-		<!--- Je Crée --->
-		<cfquery datasource="#application.razuna.api.dsn#" name="thexml">
-			CREATE TABLE raz1_thesaurus
-			(
-				value varchar(255),
-				associatedValue varchar(255)
-			)
-		</cfquery>
-
-		<!--- J'ajoute --->
-		<cfquery datasource="#application.razuna.api.dsn#" name="thexml">
-			INSERT INTO raz1_thesaurus (VALUE, ASSOCIATEDVALUE) VALUES 
-			('TATOUAGE', 'PARURE'),
-			('BIJOU', 'PARURE'),
-			('CHAUSSURE', 'PARURE'),
-			('COSTUME', 'PARURE'),
-			('CARICATURE', 'ART_GRAPHIQUE'),
-			('DESSIN', 'ART_GRAPHIQUE'),
-			('CALLIGRAPHIE', 'ART_GRAPHIQUE'),
-			('PEINTURE RUPESTRE', 'ART_GRAPHIQUE'),
-			('AFFICHE', 'ART_GRAPHIQUE'),
-			('ACTEUR', 'ARTISTE '),
-			('CALLIGRAPHE', 'ARTISTE '),
-			('CINEASTE', 'ARTISTE '),
-			('MUSICIEN', 'ARTISTE '),
-			('PEINTRE', 'ARTISTE '),
-
-		</cfquery>
-
-	 	<!--- requete test --->
-		<cfquery datasource="#application.razuna.api.dsn#" name="thexml">
-			SELECT *
-			FROM raz1_thesaurus u
-			WHERE u.value LIKE '%o%'
-		</cfquery>
-
-		<!--- Return --->
-		<cfreturn thexml>
 	</cffunction/>
 
 	<cffunction name="test" access="remote" output="false" returntype="query" returnformat="json"  >
