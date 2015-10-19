@@ -398,7 +398,13 @@
 									descriptor.chosen()
 										//Changement
 										.change(function(event, params){
-											input.val(getSelected().join(","));	
+											if (params && params['selected']) {
+												var terms = params['selected'].split(":");													
+												descriptor.find("option[value='"+terms[0]+":"+terms[1]+"']").removeProp("selected");
+												descriptor.find("option[value='"+terms[1]+"']").prop("selected", true);
+												descriptor.trigger("chosen:updated");
+											}											
+											input.val(getSelected(terms ? terms[0] : null).join(","));	
 											drop.css("display", "none");
 											setTimeout(hoverListener,100);								
 										})
@@ -408,28 +414,31 @@
 											"http://ima.j2s.net/Thesaurus_WS/AllTerms.php", 
 											function(result){
 												if(result.err === 200){
-													//var selectedList = "<cfoutput>#cf_value#</cfoutput>"	
+													var selectedList = "<cfoutput>#cf_value#</cfoutput>";
 													$.each(result.values.sort(), function(index, item){
-														//if(selectedList.split(",").indexOf(item) > -1) {
-														//	descriptor.append("<option value='"+item[0]+"' selected=selected>"+item[1]+"</option>");
-														//}
-														//else {
-															descriptor.append("<option value='"+item[0]+"'>"+item[1]+"</option>");
-														//}
+														if(selectedList.split(",").indexOf(item[1]) > -1) {
+															descriptor.append("<option value='"+item[1]+"' selected=selected>"+item[0]+"</option>");
+														}
+														else {
+															var ti_style = item[0] == item[1] ? "" : "style='color: red'";
+															var value = item[0] == inputChangeTimerem[1] ? item[0] : item[0]+":"+item[1];
+															descriptor.append("<option "+ti_style+" value='"+value+"'>"+item[0]+"</option>");
+														}
 													});
 													descriptor.trigger("chosen:updated");
-													setTimeout(hoverListener, 100);	
+													setTimeout(hoverListener,100);	
 												}
 											});
 										})
 										//J'affiche la liste
-										.on("chosen:showing_dropdown", function(){
-																			setTimeout(hoverListener, 100);
-																		});
+										.on("chosen:showing_dropdown", function(){setTimeout(hoverListener,100);	});
 
 									//Je tape des caractères, j'écoute le hover sur les éléments
 									descriptor.next(".chosen-container").find("input").keyup(function(){setTimeout(hoverListener,100);});
-									$("body").click(function(){drop.css("display", "none");})
+									
+									$("body").click(
+										function(){drop.css("display", "none");
+									});
 
 									var drop = $(
 										'<div class="thesaurus-drop"><ul class="thesaurus-results">'+
@@ -444,58 +453,72 @@
 										hovered = this;
 										drop.css("display", "none");
 										hoverTimer = setTimeout(function(){hoverShow(ev);}, 1000);
-									}
-									var hoverListener = function(){descriptor.next(".chosen-container").find("li").unbind().hover(hoverHandler, cleartHoverTimer);}
-									var cleartHoverTimer = function(ev){if(hoverTimer){clearTimeout(hoverTimer);}}
+									};
+
+									var hoverListener = function(){
+										descriptor.next(".chosen-container").find("li").unbind().hover(hoverHandler, cleartHoverTimer);
+									};
+									
+									var cleartHoverTimer = function(ev){
+										if(hoverTimer){
+											clearTimeout(hoverTimer);
+										}
+									};
 
 									var hoverShow = function(ev){
 										$("body").append(drop);
 										drop.find(".thesaurus-result").remove();
 										$.getJSON(
 										"http://ima.j2s.net/Thesaurus_WS/ForDescriptor.php?uniterm="+ $(hovered).text(), 
-										function(result){
-											//J'ai un résultat
-											if(result.err === 200){
-												if(result.TG.length > 0 || result.TA.length > 1 || result.TS.length > 0 ) {
-													drop.css("display", "block").css("top", ev.pageY).css("left", ev.pageX-300);
-													drop.find(".ta,.tg,.ts").hide();
-													//TG
-													if(result.TG.length > 0){
-														drop.find(".tg").show().after('<li class="thesaurus-result" value="'+result.TG+'">'+result.TG+'</li>');
+											function(result){
+												//J'ai un résultat
+												if(result.err === 200){
+													if(result.TG.length > 0 || result.TA.length > 1 || result.TS.length > 0 ) {
+														drop.css("display", "block").css("top", ev.pageY).css("left", ev.pageX-300);
+														drop.find(".ta,.tg,.ts").hide();
+														//TG
+														if(result.TG.length > 0){
+															drop.find(".tg").show().after('<li class="thesaurus-result" value="'+result.TG+'">'+result.TG+'</li>');
+														}
+														//TA
+														if(result.TA.length > 0){
+															$.each(result.TA.reverse(), function(i,TA){
+																drop.find(".ta").show().after('<li class="thesaurus-result" value="'+TA+'">'+TA+'</li>');
+															});
+														}
+														//TS
+														if(result.TS.length > 0){
+															$.each(result.TS.reverse(), function(i,TS){
+																drop.find(".ts").show().after('<li class="thesaurus-result" value="'+TS+'">'+TS+'</li>');
+															});
+														}
 													}
-													//TA
-													if(result.TA.length > 0){
-														$.each(result.TA.reverse(), function(i,TA){
-															drop.find(".ta").show().after('<li class="thesaurus-result" value="'+TA+'">'+TA+'</li>');
-														});
-													}
-													//TS
-													if(result.TS.length > 0){
-														$.each(result.TS.reverse(), function(i,TS){
-															drop.find(".ts").show().after('<li class="thesaurus-result" value="'+TS+'">'+TS+'</li>');
-														});
-													}
+													//J'écoute la sélection
+													drop.find(".thesaurus-result").click(function(){
+														descriptor.find("option[value='"+$(hovered).text()+"']").removeProp("selected");
+														descriptor.find("option[value='"+$(this).text()+"']").prop("selected", true);
+														descriptor.trigger("chosen:updated");
+														drop.css("display", "none");
+														setTimeout(hoverListener,100);
+													})
 												}
-												//J'écoute la sélection
-												drop.find(".thesaurus-result").click(function(){
-													descriptor.find("option[value='"+$(hovered).text()+"']").removeProp("selected");
-													descriptor.find("option[value='"+$(this).text()+"']").prop("selected", true);
-													descriptor.trigger("chosen:updated");
-													drop.css("display", "none");
-													setTimeout(hoverListener,100);
-												})
 											}
-										});
+										);
 
 									}
 
 									//Demande la sélection
-									var getSelected = function() {
+									var getSelected = function(term) {
 										var values = []; 
-										$.each(descriptor[0].selectedOptions, function(index, item){values.push(item.text)});
+										$.each(descriptor[0].selectedOptions, function(index, item){
+											if (!term || term != item.text) {
+												values.push(item.text);
+											}
+										});
 										return values;
 									}
 									});
+
 								})(this);
 							</script>
 						</cfoutput>	
