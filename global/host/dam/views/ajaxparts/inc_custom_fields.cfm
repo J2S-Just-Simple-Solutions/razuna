@@ -48,7 +48,10 @@
 				<cfelse>
 					<td>
 				</cfif>
+
+					<!---------------->
 					<!--- For text --->
+					<!---------------->
 					<cfif cf_type EQ "text">
 						<!--- Variable --->
 						<cfset allowed = false>
@@ -70,7 +73,10 @@
 							<cfset allowed = true>
 						</cfif>
 						<input type="text" dir="auto" style="width:300px;" id="cf_text_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" <cfif listFindNoCase(custom_fields,'#qry_cf.cf_id#',',')>onchange="document.form#attributes.file_id#.cf_meta_text_#listlast(cf_id,'-')#.value = document.form#attributes.file_id#.cf_text_#listlast(cf_id,'-')#.value;" </cfif>  <cfif structKeyExists(variables,"cf_inline")> placeholder="#cf_text#"</cfif><cfif !allowed> disabled="disabled"</cfif>>
+					
+					<!------------->
 					<!--- Radio --->
+					<!------------->
 					<cfelseif cf_type EQ "radio">
 						<!--- Variable --->
 						<cfset allowed = false>
@@ -93,7 +99,10 @@
 						</cfif>
 						<input type="radio" name="cf_#cf_id#" id="cf_radio_yes#listlast(cf_id,'-')#" value="T" <cfif listFindNoCase(custom_fields,'#qry_cf.cf_id#',',')> onchange="document.form#attributes.file_id#.cf_meta_radio_yes#listlast(cf_id,'-')#.checked = document.form#attributes.file_id#.cf_radio_yes#listlast(cf_id,'-')#.checked;" </cfif> <cfif cf_value EQ "T"> checked="true"</cfif><cfif !allowed> disabled="disabled"</cfif>>#myFusebox.getApplicationData().defaults.trans("yes")# 
 						<input type="radio" name="cf_#cf_id#" id="cf_radio_no#listlast(cf_id,'-')#" value="F" <cfif listFindNoCase(custom_fields,'#qry_cf.cf_id#',',')> onchange="document.form#attributes.file_id#.cf_meta_radio_no#listlast(cf_id,'-')#.checked = document.form#attributes.file_id#.cf_radio_no#listlast(cf_id,'-')#.checked;" </cfif> <cfif cf_value EQ "F" OR cf_value EQ ""> checked="true"</cfif><cfif !allowed> disabled="disabled"</cfif>>#myFusebox.getApplicationData().defaults.trans("no")#
+					
+					<!---------------->
 					<!--- Textarea --->
+					<!---------------->
 					<cfelseif cf_type EQ "textarea">
 						<!--- Variable --->
 						<cfset allowed = false>
@@ -115,7 +124,10 @@
 							<cfset allowed = true>
 						</cfif>
 						<textarea name="cf_#cf_id#" dir="auto" id="cf_textarea_#listlast(cf_id,'-')#" <cfif listFindNoCase(custom_fields,'#qry_cf.cf_id#',',')> onchange="document.form#attributes.file_id#.cf_meta_textarea_#listlast(cf_id,'-')#.value = document.form#attributes.file_id#.cf_textarea_#listlast(cf_id,'-')#.value;" </cfif> style="width:310px;height:60px;"<cfif structKeyExists(variables,"cf_inline")> placeholder="#cf_text#"</cfif><cfif !allowed> disabled="disabled"</cfif>>#cf_value#</textarea>
+
+					<!-------------->
 					<!--- Select --->
+					<!-------------->
 					<cfelseif cf_type EQ "select">
 						<!--- Variable --->
 						<cfset allowed = false>
@@ -142,7 +154,10 @@
 								<option value="#i#"<cfif i EQ "#cf_value#"> selected="selected"</cfif>>#i#</option>
 							</cfloop>
 						</select>
+
+					<!--------------------->
 					<!--- Select-search --->
+					<!--------------------->
 					<cfelseif cf_type EQ "select-search">
 						<!--- Variable --->
 						<cfset allowed = false>
@@ -208,7 +223,10 @@
 								})(this);
 							</script>
 						</cfoutput>	
+
+					<!----------------------->
 					<!--- select-category --->
+					<!----------------------->
 					<cfelseif cf_type EQ "select-category">
 						<!--- Variable --->
 						<cfset allowed = false>
@@ -233,7 +251,7 @@
 						<select multiple type="category" category="cf_#cf_id#" id="cf_select_category_#listlast(cf_id,'-')#" value="#cf_value#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<option value=""></option>
 							<cfloop list="#ltrim(replace(cf_select_list,', ',',','ALL'))#" index="word">
-								<option value="#word[0]#" <!---<cfif listContains("#cf_value#", #word#, ",")> selected="selected"</cfif>--->>#word[1]#</option>
+								<option value="#word#" <cfif listContains("#cf_value#", #word#, ",")> selected="selected"</cfif>>#word#</option>
 							</cfloop>						
 						</select>						
 						<cfoutput>
@@ -250,8 +268,10 @@
 									});
 								})(this);
 							</script>
-						</cfoutput>						
+						</cfoutput>
+					<!----------------------->			
 					<!--- select-category --->
+					<!----------------------->
 					<cfelseif cf_type EQ "select-sub-category">
 						<!--- Variable --->
 						<cfset allowed = false>
@@ -335,7 +355,10 @@
 								})(this);
 							</script>
 						</cfoutput>
+
+					<!------------------->
 					<!--- Descripteur --->
+					<!------------------->
 					<cfelseif cf_type EQ "descriptor">
 						<!--- Variable --->
 						<cfset allowed = false>
@@ -371,7 +394,7 @@
 									var taGroup = $('<optgroup label="<cfoutput>#myFusebox.getApplicationData().defaults.trans("TA")#</cfoutput>" >');
 									var tsGroup = $('<optgroup label="<cfoutput>#myFusebox.getApplicationData().defaults.trans("TS")#</cfoutput>" >');
 
-									//Je construit mon champ multiple avec les valeurs initiale
+									//Je construis mon champ multiple avec les valeurs initiales
 									descriptor.chosen()
 										//Changement
 										.change(function(event, params){
@@ -385,18 +408,24 @@
 											"http://ima.j2s.net/Thesaurus_WS/AllTerms.php", 
 											function(result){
 												if(result.err === 200){
-													var selectedList = "<cfoutput>#cf_value#</cfoutput>"	
+													//var selectedList = "<cfoutput>#cf_value#</cfoutput>"	
 													$.each(result.values.sort(), function(index, item){
-														if(selectedList.split(",").indexOf(item) > -1) {descriptor.append("<option value='"+item+"' selected=selected>"+item+"</option>");}
-														else {descriptor.append("<option value='"+item+"'>"+item+"</option>");}
+														//if(selectedList.split(",").indexOf(item) > -1) {
+														//	descriptor.append("<option value='"+item[0]+"' selected=selected>"+item[1]+"</option>");
+														//}
+														//else {
+															descriptor.append("<option value='"+item[1]+"'>"+item[0]+"</option>");
+														//}
 													});
 													descriptor.trigger("chosen:updated");
-													setTimeout(hoverListener,100);	
+													setTimeout(hoverListener, 100);	
 												}
 											});
 										})
 										//J'affiche la liste
-										.on("chosen:showing_dropdown", function(){setTimeout(hoverListener,100);	});
+										.on("chosen:showing_dropdown", function(){
+																			setTimeout(hoverListener, 100);
+																		});
 
 									//Je tape des caractères, j'écoute le hover sur les éléments
 									descriptor.next(".chosen-container").find("input").keyup(function(){setTimeout(hoverListener,100);});
@@ -591,7 +620,10 @@
 							</script>
 						</cfoutput>	
 --->
+
+					<!---------------------------->
 					<!--- Candidat descripteur --->
+					<!---------------------------->
 					<cfelseif cf_type EQ "candidate-descriptor">
 						<!--- Variable --->
 						<cfset allowed = false>
@@ -665,8 +697,11 @@
 									})
 								})(this);
 							</script>
-						</cfoutput>			
+						</cfoutput>
+
+					<!-------------------------------------------->
 					<!--- select avec search et choix multiple --->
+					<!-------------------------------------------->
 					<cfelseif cf_type EQ "select-search-multi">
 						<!--- Variable --->
 						<cfset allowed = false>
