@@ -422,7 +422,7 @@
 												// on dispatche l'event pour que le composant se mette à jour 
 												selectDescriptor.trigger("chosen:updated");
 												//
-												inputDescriptor.val(getSelected().join(",")+","+terms[1]);	
+												inputDescriptor.val(getSelected().join(","));	
 											}
 											// Suppression d'un descripteur
 											else {
@@ -440,12 +440,17 @@
 											function(result){
 												if(result.err === 200){
 													var selectedList = "<cfoutput>#cf_value#</cfoutput>";
+													
+													console.log("selectedList: "+selectedList);
+
 													$.each(result.values.sort(), function(index, item){
+
+														console.log("item:"+item+"  0:"+item[0]+"   1:"+item[1]);
 
 														// le terme est-il un terme interdit ?
 														var isBanTerm = item[0] !== item[1];// index 0 -> mot interdit, index 1 -> le terme remplaçant	
 														// le terme est-il sélectionné ?
-														var isSelected = selectedList.split(",").indexOf(item[1]) > -1;
+														var isSelected = selectedList.split(",").indexOf(item[0]) > -1;
 
 														// style des termes interdits
 														var banTermStyle = isBanTerm ? "style='color: red'" : "";
