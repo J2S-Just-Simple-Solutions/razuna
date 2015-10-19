@@ -319,8 +319,14 @@
 									var categoryChangeHandler = function(event){
 										//les valeurs sélectionnées
 										var selectedList = [];
-										$.each( subCategory[0].selectedOptions, function(index, item){selectedList.push(item.text)})
-										if(selectedList.length === 0 ){selectedList = "<cfoutput>#cf_value#</cfoutput>"}
+										$.each( subCategory[0].selectedOptions, 
+											function(index, item){
+												selectedList.push(item.text)
+											}
+										);
+										if(selectedList.length === 0 ){
+											selectedList = "<cfoutput>#cf_value#</cfoutput>";
+										}
 
 										//La liste complète
 										var #toScript(category, "values")#
@@ -342,8 +348,12 @@
 											//Si elle est dans la liste des catégorie
 											if(categoryList.indexOf(item) > - 1 ) {
 												//Je l'ajoute avec l'option selected si elle est sélectionnée
-												if(selectedList.indexOf(item) > -1) {subCategory.append("<option value="+item+" selected=selected>"+item+"</option>");}
-												else {subCategory.append("<option value="+item+" >"+item+"</option>");}
+												if(selectedList.indexOf(item) > -1) {
+													subCategory.append("<option value="+item+" selected=selected>"+item+"</option>");
+												}
+												else {
+													subCategory.append("<option value="+item+" >"+item+"</option>");
+												}
 											}			
 										}
 										//je mets à jour
@@ -388,23 +398,27 @@
 							<script language="JavaScript" type="text/javascript">
 								(function(self){
 									$(document).ready(function(){
-									var input = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
-									var descriptor = $("select[descriptor='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+									// identifiants des composants du champ "Descripteurs"
+									var inputDescriptor = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+									var selectDescriptor = $("select[descriptor='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 									var tgGroup = $('<optgroup label="<cfoutput>#myFusebox.getApplicationData().defaults.trans("TG")#</cfoutput>" >');
 									var taGroup = $('<optgroup label="<cfoutput>#myFusebox.getApplicationData().defaults.trans("TA")#</cfoutput>" >');
 									var tsGroup = $('<optgroup label="<cfoutput>#myFusebox.getApplicationData().defaults.trans("TS")#</cfoutput>" >');
 
 									//Je construis mon champ multiple avec les valeurs initiales
-									descriptor.chosen()
+									selectDescriptor.chosen()
 										//Changement
 										.change(function(event, params){
 											if (params && params['selected']) {
-												var terms = params['selected'].split(":");													
-												descriptor.find("option[value='"+terms[0]+":"+terms[1]+"']").removeProp("selected");
-												descriptor.find("option[value='"+terms[1]+"']").prop("selected", true);
-												descriptor.trigger("chosen:updated");
+												var terms = params['selected'].split(":"); // index 0 -> mot interdit, index 1 -> le terme remplaçant
+												// on désélectionne l'option correspondant au mot interdit...
+												selectDescriptor.find("option[value='"+terms[0]+":"+terms[1]+"']").removeProp("selected");
+												// ...pour sélectionner le terme remplaçant à la place
+												selectDescriptor.find("option[value='"+terms[1]+":"+terms[1]+"']").prop("selected", true);
+												// on dispatche l'event pour que le composant se mette à jour 
+												selectDescriptor.trigger("chosen:updated");
 											}											
-											input.val(getSelected(terms ? terms[0] : null).join(","));	
+											inputDescriptor.val(getSelected(terms ? terms[1] : null).join(","));	
 											drop.css("display", "none");
 											setTimeout(hoverListener,100);								
 										})
@@ -416,30 +430,36 @@
 												if(result.err === 200){
 													var selectedList = "<cfoutput>#cf_value#</cfoutput>";
 													$.each(result.values.sort(), function(index, item){
-														if(selectedList.split(",").indexOf(item[1]) > -1) {
-															descriptor.append("<option value='"+item[1]+"' selected=selected>"+item[0]+"</option>");
-														}
-														else {
-															var ti_style = item[0] == item[1] ? "" : "style='color: red'";
-															var value = item[0] == item[1] ? item[0] : item[0]+":"+item[1];
-															descriptor.append("<option "+ti_style+" value='"+value+"'>"+item[0]+"</option>");
-														}
+
+														// le terme est-il un terme interdit ?
+														var isBanTerm = item[0] != item[1];// index 0 -> mot interdit, index 1 -> le terme remplaçant	
+														// le terme est-il sélectionné ?
+														var isSelected = selectedList.split(",").indexOf(item[1]) > -1;
+
+														// style des termes interdits
+														var banTermStyle = isBanTerm ? "style='color: red'" : "";
+														// Termes sélectionnés
+														var selectedAttr = isSelected ? "selected='selected'" : "";
+
+														// Ajout de l'option
+														selectDescriptor.append("<option "+banTermStyle+" value='"+item[0]+":"item[1]+"' "+selectedAttr+" >"+item[0]+"</option>");
 													});
-													descriptor.trigger("chosen:updated");
+													selectDescriptor.trigger("chosen:updated");
 													setTimeout(hoverListener,100);	
 												}
 											});
 										})
 										//J'affiche la liste
-										.on("chosen:showing_dropdown", function(){setTimeout(hoverListener,100);	});
+										.on("chosen:showing_dropdown", function(){setTimeout(hoverListener,100);});
 
 									//Je tape des caractères, j'écoute le hover sur les éléments
-									descriptor.next(".chosen-container").find("input").keyup(function(){setTimeout(hoverListener,100);});
+									selectDescriptor.next(".chosen-container").find("input").keyup(function(){setTimeout(hoverListener,100);});
 									
 									$("body").click(
-										function(){drop.css("display", "none");
-									});
-
+										function(){
+											drop.css("display", "none");
+										}
+									);
 									var drop = $(
 										'<div class="thesaurus-drop"><ul class="thesaurus-results">'+
 										'<li class="thesaurus-result-group tg"><cfoutput>#myFusebox.getApplicationData().defaults.trans("TG")#</cfoutput></li>'+
@@ -454,17 +474,14 @@
 										drop.css("display", "none");
 										hoverTimer = setTimeout(function(){hoverShow(ev);}, 1000);
 									};
-
 									var hoverListener = function(){
-										descriptor.next(".chosen-container").find("li").unbind().hover(hoverHandler, cleartHoverTimer);
-									};
-									
+										selectDescriptor.next(".chosen-container").find("li").unbind().hover(hoverHandler, cleartHoverTimer);
+									};									
 									var cleartHoverTimer = function(ev){
 										if(hoverTimer){
 											clearTimeout(hoverTimer);
 										}
 									};
-
 									var hoverShow = function(ev){
 										$("body").append(drop);
 										drop.find(".thesaurus-result").remove();
@@ -495,22 +512,21 @@
 													}
 													//J'écoute la sélection
 													drop.find(".thesaurus-result").click(function(){
-														descriptor.find("option[value='"+$(hovered).text()+"']").removeProp("selected");
-														descriptor.find("option[value='"+$(this).text()+"']").prop("selected", true);
-														descriptor.trigger("chosen:updated");
+														selectDescriptor.find("option[value='"+$(hovered).text()+"']").removeProp("selected");
+														selectDescriptor.find("option[value='"+$(this).text()+"']").prop("selected", true);
+														selectDescriptor.trigger("chosen:updated");
 														drop.css("display", "none");
 														setTimeout(hoverListener,100);
 													})
 												}
 											}
 										);
-
 									}
 
 									//Demande la sélection
 									var getSelected = function(term) {
 										var values = []; 
-										$.each(descriptor[0].selectedOptions, function(index, item){
+										$.each(selectDescriptor[0].selectedOptions, function(index, item){
 											if (!term || term != item.text) {
 												values.push(item.text);
 											}
@@ -679,14 +695,13 @@
 							<script language="JavaScript" type="text/javascript">
 								(function(self){
 									var prefix = "<cfoutput>#session.hostdbprefix#</cfoutput>";
-									var input = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+									var inputDescriptorCandidate = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 									var select = $("td select[candidate='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 
 									select.chosen({add_contains: true, no_results_text : ""}).change(function(){
 										var values = []; 
 										$.each(select[0].selectedOptions, function(index, item){values.push(item.text)})
-										console.log(values)
-										input.val(values.join(","));
+										inputDescriptorCandidate.val(values.join(","));
 									});		
 
 									var chosen = select.next(".chosen-container");
