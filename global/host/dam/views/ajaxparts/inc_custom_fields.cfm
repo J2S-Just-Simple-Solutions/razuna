@@ -413,8 +413,8 @@
 											console.log(inputDescriptor.val());
 											// Ajout d'un descripteur
 											if (params && params['selected']) {
-												console.log("Ajout d'un descripteur: "+terms[0]+" -> "+terms[1]);
 												var terms = params['selected'].split(":"); // index 0 -> mot interdit, index 1 -> le terme remplaçant
+												console.log("Ajout d'un descripteur: "+terms[0]+" -> "+terms[1]);
 												// on désélectionne l'option correspondant au mot interdit...
 												selectDescriptor.find("option[value='"+terms[0]+":"+terms[1]+"']").removeProp("selected");
 												// ...pour sélectionner le terme remplaçant à la place
@@ -422,7 +422,7 @@
 												// on dispatche l'event pour que le composant se mette à jour 
 												selectDescriptor.trigger("chosen:updated");
 												//
-												inputDescriptor.val(getSelected().join(",")","+terms[1]);	
+												inputDescriptor.val(getSelected().join(",")+","+terms[1]);	
 											}
 											// Suppression d'un descripteur
 											else {
@@ -539,7 +539,7 @@
 										var values = []; 
 										console.log("getSelected:");
 										$.each(selectDescriptor[0].selectedOptions, function(index, item){
-											console.log("  "+item);
+											console.log("  "+item.text);
 											values.push(item.text);
 										});
 										return values;
