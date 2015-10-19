@@ -231,10 +231,9 @@
 						</cfif>
 						<input type="text" dir="auto" style="width:300px;" id="cf_thesaurus_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
 						<select multiple type="category" category="cf_#cf_id#" id="cf_select_category_#listlast(cf_id,'-')#" value="#cf_value#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
-							<cfset x = ["mars","earth", "venus", "jupiter"]>
 							<option value=""></option>
-							<cfloop list="#ltrim(replace(cf_select_list,', ',',','ALL'))#" index="i">
-								<option value="#i#" <cfif listContains("#cf_value#", #i#, ",")> selected="selected"</cfif>>#i#</option>
+							<cfloop list="#ltrim(replace(cf_select_list,', ',',','ALL'))#" index="word">
+								<option value="#word[0]#" <!---<cfif listContains("#cf_value#", #word#, ",")> selected="selected"</cfif>--->>#word[1]#</option>
 							</cfloop>						
 						</select>						
 						<cfoutput>
