@@ -421,7 +421,7 @@
 														}
 														else {
 															var ti_style = item[0] == item[1] ? "" : "style='color: red'";
-															var value = item[0] == item[0] = item[1] ? item[0] : item[0]+":"+item[1];
+															var value = item[0] == item[1] ? item[0] : item[0]+":"+item[1];
 															descriptor.append("<option "+ti_style+" value='"+value+"'>"+item[0]+"</option>");
 														}
 													});
