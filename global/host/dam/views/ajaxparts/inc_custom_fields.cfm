@@ -414,7 +414,7 @@
 														//	descriptor.append("<option value='"+item[0]+"' selected=selected>"+item[1]+"</option>");
 														//}
 														//else {
-															descriptor.append("<option value='"+item[1]+"'>"+item[0]+"</option>");
+															descriptor.append("<option value='"+item[0]+"'>"+item[1]+"</option>");
 														//}
 													});
 													descriptor.trigger("chosen:updated");
