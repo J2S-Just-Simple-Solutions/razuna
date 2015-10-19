@@ -409,6 +409,8 @@
 									selectDescriptor.chosen()
 										//Changement
 										.change(function(event, params){
+											console.log("inputDescriptor:");
+											console.log(inputDescriptor.val());
 											if (params && params['selected']) {
 												var terms = params['selected'].split(":"); // index 0 -> mot interdit, index 1 -> le terme remplaçant
 												// on désélectionne l'option correspondant au mot interdit...
@@ -417,8 +419,9 @@
 												selectDescriptor.find("option[value='"+terms[1]+":"+terms[1]+"']").prop("selected", true);
 												// on dispatche l'event pour que le composant se mette à jour 
 												selectDescriptor.trigger("chosen:updated");
+												//
+												//inputDescriptor.val(getSelected().join(","));	
 											}											
-											inputDescriptor.val(getSelected(terms ? terms[1] : null).join(","));	
 											drop.css("display", "none");
 											setTimeout(hoverListener,100);								
 										})
@@ -432,7 +435,7 @@
 													$.each(result.values.sort(), function(index, item){
 
 														// le terme est-il un terme interdit ?
-														var isBanTerm = item[0] != item[1];// index 0 -> mot interdit, index 1 -> le terme remplaçant	
+														var isBanTerm = item[0] !== item[1];// index 0 -> mot interdit, index 1 -> le terme remplaçant	
 														// le terme est-il sélectionné ?
 														var isSelected = selectedList.split(",").indexOf(item[1]) > -1;
 
@@ -442,7 +445,7 @@
 														var selectedAttr = isSelected ? "selected='selected'" : "";
 
 														// Ajout de l'option
-														selectDescriptor.append("<option "+banTermStyle+" value='"+item[0]+":"item[1]+"' "+selectedAttr+" >"+item[0]+"</option>");
+														selectDescriptor.append("<option "+banTermStyle+" value='"+item[0]+":"+item[1]+"' "+selectedAttr+" >"+item[0]+"</option>");
 													});
 													selectDescriptor.trigger("chosen:updated");
 													setTimeout(hoverListener,100);	
@@ -524,12 +527,10 @@
 									}
 
 									//Demande la sélection
-									var getSelected = function(term) {
+									var getSelected = function() {
 										var values = []; 
 										$.each(selectDescriptor[0].selectedOptions, function(index, item){
-											if (!term || term != item.text) {
-												values.push(item.text);
-											}
+											values.push(item.text);
 										});
 										return values;
 									}
@@ -593,7 +594,7 @@
 												descriptor.next(".chosen-container").find(".highlighted").trigger("mousedown").trigger("mouseup");
 											}
 										})
-										//Sur la pression d'une touche, j'intérroge le thesaurus
+										//Sur la pression d'une touche, j'interroge le thesaurus
 										.on("keyup", function(ev){	
 											clearTimeout(inputChangeTimer);
 											inputChangeTimer = setTimeout(function(){inputChange(ev)}, 200);								
