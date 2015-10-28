@@ -25,6 +25,30 @@
 --->
 <cfcomponent output="false" extends="authentication">
 		
+	<!--- J2S/FL - Update "cf_select_list" from a Custom Field --->
+    <cffunction name="updateSelectListOfCustomField" access="remote" output="false" returntype="string"  >
+        <cfargument name="prefix" required="true" type="string">
+        <cfargument name="cf_id" required="true" type="string">
+        <cfargument name="value" required="true" type="string">
+            <cfquery datasource="#application.razuna.datasource#" name="qry_select_list">
+            SELECT cf_select_list
+            FROM #prefix#custom_fields
+            WHERE cf_id = <cfqueryparam cfsqltype="cf_sql_varchar" value="#cf_id#">
+            </cfquery>
+        <cfloop query="qry_select_list" >
+            <cfset result=#cf_select_list#>
+        </cfloop>
+        <!--- Add value if not exist in list --->
+        <cfif FindNoCase(value, result) IS False>
+            <cfset new_list=#result# & "," & #value#>
+			<cfquery datasource="#application.razuna.datasource#" name="qry">
+                UPDATE #prefix#custom_fields
+                SET cf_select_list = <cfqueryparam cfsqltype="cf_sql_varchar" value="#new_list#">
+                WHERE CF_ID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#cf_id#" >
+        </cfquery>                
+        </cfif>
+    </cffunction/>
+
 	<!--- Get all custom fields --->
 	<cffunction name="getall" access="remote" output="false" returntype="query" returnformat="json">
 		<cfargument name="api_key" required="true">
