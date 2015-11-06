@@ -145,7 +145,7 @@
 		// Custom fields (get values)
 		<cfloop query="qry_cf_fields"><cfset cfid = replace(cf_id,"-","","all")><cfoutput>
 		if((thetype == '#qry_cf_fields.cf_show#' || '#qry_cf_fields.cf_show#' == 'all' || thetype == 'all') && '#qry_cf_fields.cf_show#' != 'users'){
-			<cfif cf_type EQ "text" OR cf_type EQ "textarea">
+			<cfif cf_type EQ "text" OR cf_type EQ "textarea" OR cf_type EQ "inventory">
 				var value_#cfid# = document.forms[theform].cf#cfid#.value.split(' ').join(' +');
 			<cfelseif cf_type EQ "select" OR cf_type EQ "select-search" OR cf_type EQ "select-category" OR cf_type EQ "candidate-descriptor" OR cf_type EQ "select-search-multi" OR cf_type EQ "candidate-descriptor"  OR cf_type EQ "select-sub-category" OR cf_type EQ "descriptor">
 				var value_#cfid# = document.forms[theform].cf#cfid#.options[document.forms[theform].cf#cfid#.selectedIndex].value.split(' ').join(' +');

@@ -535,6 +535,14 @@
 			      return false;
 			}
 		}
+
+		// Gestion du numéro d'inventaire
+		if($(".inventory-error").length > 0 ){
+			if(!confirm('#myFusebox.getApplicationData().defaults.trans("inventory-error")#')){
+				return false;
+			}		
+		}
+
 		return true;
 	}
 	// Submit form

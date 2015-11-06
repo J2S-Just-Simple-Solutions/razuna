@@ -830,6 +830,51 @@
 								})(this);
 							</script>
 						</cfoutput>
+
+					<cfelseif cf_type EQ "inventory">
+						<!--- Variable --->
+						<cfset allowed = false>
+						<!--- Check for Groups --->
+						<cfloop list="#session.thegroupofuser#" index="i">
+							<cfif listfind(cf_edit,i)>
+								<cfset allowed = true>
+								<cfbreak>
+							</cfif>
+						</cfloop>
+						<!--- Check for users --->
+						<cfloop list="#session.theuserid#" index="i">
+							<cfif listfind(cf_edit,i)>
+								<cfset allowed = true>
+								<cfbreak>
+							</cfif>
+						</cfloop>
+						<cfif !isnumeric(cf_edit) AND cf_edit EQ "true">
+							<cfset allowed = true>
+						</cfif>
+						<form><input type="text" dir="auto" style="width:300px;" id="cf_text_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" <cfif structKeyExists(variables,"cf_inline")> placeholder="#cf_text#"</cfif><cfif !allowed> disabled="disabled"</cfif>></form>
+						<cfoutput>
+							<!--- JS --->
+							<style type="text/css">
+								.inventory-error{
+									border-color: red;
+									outline-color:red;
+								}
+							</style>
+							<script language="JavaScript" type="text/javascript">
+								(function(self){
+									var input = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+
+									input.on("input", function(){
+										$.get("../../global/api2/J2S.cfc?method=getInventory&value=" + input.val() + "&cf_id=" + "#qry_cf.cf_id#", 
+										function(result){
+											var data = JSON.parse(result).DATA;
+											if(data.length > 0){input.addClass("inventory-error");}
+											else{input.removeClass("inventory-error");}
+										});
+									})
+								})(this);
+							</script>
+						</cfoutput>
 					</cfif>
 				</td>
 			</tr>
