@@ -70,6 +70,13 @@
 														<cfif thereq>
 															<cfset forjs = forjs & ",#id#_cf_#cf_id#:text">
 														</cfif>
+													<!--- For inventory --->
+													<cfelseif cf_type EQ "inventory">
+														<input type="text" style="width:400px;" id="#id#_cf_#cf_id#" name="#id#_cf_#cf_id#" />
+														<a href ="javascript:void(0)" onclick="copytextfield('cf_#cf_id#',$('###id#_cf_#cf_id#').val())">Copy to all</a>
+														<cfif thereq>
+															<cfset forjs = forjs & ",#id#_cf_#cf_id#:text">
+														</cfif>		
 													<!--- Radio --->
 													<cfelseif cf_type EQ "radio">
 														<input type="radio" name="#id#_cf_#cf_id#" id="#id#_cf_#cf_id#" value="T">yes <input type="radio" name="#id#_cf_#cf_id#" id="#id#_cf_#cf_id#" value="F" checked="true">no
@@ -176,7 +183,7 @@
 						<!--- The type --->
 						<cfset tt = listlast(i,":")>
 						<!--- JS --->
-						<cfif tt EQ "text">
+						<cfif tt EQ "text" || tt EQ "inventory">
 							if ( $('###tf#').val() == '' ){
 								alert('Please enter all required values!');
 								return false;
