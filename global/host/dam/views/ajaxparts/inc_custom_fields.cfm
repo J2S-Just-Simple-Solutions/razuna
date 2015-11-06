@@ -409,16 +409,14 @@
 									selectDescriptor.chosen()
 										//Changement
 										.change(function(event, params){
-											console.log("inputDescriptor:");
-											console.log(inputDescriptor.val());
+											var term = params.selected;
+											var replacement = $(event.target).find("option[value='"+term+"']").attr("replacement");
 											// Ajout d'un descripteur
 											if (params && params['selected']) {
-												var terms = params['selected'].split(":"); // index 0 -> mot interdit, index 1 -> le terme remplaçant
-												console.log("Ajout d'un descripteur: "+terms[0]+" -> "+terms[1]);
 												// on désélectionne l'option correspondant au mot interdit...
-												selectDescriptor.find("option[value='"+terms[0]+":"+terms[1]+"']").removeProp("selected");
+												selectDescriptor.find("option[value='"+term+"']").removeProp("selected");
 												// ...pour sélectionner le terme remplaçant à la place
-												selectDescriptor.find("option[value='"+terms[1]+":"+terms[1]+"']").prop("selected", true);
+												selectDescriptor.find("option[value='"+replacement+"']").prop("selected", true);
 												// on dispatche l'event pour que le composant se mette à jour 
 												selectDescriptor.trigger("chosen:updated");
 												//
@@ -426,10 +424,9 @@
 											}
 											// Suppression d'un descripteur
 											else {
-												console.log("Suppression d'un descripteur");
 												inputDescriptor.val(getSelected().join(","));
 											}
-											console.log(inputDescriptor.val());								
+											//console.log(inputDescriptor.val());								
 											drop.css("display", "none");
 											setTimeout(hoverListener,100);								
 										})
@@ -441,16 +438,18 @@
 												if(result.err === 200){
 													var selectedList = "<cfoutput>#cf_value#</cfoutput>";
 													
-													console.log("selectedList: "+selectedList);
+													//console.log("selectedList: "+selectedList);
 
 													$.each(result.values.sort(), function(index, item){
+														var term = item[0];
+														var replacement = item[1];
 
-														console.log("item:"+item+"  0:"+item[0]+"   1:"+item[1]);
+														//console.log("item:"+item+"  0:"+item[0]+"   1:"+item[1]);
 
 														// le terme est-il un terme interdit ?
-														var isBanTerm = item[0] !== item[1];// index 0 -> mot interdit, index 1 -> le terme remplaçant	
+														var isBanTerm = term !== replacement;// index 0 -> mot interdit, index 1 -> le terme remplaçant	
 														// le terme est-il sélectionné ?
-														var isSelected = selectedList.split(",").indexOf(item[0]) > -1;
+														var isSelected = selectedList.split(",").indexOf(term) > -1;
 
 														// style des termes interdits
 														var banTermStyle = isBanTerm ? "style='color: red'" : "";
@@ -458,7 +457,7 @@
 														var selectedAttr = isSelected ? "selected='selected'" : "";
 
 														// Ajout de l'option
-														selectDescriptor.append("<option "+banTermStyle+" value='"+item[0]+":"+item[1]+"' "+selectedAttr+" >"+item[0]+"</option>");
+														selectDescriptor.append("<option "+banTermStyle+" value='"+term+"' replacement='"+replacement+"' "+selectedAttr+" >"+term+"</option>");
 													});
 													selectDescriptor.trigger("chosen:updated");
 													setTimeout(hoverListener,100);	
