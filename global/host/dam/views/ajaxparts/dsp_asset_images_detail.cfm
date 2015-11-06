@@ -539,7 +539,7 @@
 
 		//Si un champ obligatoire est vide
 		if($("input[inventory]").length > 0 && $("input[inventory]").val() == "") {
-			alert('#myFusebox.getApplicationData().defaults.trans("inventory-required")#');
+			alert("#myFusebox.getApplicationData().defaults.trans('inventory-required')#");
 			return false;
 		}
 
