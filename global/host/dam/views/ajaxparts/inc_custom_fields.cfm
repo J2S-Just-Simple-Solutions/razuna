@@ -201,7 +201,7 @@
 											var currentValue = $(this).val();
 											select.append('<option value="'+currentValue+'">'+currentValue+'</option>');								
 											select.trigger("chosen:updated");
-											//Je met à jour le serveur
+											//Je mets à jour le serveur
 											var values = [];
 											$.each(select.find("option"), function(index, item){
 												if($(item).html().length > 0)
@@ -342,10 +342,10 @@
 											categoryList = categoryList.concat(values[category[0].selectedOptions[j].index - 1].split(";"));
 										}
 
-										//Pour chaque valeurs
+										//Pour chaque valeur
 										for(var i = 0 ; i < list.length ; i++){
 											var item = list[i];
-											//Si elle est dans la liste des catégorie
+											//Si elle est dans la liste des catégories
 											if(categoryList.indexOf(item) > - 1 ) {
 												//Je l'ajoute avec l'option selected si elle est sélectionnée
 												if(selectedList.indexOf(item) > -1) {
@@ -731,7 +731,7 @@
 											select.append(current);								
 											select.trigger("chosen:updated");
 											select.trigger("chosen:activate");
-											//Je met à jour le serveur
+											//Je mets à jour le serveur
 											var values = [];
 											$.each(select.find("option"), function(index, item){
 												if($(item).html().length > 0)
@@ -809,7 +809,7 @@
 											select.append(current);								
 											select.trigger("chosen:updated");
 											select.trigger("chosen:activate");
-											//Je met à jour le serveur
+											//Je mets à jour le serveur
 											var values = [];
 											$.each(select.find("option"), function(index, item){
 												if($(item).html().length > 0)

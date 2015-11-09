@@ -159,9 +159,9 @@
 									<cfif attributes.cs.images_metadata EQ "" OR ( NOT prefs.set2_upc_enabled AND attributes.cs.images_metadata EQ "img_upc_number AS cs_img_upc_number" )>
 										<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#id#&what=images&loaddiv=content&folder_id=#folder_id_r#&labelview=yes','#Jsstringformat(filename)#',1070,1);return false;"><strong>#filename#</strong></a>
 										<br /><br />
-										Folder: <a href="##" onclick="goToFolder('#folder_id_r#')">#folder_name#</a>
+										<!---Folder:--->Dossier: <a href="##" onclick="goToFolder('#folder_id_r#')">#folder_name#</a>
 									<cfelse>
-										Folder: <a href="##" onclick="goToFolder('#folder_id_r#')">#folder_name#</a>
+										<!---Folder:--->Dossier: <a href="##" onclick="goToFolder('#folder_id_r#')">#folder_name#</a>
 										<br /><br />
 										<cfloop list="#attributes.cs_place.bottom.image#" index="m" delimiters=",">
 											<cfif m CONTAINS "_filename">
@@ -300,9 +300,9 @@
 										<a href="##" onclick="showwindow('#myself##xfa.detailvid#&file_id=#id#&what=videos&loaddiv=content&folder_id=#folder_id_r#','',1070,1);return false;"><strong>#filename#</strong></a>
 										<br />
 										<br />
-										Folder: <a href="##" onclick="goToFolder('#folder_id_r#')">#folder_name#</a>
+										<!---Folder:--->Dossier: <a href="##" onclick="goToFolder('#folder_id_r#')">#folder_name#</a>
 									<cfelse>
-										Folder: <a href="##" onclick="goToFolder('#folder_id_r#')">#folder_name#</a>
+										<!---Folder:--->Dossier: <a href="##" onclick="goToFolder('#folder_id_r#')">#folder_name#</a>
 										<br />
 										<br />
 										<cfloop list="#attributes.cs_place.bottom.video#" index="m" delimiters=",">
@@ -348,7 +348,7 @@
 									#myFusebox.getApplicationData().defaults.trans("date_created")#:<br>
 									#dateformat(date_create, "#myFusebox.getApplicationData().defaults.getdateformat()#")# #timeformat(date_create, "HH:mm")#
 									<br><br>
-									<a href="##" onclick="showwindow('#myself#ajax.remove_record&id=#id#&what=videos&loaddiv=content&folder_id=#folder_id_r#','#Jsstringformat(myFusebox.getApplicationData().defaults.trans("remove"))#',400,1);return false;">Delete</a>
+									<a href="##" onclick="showwindow('#myself#ajax.remove_record&id=#id#&what=videos&loaddiv=content&folder_id=#folder_id_r#','#Jsstringformat(myFusebox.getApplicationData().defaults.trans("remove"))#',400,1);return false;"><!---Delete--->Supprimer</a>
 								</cfif>
 							</div>
 						</cfif>
@@ -451,9 +451,9 @@
 										<a href="##" onclick="showwindow('#myself##xfa.detailaud#&file_id=#id#&what=audios&loaddiv=content&folder_id=#folder_id_r#','',1070,1);return false;"><strong>#left(filename,50)#</strong></a>
 										<br />
 										<br />
-										Folder: <a href="##" onclick="goToFolder('#folder_id_r#')">#folder_name#</a>
+										<!---Folder:--->Dossier: <a href="##" onclick="goToFolder('#folder_id_r#')">#folder_name#</a>
 									<cfelse>
-										Folder: <a href="##" onclick="goToFolder('#folder_id_r#')">#folder_name#</a>
+										<!---Folder:--->Dossier: <a href="##" onclick="goToFolder('#folder_id_r#')">#folder_name#</a>
 										<br />
 										<br />
 										<cfloop list="#attributes.cs_place.bottom.audio#" index="m" delimiters=",">
@@ -499,7 +499,7 @@
 									#myFusebox.getApplicationData().defaults.trans("date_created")#:<br>
 									#dateformat(date_create, "#myFusebox.getApplicationData().defaults.getdateformat()#")# #timeformat(date_create, "HH:mm")#
 									<br><br>
-									<a href="##" onclick="showwindow('#myself#ajax.remove_record&id=#id#&what=audios&loaddiv=content&folder_id=#folder_id_r#','#Jsstringformat(myFusebox.getApplicationData().defaults.trans("remove"))#',400,1);return false;">Delete</a>
+									<a href="##" onclick="showwindow('#myself#ajax.remove_record&id=#id#&what=audios&loaddiv=content&folder_id=#folder_id_r#','#Jsstringformat(myFusebox.getApplicationData().defaults.trans("remove"))#',400,1);return false;"><!---Delete--->Supprimer</a>
 								</cfif>
 							</div>
 						</cfif>
@@ -614,9 +614,9 @@
 										<a href="##" onclick="showwindow('#myself##xfa.detaildoc#&file_id=#id#&what=files&loaddiv=content&folder_id=#folder_id_r#','',1070,1);return false;"><strong>#left(filename,50)#</strong></a>
 										<br />
 										<br />
-										Folder: <a href="##" onclick="goToFolder('#folder_id_r#')">#folder_name#</a>
+										<!---Folder:--->Dossier: <a href="##" onclick="goToFolder('#folder_id_r#')">#folder_name#</a>
 									<cfelse>
-										Folder: <a href="##" onclick="goToFolder('#folder_id_r#')">#folder_name#</a>
+										<!---Folder:--->Dossier: <a href="##" onclick="goToFolder('#folder_id_r#')">#folder_name#</a>
 										<br />
 										<br />
 										<cfloop list="#attributes.cs_place.bottom.file#" index="m" delimiters=",">
@@ -662,7 +662,7 @@
 									#myFusebox.getApplicationData().defaults.trans("date_created")#:<br>
 									#dateformat(date_create, "#myFusebox.getApplicationData().defaults.getdateformat()#")# #timeformat(date_create, "HH:mm")#
 									<br /><br />
-									<a href="##" onclick="showwindow('#myself#ajax.remove_record&id=#id#&what=files&loaddiv=content&folder_id=#folder_id_r#','#Jsstringformat(myFusebox.getApplicationData().defaults.trans("remove"))#',400,1);return false;">Delete</a>
+									<a href="##" onclick="showwindow('#myself#ajax.remove_record&id=#id#&what=files&loaddiv=content&folder_id=#folder_id_r#','#Jsstringformat(myFusebox.getApplicationData().defaults.trans("remove"))#',400,1);return false;"><!--Delete-->Supprimer</a>
 								</cfif>
 							</div>
 						</cfif>

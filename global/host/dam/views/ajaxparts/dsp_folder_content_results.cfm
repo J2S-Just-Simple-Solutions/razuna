@@ -45,8 +45,8 @@
 		<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
 			<tr>
 				<td>
-					<div style="float:left;color:red;font-weight:bold;">No assets found!</div>
-					<div style="float:left;padding-left:10px;"><cfif session.fromshare><a href="#cgi.http_referer#">Go back to the share</cfif></div>
+					<div style="float:left;color:red;font-weight:bold;"><!---No assets found!--->Aucun actif trouvé!</div>
+					<div style="float:left;padding-left:10px;"><cfif session.fromshare><a href="#cgi.http_referer#"><!---Go back to the share--->Revenir au partage</cfif></div>
 				</td>
 			</tr>
 		</table>
@@ -266,7 +266,7 @@
 										<cfset flid = ListGetAt(i,2,'|')>
 										<cfset folderpath = folderpath & " / <a href='##' onclick=goToFolder('#flid#');>#ListGetAt(i,1,'|')#</a>">
 									</cfloop>
-									Folder: #replace(folderpath,'/','','ONE')#
+									<!---Folder:--->Dossier: #replace(folderpath,'/','','ONE')#
 								</cfif>
 							<cfelse>
 								"#filename#" en cours de traitement !
@@ -274,7 +274,7 @@
 								#myFusebox.getApplicationData().defaults.trans("date_created")#:<br>
 								#dateformat(date_create, "#myFusebox.getApplicationData().defaults.getdateformat()#")# #timeformat(date_create, "HH:mm")#
 								<br><br>
-								<a href="##" onclick="showwindow('#myself#ajax.remove_record&id=#theid#&what=images&loaddiv=#attributes.thediv#&folder_id=#folder_id_r#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(myFusebox.getApplicationData().defaults.trans("remove"))#',400,1);return false;">Delete</a>
+								<a href="##" onclick="showwindow('#myself#ajax.remove_record&id=#theid#&what=images&loaddiv=#attributes.thediv#&folder_id=#folder_id_r#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(myFusebox.getApplicationData().defaults.trans("remove"))#',400,1);return false;"><!---Delete--->Supprimer</a>
 							</cfif>
 						</div>
 					<!--- Videos --->
@@ -434,7 +434,7 @@
 										<cfset flid = ListGetAt(i,2,'|')>
 										<cfset folderpath = folderpath & " / <a href='##' onclick=goToFolder('#flid#');>#ListGetAt(i,1,'|')#</a>">
 									</cfloop>
-									Folder: #replace(folderpath,'/','','ONE')#
+									<!---Folder:--->Dossier: #replace(folderpath,'/','','ONE')#
 								</cfif>
 							<cfelse>					
 								"#filename#" en cours de traitement !
@@ -442,7 +442,7 @@
 								#myFusebox.getApplicationData().defaults.trans("date_created")#:<br>
 								#dateformat(date_create, "#myFusebox.getApplicationData().defaults.getdateformat()#")# #timeformat(date_create, "HH:mm")#
 								<br><br>
-								<a href="##" onclick="showwindow('#myself#ajax.remove_record&id=#theid#&what=videos&loaddiv=#attributes.thediv#&folder_id=#folder_id_r#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(myFusebox.getApplicationData().defaults.trans("remove"))#',400,1);return false;">Delete</a>
+								<a href="##" onclick="showwindow('#myself#ajax.remove_record&id=#theid#&what=videos&loaddiv=#attributes.thediv#&folder_id=#folder_id_r#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(myFusebox.getApplicationData().defaults.trans("remove"))#',400,1);return false;"><!---Delete--->Supprimer</a>
 							</cfif>
 						</div>
 					<!--- Audios --->
@@ -587,7 +587,7 @@
 										<cfset flid = ListGetAt(i,2,'|')>
 										<cfset folderpath = folderpath & " / <a href='##' onclick=goToFolder('#flid#');>#ListGetAt(i,1,'|')#</a>">
 									</cfloop>
-									Folder: #replace(folderpath,'/','','ONE')#
+									Dossier: #replace(folderpath,'/','','ONE')#
 								</cfif>
 							<cfelse>
 								"#filename#" en cours de traitement !
@@ -595,7 +595,7 @@
 								#myFusebox.getApplicationData().defaults.trans("date_created")#:<br>
 								#dateformat(date_create, "#myFusebox.getApplicationData().defaults.getdateformat()#")# #timeformat(date_create, "HH:mm")#
 								<br><br>
-								<a href="##" onclick="showwindow('#myself#ajax.remove_record&id=#theid#&what=audios&loaddiv=#attributes.thediv#&folder_id=#folder_id_r#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(myFusebox.getApplicationData().defaults.trans("remove"))#',400,1);return false;">Delete</a>
+								<a href="##" onclick="showwindow('#myself#ajax.remove_record&id=#theid#&what=audios&loaddiv=#attributes.thediv#&folder_id=#folder_id_r#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(myFusebox.getApplicationData().defaults.trans("remove"))#',400,1);return false;"><!---Delete--->Supprimer</a>
 							</cfif>
 						</div>
 					<!--- All other files --->
@@ -745,7 +745,7 @@
 										<cfset flid = ListGetAt(i,2,'|')>
 										<cfset folderpath = folderpath & " / <a href='##' onclick=goToFolder('#flid#');>#ListGetAt(i,1,'|')#</a>">
 									</cfloop>
-									Folder: #replace(folderpath,'/','','ONE')#
+									<!---Folder:--->Dossier: #replace(folderpath,'/','','ONE')#
 								</cfif>
 							<cfelse>
 								"#filename#" en cours de traitement !
@@ -753,7 +753,7 @@
 								#myFusebox.getApplicationData().defaults.trans("date_created")#:<br>
 								#dateformat(date_create, "#myFusebox.getApplicationData().defaults.getdateformat()#")# #timeformat(date_create, "HH:mm")#
 								<br><br>
-								<a href="##" onclick="showwindow('#myself#ajax.remove_record&id=#theid#&what=files&loaddiv=#attributes.thediv#&folder_id=#folder_id_r#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(myFusebox.getApplicationData().defaults.trans("remove"))#',400,1);return false;">Delete</a>
+								<a href="##" onclick="showwindow('#myself#ajax.remove_record&id=#theid#&what=files&loaddiv=#attributes.thediv#&folder_id=#folder_id_r#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(myFusebox.getApplicationData().defaults.trans("remove"))#',400,1);return false;"><!---Delete--->Supprimer</a>
 							</cfif>
 						</div>
 					</cfif>
