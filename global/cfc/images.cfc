@@ -1379,7 +1379,7 @@
 				</cfif>
 				<cfset var theimarguments = "#densitySettings# #theoriginalasset# #csarguments# #alpha#-resize #newImgWidth#x#newImgHeight#  -density #arguments.thestruct.xres#x#arguments.thestruct.yres# -units pixelsperinch #theflatten##theformatconv#">
 			<cfelse>
-				<cfif  theformat NEQ 'eps'>
+				<cfif theformat NEQ 'eps'>
 					<cfset var theimarguments = "#densitySettings# #theoriginalasset# #csarguments# #alpha# -resize #newImgWidth#x#newImgHeight#  #forTransparentImages##theformatconv#">
 				<cfelse>
 					<cfset var theimarguments = "#densitySettings# #theoriginalasset# #csarguments# #alpha# -resize #newImgWidth#x#newImgHeight#  #theflatten##theformatconv#">
@@ -1413,7 +1413,7 @@
 				<cfset var theimargumentsthumb = "#densitySettings# #theoriginalasset# #csarguments# -resize #resizeargs# #theflatten##thethumbtconv#"> 
 			</cfif>
 		<cfelse>
-			<cfif  theformat NEQ 'eps'>
+			<cfif theformat NEQ 'eps'>
 				<cfset var theimargumentsthumb = "#densitySettings# #theformatconv# #csarguments# -resize #resizeargs# #forTransparentImages##thethumbtconv#">
 			<cfelse>
 				<cfset var theimargumentsthumb = "#densitySettings# #theformatconv# #csarguments# -resize #resizeargs# #theflatten##thethumbtconv#">
@@ -1436,21 +1436,21 @@
 		<!--- If we are a RAW image --->
 		<cfswitch expression="#arguments.thestruct.qry_detail.img_extension#">
 			<cfcase value="nef,x3f,arw,mrw,crw,cr2,3fr,ari,srf,sr2,bay,cap,iiq,eip,dcs,dcr,drf,k25,kdc,erf,fff,mef,mos,nrw,ptx,pef,pxn,r3d,raf,raw,rw2,rwl,dng,rwz">
-				<cfset var  checkwidth = 0>
-				<cfset var  dclist = 0>
-				<cfset var  thmbwidth = 0>
-				<cfset var  fullwidth = 1000>
+				<cfset var checkwidth = 0>
+				<cfset var dclist = 0>
+				<cfset var thmbwidth = 0>
+				<cfset var fullwidth = 1000>
 				<cftry>
 					<!--- Get embedded thumb and actual image width information for comparision --->
 					<cfexecute name="#thedcraw#" arguments="-i -v #theoriginalasset#" variable="checkwidth" timeout="120"/>
 					<cfset dclist = REReplace(checkwidth,"#chr(13)#|#chr(9)#|\n|\r","@","ALL")>
 					<cfset dclist = REReplace(dclist,":","@@","ALL")>
 					<cfset var thmbsizeidx = listfindnocase(dclist,'Thumb size','@@')>
-					<cfset  thmbwidth = gettoken(dclist,thmbsizeidx+1,'@@')>
-					<cfset  thmbwidth = gettoken(thmbwidth,1,'x')>
-					<cfset  var fullsizeidx = listfindnocase(dclist,'Full size','@@')>
-					<cfset  fullwidth = gettoken(dclist,fullsizeidx+1,'@@')>
-					<cfset  fullwidth = gettoken(fullwidth,1,'x')>
+					<cfset thmbwidth = gettoken(dclist,thmbsizeidx+1,'@@')>
+					<cfset thmbwidth = gettoken(thmbwidth,1,'x')>
+					<cfset var fullsizeidx = listfindnocase(dclist,'Full size','@@')>
+					<cfset fullwidth = gettoken(dclist,fullsizeidx+1,'@@')>
+					<cfset fullwidth = gettoken(fullwidth,1,'x')>
 				<cfcatch></cfcatch>
 				</cftry>
 				<!--- Check if embedded thumb is close to full size. If not then extract from actual image (much slower). --->
@@ -1483,6 +1483,13 @@
 				<cfif thewm.wmval.wm_use_image>
 					<cfexecute name="#thecomposite#" arguments="-dissolve #thewm.wmval.wm_image_opacity#% -gravity #thewm.wmval.wm_image_position# #arguments.thestruct.rootpath#global/host/watermark/#session.hostid#/#thewm.wmval.wm_image_path# #theformatconv# #theformatconv#" timeout="90" errorVariable="err"/>
 				</cfif>
+
+
+				<cflog file="j2s-watermark" type="Information" text="name=#thecomposite#"> 
+				<cflog file="j2s-watermark" type="Information" text="arguments=-dissolve #thewm.wmval.wm_image_opacity#% -gravity #thewm.wmval.wm_image_position# #arguments.thestruct.rootpath#global/host/watermark/#session.hostid#/#thewm.wmval.wm_image_path# #theformatconv# #theformatconv#"> 
+				<cflog file="j2s-watermark" type="Error" text="#err#"> 
+
+
 				<cfif thewm.wmval.wm_use_text>
 					<!--- Opacity --->
 					<cfif thewm.wmval.wm_text_opacity EQ 100>
