@@ -95,7 +95,7 @@
 function remren(id){
 	$( "##dialog-confirm-rendition" ).dialog({
 		resizable: false,
-		height:140,
+		height: 160,
 		modal: true,
 		buttons: {
 			"#myFusebox.getApplicationData().defaults.trans("remove_rend_ok")#": function() {

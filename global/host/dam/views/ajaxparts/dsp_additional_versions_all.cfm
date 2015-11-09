@@ -80,7 +80,7 @@
 	function swaporiginal(id, type){
 		$( "##dialog-confirm-swap" ).dialog({
 			resizable: false,
-			height:160,
+			height: 160,
 			modal: true,
 			buttons: {
 				"#myFusebox.getApplicationData().defaults.trans("yes")#": function() {
@@ -101,7 +101,7 @@
 	function remavren(id,type){
 		$( "##dialog-confirm-rendition" ).dialog({
 			resizable: false,
-			height:140,
+			height: 160,
 			modal: true,
 			buttons: {
 				"#myFusebox.getApplicationData().defaults.trans("remove_rend_ok")#": function() {
