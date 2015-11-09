@@ -102,7 +102,7 @@ function remren(id){
 				$( this ).dialog( "close" );
 				$('##relatedvideos').load('#myself#c.videos_remove_related&file_id=#attributes.file_id#&what=videos&loaddiv=#attributes.loaddiv#&folder_id=#attributes.folder_id#&s=#attributes.s#&id=' + id, function(){ loadrenvid(); });
 			},
-			"#myFusebox.getApplicationData().defaults.trans('cancel')#": function() {
+			"#myFusebox.getApplicationData().defaults.trans("cancel")#": function() {
 				$( this ).dialog( "close" );
 			}
 		}

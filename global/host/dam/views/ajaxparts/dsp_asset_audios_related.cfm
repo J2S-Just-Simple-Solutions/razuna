@@ -105,7 +105,7 @@ function remrenaud(id){
 				$( this ).dialog( "close" );
 				$('##relatedaudios').load('#myself#c.audios_remove_related&file_id=#attributes.file_id#&what=audios&loaddiv=#attributes.loaddiv#&folder_id=#attributes.folder_id#&s=#attributes.s#&id=' + id, function(){ loadrenaud(); });
 			},
-			"#myFusebox.getApplicationData().defaults.trans('cancel')#": function() {
+			"#myFusebox.getApplicationData().defaults.trans("cancel")#": function() {
 				$( this ).dialog( "close" );
 			}
 		}
