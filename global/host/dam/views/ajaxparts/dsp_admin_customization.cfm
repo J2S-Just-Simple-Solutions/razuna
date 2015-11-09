@@ -107,7 +107,7 @@
 			<div stlye="clear:both;"><br /></div>
 			
 			<!--- User options --->
-			<a href="##" onclick="$('##useroptions').slideToggle('slow');return false;"><div class="headers">User Options</div></a>
+			<a href="##" onclick="$('##useroptions').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("user_options")#</div></a>
 			<div id="useroptions" style="display:none;padding-top:10px;">
 				<!--- User --->
 				<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
@@ -981,7 +981,7 @@
 			</div>
 			<div stlye="clear:both;"><br /></div>
 			<!--- Detail View --->
-			<a href="##" onclick="$('##detailview').slideToggle('slow');$('.chzn2-select').chosen({search_contains: true});return false;"><div class="headers">File Detail</div></a>
+			<a href="##" onclick="$('##detailview').slideToggle('slow');$('.chzn2-select').chosen({search_contains: true});return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans('file_detail')#</div></a>
 			<div id="detailview" style="display:none;padding-top:10px;">
 				<!--- Asset View --->
 				<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">

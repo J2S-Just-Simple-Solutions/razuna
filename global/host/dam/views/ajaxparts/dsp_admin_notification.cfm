@@ -100,8 +100,10 @@
 					#attributes.notifications.set2_new_user_email_body#
 				<cfelse>
 				#myFusebox.getApplicationData().defaults.trans("user_login_info_email")# <br>
-				Username: $username$<br>
-				Password: $password$
+				<!--- Username: $username$<br>
+				Password: $password$--->
+				Identifiant: $username$<br>
+				Mot de passe: $password$
 				</cfif>
 				</cftextarea>
 				</td>
@@ -123,11 +125,11 @@
 				<td width="120"><label for="folder_subscribe_meta">#myFusebox.getApplicationData().defaults.trans("the_asset_metadata")#</label></td>
 				<td>
 				 <select data-placeholder="Choose metadata to include" class="chzn-select" style="width:410px;" name="folder_subscribe_meta" id="folder_subscribe_meta" multiple="multiple">
-				        	<option value="" disabled>--- Custom Fields ---</option>
+				        	<option value="" disabled>#myFusebox.getApplicationData().defaults.trans("custom_fields_in_select")#</option>
 				        	<cfloop query="attributes.meta_cf"><option value="cf_#cf_id#" <cfif listcontains(attributes.notifications.set2_folder_subscribe_meta, "cf_#cf_id#")>selected</cfif>>#cf_text#</option></cfloop>
-				        	<option value="" disabled>--- For Images ---</option>
+				        	<option value="" disabled>#myFusebox.getApplicationData().defaults.trans("for_images_in_select")#</option>
 				        	<cfloop collection="#attributes.meta_img#" item="i"><option value="img_#i#" <cfif listcontainsnocase(attributes.notifications.set2_folder_subscribe_meta, "img_#i#")>selected</cfif>>#structfind(attributes.meta_img,i)#</option></cfloop>
-				        	<option value="" disabled>--- For Documents (PDF) ---</option>
+				        	<option value="" disabled>#myFusebox.getApplicationData().defaults.trans("for_documents_in_select")#</option>
 				        	<cfloop list="#attributes.meta_doc#" index="i" delimiters=","><option value="doc_#i#" <cfif listcontains(attributes.notifications.set2_folder_subscribe_meta, "doc_#i#")>selected</cfif>>#i#</option></cfloop>
 			        	</select>
 			        	</td>
@@ -148,11 +150,11 @@
 				<td width="120"><label for="asset_expiry_meta">#myFusebox.getApplicationData().defaults.trans("the_asset_metadata")#</label></td>
 				<td>
 				 <select data-placeholder="Choose metadata to include" class="chzn-select" style="width:410px;" name="asset_expiry_meta" id="asset_expiry_meta" multiple="multiple">
-				        	<option value="" disabled>--- Custom Fields ---</option>
+				        	<option value="" disabled>#myFusebox.getApplicationData().defaults.trans("custom_fields_in_select")#</option>
 				        	<cfloop query="attributes.meta_cf"><option value="cf_#cf_id#" <cfif listcontains(attributes.notifications.set2_asset_expiry_meta, "cf_#cf_id#")>selected</cfif>>#cf_text#</option></cfloop>
-				        	<option value="" disabled>--- For Images ---</option>
+				        	<option value="" disabled>#myFusebox.getApplicationData().defaults.trans("for_images_in_select")#</option>
 				        	<cfloop collection="#attributes.meta_img#" item="i"><option value="img_#i#" <cfif listcontainsnocase(attributes.notifications.set2_asset_expiry_meta, "img_#i#")>selected</cfif>>#structfind(attributes.meta_img,i)#</option></cfloop>
-				        	<option value="" disabled>--- For Documents (PDF) ---</option>
+				        	<option value="" disabled>#myFusebox.getApplicationData().defaults.trans("for_documents_in_select")#</option>
 				        	<cfloop list="#attributes.meta_doc#" index="i" delimiters=","><option value="doc_#i#" <cfif listcontains(attributes.notifications.set2_asset_expiry_meta, "doc_#i#")>selected</cfif>>#i#</option></cfloop>
 			        	</select>
 			      	</td>
@@ -169,19 +171,20 @@
 			<tr>
 				<td width="120"><label for="duplicates_body">#myFusebox.getApplicationData().defaults.trans("the_email_content")#</label></td>
 				<td><cftextarea name="duplicates_body" id="duplicates_body"><cfif len(attributes.notifications.set2_duplicates_email_body) LT 10>
-					Hi there. The file $filename$ already exists in Razuna and thus was not added to the system!
-					The file exists at the following locations: $location$
+					<!---Hi there. The file $filename$ already exists in Razuna and thus was not added to the system!
+					The file exists at the following locations: $location$--->
+					#myFusebox.getApplicationData().defaults.trans("already_file_exist_message")#
 				<cfelse> #attributes.notifications.set2_duplicates_email_body#</cfif></cftextarea></td>
 			</tr>
 			<tr>
 				<td width="120"><label for="duplicates_meta">#myFusebox.getApplicationData().defaults.trans("the_asset_metadata")#</label></td>
 				<td>
 				 <select data-placeholder="Choose metadata to include" class="chzn-select" style="width:410px;" name="duplicates_meta" id="duplicates_meta" multiple="multiple">
-				        	<option value="" disabled>--- Custom Fields ---</option>
+				        	<option value="" disabled>#myFusebox.getApplicationData().defaults.trans("custom_fields_in_select")#</option>
 				        	<cfloop query="attributes.meta_cf"><option value="cf_#cf_id#" <cfif listcontains(attributes.notifications.set2_duplicates_meta, "cf_#cf_id#")>selected</cfif>>#cf_text#</option></cfloop>
-				        	<option value="" disabled>--- For Images ---</option>
+				        	<option value="" disabled>#myFusebox.getApplicationData().defaults.trans("for_images_in_select")#</option>
 				        	<cfloop collection="#attributes.meta_img#" item="i"><option value="img_#i#" <cfif listcontainsnocase(attributes.notifications.set2_duplicates_meta, "img_#i#")>selected</cfif>>#structfind(attributes.meta_img,i)#</option></cfloop>
-				        	<option value="" disabled>--- For Documents (PDF) ---</option>
+				        	<option value="" disabled>#myFusebox.getApplicationData().defaults.trans("for_documents_in_select")#</option>
 				        	<cfloop list="#attributes.meta_doc#" index="i" delimiters=","><option value="doc_#i#" <cfif listcontains(attributes.notifications.set2_duplicates_meta, "doc_#i#")>selected</cfif>>#i#</option></cfloop>
 			        	</select>
 		        		</td>
@@ -201,20 +204,21 @@
 			CKEDITOR.instances["asset_expiry_body"].updateElement();
 			CKEDITOR.instances["duplicates_body"].updateElement();
 			CKEDITOR.instances["set2_new_user_email_body"].updateElement();
-			if ($('##set2_new_user_email_body').val().length >=4000)
-				{
-				alert ('Email body must be less than 4000 characters. '); 
+			if ($('##set2_new_user_email_body').val().length >=4000) {
+				<!---alert ('Email body must be less than 4000 characters. ');--->
+				alert ('Le corps de votre email ne doit pas excéder 4000 caractères. '); 
+				alert('#myFusebox.getApplicationData().defaults.trans("email_body_cant_exceed_4000_char")#')
 				return false;
-				}
-			if ($('##folder_subscribe_body').val().length >=1000 || $('##asset_expiry_body').val().length >=1000 || $('##duplicates_body').val().length >=1000)
-			{
-			alert ('Email introdutcions must be less than 1000 characters. '); 
-			return false;
 			}
-			if ($('##duplicates_body').val().length >=2000)
-			{
-			alert ('Email content must be less than 2000 characters. '); 
-			return false;
+			if ($('##folder_subscribe_body').val().length >=1000 || $('##asset_expiry_body').val().length >=1000 || $('##duplicates_body').val().length >=1000) {
+				<!---alert ('Email introductions must be less than 1000 characters. '); --->
+				alert ('#myFusebox.getApplicationData().defaults.trans("email_introductionss_cant_exceed_1000_char")#'); 
+				return false;
+			}
+			if ($('##duplicates_body').val().length >=2000){
+				<!---alert ('Email content must be less than 2000 characters. '); --->
+				alert ('#myFusebox.getApplicationData().defaults.trans("email_content_cant_exceed_2000_char")#'); 
+				return false;
 			}
 			// Get values
 			var url = formaction("form_admin_notification");
