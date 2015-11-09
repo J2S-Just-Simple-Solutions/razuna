@@ -557,15 +557,19 @@
 			return false;		
 		}
 
-		//Gestion du copyright et frontal
-		var copyright = $("input[name='cf_3F2A4A4C-6F3F-484C-95451AED9C683840']");
+		//Gestion du copyright et frontal		
+    	// 85C370DA-F2D2-4063-8CCBB70AC652C29B is the id of the custom field "Copyright" 
+    	// C8F68B05-ADED-457C-801C3741CAD9BA8F is the id of the custom field "Image partagée au public" 
+		var copyright = $("input[name='85C370DA-F2D2-4063-8CCBB70AC652C29B']");
 		//J'ai un copyright
 		console.log(copyright)
 		if(copyright.length > 0 ){
 			//Je récupère la bonne checkbox
-			var front = $("input[name='cf_BF7C1F49-53BB-495B-BDFA27A836A788E0'][value='"+(copyright.val().indexOf("IMA/") > -1 ? "T" : "F")+"']");
+			var front = $("input[name='C8F68B05-ADED-457C-801C3741CAD9BA8F'][value='"+(copyright.val().indexOf("IMA/") > -1 ? "T" : "F")+"']");
 			//Je la sélectionne
-			if(front.length > 0){front.click();}
+			if(front.length > 0){
+				front.click();
+			}
 		}		
 
 		return true;
