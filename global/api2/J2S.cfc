@@ -283,4 +283,23 @@
 			 return variables.encodedString;
 		</cfscript>
 	</cffunction>
+
+	<cffunction name="getInventory" access="remote" output="false" returntype="query" returnformat="json"  >
+		<!--- Je récupère mes arguments --->
+		<cfargument name="cf_id" required="true" type="string">
+		<cfargument name="value" required="true" type="string">	
+
+		<cfset result="" />
+
+		<cfquery datasource="#application.razuna.api.dsn#" name="qry">
+			SELECT cf_value
+			FROM raz1_custom_fields_values
+			WHERE cf_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="#cf_id#">
+			AND cf_value LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#value#%">
+		</cfquery>
+
+		<!--- Return --->
+		<cfreturn #qry#>
+
+	</cffunction/>
 </cfcomponent>

@@ -104,7 +104,7 @@
 				<td>
 					<cfset cfid = replace(cf_id,"-","","all")>
 					<!--- For text --->
-					<cfif cf_type EQ "text" OR cf_type EQ "textarea" >
+					<cfif cf_type EQ "text" OR cf_type EQ "textarea" OR cf_type EQ "inventory" >
 						<input type="text" style="width:300px;" name="cf#cfid#" >
 					<!--- Radio --->
 					<cfelseif cf_type EQ "radio">

@@ -520,6 +520,7 @@
 				// }
 				// </cfif>
 			</cfif>
+
 			if(str != ''){
 				alert(str);
 				return false;
@@ -535,6 +536,27 @@
 			      return false;
 			}
 		}
+
+		//Si un champ obligatoire est vide
+		if($("input[inventory]").length > 0 && $("input[inventory]").val() == "") {
+			alert("#myFusebox.getApplicationData().defaults.trans('inventory-required')#");
+			return false;
+		}
+
+		// Gestion du numéro d'inventaire
+		if($(".inventory-error").length > 0 ){
+			$("<div>#myFusebox.getApplicationData().defaults.trans('inventory-error')#</div>").dialog({
+				buttons: {
+		        "#myFusebox.getApplicationData().defaults.trans('button_save')#": function() {
+		          $(".inventory-error").removeClass("inventory-error");
+		          $("##detailinfo input[name=submit]").click();
+		          $( this ).dialog( "close" );
+		        }
+		      }
+			});
+			return false;		
+		}
+
 		return true;
 	}
 	// Submit form
