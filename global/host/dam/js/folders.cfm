@@ -133,8 +133,7 @@
 		var extension = document.forms[theform].extension.value;
 		var rawmetadata = document.forms[theform].rawmetadata.value;
 		var labels = $('#' + theform + ' [name="labels"]').val();
-		if(labels != null) 
-		{
+		if(labels != null) {
 			labels = labels.toString().replace(/,/g, " ");
 			labels = labels.toString().replace(/\//g, " ");
 		}
@@ -166,14 +165,19 @@
 		if (keywords != '') var keywords = 'keywords:(' + replacespaces(keywords) +')';
 		if (description != '') var description = 'description:(' + replacespaces(description) +')';
 		var filename;
-		if (filename.indexOf('"')!=-1 || filename.indexOf('*')!=-1)
-			{if (filename != '')  filename = 'filename:(' + filename + ')';}
-		else	
-			{if (filename != '')  filename = 'filename:("' + filename + '")';}
+		if (filename.indexOf('"')!=-1 || filename.indexOf('*')!=-1) {
+			if (filename != '')  filename = 'filename:(' + filename + ')';
+		}
+		else {
+			if (filename != '')  filename = 'filename:("' + filename + '")';
+		}
 		
-		if (extension != '') var extension = 'extension:(' + extension +')';
-		if (rawmetadata != '') var rawmetadata = 'rawmetadata:(' + replacespaces(rawmetadata) +')';
-		
+		if (extension != '') {
+			var extension = 'extension:(' + extension +')';
+		}
+		if (rawmetadata != '') {
+			var rawmetadata = 'rawmetadata:(' + replacespaces(rawmetadata) +')';
+		}		
 
 		if (labels != ''){
 			if (andor == "OR"){
