@@ -557,6 +557,17 @@
 			return false;		
 		}
 
+		//Gestion du copyright et frontal
+		var copyright = $("input[name='cf_3F2A4A4C-6F3F-484C-95451AED9C683840']");
+		//J'ai un copyright
+		console.log(copyright)
+		if(copyright.length > 0 ){
+			//Je récupère la bonne checkbox
+			var front = $("input[name='cf_BF7C1F49-53BB-495B-BDFA27A836A788E0'][value='"+(copyright.val().indexOf("IMA/") > -1 ? "T" : "F")+"']");
+			//Je la sélectionne
+			if(front.length > 0){front.click();}
+		}		
+
 		return true;
 	}
 	// Submit form
