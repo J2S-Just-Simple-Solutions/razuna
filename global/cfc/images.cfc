@@ -1479,13 +1479,8 @@
 		<!--- Before we create thumb apply watermark if any --->
 
 <cflog file="j2s-watermark" type="Information" text="Before we create thumb apply watermark if any"> 
-<cflog file="j2s-watermark" type="Information" text="#arguments.thestruct["convert_wm_" & #theformat#]#"> 
 
 		<cfif structKeyExists(arguments.thestruct,"convert_wm_#theformat#") AND #arguments.thestruct["convert_wm_" & #theformat#]# NEQ "">
-
-<cflog file="j2s-watermark" type="Information" text="name=#thecomposite#"> 
-<cflog file="j2s-watermark" type="Information" text="arguments=-dissolve #thewm.wmval.wm_image_opacity#% -gravity #thewm.wmval.wm_image_position# #arguments.thestruct.rootpath#global/host/watermark/#session.hostid#/#thewm.wmval.wm_image_path# #theformatconv# #theformatconv#"> 
-<cflog file="j2s-watermark" type="Error" text="#err#"> 
 
 			<cfif "convert_wm_#theformat#" NEQ "" >
 				<cfset var err = "">
@@ -1494,6 +1489,9 @@
 <cflog file="j2s-watermark" type="Information" text="=> watermark IMAGE"> 
 
 					<cfexecute name="#thecomposite#" arguments="-dissolve #thewm.wmval.wm_image_opacity#% -gravity #thewm.wmval.wm_image_position# #arguments.thestruct.rootpath#global/host/watermark/#session.hostid#/#thewm.wmval.wm_image_path# #theformatconv# #theformatconv#" timeout="90" errorVariable="err"/>
+
+<cflog file="j2s-watermark" type="Information" text="/usr/bin/composite -dissolve #thewm.wmval.wm_image_opacity#% -gravity #thewm.wmval.wm_image_position# #arguments.thestruct.rootpath#global/host/watermark/#session.hostid#/#thewm.wmval.wm_image_path# #theformatconv# #theformatconv#"> 
+
 				</cfif>
 
 				<cfif thewm.wmval.wm_use_text>
@@ -1513,10 +1511,12 @@
 						<cfset var thetext = "'#thewm.wmval.wm_text_content#'">
 					</cfif>
 
-<cflog file="j2s-watermark" type="Information" text="text=#thetext#"> 
-
 					<!--- Write script --->
 					<cffile action="write" file="#arguments.thestruct.theshwm#" output="#theexe# #theformatconv# -fill 'rgba(0,0,0,#topa#)' -gravity #thewm.wmval.wm_text_position# -pointsize #thewm.wmval.wm_text_font_size# -font #thewm.wmval.wm_text_font# -annotate 0 #thetext# #theformatconv#" mode="777">
+					
+
+<cflog file="j2s-watermark" type="Information" text="#theexe# #theformatconv# -fill 'rgba(0,0,0,#topa#)' -gravity #thewm.wmval.wm_text_position# -pointsize #thewm.wmval.wm_text_font_size# -font #thewm.wmval.wm_text_font# -annotate 0 #thetext# #theformatconv#"> 
+
 					<!--- Execute it --->
 					<cfexecute name="#arguments.thestruct.theshwm#" timeout="180" errorVariable="err"/>
 					<!--- Delete it --->
