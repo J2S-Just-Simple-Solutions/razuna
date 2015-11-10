@@ -482,8 +482,7 @@
 		</cfif>
 	}
 
-	function formchecks()
-	{
+	function formchecks(){
 		<cfif cs.req_filename OR cs.req_description OR cs.req_keywords OR prefs.set2_upc_enabled>
 			var reqfield = false;
 			var isNumericField = false;
@@ -528,8 +527,7 @@
 		</cfif>
 		// Check expiry date is a valid date
 		var expirydate= $('##expiry_date').val();
-		if (expirydate !='')
-		{
+		if (expirydate !='') {
 			var isdate = Date.parse(expirydate);
 			if (isNaN(isdate)) {
 			    <!---alert('Please enter a valid expiry date.');--->
@@ -607,7 +605,7 @@
 					$( this ).dialog( "close" );
 					$('##div_forall').load('#myself#c.recreatepreview&file_id=#attributes.file_id#-img&thetype=img');
 				},
-				"#myFusebox.getApplicationData().defaults.trans('cancel')#": function() {
+				"#myFusebox.getApplicationData().defaults.trans("cancel")#": function() {
 					$( this ).dialog( "close" );
 				}
 			}
