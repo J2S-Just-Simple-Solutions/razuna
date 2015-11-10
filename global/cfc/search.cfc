@@ -63,10 +63,6 @@
 
 	<cffunction name="search_all">
 		<cfargument name="thestruct" type="struct">
-
-		<!--- J2S: Add log to check lucene search--->
-		<cflog file="SearchLog" text="1-search.cfc arguments.thestruct.searchtext=#arguments.thestruct.searchtext# " /> 
-
 		<!--- Get the cachetoken for here --->
 		<cfset variables.cachetoken = getcachetoken("search")>
 		<cfset variables.cachetokenlogs = getcachetoken("logs")>
@@ -111,18 +107,12 @@
 		</cfif>
 
 		<cfif IsDefined("arguments.thestruct.descriptor") AND arguments.thestruct.descriptor>
-			<cflog file="razunaAppLog" text="original:#arguments.thestruct.searchtext#" />
 			<cfset arguments.thestruct.searchtext = searchforthesaurus(search_value=thestruct.searchtext)>
-			<cflog file="razunaAppLog" text="modified:#arguments.thestruct.searchtext#" />
 			<cfset arguments.thestruct.descriptor = false />
 		</cfif>
 
 		<cfset var sqlInCluseLimit = 990>
 		<cfset var q_end = sqlInCluseLimit>
-
-
-		<!--- J2S: Add log to check lucene search --->
-		<cflog file="SearchLog" text="2-search.cfc arguments.thestruct.searchtext=#arguments.thestruct.searchtext# " />
 
 		<!--- Search in Lucene  --->
 		<cfif arguments.thestruct.thetype EQ "all">

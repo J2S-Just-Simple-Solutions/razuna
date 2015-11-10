@@ -971,9 +971,6 @@
 		<cfargument name="category" type="string">
 		<cfargument name="hostid" type="numeric">
 
-		<!--- J2S: Add log to check lucene search --->
-		<cflog file="SearchLog" text="3-lucene.cfc criteria=#arguments.criteria# " />
-
 		<!--- Write dummy record (this fixes issues with collection not written to lucene!!!) --->
 		<!--- Commented this out cause we fixed it and second it slows down the search coniderably!!!!!! --->
 		<!--- <cftry>
@@ -986,10 +983,6 @@
 		 Do not use escape(deprecated) or encodeURI (doesn't encode '+' sign) methods to encode. Use the encodeURIComponent javascript method only.
 		--->
 		<cfset arguments.criteria = replace(urlDecode(replace(arguments.criteria,"+","PLUSSIGN","ALL")),"PLUSSIGN","+","ALL")>
-
-		<!--- J2S: Add log to check lucene search --->
-		<cflog file="SearchLog" text="4-lucene.cfc after urlDecode criteria=#arguments.criteria# " />
-
 		<!--- If criteria is empty --->
 		<cfif arguments.criteria EQ "">
 			<cfset arguments.criteria = "">
@@ -1010,25 +1003,12 @@
 			<cfset arguments.criteria = '(' & arguments.criteria_sp  & ') ' & arguments.criteria & ' keywords:(#arguments.criteria_sp#) description:(#arguments.criteria_sp#) id:(#arguments.criteria_sp#) labels:(#arguments.criteria_sp#) customfieldvalue:(#arguments.criteria_sp#)'>
 		</cfif>
 
-
-		<!--- J2S: Add log to check lucene search --->
-		<cflog file="SearchLog" text="5-lucene.cfc criteria=#arguments.criteria# " />
-
 		<cftry>
 			<cfsearch collection='#arguments.hostid#' criteria='#arguments.criteria#' name='qrylucene' category='#arguments.category#'>
-
-			<!--- J2S: Add log to check lucene search --->
-			<cflog file="SearchLog" text="6-lucene.cfc qrylucene.recordCount=#qrylucene.recordCount# " />
-
 			<cfcatch type="any">
 				<cfset qrylucene = querynew("x")>
 			</cfcatch>
 		</cftry>
-
-
-		<!--- J2S: Add log to check lucene search 
-		<cflog file="SearchLog" text="6-lucene.cfc qrylucene=#qrylucene# " />--->
-
 
 		<!--- <cfset console(arguments.criteria)> --->
 		<!--- Return --->

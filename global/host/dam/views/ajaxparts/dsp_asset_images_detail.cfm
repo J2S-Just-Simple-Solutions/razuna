@@ -532,8 +532,9 @@
 		{
 			var isdate = Date.parse(expirydate);
 			if (isNaN(isdate)) {
-			      alert('Please enter a valid expiry date.');
-			      return false;
+			    <!---alert('Please enter a valid expiry date.');--->
+			    alert("#myFusebox.getApplicationData().defaults.trans('inventory-required')#");
+			    return false;
 			}
 		}
 
@@ -546,8 +547,9 @@
 		// Gestion du numéro d'inventaire
 		if($(".inventory-error").length > 0 ){
 			$("<div>#myFusebox.getApplicationData().defaults.trans('inventory-error')#</div>").dialog({
+  				title: "#myFusebox.getApplicationData().defaults.trans("warning")#",
 				buttons: {
-		        "#myFusebox.getApplicationData().defaults.trans('button_save')#": function() {
+		        "#myFusebox.getApplicationData().defaults.trans("button_save")#": function() {
 		          $(".inventory-error").removeClass("inventory-error");
 		          $("##detailinfo input[name=submit]").click();
 		          $( this ).dialog( "close" );
