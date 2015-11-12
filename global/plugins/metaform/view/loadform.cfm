@@ -143,7 +143,7 @@
 					</cfloop>
 					<tr>
 						<td colspan="2" align="right" style="padding-top:20px;">
-							<input type="submit" name="submitfields" value="Update Files" class="button" />
+							<input type="submit" name="submitfields" value="Mettre à jour les fichiers" class="button" />
 						</td>
 					</tr>
 				</table>
