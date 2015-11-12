@@ -73,7 +73,6 @@
 													<!--- For inventory --->
 													<cfelseif cf_type EQ "inventory">
 														<input type="text" style="width:400px;" id="#id#_cf_#cf_id#" name="#id#_cf_#cf_id#" />
-														<a href ="javascript:void(0)" onclick="copytextfield('cf_#cf_id#',$('###id#_cf_#cf_id#').val())">Copy to all</a>
 														<cfif thereq>
 															<cfset forjs = forjs & ",#id#_cf_#cf_id#:text">
 														</cfif>		
