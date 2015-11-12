@@ -3,8 +3,8 @@
 	<cfoutput>
 		<!--- If we don't have any files we redirect to the folder --->
 		<cfif result.cfc.pl.loadform.qry_files.recordcount EQ 0>
-			<h1>#myFusebox.getApplicationData().defaults.trans("pmf_upload_error")#</h1>
-			<h2>#myFusebox.getApplicationData().defaults.trans("pmf_upload_error_msg")#</h2>
+			<h1>Erreur de téléversement</h1>
+			<h2>Il y a eu une erreur lors du téléversement ou le fichier existe déjà dans le système. Cliquez dans l'un des dossiers affichés pour revenir vers la vue dossier.</h2>
 		<cfelse>
 			<form id="saveform_metaform" method="post" action="index.cfm?fa=c.plugin_direct">
 			<input type="hidden" name="comp" value="metaform.cfc.settings">
@@ -12,11 +12,11 @@
 				<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
 					<tr>
 						<td colspan="2">
-							<h1>#myFusebox.getApplicationData().defaults.trans("pmf_apply_metadata")#</h1>
+							<h1>Appliquer les métadonnées</h1>
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2">#myFusebox.getApplicationData().defaults.trans("pmf_apply_metadata_msg")#</td>
+						<td colspan="2">Veuillez renseigner les champs obligatoires de chaque fichier listé ci-dessous.</td>
 					</tr>
 					<!--- <tr>
 						<th>Filename</th>
@@ -50,7 +50,7 @@
 												</cfif>
 												#ucase(thefield)#<cfif thereq> *</cfif><br />
 												<textarea class="text" name="#id#_#thefield#" id="#id#_#thefield#" style="width:400px;height:40px;"></textarea>
-												<a href ="javascript:void(0)" onclick="copytextfield('#thefield#',$('###id#_#thefield#').val())">#myFusebox.getApplicationData().defaults.trans("pmf_copy_to_all")#</a>
+												<a href ="javascript:void(0)" onclick="copytextfield('#thefield#',$('###id#_#thefield#').val())">Copier pour tous</a>
 												<cfif thereq>
 													<cfset forjs = forjs & ",#id#_#thefield#:text">
 												</cfif>
@@ -66,28 +66,27 @@
 													<!--- For text --->
 													<cfif cf_type EQ "text">
 														<input type="text" style="width:400px;" id="#id#_cf_#cf_id#" name="#id#_cf_#cf_id#" />
-														<a href ="javascript:void(0)" onclick="copytextfield('cf_#cf_id#',$('###id#_cf_#cf_id#').val())">#myFusebox.getApplicationData().defaults.trans("pmf_copy_to_all")#</a>
+														<a href ="javascript:void(0)" onclick="copytextfield('cf_#cf_id#',$('###id#_cf_#cf_id#').val())">Copy to all</a>
 														<cfif thereq>
 															<cfset forjs = forjs & ",#id#_cf_#cf_id#:text">
 														</cfif>
 													<!--- For inventory --->
 													<cfelseif cf_type EQ "inventory">
 														<input type="text" style="width:400px;" id="#id#_cf_#cf_id#" name="#id#_cf_#cf_id#" />
-														<a href ="javascript:void(0)" onclick="copytextfield('cf_#cf_id#',$('###id#_cf_#cf_id#').val())">#myFusebox.getApplicationData().defaults.trans("trash")#</a>
 														<cfif thereq>
 															<cfset forjs = forjs & ",#id#_cf_#cf_id#:text">
 														</cfif>		
 													<!--- Radio --->
 													<cfelseif cf_type EQ "radio">
 														<input type="radio" name="#id#_cf_#cf_id#" id="#id#_cf_#cf_id#" value="T">yes <input type="radio" name="#id#_cf_#cf_id#" id="#id#_cf_#cf_id#" value="F" checked="true">no
-														&nbsp;&nbsp;<a href ="javascript:void(0)" onclick="copyradiofield('cf_#cf_id#',$('input:radio[name=#id#_cf_#cf_id#]:checked').val())">#myFusebox.getApplicationData().defaults.trans("pmf_copy_to_all")#</a>
+														&nbsp;&nbsp;<a href ="javascript:void(0)" onclick="copyradiofield('cf_#cf_id#',$('input:radio[name=#id#_cf_#cf_id#]:checked').val())">Copier pour tous</a>
 														<cfif thereq>
 															<cfset forjs = forjs & ",#id#_cf_#cf_id#:radio">
 														</cfif>
 													<!--- Textarea --->
 													<cfelseif cf_type EQ "textarea">
 														<textarea name="#id#_cf_#cf_id#" id="#id#_cf_#cf_id#" style="width:400px;height:60px;"></textarea>
-														<a href ="javascript:void(0)" onclick="copytextfield('cf_#cf_id#',$('###id#_cf_#cf_id#').val())">#myFusebox.getApplicationData().defaults.trans("pmf_copy_to_all")#</a>
+														<a href ="javascript:void(0)" onclick="copytextfield('cf_#cf_id#',$('###id#_cf_#cf_id#').val())">Copier pour tous</a>
 														<cfif thereq>
 															<cfset forjs = forjs & ",#id#_cf_#cf_id#:text">
 														</cfif>
@@ -99,7 +98,7 @@
 																<option value="#i#">#i#</option>
 															</cfloop>
 														</select>
-														<a href ="javascript:void(0)" onclick="copytextfield('cf_#cf_id#',$('###id#_cf_#cf_id#').val())">#myFusebox.getApplicationData().defaults.trans("pmf_copy_to_all")#</a>
+														<a href ="javascript:void(0)" onclick="copytextfield('cf_#cf_id#',$('###id#_cf_#cf_id#').val())">Copier pour tous</a>
 														<cfif thereq>
 															<cfset forjs = forjs & ",#id#_cf_#cf_id#:select">
 														</cfif>
@@ -118,7 +117,7 @@
 														<option value="#label_id#">#label_path#</option>
 													</cfloop>
 												</select>
-												<a href ="javascript:void(0)" onclick="copylabelfield('_labels',$('###id#_#thefield#').val())">#myFusebox.getApplicationData().defaults.trans("pmf_copy_to_all")#</a>
+												<a href ="javascript:void(0)" onclick="copylabelfield('_labels',$('###id#_#thefield#').val())">Copier pour tous</a>
 												<cfif thereq>
 													<cfset forjs = forjs & ",#id#_#thefield#:chosen">
 												</cfif>
