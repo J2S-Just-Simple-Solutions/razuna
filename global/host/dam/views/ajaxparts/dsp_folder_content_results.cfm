@@ -27,7 +27,7 @@
 	<cfset isadmin = true>
 <cfelse>
 	<cfset isadmin = false>
-</cfif>:Suppro
+</cfif>
 <cfoutput>
 	<cfset uniqueid = createuuid()>
 	<cfif qry_filecount.thetotal LTE session.rowmaxpage>
