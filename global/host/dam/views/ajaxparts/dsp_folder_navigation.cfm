@@ -36,7 +36,7 @@
 			</cfif>
 			<cfif attributes.folderaccess EQ "x">
 				<p><a href="##" onclick="showwindow('#myself#ajax.folder_settings&folder_id=#attributes.folder_id#&iscol=#attributes.iscol#','<cfif attributes.iscol EQ "f">#myFusebox.getApplicationData().defaults.trans("folder_properties")#<cfelse>Collection Settings</cfif>',800,1);$('##foldertools').toggle();return false;">
-				<cfif attributes.iscol EQ "f">#myFusebox.getApplicationData().defaults.trans("folder_properties")#<cfelse>Collection Settings</cfif></a></p>
+				<cfif attributes.iscol EQ "f">#myFusebox.getApplicationData().defaults.trans("folder_properties")#<cfelse>#myFusebox.getApplicationData().defaults.trans("collection_settings")#</cfif></a></p>
 			</cfif>
 		</div>
 	</div>
