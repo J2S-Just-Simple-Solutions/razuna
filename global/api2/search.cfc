@@ -255,7 +255,8 @@
 		<!--- Get cache --->
 		<cfset var cachetoken = getcachetoken(arguments.istruct.api_key,"search")>
 		<!--- Query --->
-		<cfquery datasource="#application.razuna.api.dsn#" name="qry_img" cachedwithin="1" region="razcache">
+		<!--- FL: desactivation du cache: <cfquery datasource="#application.razuna.api.dsn#" name="qry_img" cachedwithin="1" region="razcache">--->
+		<cfquery datasource="#application.razuna.api.dsn#" name="qry_img">-
 			<cfloop from="#pos_start#" to="#pos_end#" index="i">
 				<cfif q_start NEQ 1>
 					UNION ALL
