@@ -380,7 +380,7 @@
 					});
 					</script>
 					<!--- Je modifie le filename sur le tenant phototheque (id=5) avec la valeur du numéro d'inventaire: 3A5A7EB0-F844-4B14-83A6DF40AF5C4EC2 --->
-					<cfif #session.hostid# EQ 1>
+					<cfif #session.hostid# EQ 5>
 						<cfquery datasource="#application.razuna.api.dsn#" name="qry">
 							SELECT cf_value
 							FROM raz1_custom_fields_values
