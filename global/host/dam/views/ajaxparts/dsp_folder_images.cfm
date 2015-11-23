@@ -83,6 +83,18 @@
 										</cfif>
 									});
 									</script>
+
+									<!--- Je modifie le filename sur le tenant phototheque ( 5 ) avec la valeur du numéro d'inventaire --->
+									<cfif #session.hostid# EQ 1>
+										<cfquery datasource="#application.razuna.api.dsn#" name="qry">
+											SELECT cf_value
+											FROM raz1_custom_fields_values
+											WHERE cf_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="F167BA8D-9FF1-4811-B0636F9191AF3A31">
+											AND asset_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="#id#">
+										</cfquery>
+										<cfset var inventory=#qry.cf_value#/>
+									</cfif>
+							
 									<!--- custom metadata fields to show --->
 									<cfloop list="#attributes.cs_place.top.image#" index="m" delimiters=",">
 										<span class="assetbox_title">#myFusebox.getApplicationData().defaults.trans("#listlast(m," ")#")#</span>
@@ -161,7 +173,8 @@
 									<div style="clear:left;"></div>
 									<!--- custom metadata fields to show --->
 									<cfif attributes.cs.images_metadata EQ "">
-										<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','',1070,1);return false;"><strong>#left(img_filename,50)#</strong></a>
+										<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','',1070,1);return false;">
+												<cfif inventory NEQ ""><strong>#left(inventory,50)#</strong><cfelse><strong>#left(img_filename,50)#</strong></cfif></a>
 									<cfelse>
 										<br />
 										<cfloop list="#attributes.cs_place.bottom.image#" index="m" delimiters=",">
@@ -365,6 +378,16 @@
 						</cfif>
 					});
 					</script>
+					<!--- Je modifie le filename sur le tenant phototheque ( 5 ) avec la valeur du numéro d'inventaire --->
+					<cfif #session.hostid# EQ 1>
+						<cfquery datasource="#application.razuna.api.dsn#" name="qry">
+							SELECT cf_value
+							FROM raz1_custom_fields_values
+							WHERE cf_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="F167BA8D-9FF1-4811-B0636F9191AF3A31">
+							AND asset_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="#id#">
+						</cfquery>
+						<cfset var inventory=#qry.cf_value#/>
+					</cfif>
 					<tr class="list thumbview">
 						<td align="center">
 							<cfif is_available>
@@ -398,7 +421,7 @@
 							</cfif>
 						</td>
 						<td width="100%" valign="top">
-							<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(img_filename)#',1070,1);return false;"><strong>#img_filename#</strong></a>
+							<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(img_filename)#',1070,1);return false;"><cfif inventory NEQ ""><strong>#inventory#</strong><cfelse><strong>#img_filename#</strong></cfif></a>
 							<br />
 							<!--- Icons --->
 							<div style="float:left;padding-top:5px;">
