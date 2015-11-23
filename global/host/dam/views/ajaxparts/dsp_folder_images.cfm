@@ -84,12 +84,13 @@
 									});
 									</script>
 
-									<!--- Je modifie le filename sur le tenant phototheque ( 5 ) avec la valeur du numéro d'inventaire --->
-									<cfif #session.hostid# EQ 1>
+									<!--- Je modifie le filename sur le tenant phototheque (id=5) 
+										  avec la valeur du numéro d'inventaire: 3A5A7EB0-F844-4B14-83A6DF40AF5C4EC2 --->
+									<cfif #session.hostid# EQ 5>
 										<cfquery datasource="#application.razuna.api.dsn#" name="qry">
 											SELECT cf_value
 											FROM raz1_custom_fields_values
-											WHERE cf_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="F167BA8D-9FF1-4811-B0636F9191AF3A31">
+											WHERE cf_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="3A5A7EB0-F844-4B14-83A6DF40AF5C4EC2">
 											AND asset_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="#id#">
 										</cfquery>
 										<cfset var inventory=#qry.cf_value#/>
@@ -378,12 +379,12 @@
 						</cfif>
 					});
 					</script>
-					<!--- Je modifie le filename sur le tenant phototheque ( 5 ) avec la valeur du numéro d'inventaire --->
+					<!--- Je modifie le filename sur le tenant phototheque (id=5) avec la valeur du numéro d'inventaire: 3A5A7EB0-F844-4B14-83A6DF40AF5C4EC2 --->
 					<cfif #session.hostid# EQ 1>
 						<cfquery datasource="#application.razuna.api.dsn#" name="qry">
 							SELECT cf_value
 							FROM raz1_custom_fields_values
-							WHERE cf_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="F167BA8D-9FF1-4811-B0636F9191AF3A31">
+							WHERE cf_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="3A5A7EB0-F844-4B14-83A6DF40AF5C4EC2">
 							AND asset_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="#id#">
 						</cfquery>
 						<cfset var inventory=#qry.cf_value#/>
