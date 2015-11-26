@@ -138,6 +138,17 @@
 									</cfif>
 								});
 								</script>
+								<!--- Je modifie le filename sur le tenant phototheque (id photothèque = 5) avec la valeur du numéro d'inventaire:3A5A7EB0-F844-4B14-83A6DF40AF5C4EC2 --->
+								<cfif #session.hostid# EQ 5>
+									<cfquery datasource="mysql" name="qry">
+										SELECT cf_value
+										FROM raz1_custom_fields_values
+										WHERE cf_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="3A5A7EB0-F844-4B14-83A6DF40AF5C4EC2">
+										AND asset_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="#id#">
+									</cfquery>
+									<cfset var inventory=#qry.cf_value#/>
+								<cfelse><cfset var inventory="">
+								</cfif>
 								<cfif structkeyexists(attributes,"share") AND attributes.share EQ "F">
 									<cfloop list="#attributes.cs_place.top.image#" index="m" delimiters=",">
 										<cfif m CONTAINS "_filename">
@@ -225,7 +236,7 @@
 								<cfif structkeyexists(attributes,"share") AND attributes.share EQ "F">
 									<!--- custom metadata fields to show --->
 									<cfif attributes.cs.images_metadata EQ "" OR ( NOT prefs.set2_upc_enabled AND attributes.cs.images_metadata EQ "img_upc_number AS cs_img_upc_number" )>
-										<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#theid#&what=images&loaddiv=#attributes.thediv#&folder_id=#folder_id_r#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(filename)#',1070,1);return false;"><strong>#left(filename,30)#</strong></a>
+										<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#theid#&what=images&loaddiv=#attributes.thediv#&folder_id=#folder_id_r#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(filename)#',1070,1);return false;"><cfif inventory NEQ ""><strong>#left(inventory,30)#</strong><cfelse><strong>#left(filename,30)#</strong></cfif></a>
 									<cfelse>
 										<br />
 										<cfloop list="#attributes.cs_place.bottom.image#" index="m" delimiters=",">
