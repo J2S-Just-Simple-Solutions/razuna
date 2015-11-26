@@ -334,6 +334,13 @@
 					</cfif>
 				</div>
 				<div class="j2s-metadata-fields">
+					<!--- copy metadata link --->
+					<div style="display:block; padding-bottom:10px;">
+						<!--- http://wiki.dev.j2s.net/ticket/5515 <button onclick="showwindow('#myself#c.copy_metaData&what=#attributes.what#&file_id=#attributes.file_id#','#JSStringFormat(myFusebox.getApplicationData().defaults.trans("add_file"))#',650,1);return false;" class="button" title="#myFusebox.getApplicationData().defaults.trans("copy_meta_data_title")#">#myFusebox.getApplicationData().defaults.trans("copy_meta_data")#</button> --->
+						<input type="submit" name="cMetadata" onclick="copyMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("copy")#"></input>
+						<input type="submit" name="pMetadata" onclick="pasteMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("paste")#"></input>
+						<input type="submit" name="submit" value="#myFusebox.getApplicationData().defaults.trans("button_save")#" class="button" style="float:right;">
+					</div>
 					<!--- Description & Keywords --->
 					<a href="##" onclick="$('##detaildesc').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("asset_desc2")#</div></a>
 					<div id="detaildesc">
@@ -393,8 +400,8 @@
 						<!--- copy metadata link --->
 						<div style="float:left;padding-top:25px;">
 							<!--- http://wiki.dev.j2s.net/ticket/5515 <button onclick="showwindow('#myself#c.copy_metaData&what=#attributes.what#&file_id=#attributes.file_id#','#JSStringFormat(myFusebox.getApplicationData().defaults.trans("add_file"))#',650,1);return false;" class="button"  title="#myFusebox.getApplicationData().defaults.trans("copy_meta_data_title")#">#myFusebox.getApplicationData().defaults.trans("copy_meta_data")#</button> --->
-							<input type="submit" id="cMetadata" onclick="copyMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("copy")#"></input>
-							<input type="submit" id="pMetadata" onclick="pasteMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("paste")#"></input>
+							<input type="submit" name="cMetadata" onclick="copyMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("copy")#"></input>
+							<input type="submit" name="pMetadata" onclick="pasteMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("paste")#"></input>
 						</div>
 						<div style="float:right;padding-top:25px;">
 							<input type="submit" name="submit" value="#myFusebox.getApplicationData().defaults.trans("button_save")#" class="button">
@@ -523,6 +530,7 @@
 				$("##updatefile").animate({opacity: 1.0}, 3000).fadeTo("slow", 0);
 		   	}
 		});
+		localStorage.removeItem("asset_details_modified");
         return false; 
 	};
 	// Recreate window confirm dialog
@@ -543,11 +551,11 @@
 		});
 	};
 
-	$("##pMetadata").ready(function(){
+	$("input[name=pMetadata]").ready(function(){
 		if(localStorage.getItem("file_id") && localStorage.getItem("file_id").length > 0 && localStorage.getItem("file_id") !== "#attributes.file_id#")
-			$("##pMetadata").removeProp("disabled");
+			$("input[name=pMetadata]").removeProp("disabled");
 		else
-			$("##pMetadata").prop("disabled", "disabled");
+			$("input[name=pMetadata]").prop("disabled", "disabled");
 	});
 
 	function copyMetadata(){
@@ -557,12 +565,42 @@
 	function pasteMetadata(){
 		$(this).load("index.cfm?fa=c.copy_metadata_video_do&file_id="+localStorage.getItem("file_id")+"&idList=#attributes.file_id#&insert_type=replace")
 		//localStorage.removeItem("file_id");
-		//$("##pMetadata").prop("disabled", "disabled");
+		//$("input[name=pMetadata]").prop("disabled", "disabled");
 		$(this).load("index.cfm?fa=c.admin_flush_db");
 		showwindow('index.cfm?fa=c.videos_detail&file_id=#attributes.file_id#&what=videos&loaddiv=content&folder_id=#folder_id#&showsubfolders=F&row=3&filecount=10','',1070,1);
 	};
 
 	// Activate Chosen
 	$(".chzn-select").chosen({search_contains: true});
+
+	//Gestion du controle de rique de perte de données sans sauvegarde
+	$("##tab_detail").ready(function(){
+		$(this).find("input, textarea").change(function(){
+			localStorage.setItem("asset_details_modified", "true");
+		});
+		$(".ui-dialog-titlebar-close span").click(function(e){
+			var button = $(e.currentTarget);
+			if(localStorage.getItem("asset_details_modified")){
+				e.preventDefault();
+				e.stopImmediatePropagation();
+				$("<div>#myFusebox.getApplicationData().defaults.trans('has_change')#</div>").dialog({
+					resizable: false,
+					height:250,
+					modal: true,
+					buttons: {
+						"#myFusebox.getApplicationData().defaults.trans("has_change_yes")#": function() {
+							localStorage.removeItem("asset_details_modified");
+							button.click();
+							$( this ).dialog( "close" );
+						},
+						"#myFusebox.getApplicationData().defaults.trans("has_change_no")#": function() {
+							$( this ).dialog( "close" );
+						}
+					}
+				});
+			}
+			
+		});
+	});
 </script>
 </cfoutput>
