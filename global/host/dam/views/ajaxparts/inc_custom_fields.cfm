@@ -190,7 +190,7 @@
 								(function(self){
 									var prefix = "<cfoutput>#session.hostdbprefix#</cfoutput>";
 									var select = $("td select[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
-									select.chosen({add_contains: true});		
+									select.chosen({add_contains: true, no_results_text:"<cfoutput>#myFusebox.getApplicationData().defaults.trans("no_match")#</cfoutput>"});		
 
 									var chosen = select.next(".chosen-container");
 									//Sur entrée
@@ -261,7 +261,7 @@
 									var input = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 									var category = $("select[category='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 
-									category.chosen().change(function(){
+									category.chosen({no_results_text:"<cfoutput>#myFusebox.getApplicationData().defaults.trans("no_match")#</cfoutput>"}).change(function(){
 										var values = []; 
 										$.each(category[0].selectedOptions, function(index, item){values.push(item.text)})
 										input.val(values.join(","));
@@ -309,7 +309,7 @@
 									var subCategory = $("select[sub-category='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 
 									
-									subCategory.chosen().change(function(){
+									subCategory.chosen({no_results_text:"<cfoutput>#myFusebox.getApplicationData().defaults.trans("no_match")#</cfoutput>"}).change(function(){
 										var values = []; 
 										$.each(subCategory[0].selectedOptions, function(index, item){values.push(item.text)})
 										input.val(values.join(","));
@@ -406,7 +406,7 @@
 									var tsGroup = $('<optgroup label="<cfoutput>#myFusebox.getApplicationData().defaults.trans("TS")#</cfoutput>" >');
 
 									//Je construis mon champ multiple avec les valeurs initiales
-									selectDescriptor.chosen()
+									selectDescriptor.chosen({no_results_text:"<cfoutput>#myFusebox.getApplicationData().defaults.trans("no_match")#</cfoutput>"})
 										//Changement
 										.change(function(event, params){
 											var term = params.selected;
