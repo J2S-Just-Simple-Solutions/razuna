@@ -647,32 +647,34 @@
 
 	//Gestion du controle de rique de perte de données sans sauvegarde
 	$("##tab_detail").ready(function(){
-		$(this).find("input, textarea").change(function(){
-			localStorage.setItem("asset_details_modified", "true");
-		});
-		$(".ui-dialog-titlebar-close span").click(function(e){
-			var button = $(e.currentTarget);
-			if(localStorage.getItem("asset_details_modified")){
-				e.preventDefault();
-				e.stopImmediatePropagation();
-				$("<div>#myFusebox.getApplicationData().defaults.trans('has_change')#</div>").dialog({
-					resizable: false,
-					height:250,
-					modal: true,
-					buttons: {
-						"#myFusebox.getApplicationData().defaults.trans("has_change_yes")#": function() {
-							localStorage.removeItem("asset_details_modified");
-							button.click();
-							$( this ).dialog( "close" );
-						},
-						"#myFusebox.getApplicationData().defaults.trans("has_change_no")#": function() {
-							$( this ).dialog( "close" );
+		var details = this;
+		setTimeout(function(){
+			$(details).find("input, textarea, select").change(function(){
+				localStorage.setItem("asset_details_modified", "true");
+			});
+			$(".ui-dialog-titlebar-close span").click(function(e){
+				var button = $(e.currentTarget);
+				if(localStorage.getItem("asset_details_modified")){
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					$("<div>#myFusebox.getApplicationData().defaults.trans('has_change')#</div>").dialog({
+						resizable: false,
+						height:150,
+						modal: true,
+						buttons: {
+							"#myFusebox.getApplicationData().defaults.trans("has_change_yes")#": function() {
+								localStorage.removeItem("asset_details_modified");
+								button.click();
+								$( this ).dialog( "close" );
+							},
+							"#myFusebox.getApplicationData().defaults.trans("has_change_no")#": function() {
+								$( this ).dialog( "close" );
+							}
 						}
-					}
-				});
-			}
-			
-		});
+					});
+				}
+			});
+		},1000);
 	});
 
 	</script>
