@@ -100,7 +100,7 @@
 									<cfloop list="#attributes.cs_place.top.image#" index="m" delimiters=",">
 										<span class="assetbox_title">#myFusebox.getApplicationData().defaults.trans("#listlast(m," ")#")#</span>
 										<cfif m CONTAINS "_filename">
-											<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#,#img_filename#" ))#',1070,1);return false;"><strong>#evaluate(listlast(m," "))#</strong></a>
+											<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#;#img_filename#", ";" ))#',1070,1);return false;"><strong>#evaluate(listlast(m," "))#</strong></a>
 										<cfelseif m CONTAINS "_size">
 											#myFusebox.getApplicationData().global.converttomb('#evaluate(listlast(m," "))#')# MB
 										<cfelseif m CONTAINS "_time">
@@ -128,7 +128,7 @@
 										</cfif>
 									</cfloop>
 									<br/><br/>
-									<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#,#img_filename#" ))#',1070,1);return false;">
+									<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#;#img_filename#", ";" ))#',1070,1);return false;">
 										<div id="draggable#img_id#" type="#img_id#-img" class="theimg">
 											<!--- Show assets --->
 											<cfif link_kind NEQ "url">
@@ -174,14 +174,14 @@
 									<div style="clear:left;"></div>
 									<!--- custom metadata fields to show --->
 									<cfif attributes.cs.images_metadata EQ "">
-										<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#,#img_filename#" ))#',1070,1);return false;">
+										<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#;#img_filename#", ";" ))#',1070,1);return false;">
 												<cfif inventory NEQ ""><strong>#left(inventory,50)#</strong><cfelse><strong>#left(img_filename,50)#</strong></cfif></a>
 									<cfelse>
 										<br />
 										<cfloop list="#attributes.cs_place.bottom.image#" index="m" delimiters=",">
 											<span class="assetbox_title">#myFusebox.getApplicationData().defaults.trans("#listlast(m," ")#")#</span>
 											<cfif m CONTAINS "_filename">
-												<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#,#img_filename#" ))#',1070,1);return false;"><strong>#evaluate(listlast(m," "))#</strong></a>
+												<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#;#img_filename#", ";" ))#',1070,1);return false;"><strong>#evaluate(listlast(m," "))#</strong></a>
 											<cfelseif m CONTAINS "_size">
 												#myFusebox.getApplicationData().global.converttomb('#evaluate(listlast(m," "))#')# MB
 											<cfelseif m CONTAINS "_time">

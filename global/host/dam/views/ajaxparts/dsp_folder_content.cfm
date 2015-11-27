@@ -169,7 +169,7 @@
 								<cfloop list="#attributes.cs_place.top.image#" index="m" delimiters=",">
 									<cfif m CONTAINS "_filename">
 										<span class="assetbox_title">#myFusebox.getApplicationData().defaults.trans("#listlast(m," ")#")#</span>
-										<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#id#&what=images&loaddiv=content&folder_id=#attributes.folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#,#filename#"))#',1070,1);return false;"><strong>#evaluate(listlast(m," "))#</strong></a>
+										<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#id#&what=images&loaddiv=content&folder_id=#attributes.folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#;#filename#", ";"))#',1070,1);return false;"><strong>#evaluate(listlast(m," "))#</strong></a>
 									<cfelseif m CONTAINS "_size">
 										<span class="assetbox_title">#myFusebox.getApplicationData().defaults.trans("#listlast(m," ")#")#</span>
 										#myFusebox.getApplicationData().global.converttomb('#evaluate(listlast(m," "))#')# MB
@@ -201,7 +201,7 @@
 									</cfif>
 								</cfloop>
 								<br/><br/>
-								<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#id#&what=images&loaddiv=content&folder_id=#attributes.folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#,#filename#"))#',1070,1);return false;">
+								<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#id#&what=images&loaddiv=content&folder_id=#attributes.folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#;#filename#", ";"))#',1070,1);return false;">
 									<div id="draggable#id#-#kind#" type="#id#-#kind#" class="theimg">
 									<!--- Show assets --->
 									<cfif link_kind NEQ "url">
@@ -249,13 +249,13 @@
 								<div style="clear:left;"></div>
 								<!--- custom metadata fields to show --->
 								<cfif attributes.cs.images_metadata EQ "" OR ( NOT prefs.set2_upc_enabled AND attributes.cs.images_metadata EQ "img_upc_number AS cs_img_upc_number" )>
-									<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#id#&what=images&loaddiv=content&folder_id=#attributes.folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#,#filename#"))#',1070,1);return false;"><cfif inventory NEQ ""><strong>#left(inventory,50)#</strong><cfelse><strong>#left(filename,50)#</strong></cfif></a>
+									<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#id#&what=images&loaddiv=content&folder_id=#attributes.folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#;#filename#", ";"))#',1070,1);return false;"><cfif inventory NEQ ""><strong>#left(inventory,50)#</strong><cfelse><strong>#left(filename,50)#</strong></cfif></a>
 								<cfelse>
 									<br />
 									<cfloop list="#attributes.cs_place.bottom.image#" index="m" delimiters=",">
 										<cfif m CONTAINS "_filename">
 											<span class="assetbox_title">#myFusebox.getApplicationData().defaults.trans("#listlast(m," ")#")#</span>
-											<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#id#&what=images&loaddiv=content&folder_id=#attributes.folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#,#filename#"))#',1070,1);return false;"><strong>#evaluate(listlast(m," "))#</strong></a>
+											<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#id#&what=images&loaddiv=content&folder_id=#attributes.folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#;#filename#", ";"))#',1070,1);return false;"><strong>#evaluate(listlast(m," "))#</strong></a>
 										<cfelseif m CONTAINS "_size">
 											<span class="assetbox_title">#myFusebox.getApplicationData().defaults.trans("#listlast(m," ")#")#</span>
 											#myFusebox.getApplicationData().global.converttomb('#evaluate(listlast(m," "))#')# MB
@@ -1267,7 +1267,7 @@
 					<tr class="list thumbview">
 						<td align="center">
 							<cfif is_available>
-								<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#id#&what=images&loaddiv=content&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#,#filename#"))#',1070,1);return false;">
+								<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#id#&what=images&loaddiv=content&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#;#filename#", ";"))#',1070,1);return false;">
 									<!--- Show assets --->
 									<div id="draggable#id#-#kind#" type="#id#-#kind#">
 										<cfif link_kind NEQ "url">
@@ -1297,7 +1297,7 @@
 							</cfif>
 						</td>
 						<td valign="top" width="100%">
-							<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#id#&what=images&loaddiv=content&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#,#filename#"))#',1070,1);return false;"><cfif inventory NEQ ""><strong>#inventory#</strong><cfelse><strong>#filename#</strong></cfif></a>
+							<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#id#&what=images&loaddiv=content&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#;#filename#", ";"))#',1070,1);return false;"><cfif inventory NEQ ""><strong>#inventory#</strong><cfelse><strong>#filename#</strong></cfif></a>
 							<br />
 							<!--- Icons --->
 							<div style="float:left;padding-top:5px;">

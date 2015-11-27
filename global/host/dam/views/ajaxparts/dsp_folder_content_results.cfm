@@ -153,7 +153,7 @@
 									<cfloop list="#attributes.cs_place.top.image#" index="m" delimiters=",">
 										<cfif m CONTAINS "_filename">
 											<span class="assetbox_title">#myFusebox.getApplicationData().defaults.trans("#listlast(m," ")#")#</span>
-											<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#theid#&what=images&loaddiv=#attributes.thediv#&folder_id=#folder_id_r#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(ListFirst( "#inventory#,#filename#" ))#',1200,1);return false;"><strong>#evaluate(listlast(m," "))#</strong></a>
+											<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#theid#&what=images&loaddiv=#attributes.thediv#&folder_id=#folder_id_r#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(ListFirst( "#inventory#;#filename#", ";" ))#',1200,1);return false;"><strong>#evaluate(listlast(m," "))#</strong></a>
 										<cfelseif m CONTAINS "_size">
 											<span class="assetbox_title">#myFusebox.getApplicationData().defaults.trans("#listlast(m," ")#")#</span>
 											#myFusebox.getApplicationData().global.converttomb('#evaluate(listlast(m," "))#')# MB
@@ -169,7 +169,7 @@
 										</cfif>
 										<br />
 									</cfloop>
-									<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#theid#&what=images&loaddiv=#attributes.thediv#&folder_id=#folder_id_r#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(ListFirst( "#inventory#,#filename#"))#',1070,1);return false;">
+									<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#theid#&what=images&loaddiv=#attributes.thediv#&folder_id=#folder_id_r#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(ListFirst( "#inventory#;#filename#", ";"))#',1070,1);return false;">
 								</cfif>
 								<div id="draggable-s#theid#-#kind#" type="#theid#-#kind#" class="theimg">
 
@@ -236,13 +236,13 @@
 								<cfif structkeyexists(attributes,"share") AND attributes.share EQ "F">
 									<!--- custom metadata fields to show --->
 									<cfif attributes.cs.images_metadata EQ "" OR ( NOT prefs.set2_upc_enabled AND attributes.cs.images_metadata EQ "img_upc_number AS cs_img_upc_number" )>
-										<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#theid#&what=images&loaddiv=#attributes.thediv#&folder_id=#folder_id_r#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(ListFirst( "#inventory#,#filename#" ))#',1070,1);return false;"><cfif inventory NEQ ""><strong>#left(inventory,50)#</strong><cfelse><strong>#left(filename,30)#</strong></cfif></a>
+										<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#theid#&what=images&loaddiv=#attributes.thediv#&folder_id=#folder_id_r#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(ListFirst( "#inventory#;#filename#", ";" ))#',1070,1);return false;"><cfif inventory NEQ ""><strong>#left(inventory,50)#</strong><cfelse><strong>#left(filename,30)#</strong></cfif></a>
 									<cfelse>
 										<br />
 										<cfloop list="#attributes.cs_place.bottom.image#" index="m" delimiters=",">
 											<cfif m CONTAINS "_filename">
 												<span class="assetbox_title">#myFusebox.getApplicationData().defaults.trans("#listlast(m," ")#")#</span>
-												<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#theid#&what=images&loaddiv=#attributes.thediv#&folder_id=#folder_id_r#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(ListFirst( "#inventory#,#filename#" ))#',1070,1);return false;"><strong>#evaluate(listlast(m," "))#</strong></a>
+												<a href="##" onclick="showwindow('#myself##xfa.detailimg#&file_id=#theid#&what=images&loaddiv=#attributes.thediv#&folder_id=#folder_id_r#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(ListFirst( "#inventory#;#filename#", ";" ))#',1070,1);return false;"><strong>#evaluate(listlast(m," "))#</strong></a>
 											<cfelseif m CONTAINS "_size">
 												<span class="assetbox_title">#myFusebox.getApplicationData().defaults.trans("#listlast(m," ")#")#</span>
 												#myFusebox.getApplicationData().global.converttomb('#evaluate(listlast(m," "))#')# MB
