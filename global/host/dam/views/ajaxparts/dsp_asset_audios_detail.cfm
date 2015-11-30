@@ -514,6 +514,7 @@
 
 	//Gestion du controle de rique de perte de données sans sauvegarde
 	$("##tab_detail").ready(function(){
+		localStorage.removeItem("asset_details_modified");
 		var details = this;
 		setTimeout(function(){
 			$(details).find("input, textarea, select").change(function(){
