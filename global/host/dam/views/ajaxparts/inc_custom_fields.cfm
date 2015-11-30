@@ -725,7 +725,7 @@
 										//J'ajoute à la liste							
 										if(ev.keyCode === 13 && (chosen.find(".chosen-results .active-result").length === 0) ){
 											//Je mets à jour ma liste
-											var currentValue = $(this).val().toUpperCase();
+											var currentValue = $(this).val()/*.toUpperCase()*/;
 											var current = $('<option value="'+currentValue+'" selected>'+currentValue+'</option>');
 											select.append(current);								
 											select.trigger("chosen:updated");
