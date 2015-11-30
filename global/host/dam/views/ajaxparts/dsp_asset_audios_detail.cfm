@@ -510,7 +510,7 @@
 	};
 
 	// Activate Chosen
-	$(".chzn-select").chosen({search_contains: true});
+	$(".chzn-select").chosen({search_contains: true}).next().css('min-width', "390px");
 
 	//Gestion du controle de rique de perte de données sans sauvegarde
 	$("##tab_detail").ready(function(){
