@@ -138,7 +138,19 @@
 								<br />#myFusebox.getApplicationData().defaults.trans("link_images_desc")#
 							</cfif>
 						<cfelse>
-							<a href="#qry_detail.detail.link_path_url#" target="_blank" border="0"><img src="#qry_detail.detail.link_path_url#" border="0"></a><br /><a href="#qry_detail.detail.link_path_url#" target="_blank" border="0">#qry_detail.detail.link_path_url#</a>
+							<a href="#qry_detail.detail.link_path_url#" target="_blank" border="0" ><img src="#qry_detail.detail.link_path_url#" border="0"></a><br /><a href="#qry_detail.detail.link_path_url#" target="_blank" border="0">#qry_detail.detail.link_path_url#</a>
+						</cfif>
+						<!--- Je modifie le filename sur le tenant phototheque (id photothèque = 5) avec la valeur du numéro d'inventaire:3A5A7EB0-F844-4B14-83A6DF40AF5C4EC2 --->
+						<cfif #session.hostid# EQ 5>
+							<cfquery datasource="mysql" name="qry">
+								SELECT cf_value
+								FROM raz1_custom_fields_values
+								WHERE cf_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="3A5A7EB0-F844-4B14-83A6DF40AF5C4EC2">
+								AND asset_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="#attributes.file_id#">
+							</cfquery>
+							<cfif #qry.cf_value# NEQ "">
+								<span> #qry.cf_value# <span/>
+							</cfif>
 						</cfif>
 					</td>
 					<td width="100%" valign="top" colspan="2" style="padding-top:20px;" valign="top">
@@ -301,7 +313,7 @@
 		<!--- Meta Data --->
 		<cfif cs.tab_metadata>
 			<div id="meta" class="collapsable j2s-metadata">
-				<div class="j2s-preview">
+				<div class="j2s-preview" style="text-align: center;">
 					<cfif qry_detail.detail.link_kind NEQ "url">
 						<cfset thestorage = "#cgi.context_path#/assets/#session.hostid#/">
 						<!--- </cfif> --->
@@ -320,6 +332,18 @@
 						</cfif>
 					<cfelse>
 						<a href="#qry_detail.detail.link_path_url#" target="_blank" border="0"><img src="#qry_detail.detail.link_path_url#" border="0"></a><br /><a href="#qry_detail.detail.link_path_url#" target="_blank" border="0">#qry_detail.detail.link_path_url#</a>
+					</cfif>
+					<!--- Je modifie le filename sur le tenant phototheque (id photothèque = 5) avec la valeur du numéro d'inventaire:3A5A7EB0-F844-4B14-83A6DF40AF5C4EC2 --->
+					<cfif #session.hostid# EQ 5>
+						<cfquery datasource="mysql" name="qry">
+							SELECT cf_value
+							FROM raz1_custom_fields_values
+							WHERE cf_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="3A5A7EB0-F844-4B14-83A6DF40AF5C4EC2">
+							AND asset_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="#attributes.file_id#">
+						</cfquery>
+						<cfif #qry.cf_value# NEQ "">
+							<span> #qry.cf_value# <span/>
+						</cfif>
 					</cfif>
 				</div>
 				<div class="j2s-metadata-fields">
