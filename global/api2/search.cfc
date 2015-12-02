@@ -632,7 +632,8 @@
 		<!--- Add the amount of assets to the query --->
 		<cfset var amount = ArrayNew(1)>
 		<cfset amount[1] = qry_img.recordcount>
-		<cfset QueryAddcolumn(qry_img, "cnt", "integer", amount)>
+		<!---<cfset QueryAddcolumn(qry_img, "cnt", "integer", amount)>--->
+<cfif not IsDefined("qry_img.cnt")><cfset QueryAddcolumn(qry_img, "cnt", "integer", amount)></cfif>		
 		<!--- If no records in query returned then a null row is inserted by the QueryAddColumn above so filter it out --->
 		<cfquery name="qry_img" dbtype="query">
 			SELECT * FROM qry_img WHERE id IS NOT NULL
@@ -1066,7 +1067,8 @@
 		<!--- Add the amount of assets to the query --->
 		<cfset var amount = ArrayNew(1)>
 		<cfset amount[1] = qry_vid.recordcount>
-		<cfset QueryAddcolumn(qry_vid, "cnt", "integer", amount)>
+		<!---J2S<cfset QueryAddcolumn(qry_vid, "cnt", "integer", amount)>--->
+		<cfif not IsDefined("qry_vid.cnt")><cfset QueryAddcolumn(qry_vid, "cnt", "integer", amount)></cfif>
 		<cfquery name="qry_vid" dbtype="query">
 			SELECT * FROM qry_vid WHERE id IS NOT NULL
 		</cfquery>
@@ -1489,7 +1491,8 @@
 		<!--- Add the amount of assets to the query --->
 		<cfset var amount = ArrayNew(1)>
 		<cfset amount[1] = qry_aud.recordcount>
-		<cfset QueryAddcolumn(qry_aud, "cnt", "integer", amount)>
+		<!---J2S<cfset QueryAddcolumn(qry_aud, "cnt", "integer", amount)>--->
+<cfif not IsDefined("qry_aud.cnt")><cfset QueryAddcolumn(qry_aud, "cnt", "integer", amount)></cfif>
 		<cfquery name="qry_aud" dbtype="query">
 			SELECT * FROM qry_aud WHERE id IS NOT NULL
 		</cfquery>
@@ -1958,7 +1961,8 @@
 		<!--- Add the amount of assets to the query --->
 		<cfset var amount = ArrayNew(1)>
 		<cfset amount[1] = qry_doc.recordcount>
-		<cfset QueryAddcolumn(qry_doc, "cnt", "integer", amount)>
+		<!---J2S<cfset QueryAddcolumn(qry_doc, "cnt", "integer", amount)>--->
+<cfif not IsDefined("qry_doc.cnt")><cfset QueryAddcolumn(qry_doc, "cnt", "integer", amount)></cfif>
 		<cfquery name="qry_doc" dbtype="query">
 			SELECT * FROM qry_doc WHERE id IS NOT NULL
 		</cfquery>
