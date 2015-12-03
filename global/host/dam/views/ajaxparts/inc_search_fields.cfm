@@ -119,7 +119,7 @@
 						</select>
 					<!--- Descriptot --->
 					<cfelseif cf_type EQ "descriptor">
-                        <select name="cf#cfid#" descriptor style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_an_descriptor")#">									
+                        <select name="cf#cfid#" descriptor style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_an_descriptor")#">							<option></option>		
 						</select>
 						<cfoutput>
 							<!--- JS --->
@@ -128,12 +128,11 @@
 								descriptorSearch.ready(function(){
 									if(!descriptorSearch.prop("ready")) {
 										descriptorSearch.prop("ready", true);
-										descriptorSearch.chosen();
+										descriptorSearch.chosen({allow_single_deselect:true});
 										$.getJSON(
 										"http://ima.j2s.net/Thesaurus_WS/AllTerms.php", 
 										function(result){
 											if(result.err === 200){
-												descriptorSearch.append("<option value=''></option>");
 												$.each(result.values.sort(), function(index, item){
 													descriptorSearch.append("<option value='"+item+"'>"+item+"</option>");
 												});

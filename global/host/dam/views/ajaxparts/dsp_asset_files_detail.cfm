@@ -638,5 +638,28 @@
 			});
 		},1000);
 	});
+
+	function navigate(direction){
+		if(localStorage.getItem("asset_details_modified")){
+			$("<div>#myFusebox.getApplicationData().defaults.trans('has_change')#</div>").dialog({
+				resizable: false, height:150, modal: true,
+				buttons: {
+					"#myFusebox.getApplicationData().defaults.trans("has_change_yes")#": function() {
+						gotoFile(direction);
+						$( this ).dialog( "close" );
+					},
+					"#myFusebox.getApplicationData().defaults.trans("has_change_no")#": function() {$( this ).dialog( "close" );}
+				}
+			});
+		}
+		else {gotoFile(direction);}
+	};
+
+	function gotoFile(direction){	
+		showwindow('#myself#c.detail_proxy&file_id=#attributes.file_id#&what=#attributes.what#&loaddiv=#attributes.loaddiv#&folder_id=#attributes.folder_id#&showsubfolders=#attributes.showsubfolders#&row='+direction+'&filecount=#attributes.filecount#&#file_extension#','',1070,1);
+		return false;
+	};
+
+
 	</script>
 </cfoutput>
