@@ -36,13 +36,16 @@
 			<!--- Hide if row is 0 --->
 			<cfif rowback NEQ 0>
 				<div style="float:left;">
-					<button type="button" class="awesome small green" onclick="navigate(#rowback#);">&lt; #myFusebox.getApplicationData().defaults.trans("back")#</button>
+					<button type="button" class="awesome small green" onclick="navigate(#rowback#,#attributes.filecount#);">&lt; #myFusebox.getApplicationData().defaults.trans("back")#</button>
 				</div>
 			</cfif>
+
+			<cfif structKeyExists(attributes,"filecount")><div style="text-align:center;position: absolute;width: 100%;">#attributes.row#/#attributes.filecount#</div></cfif>
+
 			<!--- Hide if filecount eq row --->
 			<cfif NOT rownext GT attributes.filecount>
 				<div style="float:right;">
-					<button type="button" class="awesome small green" onclick="navigate(#rownext#);">#myFusebox.getApplicationData().defaults.trans("next")# &gt;</button>
+					<button type="button" class="awesome small green" onclick="navigate(#rownext#,#attributes.filecount#);">#myFusebox.getApplicationData().defaults.trans("next")# &gt;</button>
 				</div>
 			</cfif>
 		</div>
