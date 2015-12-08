@@ -418,8 +418,6 @@
 				</form>
 			</div>
 		</cfif>
-		<!--- Loading Bars --->
-		<div id="loading_searchadv2" style="width:100%;text-align:center;"></div>
 	</div>
 	<!--- Activate the Tabs --->
 	<script language="JavaScript" type="text/javascript">
