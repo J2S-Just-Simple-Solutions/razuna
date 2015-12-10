@@ -124,6 +124,18 @@
 
 	// For search
 	function subadvfields(theform){
+		//Je récupère la derniere recherche
+		var lastSearch = localStorage.getItem("last_search")
+		//Je la parse, si elle n'existe pas je la crée
+		if(lastSearch)lastSearch = JSON.parse(lastSearch);
+		else lastSearch = [];
+		//je récupère mes champs
+		var form = $("#"+theform).serializeArray();
+		form.push({name:"now", value : $.now()})
+		lastSearch.push(form);
+		//J'enregistre en localstorage les 15 derniers
+		localStorage.setItem("last_search", JSON.stringify(lastSearch.slice(-15)));
+
 		// Get values
 		var searchtext = '';
 		var searchfor = document.forms[theform].searchfor.value;
