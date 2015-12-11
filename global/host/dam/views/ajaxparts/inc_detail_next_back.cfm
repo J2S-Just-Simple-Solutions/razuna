@@ -40,7 +40,7 @@
 				</div>
 			</cfif>
 
-			<cfif structKeyExists(attributes,"filecount")><div style="text-align:center;position: absolute;width: 100%;">#attributes.row#/#attributes.filecount#</div></cfif>
+			<cfif structKeyExists(attributes,"filecount")><div style="text-align:center;position: absolute;width: 50%;margin-left: 25%;">#attributes.row#/#attributes.filecount#</div></cfif>
 
 			<!--- Hide if filecount eq row --->
 			<cfif NOT rownext GT attributes.filecount>
