@@ -157,7 +157,7 @@
 						<table border="0" width="100%" cellpadding="0" cellspacing="0" class="grid">
 							<!--- Filename --->
 							<tr>
-								<td width="1%" nowrap="true" style="font-weight:bold;">#myFusebox.getApplicationData().defaults.trans("file_name")#</td>
+								<td width="1%" nowrap="true" style="font-weight:bold;"><cfif #session.hostid# NEQ 5>#myFusebox.getApplicationData().defaults.trans("file_name")#<cfelse>Gesco</cfif></td>
 								<td width="100%" nowrap="true"><input type="text" style="width:400px;" name="fname" id="fname" value="#qry_detail.detail.img_filename#" onchange="document.form#attributes.file_id#.file_name.value = document.form#attributes.file_id#.fname.value; <cfif prefs.set2_upc_enabled>if (!isNaN(document.form#attributes.file_id#.fname.value.substr(0,6))) {document.form#attributes.file_id#.img_upc.value = document.form#attributes.file_id#.fname.value.split('.')[0];}</cfif>"> <cfif cs.show_favorites_part><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=img');flash_footer('#myFusebox.getApplicationData().defaults.trans("item_favorite")#');return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></cfif></td>
 							</tr>
 							<!--- Description & Keywords 
@@ -360,7 +360,7 @@
 						<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
 							<!--- Filename --->
 							<tr>
-								<td width="1%" nowrap="true" style="font-weight:bold;">#myFusebox.getApplicationData().defaults.trans("file_name")#</td>
+								<td width="1%" nowrap="true" style="font-weight:bold;"><cfif #session.hostid# NEQ 5>#myFusebox.getApplicationData().defaults.trans("file_name")#<cfelse>Gesco</cfif></td>
 								<td width="100%" nowrap="true">
 									<input type="text" style="width:400px;" name="file_name" value="#qry_detail.detail.img_filename#" onchange="document.form#attributes.file_id#.fname.value = document.form#attributes.file_id#.file_name.value;"> <cfif cs.show_favorites_part><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=img');flash_footer();return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></cfif>
 								</td>
