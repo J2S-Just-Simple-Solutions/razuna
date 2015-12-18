@@ -81,6 +81,7 @@
 		<cfargument name="cs" type="any" required="false" default="" hint="custom metadata fields">
 		<cfargument name="dbdirect" type="string" required="false" default="false">
 		<cfargument name="available" type="string" required="false" default="1">
+		<cfargument name="maxrows" type="numeric" default="0">
 		<!--- Check key --->
 		<cfset var thesession = checkdb(arguments.api_key)>
 
@@ -628,6 +629,10 @@
 		    		<cfset q_end = q_end + 990>
 			</cfloop>
 			ORDER BY #session.sortby#
+			<!--- ATTENTION PAS DE TEST SUR LE TYPE DE BASE DE DONNEES --->
+	        <cfif structKeyExists(arguments.istruct, "maxrows") AND arguments.istruct.maxrows NEQ 0>
+	        	LIMIT #arguments.istruct.maxrows#
+	        </cfif>
 		</cfquery>
 		<!--- Add the amount of assets to the query --->
 		<cfset var amount = ArrayNew(1)>
@@ -1062,6 +1067,9 @@
 		    		<cfset q_end = q_end + 990>
 		    </cfloop>
 			ORDER BY #session.sortby# 
+			<cfif structKeyExists(arguments.istruct, "maxrows") AND arguments.istruct.maxrows NEQ 0>
+	        	LIMIT #arguments.istruct.maxrows#
+	        </cfif>
 		</cfquery>
 
 		<!--- Add the amount of assets to the query --->
@@ -1487,6 +1495,9 @@
 			</cfloop>
 			
 			ORDER BY #session.sortby#
+			<cfif structKeyExists(arguments.istruct, "maxrows") AND arguments.istruct.maxrows NEQ 0>
+	        	LIMIT #arguments.istruct.maxrows#
+	        </cfif>
 		</cfquery>
 		<!--- Add the amount of assets to the query --->
 		<cfset var amount = ArrayNew(1)>
@@ -1930,6 +1941,9 @@
 			
 			<cfif arguments.fstruct.ui>, f.is_available, f.link_kind, f.link_path_url</cfif>
 	        ORDER BY #session.sortby#
+	        <cfif structKeyExists(arguments, "maxrows") AND arguments.maxrows NEQ 0>
+	        	LIMIT #arguments.maxrows#
+	        </cfif>
 		</cfquery>
 		<!--- If we query for doc only and have a filetype we filter the results --->
 		<cfif arguments.fstruct.show NEQ "all" AND arguments.fstruct.show EQ "doc" AND arguments.fstruct.doctype NEQ "">
