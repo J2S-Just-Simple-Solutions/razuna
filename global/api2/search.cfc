@@ -1067,8 +1067,8 @@
 		    		<cfset q_end = q_end + 990>
 		    </cfloop>
 			ORDER BY #session.sortby# 
-			<cfif structKeyExists(arguments.istruct, "maxrows") AND arguments.istruct.maxrows NEQ 0>
-	        	LIMIT #arguments.istruct.maxrows#
+			<cfif structKeyExists(arguments.vstruct, "maxrows") AND arguments.vstruct.maxrows NEQ 0>
+	        	LIMIT #arguments.vstruct.maxrows#
 	        </cfif>
 		</cfquery>
 
@@ -1495,8 +1495,8 @@
 			</cfloop>
 			
 			ORDER BY #session.sortby#
-			<cfif structKeyExists(arguments.istruct, "maxrows") AND arguments.istruct.maxrows NEQ 0>
-	        	LIMIT #arguments.istruct.maxrows#
+			<cfif structKeyExists(arguments.astruct, "maxrows") AND arguments.astruct.maxrows NEQ 0>
+	        	LIMIT #arguments.astruct.maxrows#
 	        </cfif>
 		</cfquery>
 		<!--- Add the amount of assets to the query --->
@@ -1941,8 +1941,8 @@
 			
 			<cfif arguments.fstruct.ui>, f.is_available, f.link_kind, f.link_path_url</cfif>
 	        ORDER BY #session.sortby#
-	        <cfif structKeyExists(arguments, "maxrows") AND arguments.maxrows NEQ 0>
-	        	LIMIT #arguments.maxrows#
+	        <cfif structKeyExists(arguments.fstruct, "maxrows") AND arguments.fstruct.maxrows NEQ 0>
+	        	LIMIT #arguments.fstruct.maxrows#
 	        </cfif>
 		</cfquery>
 		<!--- If we query for doc only and have a filetype we filter the results --->
