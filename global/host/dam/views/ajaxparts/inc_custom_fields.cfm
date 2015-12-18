@@ -251,7 +251,7 @@
 						<select multiple type="category" category="cf_#cf_id#" id="cf_select_category_#listlast(cf_id,'-')#" value="#cf_value#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<option value=""></option>
 							<cfloop list="#ltrim(replace(cf_select_list,', ',',','ALL'))#" index="word">
-								<option value="#word#" <cfif listContains("#cf_value#", #word#, ",")> selected="selected"</cfif>>#word#</option>
+								<option value="#word#" <cfif ListFind("#cf_value#", #word#, ",")> selected="selected"</cfif>>#word#</option>
 							</cfloop>						
 						</select>						
 						<cfoutput>
@@ -339,7 +339,8 @@
 										
 										//Je récupère les catégories sélectionnées
 										for ( var j = 0 ; j < category[0].selectedOptions.length ; j++) {
-											categoryList = categoryList.concat(values[category[0].selectedOptions[j].index - 1].split(";"));
+											var cat = values[category[0].selectedOptions[j].index - 1];
+											categoryList = categoryList.concat(cat? cat.split(";") : "");
 										}
 
 										//Pour chaque valeur
@@ -702,7 +703,7 @@
 						<select multiple candidate="cf_#cf_id#" id="cf_select_#listlast(cf_id,'-')#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<option value="" data-placeholder="test"></option>
 							<cfloop list="#ltrim(ListSort(REReplace(cf_select_list, ",(?![^()]+\))\s?" ,';','ALL'), 'text', 'asc', ';'))#" index="i" delimiters=";">
-								<option value="#i#" <cfif listContains("#cf_value#", #i#, ",")> selected="selected"</cfif>>#i#</option>
+								<option value="#i#" <cfif listFind("#cf_value#", #i#, ",")> selected="selected"</cfif>>#i#</option>
 							</cfloop>
 						</select>
 						<cfoutput>
@@ -779,7 +780,7 @@
 						<select multiple selecSearchMulti="cf_#cf_id#" id="cf_select_#listlast(cf_id,'-')#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<option value="" data-placeholder="test"></option>
 							<cfloop list="#ltrim(ListSort(REReplace(cf_select_list, ",(?![^()]+\))\s?" ,';','ALL'), 'text', 'asc', ';'))#" index="i" delimiters=";">
-								<option value="#i#" <cfif listContains("#cf_value#", #i#, ",")> selected="selected"</cfif>>#i#</option>
+								<option value="#i#" <cfif listFind("#cf_value#", #i#, ",")> selected="selected"</cfif>>#i#</option>
 							</cfloop>
 						</select>
 						<cfoutput>
