@@ -385,6 +385,18 @@
 					<cfqueryparam value="#createuuid()#" CFSQLType="CF_SQL_VARCHAR">
 					)
 					</cfquery>
+					<!--- J2S Ajout de la description en français --->
+					<cfquery datasource="#application.razuna.datasource#">
+					insert into #session.hostdbprefix#folders_desc
+					(folder_id_r, lang_id_r, folder_desc, host_id, rec_uuid)
+					values(
+					<cfqueryparam value="#newfolderid#" cfsqltype="CF_SQL_VARCHAR">, 
+					<cfqueryparam value="3" cfsqltype="cf_sql_numeric">, 
+					<cfqueryparam value="Ceci est votre dossier personnel" cfsqltype="cf_sql_varchar">,
+					<cfqueryparam cfsqltype="cf_sql_numeric" value="#session.hostid#">,
+					<cfqueryparam value="#createuuid()#" CFSQLType="CF_SQL_VARCHAR">
+					)
+					</cfquery>
 				</cfif>
 			</cfif>
 		</cfthread>
