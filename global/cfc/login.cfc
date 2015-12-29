@@ -189,7 +189,7 @@
 				<!--- Cookie --->
 				<cfset setcookie("loginadminrem",arguments.thestruct.rem_login,"never")>
 			</cfif>
-			<!--- If we login to the DAM then check for the existence of the "Mon dossier" of this user --->
+			<!--- If we login to the DAM then check for the existence of the "My Folder" of this user --->
 			<cfif arguments.thestruct.loginto EQ "dam" AND arguments.thestruct.from_share EQ "f">
 				<!--- Store the login info into cookie var --->
 				<cfif arguments.thestruct.rem_login EQ "T">
@@ -360,7 +360,7 @@
 					(folder_id, folder_name, folder_level, folder_owner, folder_create_date, folder_change_date, folder_create_time, folder_change_time, folder_of_user, folder_id_r, folder_main_id_r, host_id)
 					values (
 					<cfqueryparam value="#newfolderid#" cfsqltype="CF_SQL_VARCHAR">, 
-					<cfqueryparam value="Mon dossier" cfsqltype="cf_sql_varchar">, 
+					<cfqueryparam value="My folder" cfsqltype="cf_sql_varchar">, 
 					<cfqueryparam value="1" cfsqltype="cf_sql_numeric">, 
 					<cfqueryparam value="#attributes.intstruct.userid#" cfsqltype="CF_SQL_VARCHAR">, 
 					<cfqueryparam value="#now()#" cfsqltype="cf_sql_date">, 
