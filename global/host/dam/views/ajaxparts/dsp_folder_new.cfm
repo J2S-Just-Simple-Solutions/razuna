@@ -48,7 +48,7 @@
 				<tr>
 					<td><strong>#myFusebox.getApplicationData().defaults.trans("folder_name")#</strong></td>
 					<td>
-						<cfif qry_folder.folder_name EQ "My Folder">
+						<cfif qry_folder.folder_name EQ "Mon dossier">
 							<input type="hidden" name="folder_name" id="folder_name" value="#qry_folder.folder_name#">
 							#qry_folder.folder_name#
 						<cfelse>
