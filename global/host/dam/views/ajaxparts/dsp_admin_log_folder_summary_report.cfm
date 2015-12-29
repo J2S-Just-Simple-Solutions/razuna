@@ -44,7 +44,7 @@
 					<cfset crumbs = myFusebox.getApplicationData().folders.getbreadcrumb(folder_id)>
 					<cfloop list="#crumbs#" delimiters=";" index="i">
 						<cfset folderpath = folderpath & "/#ListGetAt(i,1,'|')#">
-						<cfif ListGetAt(i,1,'|') EQ 'My Folder'>
+						<cfif ListGetAt(i,1,'|') EQ 'Mon dossier'>
 							<cfset folderpath = folderpath & " (#username#)">
 						</cfif>
 					</cfloop>
