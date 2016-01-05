@@ -279,7 +279,7 @@
 			(folder_id, folder_name, folder_level, folder_owner, folder_create_date, folder_change_date, folder_create_time, folder_change_time, folder_of_user, folder_id_r, folder_main_id_r, host_id)
 			values (
 			<cfqueryparam value="#newfolderid#" cfsqltype="CF_SQL_VARCHAR">, 
-			<cfqueryparam value="Uploads" cfsqltype="cf_sql_varchar">, 
+			<cfqueryparam value="Téléchargements" cfsqltype="cf_sql_varchar">, 
 			<cfqueryparam value="1" cfsqltype="cf_sql_numeric">, 
 			<cfqueryparam value="#arguments.userid#" cfsqltype="CF_SQL_VARCHAR">, 
 			<cfqueryparam value="#now()#" cfsqltype="cf_sql_date">, 
@@ -292,14 +292,26 @@
 			<cfqueryparam cfsqltype="cf_sql_numeric" value="#session.hostid#">
 			)
 			</cfquery>
-			<!--- Insert the DESCRIPTION --->
+			<!--- Insert the DESCRIPTION EN --->
 			<cfquery datasource="#application.razuna.datasource#">
 			INSERT INTO #session.hostdbprefix#folders_desc
 			(folder_id_r, lang_id_r, folder_desc, host_id, rec_uuid)
 			VALUES(
 			<cfqueryparam value="#newfolderid#" cfsqltype="CF_SQL_VARCHAR">, 
 			<cfqueryparam value="1" cfsqltype="cf_sql_numeric">, 
-			<cfqueryparam value="Public Uploads folder" cfsqltype="cf_sql_varchar">,
+			<cfqueryparam value="Dossier pubic de téléchargements" cfsqltype="cf_sql_varchar">,
+			<cfqueryparam cfsqltype="cf_sql_numeric" value="#session.hostid#">,
+			<cfqueryparam value="#createuuid()#" CFSQLType="CF_SQL_VARCHAR">
+			)
+			</cfquery>
+			<!--- Insert the DESCRIPTION FR --->
+			<cfquery datasource="#application.razuna.datasource#">
+			INSERT INTO #session.hostdbprefix#folders_desc
+			(folder_id_r, lang_id_r, folder_desc, host_id, rec_uuid)
+			VALUES(
+			<cfqueryparam value="#newfolderid#" cfsqltype="CF_SQL_VARCHAR">, 
+			<cfqueryparam value="3" cfsqltype="cf_sql_numeric">, 
+			<cfqueryparam value="Dossier pubic de téléchargements" cfsqltype="cf_sql_varchar">,
 			<cfqueryparam cfsqltype="cf_sql_numeric" value="#session.hostid#">,
 			<cfqueryparam value="#createuuid()#" CFSQLType="CF_SQL_VARCHAR">
 			)
