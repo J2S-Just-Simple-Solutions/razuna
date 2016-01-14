@@ -329,6 +329,8 @@
 		<!--- Check to see if session is valid --->
 		<cfif thesession>
 			<!--- Query --->
+			<!--- Ajout du 'AND c.cf_id != "61A9CFB5-850E-48F6-86DFC7500D935704"' afin de ne pas remonter les champ contenu (PDF) 
+				  dans le frontal Web --->
 			<cfquery datasource="#application.razuna.api.dsn#" name="thexml">
 			SELECT DISTINCT ct.cf_id_r field_id, ct.cf_text field_text, cv.cf_value field_value, c.cf_order, cv.asset_id_r file_id
 			FROM #application.razuna.api.prefix["#arguments.api_key#"]#custom_fields_text ct, #application.razuna.api.prefix["#arguments.api_key#"]#custom_fields c, #application.razuna.api.prefix["#arguments.api_key#"]#custom_fields_values cv
@@ -337,6 +339,7 @@
 			AND c.cf_id = ct.cf_id_r
 			AND ct.lang_id_r = <cfqueryparam cfsqltype="cf_sql_numeric" value="#arguments.lang_id#">
 			AND cv.host_id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#application.razuna.api.hostid["#arguments.api_key#"]#">
+			AND c.cf_id != "61A9CFB5-850E-48F6-86DFC7500D935704" 
 			ORDER BY c.cf_order
 			</cfquery>
 		<!--- No session found --->
