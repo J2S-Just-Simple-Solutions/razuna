@@ -616,7 +616,7 @@
 			});
 			$(".ui-dialog-titlebar-close span").click(function(e){
 				var button = $(e.currentTarget);
-				if(localStorage.getItem("asset_details_modified")){
+				/*if(localStorage.getItem("asset_details_modified")){
 					e.preventDefault();
 					e.stopImmediatePropagation();
 					$("<div>#myFusebox.getApplicationData().defaults.trans('has_change')#</div>").dialog({
@@ -634,7 +634,7 @@
 							}
 						}
 					});
-				}
+				}*/
 			});
 		},1000);
 	});
