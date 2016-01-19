@@ -1483,11 +1483,13 @@
 				<cfset var err = "">
 				<cfif thewm.wmval.wm_use_image>
 
+					<set name="arguments.thestruct.rootpath" value="#ExpandPath('../..')#" />
+
 					<cflog file="api" type="error" text="thecomposite=#thecomposite#">
 					<cflog file="api" type="error" text="arguments.thestruct.rootpath=#arguments.thestruct.rootpath#">
 					
 					<cfexecute name="#thecomposite#" arguments="-dissolve #thewm.wmval.wm_image_opacity#% -gravity #thewm.wmval.wm_image_position# #arguments.thestruct.rootpath#global/host/watermark/#session.hostid#/#thewm.wmval.wm_image_path# #theformatconv# #theformatconv#" timeout="90" errorVariable="err"/>
-					<!---<cfexecute name="#thecomposite#" arguments="-dissolve #thewm.wmval.wm_image_opacity#% -gravity #thewm.wmval.wm_image_position# /opt/razuna_tomcat_1_7/tomcat/webapps/razuna/global/host/watermark/#session.hostid#/#thewm.wmval.wm_image_path# #theformatconv# #theformatconv#" timeout="90" errorVariable="err"/> --->
+					<!--- <cfexecute name="#thecomposite#" arguments="-dissolve #thewm.wmval.wm_image_opacity#% -gravity #thewm.wmval.wm_image_position# /opt/razuna_tomcat_1_7/tomcat/webapps/razuna/global/host/watermark/#session.hostid#/#thewm.wmval.wm_image_path# #theformatconv# #theformatconv#" timeout="90" errorVariable="err"/> --->
 				</cfif>
 				<cfif thewm.wmval.wm_use_text>
 					<!--- Opacity --->
