@@ -1483,7 +1483,7 @@
 				<cfset var err = "">
 				<cfif thewm.wmval.wm_use_image>
 
-					<set name="arguments.thestruct.rootpath" value="#ExpandPath('../..')#" />
+					<cfset var arguments.thestruct.rootpath="#ExpandPath('../..')#" />
 
 					<cflog file="api" type="error" text="thecomposite=#thecomposite#">
 					<cflog file="api" type="error" text="arguments.thestruct.rootpath=#arguments.thestruct.rootpath#">
