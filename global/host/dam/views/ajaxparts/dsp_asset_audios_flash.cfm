@@ -25,7 +25,8 @@
 --->
 <!--- If asset has expired then show appropriate message --->
 <cfif isdefined("qry_detail_aud.detail.expiry_date_actual") AND isdate(qry_detail_aud.detail.expiry_date_actual) AND qry_detail_aud.detail.expiry_date_actual lt now()>
-	Asset has expired. Please contact administrator to gain access to this asset.<cfabort>
+	<!---Asset has expired. Please contact administrator to gain access to this asset.--->	
+	L'actif a expiré. Veuillez contacter l'administrateur pour accéder cet actif .<cfabort>
 </cfif>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -42,7 +43,9 @@ div##wrapper {
 	text-align: left; /* reset text alignment */ 
 	margin-left: auto; 
 	margin-right: auto;
-	width: 450px;
+	/* width: 450px; FL */
+	width: inherit; /* FL */
+	overflow: hidden; /* FL */
 	margin-top: 100px;
 }
 </style>
@@ -102,7 +105,8 @@ div##wrapper {
 			<audio controls="controls">
 				<source src="#audiopath#" type="audio/ogg" />
 			  	<!--- <source src="song.mp3" type="audio/mp3" /> --->
-			  	Your browser does not support the <code>HTML5 video</code> element. Please download the file!
+			  	<!---Your browser does not support the <code>HTML5 video</code> element. Please download the file!--->
+			  	Votre navigateur ne supporte pas le composant vidéo HTML5. Veuillez télécharger le fichier !
 			</audio>
 			<br>
 			If the audio above does not play, you can also <a href="#myself#c.serve_file&file_id=#attributes.file_id#&type=aud" target="_blank">get it directly from here.</a>
