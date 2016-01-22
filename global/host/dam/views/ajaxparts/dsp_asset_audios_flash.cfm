@@ -42,10 +42,9 @@ body {
 div##wrapper { 
 	text-align: left; /* reset text alignment */ 
 	margin-left: auto; 
-	margin-right: auto;
-	/* width: 450px; FL */
-	width: inherit; /* FL */
-	overflow: hidden; /* FL */
+	/* width: 450px; Commented by J2S (FL)  */
+	width: inherit; /* Added by J2S (FL) */
+	overflow: hidden; /* Added by J2S (FL) */
 	margin-top: 100px;
 }
 </style>
@@ -114,7 +113,7 @@ div##wrapper {
 		<!--- Quicktime --->
 		<cfcase value="wav,m4a,m4b,m4p,au,amr">
 			<script language="JavaScript" type="text/javascript">
-			QT_WriteOBJECT('#audiopath#','450','30','',
+			QT_WriteOBJECT('#audiopath#','350','40','',
 			'target','myself',
 			'controller','true',
 			'autoplay', 'false',
