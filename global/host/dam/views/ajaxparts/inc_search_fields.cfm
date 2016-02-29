@@ -104,26 +104,28 @@
 				<td>
 					<cfset cfid = replace(cf_id,"-","","all")>
 					<!--- For text --->
-					<cfif cf_type EQ "text" OR cf_type EQ "textarea" OR cf_type EQ "inventory" OR cf_type EQ "select" OR cf_type EQ "select-search" OR cf_type EQ "select-category" OR cf_type EQ "candidate-descriptor" OR cf_type EQ "select-search-multi" OR cf_type EQ "candidate-descriptor" OR cf_type EQ "select-sub-category" >
+					<cfif cf_type EQ "text" OR cf_type EQ "textarea" OR cf_type EQ "inventory" >
 						<input type="text" style="width:300px;" name="cf#cfid#" >
 					<!--- Radio --->
 					<cfelseif cf_type EQ "radio">
 						<input type="radio" name="cf#cfid#" value="T">#myFusebox.getApplicationData().defaults.trans("yes")# <input type="radio" name="cf#cfid#" value="F">#myFusebox.getApplicationData().defaults.trans("no")#
-					<!--- Select 
-						Avec un SELECT pas moyen d'inclure un OR, un AND ou un NOT :-(
-						On revient donc à l'input
-					<cfelseif cf_type EQ "select" OR cf_type EQ "select-search" OR cf_type EQ "select-category" OR cf_type EQ "candidate-descriptor" OR cf_type EQ "select-search-multi" OR cf_type EQ "candidate-descriptor" OR cf_type EQ "select-sub-category">
-						
+					<!--- Select --->
+					<cfelseif cf_type EQ "select" OR cf_type EQ "select-search" OR cf_type EQ "select-category" OR cf_type EQ "candidate-descriptor" OR cf_type EQ "select-search-multi" OR cf_type EQ "candidate-descriptor"  OR cf_type EQ "select-sub-category">				
+						<!--- Avec un SELECT pas moyen d'inclure un OR, un AND ou un NOT :-(
+							  On revient donc à l'input
+						<input type="text" style="width:300px;" name="cf#cfid#" > --->
 						<select name="cf#cfid#" style="width:300px;">
 							<option value="" selected="selected"></option>
 							<cfloop list="#ltrim(ListSort(REReplace(cf_select_list, ",(?![^()]+\))\s?" ,';','ALL'), 'text', 'asc', ';'))#" index="i" delimiters=";">
 								<option value="#i#">#i#</option>
 							</cfloop>
-						</select> --->
+						</select>
 					<!--- Descriptor --->
 					<cfelseif cf_type EQ "descriptor">
-                        <select name="cf#cfid#" descriptor style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_an_descriptor")#">							<option></option>		
-						</select>
+                        <!--- Avec un SELECT pas moyen d'inclure un OR, un AND ou un NOT :-(
+							  On revient donc à l'input
+						<input type="text" style="width:300px;" name="cf#cfid#" > --->
+						<select name="cf#cfid#" descriptor style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_an_descriptor")#"><option></option></select>
 						<cfoutput>
 							<!--- JS --->
 							<script language="JavaScript" type="text/javascript">
