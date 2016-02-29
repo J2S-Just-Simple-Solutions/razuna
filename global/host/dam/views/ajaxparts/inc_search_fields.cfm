@@ -126,9 +126,8 @@
 							  On revient donc à l'input 
 						<input type="text" style="width:300px;" name="cf#cfid#" > --->
 						<select name="cf#cfid#" descriptor style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_an_descriptor")#"><option></option></select>
-						<cfoutput> --->
+						<cfoutput>
 							<!--- JS --->
-							<!---
 							<script language="JavaScript" type="text/javascript">
 								var descriptorSearch = $("select[name='cf"+"<cfoutput>#cfid#</cfoutput>"+"']");
 								descriptorSearch.ready(function(){
