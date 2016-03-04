@@ -104,7 +104,7 @@
 				<cfinvokeargument name="assetid" value="all" />
 			</cfinvoke>
 		</cfif>
-</cffunction>
+	</cffunction>
 
 	<!--- INDEX: Update --->
 	<cffunction name="index_update_hosted" access="public" output="false" returntype="void">
@@ -971,6 +971,11 @@
 		<cfargument name="category" type="string">
 		<cfargument name="hostid" type="numeric">
 
+		<cflog file="lucene" type="Information" text="*** Nouvelle recherche Lucene ****" >
+		<cflog file="lucene" type="Information" text="Argument criteria: #arguments.criteria#" >
+		<cflog file="lucene" type="Information" text="Argument category: #arguments.category#" >
+		<cflog file="lucene" type="Information" text="Argument hostid: #arguments.hostid#" >
+
 		<!--- Write dummy record (this fixes issues with collection not written to lucene!!!) --->
 		<!--- Commented this out cause we fixed it and second it slows down the search coniderably!!!!!! --->
 		<!--- <cftry>
@@ -983,6 +988,9 @@
 		 Do not use escape(deprecated) or encodeURI (doesn't encode '+' sign) methods to encode. Use the encodeURIComponent javascript method only.
 		--->
 		<cfset arguments.criteria = replace(urlDecode(replace(arguments.criteria,"+","PLUSSIGN","ALL")),"PLUSSIGN","+","ALL")>
+		
+		<cflog file="lucene" type="Information" text="criteria (après 1er traiement): #arguments.criteria#" >
+
 		<!--- If criteria is empty --->
 		<cfif arguments.criteria EQ "">
 			<cfset arguments.criteria = "">
@@ -1002,6 +1010,8 @@
 			</cfif>
 			<cfset arguments.criteria = '(' & arguments.criteria_sp  & ') ' & arguments.criteria & ' keywords:(#arguments.criteria_sp#) description:(#arguments.criteria_sp#) id:(#arguments.criteria_sp#) labels:(#arguments.criteria_sp#) customfieldvalue:(#arguments.criteria_sp#)'>
 		</cfif>
+
+		<cflog file="lucene" type="Information" text="criteria (après 2nd traiement): #arguments.criteria#" >
 
 		<cftry>
 			<cfsearch collection='#arguments.hostid#' criteria='#arguments.criteria#' name='qrylucene' category='#arguments.category#'>
