@@ -987,7 +987,7 @@
 		--->
 		<cfset arguments.criteria = replace(urlDecode(replace(arguments.criteria,"+","PLUSSIGN","ALL")),"PLUSSIGN","+","ALL")>
 
-		<!--- If criteria is empty 
+		<!--- If criteria is empty --->
 		<cfif arguments.criteria EQ "">
 			<cfset arguments.criteria = "">
 		<!--- Put search together. If the criteria contains a ":" then we assume the user wants to search with his own fields --->
@@ -1005,7 +1005,7 @@
 				<cfset arguments.criteria = 'filename:(#arguments.criteria#*) filename:("#arguments.criteria#")'>
 			</cfif>
 			<cfset arguments.criteria = '(' & arguments.criteria_sp  & ') ' & arguments.criteria & ' keywords:(#arguments.criteria_sp#) description:(#arguments.criteria_sp#) id:(#arguments.criteria_sp#) labels:(#arguments.criteria_sp#) customfieldvalue:(#arguments.criteria_sp#)'>
-		</cfif>--->
+		</cfif>
 
 		<cflog file="lucene" type="Information" text="criteria (après traitement): #arguments.criteria#" >
 
