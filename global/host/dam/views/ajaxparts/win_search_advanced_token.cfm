@@ -48,7 +48,7 @@
 				//Je lance la recherche
 				$("input[name=simplesearchtext]").val(value);
 				$("##form_simplesearch button").click();
-				//$("input[name=simplesearchtext]").val("");
+				$("input[name=simplesearchtext]").val("");
 			}
 
 			//Je crée mon champ de recherche
