@@ -99,10 +99,17 @@
 						<!--- <img src="#dynpath#/global/host/dam/images/search_16.png" width="16" height="16" border="0" onclick="checkentry();" class="ddicon"> --->
 					</div>
 				</div>
+
+				<div style="float:right;padding-left:20px;padding-top:8px;">
+					<a href="##" onclick="loadcontent('rightside','#myself#c.search_advanced_token&folder_id=0');$('##searchselection').toggle();return false;">Recherche par champs</a>
+					<!--- <a href="##" style="padding-left:15px;" onclick="loadcontent('rightside','#myself#c.updater_tool');return false;"><strong style="color:red;">FILE RE-UPLOAD!</strong></a> --->
+				</div>
+
 				<div style="float:right;padding-left:20px;padding-top:8px;">
 					<a href="##" onclick="loadcontent('rightside','#myself#c.search_advanced&folder_id=0');$('##searchselection').toggle();return false;">#myFusebox.getApplicationData().defaults.trans("link_adv_search")#</a>
 					<!--- <a href="##" style="padding-left:15px;" onclick="loadcontent('rightside','#myself#c.updater_tool');return false;"><strong style="color:red;">FILE RE-UPLOAD!</strong></a> --->
 				</div>
+
 				<!--- Enabled UPC search --->
 				<cfif prefs.set2_upc_enabled>
 					<div style="float:right;padding-left:20px;padding-top:8px;">
