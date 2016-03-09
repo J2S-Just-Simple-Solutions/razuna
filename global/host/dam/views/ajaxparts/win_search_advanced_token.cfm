@@ -28,7 +28,7 @@
 <cfoutput>
 	Recherche par champs : 
 	<br>
-	<textarea></textarea>
+	<iframe style="border:none;width:100%;"></iframe>
 	<script data-main="underscore" src="/razuna-dev/global/js/underscore-min.js"></script>
 	<script data-main="rte" src="/razuna-dev/global/js/jquery.richTokenEditor.js"></script>
 	<script type="text/javascript">
@@ -36,7 +36,7 @@
 			var fields = <cfoutput>#serializeJson(qry_fields)#</cfoutput>;
 			var searchHandler = function(value){
 				// TODO
-				// Gerer le "tous les champs" => (description:(value) OR customfieldvalue(value))
+				// Gèrer un historique des requetes
 
 				//Je décompose ma recherche en customfield
 				value = value.replace(/[\w-]+:'\w+'/g, function(match, contents){
@@ -52,7 +52,7 @@
 			}
 
 			//Je crée mon champ de recherche
-			$("textarea").richTokenEditor({fields : fields.DATA.slice(0,4), callback : searchHandler});	
+			$("iframe").richTokenEditor({fields : fields.DATA.slice(0,4), callback : searchHandler});	
 
 			
 		});

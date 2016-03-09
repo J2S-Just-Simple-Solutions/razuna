@@ -12,16 +12,17 @@ iframe {
 	border : none;
 	width: 100%;
 }
-iframe body {
+body {
+	height: 150px;
 	margin: 0;
 	overflow: hidden;
 	border: none;
-	width: 600px;
+	width: 100%;
 }
 .editor {
 	margin-top: 5px;
 	margin-bottom: 5px;
-	width: calc(100% - 0px);
+	width: calc(100% - 5px);
 	overflow: auto;
 	height: calc(100% - 60px);
 	border: 1px solid grey;

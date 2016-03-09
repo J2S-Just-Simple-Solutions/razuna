@@ -11,7 +11,7 @@
 		
 	var version = "v1.0";
 	
-	//------------------------------------------------------------------customfieldvalue:(+5876FB0F-CFE2-4111-9880482B8B8CA19D +alain)
+	//------------------------------------------------------------------
 	//L'éditeur
 	var _editor ='<iframe></iframe>';
 	
@@ -35,9 +35,7 @@
 	$.fn.richTokenEditor = function(options) {		
 		//Je remplace mon textArea pas un richTokenEditor
 		$(this).each(function(){
-			var iframe = $(_editor).css({"border":"none", "width":"100%"});
-			$(this).replaceWith(iframe);
-			var content = iframe[0].contentDocument;
+			var content = this.contentDocument;
 			$(content).find("body").html(_controlTokenEditor);
 			$(content).find("div").prop("contentEditable", true).html($(this).text()).focus();
 			$(content).find("head").append(_style);	
