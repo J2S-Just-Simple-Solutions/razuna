@@ -100,10 +100,12 @@
 					</div>
 				</div>
 
-				<div style="float:right;padding-left:20px;padding-top:8px;">
-					<a href="##" onclick="loadcontent('rightside','#myself#c.search_advanced_token&folder_id=0');$('##searchselection').toggle();return false;">Recherche par champs</a>
-					<!--- <a href="##" style="padding-left:15px;" onclick="loadcontent('rightside','#myself#c.updater_tool');return false;"><strong style="color:red;">FILE RE-UPLOAD!</strong></a> --->
-				</div>
+				<cfif session.theuserid eq "0B944CF8-AB64-42ED-9B0BB73BEB2D7602">
+					<div style="float:right;padding-left:20px;padding-top:8px;">
+						<a href="##" onclick="loadcontent('rightside','#myself#c.search_advanced_token&folder_id=0');$('##searchselection').toggle();return false;">Recherche par champs</a>
+						<!--- <a href="##" style="padding-left:15px;" onclick="loadcontent('rightside','#myself#c.updater_tool');return false;"><strong style="color:red;">FILE RE-UPLOAD!</strong></a> --->
+					</div>
+				</cfif>					
 
 				<div style="float:right;padding-left:20px;padding-top:8px;">
 					<a href="##" onclick="loadcontent('rightside','#myself#c.search_advanced&folder_id=0');$('##searchselection').toggle();return false;">#myFusebox.getApplicationData().defaults.trans("link_adv_search")#</a>
