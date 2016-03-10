@@ -29,8 +29,8 @@
 	Recherche par champs : 
 	<br>
 	<iframe style="border:none;width:100%;"></iframe>
-	<script data-main="underscore" src="/razuna-dev/global/js/underscore-min.js"></script>
-	<script data-main="rte" src="/razuna-dev/global/js/jquery.richTokenEditor.js"></script>
+	<script data-main="underscore" src="/razuna/global/js/underscore-min.js"></script>
+	<script data-main="rte" src="/razuna/global/js/jquery.richTokenEditor.js"></script>
 	<script type="text/javascript">
 		$(document).ready( function(){
 			var fields = <cfoutput>#serializeJson(qry_fields)#</cfoutput>;
