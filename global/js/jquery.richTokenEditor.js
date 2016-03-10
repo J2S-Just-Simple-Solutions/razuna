@@ -20,7 +20,9 @@
 	var _controlTokenEditor = 
 		'<select contentEditable="false"><option value="" selected>Sélectionner un champ</option>\n\
 		<option value="ALL">Dans tous les champs</option>\n\
-		<option value="description">Dans Description</option>\n\
+		<option value="ALLFIELDS">Dans tous les champs personnalisés</option>\n\
+		<option value="description">Dans le champ Description</option>\n\
+		<option disabled>───────────────────────────</option>\n\
 		</select>\n\
 		<button value="AND" action contentEditable="false">Et</button>\n\
 		<button value="OR" action contentEditable="false">Ou</button>\n\
@@ -41,6 +43,11 @@
 			$(content).find("head").append(_style);	
 
 			//Je rempli ma liste de champ
+			var fields = options.fields.sort(function (a, b) {
+			    if (a[5].toLowerCase() > b[5].toLowerCase())return 1;
+			    if (a[5].toLowerCase() < b[5].toLowerCase())return -1;
+			    return 0;
+			});
 			_.each(options.fields, function(field){
 				$(content).find('select').append("<option value='"+field[0]+"''>"+field[5]+" commence par</option>");
 			})

@@ -43,6 +43,7 @@
 					var operationValue = operation[1].replace(/\'/g, "").replace(/\s/g, "+");
 					var operationField = operation[0];
 					if(operationField === "ALL")return "(description:("+operationValue+") OR customfieldvalue:("+operationValue+"))";
+					else if(operation[0] === "ALLFIELDS")return "customfieldvalue:("+operationValue+")";
 					else if(operation[0] === "description")return "description:("+operationValue+")";
 					else return "customfieldvalue:(+"+operationField+"+"+operationValue+")";
 				});
