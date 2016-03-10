@@ -18,13 +18,13 @@
 	//------------------------------------------------------------------
 	//Mes controles	
 	var _controlTokenEditor = 
-		'<select><option value="" selected>Sélectionner un champ</option>\n\
-		<option value="ALL">Tous les champs</option>\n\
-		<option value="description">Description</option>\n\
+		'<select contentEditable="false"><option value="" selected>Sélectionner un champ</option>\n\
+		<option value="ALL">Dans tous les champs</option>\n\
+		<option value="description">Dans Description</option>\n\
 		</select>\n\
-		<button value="AND" action>Et</button>\n\
-		<button value="OR" action>Ou</button>\n\
-		<button value="NOT" action>Sauf</button>\n\
+		<button value="AND" action contentEditable="false">Et</button>\n\
+		<button value="OR" action contentEditable="false">Ou</button>\n\
+		<button value="NOT" action contentEditable="false">Sauf</button>\n\
 		<div class="editor"/>\n\
 		<button id="search">Rechercher</button>';
 		
@@ -42,7 +42,7 @@
 
 			//Je rempli ma liste de champ
 			_.each(options.fields, function(field){
-				$(content).find('select').append("<option value='"+field[0]+"''>"+field[5]+"</option>");
+				$(content).find('select').append("<option value='"+field[0]+"''>"+field[5]+" commence par</option>");
 			})
 			
 			//------------------------------------------------------------------

@@ -37,22 +37,24 @@
 			var searchHandler = function(value){
 				// TODO
 				// Gèrer un historique des requetes
-
 				//Je décompose ma recherche en customfield
-				value = value.replace(/[\w-]+:'\w+'/g, function(match, contents){
+				value = value.replace(/[\w-]+:'[\w\s]+'/g, function(match, contents){
 					var operation = match.split(":");
-					if(operation[0] === "ALL")return "(description:(+"+operation[1]+") OR customfieldvalue:(+"+operation[1]+"))";
-					else return "customfieldvalue:(+"+operation[0]+" +"+operation[1]+")";
+					var operationValue = operation[1].replace(/\'/g, "").replace(/\s/g, "+");
+					var operationField = operation[0];
+					if(operationField === "ALL")return "(description:("+operationValue+") OR customfieldvalue:("+operationValue+"))";
+					else if(operation[0] === "description")return "description:("+operationValue+")";
+					else return "customfieldvalue:(+"+operationField+"+"+operationValue+")";
 				});
 
 				//Je lance la recherche
 				$("input[name=simplesearchtext]").val(value);
 				$("##form_simplesearch button").click();
-				$("input[name=simplesearchtext]").val("");
+				//$("input[name=simplesearchtext]").val("");
 			}
 
 			//Je crée mon champ de recherche
-			$("iframe").richTokenEditor({fields : fields.DATA.slice(0,4), callback : searchHandler});	
+			$("iframe").richTokenEditor({fields : fields.DATA, callback : searchHandler});	
 
 			
 		});
