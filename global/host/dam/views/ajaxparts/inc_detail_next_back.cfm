@@ -36,13 +36,16 @@
 			<!--- Hide if row is 0 --->
 			<cfif rowback NEQ 0>
 				<div style="float:left;">
-					<button type="button" class="awesome small green" onclick="showwindow('#myself#c.detail_proxy&file_id=#attributes.file_id#&what=#attributes.what#&loaddiv=#attributes.loaddiv#&folder_id=#attributes.folder_id#&showsubfolders=#attributes.showsubfolders#&row=#rowback#&filecount=#attributes.filecount#&#file_extension#','',1000,1);return false;">&lt; #myFusebox.getApplicationData().defaults.trans("back")#</button>
+					<button type="button" class="awesome small green" onclick="navigate(#rowback#,#attributes.filecount#);">&lt; #myFusebox.getApplicationData().defaults.trans("back")#</button>
 				</div>
 			</cfif>
+
+			<cfif structKeyExists(attributes,"filecount")><div style="text-align:center;position: absolute;width: 50%;margin-left: 25%;">#attributes.row#/#attributes.filecount#</div></cfif>
+
 			<!--- Hide if filecount eq row --->
 			<cfif NOT rownext GT attributes.filecount>
 				<div style="float:right;">
-					<button type="button" class="awesome small green" onclick="showwindow('#myself#c.detail_proxy&file_id=#attributes.file_id#&what=#attributes.what#&loaddiv=#attributes.loaddiv#&folder_id=#attributes.folder_id#&showsubfolders=#attributes.showsubfolders#&row=#rownext#&filecount=#attributes.filecount#&#file_extension#','',1000,1);return false;">#myFusebox.getApplicationData().defaults.trans("next")# &gt;</button>
+					<button type="button" class="awesome small green" onclick="navigate(#rownext#,#attributes.filecount#);">#myFusebox.getApplicationData().defaults.trans("next")# &gt;</button>
 				</div>
 			</cfif>
 		</div>

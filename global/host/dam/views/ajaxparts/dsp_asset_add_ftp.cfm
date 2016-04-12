@@ -34,11 +34,11 @@
 		</tr>
 		<tr>
 			<td nowrap="true" width="120">#myFusebox.getApplicationData().defaults.trans("ftp_server")#</td>
-			<td width="480"><input id="ftp_server" name="ftp_server" type="text" size="40" tabindex="1" value="<cfif structkeyexists(session,"ftp_server")>#session.ftp_server#</cfif>"></td>
+			<td width="480"><input id="ftp_server" name="ftp_server" type="text" size="40" tabindex="1" value="<cfif structkeyexists(session,"ftp_server")>#session.ftp_server#<cfelse>ima.j2s.net</cfif>"></td>
 		</tr>
 		<tr>
 			<td nowrap="true">#myFusebox.getApplicationData().defaults.trans("username")#</td>
-			<td><input id="ftp_user" name="ftp_user" type="text" size="40" tabindex="2" value="<cfif structkeyexists(session,"ftp_user")>#session.ftp_user#</cfif>"></td>
+			<td><input id="ftp_user" name="ftp_user" type="text" size="40" tabindex="2" value="<cfif structkeyexists(session,"ftp_user")>#session.ftp_user#<cfelse>ftpima</cfif>"></td>
 		</tr>
 		<tr>
 			<td nowrap="true">#myFusebox.getApplicationData().defaults.trans("password")#</td>
@@ -69,7 +69,7 @@
 	    	var pass = $('##ftp_pass').val();
 	    	var passive = $('##ftp_passive:checked').val();
 	    	// Change Button
-		   	$('##ftplogin').html('#myFusebox.getApplicationData().defaults.trans("please_wait")#...(sometimes minutes)');
+		   	$('##ftplogin').html('#myFusebox.getApplicationData().defaults.trans("please_wait")#...()#myFusebox.getApplicationData().defaults.trans("sometimes_minutes")#)');
 	    	// Load the FTP site
 	    	$('##addftp').load('#myself#c.asset_add_ftp_show', { folder_id:"#attributes.folder_id#", ftp_server: server, ftp_user: user, ftp_pass: pass, ftp_passive: passive } );
 	    	return false;

@@ -128,7 +128,7 @@
 			var u = $('##av_link_url').val();
 			// Save new link
 			if (t == "" || u == ""){
-				alert('#myFusebox.getApplicationData().defaults.trans("adiver_link_error")#');
+				alert("#myFusebox.getApplicationData().defaults.trans("adiver_link_error")#");
 				return false;
 			}
 			else {

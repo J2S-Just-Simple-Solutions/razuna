@@ -126,6 +126,18 @@
 
 	// For search
 	function subadvfields(theform){
+		//Je récupère la derniere recherche
+		var lastSearch = localStorage.getItem("last_search")
+		//Je la parse, si elle n'existe pas je la crée
+		if(lastSearch)lastSearch = JSON.parse(lastSearch);
+		else lastSearch = [];
+		//je récupère mes champs
+		var form = $("#"+theform).serializeArray();
+		form.push({name:"now", value : $.now()})
+		lastSearch.push(form);
+		//J'enregistre en localstorage les 15 derniers
+		localStorage.setItem("last_search", JSON.stringify(lastSearch.slice(-15)));
+
 		// Get values
 		var searchtext = '';
 		// var searchfor = document.forms[theform].searchfor.value;
@@ -135,8 +147,7 @@
 		var extension = document.forms[theform].extension.value;
 		var rawmetadata = document.forms[theform].rawmetadata.value;
 		var labels = $('#' + theform + ' [name="labels"]').val();
-		if(labels != null) 
-		{
+		if(labels != null) {
 			labels = labels.toString().replace(/,/g, " ");
 			labels = labels.toString().replace(/\//g, " ");
 		}
@@ -168,14 +179,19 @@
 		if (keywords != '') var keywords = 'keywords:(' + replacespaces(keywords) +')';
 		if (description != '') var description = 'description:(' + replacespaces(description) +')';
 		var filename;
-		if (filename.indexOf('"')!=-1 || filename.indexOf('*')!=-1)
-			{if (filename != '')  filename = 'filename:(' + filename + ')';}
-		else	
-			{if (filename != '')  filename = 'filename:("' + filename + '")';}
+		if (filename.indexOf('"')!=-1 || filename.indexOf('*')!=-1) {
+			if (filename != '')  filename = 'filename:(' + filename + ')';
+		}
+		else {
+			if (filename != '')  filename = 'filename:("' + filename + '")';
+		}
 		
-		if (extension != '') var extension = 'extension:(' + extension +')';
-		if (rawmetadata != '') var rawmetadata = 'rawmetadata:(' + replacespaces(rawmetadata) +')';
-		
+		if (extension != '') {
+			var extension = 'extension:(' + extension +')';
+		}
+		if (rawmetadata != '') {
+			var rawmetadata = 'rawmetadata:(' + replacespaces(rawmetadata) +')';
+		}		
 
 		if (labels != ''){
 			if (andor == "OR"){

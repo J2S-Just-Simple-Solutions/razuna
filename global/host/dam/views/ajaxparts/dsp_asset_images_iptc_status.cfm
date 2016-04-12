@@ -58,7 +58,7 @@
 		<td class="td2" width="100%"><input type="text" name="xmp_category" size="3" maxlength="3" value="#qry_xmp.category#"></td>
 	</tr>
 	<tr>
-		<td class="td2" valign="top" nowrap="nowrap"><strong>#myFusebox.getApplicationData().defaults.trans("supplemental")# #myFusebox.getApplicationData().defaults.trans("categories_iptc")#</strong></td>
+		<td class="td2" valign="top" nowrap="nowrap"><strong>#myFusebox.getApplicationData().defaults.trans("supplemental_categories_iptc")#</strong></td>
 		<td class="td2" width="100%"><textarea name="xmp_supplemental_categories" style="width:350px;height:40px;">#qry_xmp.categorysub#</textarea></td>
 	</tr>
 	<tr>

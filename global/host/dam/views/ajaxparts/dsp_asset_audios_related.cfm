@@ -98,14 +98,14 @@
 function remrenaud(id){
 	$( "##dialog-confirm-rendition" ).dialog({
 		resizable: false,
-		height:140,
+		height: 160,
 		modal: true,
 		buttons: {
 			"#myFusebox.getApplicationData().defaults.trans("remove_rend_ok")#": function() {
 				$( this ).dialog( "close" );
 				$('##relatedaudios').load('#myself#c.audios_remove_related&file_id=#attributes.file_id#&what=audios&loaddiv=#attributes.loaddiv#&folder_id=#attributes.folder_id#&s=#attributes.s#&id=' + id, function(){ loadrenaud(); });
 			},
-			"#myFusebox.getApplicationData().defaults.trans('cancel')#": function() {
+			"#myFusebox.getApplicationData().defaults.trans("cancel")#": function() {
 				$( this ).dialog( "close" );
 			}
 		}

@@ -1716,6 +1716,11 @@
 			WHERE file_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.thestruct.file_id#">
 			AND host_id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#session.hostid#">
 		</cfquery>
+		<cfquery name="select_custom" datasource="#application.razuna.datasource#">
+			SELECT cf_id_r, cf_value FROM #session.hostdbprefix#custom_fields_values
+			WHERE asset_id_r = <cfqueryparam value="#arguments.thestruct.file_id#" cfsqltype="cf_sql_varchar" >
+			AND host_id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#session.hostid#">
+		</cfquery>
 		<cfif arguments.thestruct.insert_type EQ 'replace'>
 			<cfloop list="#arguments.thestruct.idlist#" index="i">
 				<cfloop query="thefiletext">
@@ -1750,6 +1755,39 @@
 							)
 						</cfquery>
 					</cfif>
+				</cfloop>
+			</cfloop>
+			<cfloop list="#arguments.thestruct.idList#" index="id" delimiters=",">
+				<cfloop query = "select_custom">
+					<cfquery name="count_custom" datasource="#application.razuna.datasource#">
+						SELECT asset_id_r FROM #session.hostdbprefix#custom_fields_values 
+						WHERE asset_id_r = <cfqueryparam value="#id#" cfsqltype="cf_sql_varchar">
+						AND cf_id_r = <cfqueryparam value="#select_custom.cf_id_r#" cfsqltype="cf_sql_varchar">
+						AND host_id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#session.hostid#">
+					</cfquery>
+					<cfif select_custom.cf_id_r neq "61A9CFB5-850E-48F6-86DFC7500D935704">
+						<cfif count_custom.RecordCount>
+							<cfquery name="updateimges_text" datasource="#application.razuna.datasource#">
+								UPDATE #session.hostdbprefix#custom_fields_values SET 
+								cf_value = <cfqueryparam value="#select_custom.cf_value#" cfsqltype="cf_sql_varchar">
+								WHERE asset_id_r = <cfqueryparam value="#id#" cfsqltype="cf_sql_varchar">
+								AND cf_id_r = <cfqueryparam value="#select_custom.cf_id_r#" cfsqltype="cf_sql_varchar">
+								AND host_id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#session.hostid#">
+							</cfquery>
+						<cfelse>
+							<cfquery datasource="#variables.dsn#">
+								INSERT IGNORE INTO #session.hostdbprefix#custom_fields_values
+								( cf_id_r, asset_id_r, cf_value, HOST_ID, rec_uuid)
+								VALUES(
+								<cfqueryparam value="#select_custom.cf_id_r#" cfsqltype="cf_sql_varchar">,
+								<cfqueryparam value="#id#" cfsqltype="cf_sql_varchar">, 
+								<cfqueryparam value="#select_custom.cf_value#" cfsqltype="cf_sql_varchar">, 
+								<cfqueryparam value="#session.hostid#" cfsqltype="cf_sql_numeric">, 
+								<cfqueryparam value="#createuuid()#" cfsqltype="cf_sql_varchar">
+								)
+							</cfquery>
+						</cfif>
+					</cfif>	
 				</cfloop>
 			</cfloop>
 		<cfelse>

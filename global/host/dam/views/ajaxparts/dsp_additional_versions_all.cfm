@@ -80,10 +80,10 @@
 	function swaporiginal(id, type){
 		$( "##dialog-confirm-swap" ).dialog({
 			resizable: false,
-			height:160,
+			height: 160,
 			modal: true,
 			buttons: {
-				"#myFusebox.getApplicationData().defaults.trans('yes')#": function() {
+				"#myFusebox.getApplicationData().defaults.trans("yes")#": function() {
 					$( this ).dialog( "close" );
 					$('##div_forall').load('#myself#c.swap_rendition_original&file_id=#attributes.file_id#&folder_id=#attributes.folder_id#&id=' + id, function(){ 
 						if (type == 'img')loadren();
@@ -92,7 +92,7 @@
 						$('##msg').html('<font color=steelblue">#myFusebox.getApplicationData().defaults.trans("swap_ok")#</font>');
 					 });
 				},
-				"#myFusebox.getApplicationData().defaults.trans('cancel')#": function() {
+				"#myFusebox.getApplicationData().defaults.trans("cancel")#": function() {
 					$( this ).dialog( "close" );
 				}
 			}
@@ -101,7 +101,7 @@
 	function remavren(id,type){
 		$( "##dialog-confirm-rendition" ).dialog({
 			resizable: false,
-			height:140,
+			height: 160,
 			modal: true,
 			buttons: {
 				"#myFusebox.getApplicationData().defaults.trans("remove_rend_ok")#": function() {
@@ -113,7 +113,7 @@
 						if (type == 'doc')loadcontent('additionalversions','#myself#c.av_load&file_id=#attributes.file_id#&folder_id=#attributes.folder_id#&isdoc=yes');
 					});
 				},
-				"#myFusebox.getApplicationData().defaults.trans('cancel')#": function() {
+				"#myFusebox.getApplicationData().defaults.trans("cancel")#": function() {
 					$( this ).dialog( "close" );
 				}
 			}

@@ -5680,6 +5680,37 @@
 		<!-- Show -->
 		<do action="ajax.search_advanced" />
 	</fuseaction>
+
+	<fuseaction name="search_advanced_token">
+		<!-- Params -->
+		<set name="session.search.labels_all" value="" />
+		<set name="session.search.labels_img" value="" />
+		<set name="session.search.labels_aud" value="" />
+		<set name="session.search.labels_vid" value="" />
+		<set name="session.search.labels_doc" value="" />
+		<if condition="structkeyexists(attributes,'fromshare')">
+			<true>
+				<set name="attributes.fromshare" value="true" />
+			</true>
+			<false>
+				<set name="attributes.fromshare" value="false" />
+			</false>
+		</if>
+		<!-- Get labels -->
+		<do action="labels" />
+		<!-- CFC: Customization -->
+		<invoke object="myFusebox.getApplicationData().settings" methodcall="get_customization()" returnvariable="cs" />
+		<!-- CFC: Custom fields -->
+		<invoke object="myFusebox.getApplicationData().custom_fields" methodcall="getfieldssearch(attributes)" returnvariable="qry_fields" />
+		<!-- if we need to query the search selection folders -->
+		<if condition="cs.search_selection">
+			<true>
+				<invoke object="myFusebox.getApplicationData().folders" methodcall="getInSearchSelection()" returnvariable="qry_searchselection" />
+			</true>
+		</if>
+		<!-- Show -->
+		<do action="ajax.search_advanced_token" />
+	</fuseaction>
 	
 	<!--
 		END: SEARCH

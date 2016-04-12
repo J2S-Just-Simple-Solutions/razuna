@@ -63,13 +63,13 @@
 	<!--- Show tabs --->
 	<div id="tab_detail#attributes.file_id#">
 		<ul>
+			<cfif cs.tab_metadata>
+				<li><a href="##meta">#myFusebox.getApplicationData().defaults.trans("metadata")#</a></li>
+			</cfif>
 			<li><a href="##detailinfo">#myFusebox.getApplicationData().defaults.trans("asset_information")#</a></li>
 			<!--- RAZ-549: Added in condition to not show renditions, versions and sharing tabs when asset has expired --->
 			<cfif qry_detail.detail.link_kind NEQ "url" AND cs.tab_convert_files AND iif(isdate(qry_detail.detail.expiry_date) AND qry_detail.detail.expiry_date LT now(), false, true)>
 				<li><a href="##convertt" onclick="loadrenvid();return false;">#myFusebox.getApplicationData().defaults.trans("convert")#</a></li>
-			</cfif>
-			<cfif cs.tab_metadata>
-				<li><a href="##meta">Metadata</a></li>
 			</cfif>
 			<!--- VERSIONS --->
 			<!--- attributes.folderaccess NEQ "R" AND condition removed for RAZ-2905 --->
@@ -93,7 +93,7 @@
 			<!--- Hide these for R-groups --->
 			<cfif attributes.folderaccess NEQ "R">
 				<cfif cs.tab_history>
-					<li><a href="##history" onclick="loadcontent('history','#myself#c.log_history&id=#attributes.file_id#');">History</a></li>
+					<li><a href="##history" onclick="loadcontent('history','#myself#c.log_history&id=#attributes.file_id#');">#myFusebox.getApplicationData().defaults.trans("tab_history")#</a></li>
 				</cfif>
 				<!--- Aliases'd --->
 				<cfif qry_aliases.recordcount NEQ 0>
@@ -172,14 +172,14 @@
 									<cfset thisid = lang_id>
 									<tr>
 										<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
-										<td class="td2" width="100%"><textarea name="vid_desc_#thisid#" id="vid_desc_#thisid#" class="text" style="width:400px;height:60px;" <cfif cs.tab_metadata>onchange="document.form#attributes.file_id#.desc_#thisid#.value = document.form#attributes.file_id#.vid_desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#vid_description#</cfif></cfloop></textarea></td>
+										<td class="td2" width="100%"><textarea dir="auto" name="vid_desc_#thisid#" id="vid_desc_#thisid#" class="text" style="width:400px;height:60px;" <cfif cs.tab_metadata>onchange="document.form#attributes.file_id#.desc_#thisid#.value = document.form#attributes.file_id#.vid_desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#vid_description#</cfif></cfloop></textarea></td>
 									</tr>
 									<tr>
 										<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
 										<td class="td2" width="100%"><textarea name="vid_keywords_#thisid#" id="vid_keywords_#thisid#" class="text" style="width:400px;height:30px;" <cfif cs.tab_metadata>onchange="document.form#attributes.file_id#.keywords_#thisid#.value = document.form#attributes.file_id#.vid_keywords_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#vid_keywords#</cfif></cfloop></textarea></td>
 									</tr>
 								</cfif>
-							</cfloop>
+							</cfloop> 
 							<!--- Labels --->
 							<cfif cs.tab_labels>
 								<tr>
@@ -213,7 +213,7 @@
 													</cfloop>
 												</select>
 												<cfif  flag EQ 1 OR (Request.securityobj.CheckSystemAdminUser() OR Request.securityobj.CheckAdministratorUser())>
-													<a href="##" onclick="showwindow('#myself#c.admin_labels_add&label_id=0&closewin=2','Create new label',450,2);return false"><img src="#dynpath#/global/host/dam/images/list-add-3.png" width="24" height="24" border="0" style="margin-left:-2px;" /></a>
+													<a href="##" onclick="showwindow('#myself#c.admin_labels_add&label_id=0&closewin=2','#myFusebox.getApplicationData().defaults.trans('create_new_label')#',450,2);return false"><img src="#dynpath#/global/host/dam/images/list-add-3.png" width="24" height="24" border="0" style="margin-left:-2px;" /></a>
 												</cfif>
 											<cfelse>
 												<!--- Label text area --->
@@ -229,7 +229,7 @@
 														</cfloop>
 													</div>
 													<cfif flag EQ 1 OR (Request.securityobj.CheckSystemAdminUser() OR Request.securityobj.CheckAdministratorUser())>
-														<a href="##" onclick="showwindow('#myself#c.admin_labels_add&label_id=0&closewin=2','Create new label',450,2);return false" style="float:left;"><img src="#dynpath#/global/host/dam/images/list-add-3.png" width="24" height="24" border="0" style="margin-left:-2px;" /></a>
+														<a href="##" onclick="showwindow('#myself#c.admin_labels_add&label_id=0&closewin=2','#myFusebox.getApplicationData().defaults.trans('create_new_label')#',450,2);return false" style="float:left;"><img src="#dynpath#/global/host/dam/images/list-add-3.png" width="24" height="24" border="0" style="margin-left:-2px;" /></a>
 													</cfif>
 													<!--- Select label button --->
 													<br /><br /><a onclick="showwindow('#myself#c.select_label_popup&file_id=#attributes.file_id#&file_type=vid&closewin=2','Choose Labels',600,2);return false;" href="##"><button class="awesome big green">#myFusebox.getApplicationData().defaults.trans("select_labels")#</button></a>
@@ -311,58 +311,105 @@
 		<div id="divcomments"></div>
 		<!--- Meta Data --->
 		<cfif cs.tab_metadata>
-			<div id="meta" class="collapsable">
-				<!--- Description & Keywords --->
-				<a href="##" onclick="$('##detaildesc').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("asset_desc")#</div></a>
-				<div id="detaildesc">
-					<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
-						<!--- Filename --->
-						<tr>
-							<td width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("file_name")#<strong></td>
-							<td width="1%" nowrap="true"><input type="text" style="width:400px;" name="file_name" value="#qry_detail.detail.vid_filename#" onchange="document.form#attributes.file_id#.fname.value = document.form#attributes.file_id#.file_name.value;"> <cfif cs.show_favorites_part><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=vid');flash_footer('#myFusebox.getApplicationData().defaults.trans("item_favorite")#');return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></cfif>
-							</td>
-						</tr>
-						<cfloop query="qry_langs">
-							<cfset thisid = lang_id>
-							<tr>
-								<td class="td2" valign="top" width="1%" nowrap="true"><strong><cfif qry_langs.recordcount NEQ 1>#lang_name#: </cfif>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
-								<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>vid_</cfif>desc_#thisid#" class="text" style="width:400px;height:50px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.vid_desc_#thisid#.value = document.form#attributes.file_id#.desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#vid_description#</cfif></cfloop></textarea></td>
-							</tr>
-							<tr>
-								<td class="td2" valign="top" width="1%" nowrap="true"><strong><cfif qry_langs.recordcount NEQ 1>#lang_name#: </cfif>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
-								<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>vid_</cfif>keywords_#thisid#" class="text" style="width:400px;height:50px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.vid_keywords_#thisid#.value = document.form#attributes.file_id#.keywords_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#vid_keywords#</cfif></cfloop></textarea></td>
-							</tr>
-						</cfloop>
-					</table>
+			<div id="meta" class="collapsable j2s-metadata">
+				<div class="j2s-preview">
+		 			<cfif attributes.folderaccess NEQ "R" OR (org_share_setting.recordcount EQ 1 AND org_share_setting.asset_dl EQ 1)>
+						<cfif qry_detail.detail.link_kind NEQ "lan">
+							<div id="thevideodetail" style="display: inline-block;">
+								<cfif qry_detail.detail.link_kind EQ "url">
+									<cfif qry_detail.detail.link_path_url contains "http">
+										<a href="#qry_detail.detail.link_path_url#" target="_blank">#qry_detail.detail.link_path_url#</a>
+									<cfelse>
+										#qry_detail.detail.link_path_url#
+									</cfif>
+								<cfelse>
+									<a href="#session.thehttp##cgi.HTTP_HOST##cgi.SCRIPT_NAME#?#theaction#=c.sv&f=#attributes.file_id#&v=o" target="_blank"><img src="<cfif application.razuna.storage EQ "local">#cgi.context_path#/assets/#session.hostid#/#qry_detail.detail.path_to_asset#/#qry_detail.detail.vid_name_image#?#qry_detail.detail.hashtag#&#uniqueid#<cfelse>#qry_detail.detail.cloud_url#</cfif>" width="380"></a>
+								</cfif>
+							</div>
+						<cfelse>
+							<img src="#thestorage##qry_detail.detail.path_to_asset#/#qry_detail.detail.vid_name_image#?#uniqueid#" border="0" width="380"><br />
+							#qry_detail.detail.link_path_url#<br />
+							#myFusebox.getApplicationData().defaults.trans("link_videos_desc")#
+						</cfif>
+					<cfelse>
+						<img src="#thestorage##qry_detail.detail.path_to_asset#/#qry_detail.detail.vid_name_image#?#uniqueid#" border="0" width="380">
+					</cfif>
 				</div>
-				<div stlye="clear:both;"></div>
-				<!--- CUSTOM FIELDS --->
-				<cfif qry_cf.recordcount NEQ 0 AND cs.tab_custom_fields>
-					<br />
-					<a href="##" onclick="$('##customfields').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("custom_fields_asset")#</div></a>
-					<div id="customfields">
-						<cfinclude template="inc_custom_fields.cfm">
+				<div class="j2s-metadata-fields">
+					<!--- copy metadata link --->
+					<div style="display:block; padding-bottom:10px;">
+						<!--- http://wiki.dev.j2s.net/ticket/5515 <button onclick="showwindow('#myself#c.copy_metaData&what=#attributes.what#&file_id=#attributes.file_id#','#JSStringFormat(myFusebox.getApplicationData().defaults.trans("add_file"))#',650,1);return false;" class="button" title="#myFusebox.getApplicationData().defaults.trans("copy_meta_data_title")#">#myFusebox.getApplicationData().defaults.trans("copy_meta_data")#</button> --->
+						<input type="submit" name="cMetadata" onclick="copyMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("copy")#"></input>
+						<input type="submit" name="pMetadata" onclick="pasteMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("paste")#"></input>
+						<input type="submit" name="submit" value="#myFusebox.getApplicationData().defaults.trans("button_save")#" class="button" style="float:right;">
+					</div>
+					<!--- Description & Keywords --->
+					<a href="##" onclick="$('##detaildesc').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("asset_desc2")#</div></a>
+					<div id="detaildesc">
+						<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
+							<!--- Filename --->
+							<tr>
+								<td width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("file_name")#<strong></td>
+								<td width="1%" nowrap="true"><input type="text" style="width:400px;" name="file_name" value="#qry_detail.detail.vid_filename#" onchange="document.form#attributes.file_id#.fname.value = document.form#attributes.file_id#.file_name.value;"> <cfif cs.show_favorites_part><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=vid');flash_footer('#myFusebox.getApplicationData().defaults.trans("item_favorite")#');return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></cfif>
+								</td>
+							</tr>
+							<!--- Description dans chaque langue --->
+							<cfloop query="qry_langs">
+								<cfset thisid = lang_id>
+								<!--- FL: http://wiki.dev.j2s.net/ticket/5512 
+								<tr>
+						 			<td class="td2" valign="top" width="1%" nowrap="true"><strong><cfif qry_langs.recordcount NEQ 1>#lang_name#: </cfif>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
+						 			<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>vid_</cfif>desc_#thisid#" class="text" style="width:400px;height:50px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.vid_desc_#thisid#.value = document.form#attributes.file_id#.desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#vid_description#</cfif></cfloop></textarea></td>
+						 		</tr>
+								<tr>
+						 			<td class="td2" valign="top" width="1%" nowrap="true"><strong><cfif qry_langs.recordcount NEQ 1>#lang_name#: </cfif>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
+						 			<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>vid_</cfif>keywords_#thisid#" class="text" style="width:400px;height:50px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.vid_keywords_#thisid#.value = document.form#attributes.file_id#.keywords_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#vid_keywords#</cfif></cfloop></textarea></td>
+						 		</tr>--->	
+						 		<tr style="<cfif thisid NEQ 1>display:none;</cfif>">
+						 			<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
+						 			<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>vid_</cfif>desc_#thisid#" class="text" style="width:400px;height:50px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.vid_desc_#thisid#.value = document.form#attributes.file_id#.desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#vid_description#</cfif></cfloop></textarea></td>
+						 		</tr>
+								<tr style="<cfif thisid NEQ 1>display:none;</cfif>">
+						 			<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
+						 			<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>vid_</cfif>keywords_#thisid#" class="text" style="width:400px;height:50px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.vid_keywords_#thisid#.value = document.form#attributes.file_id#.keywords_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#vid_keywords#</cfif></cfloop></textarea></td>
+						 		</tr>				
+							</cfloop>	
+							<tr>
+								<td class="td2"></td><td class="td2">#myFusebox.getApplicationData().defaults.trans("comma_seperated")#</td>
+							</tr>			
+						</table>
 					</div>
 					<div stlye="clear:both;"></div>
-				</cfif>
-				<!--- Raw Metadata --->
-				<cfif qry_detail.detail.link_kind NEQ "url">
-					<br />
-					<a href="##" onclick="$('##rawmetadata').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("raw_metadata")#</div></a>
-					<div id="rawmetadata" style="display:none;padding-top:10px;">
-						<div style="height:400px;overflow:auto;">#ParagraphFormat(qry_detail.detail.vid_meta)#</div>
-					</div>
-				</cfif>
-				<!--- Submit Button --->
-				<cfif attributes.folderaccess NEQ "R">
-					<!--- copy metadata link --->
-					<div style="float:left;padding-top:25px;">
-						<button onclick="showwindow('#myself#c.copy_metaData&what=#attributes.what#&file_id=#attributes.file_id#','#JSStringFormat(myFusebox.getApplicationData().defaults.trans("add_file"))#',650,1);return false;" class="button">#myFusebox.getApplicationData().defaults.trans("copy_meta_data")#</button>
-					</div>
-					<div style="float:right;padding-top:25px;">
-						<input type="submit" name="submit" value="#myFusebox.getApplicationData().defaults.trans("button_save")#" class="button">
-					</div>
-				</cfif>
+					<!--- CUSTOM FIELDS --->
+					<cfif qry_cf.recordcount NEQ 0 AND cs.tab_custom_fields>
+						<br />
+						<a href="##" onclick="$('##customfields').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("custom_fields_asset")#</div></a>
+						<div id="customfields">
+							<cfinclude template="inc_custom_fields.cfm">
+						</div>
+						<div stlye="clear:both;"></div>
+					</cfif>
+					<!--- Raw Metadata --->
+					<cfif qry_detail.detail.link_kind NEQ "url">
+						<br />
+						<a href="##" onclick="$('##rawmetadata').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("raw_metadata")#</div></a>
+						<div id="rawmetadata" style="display:none;padding-top:10px;">
+							<div style="height:400px;overflow:auto;">#ParagraphFormat(qry_detail.detail.vid_meta)#</div>
+						</div>
+					</cfif>
+					<!--- Submit Button --->
+					<cfif attributes.folderaccess NEQ "R">
+						<!--- copy metadata link --->
+						<div style="float:left;padding-top:25px;">
+							<!--- http://wiki.dev.j2s.net/ticket/5515 <button onclick="showwindow('#myself#c.copy_metaData&what=#attributes.what#&file_id=#attributes.file_id#','#JSStringFormat(myFusebox.getApplicationData().defaults.trans("add_file"))#',650,1);return false;" class="button"  title="#myFusebox.getApplicationData().defaults.trans("copy_meta_data_title")#">#myFusebox.getApplicationData().defaults.trans("copy_meta_data")#</button> --->
+							<input type="submit" name="cMetadata" onclick="copyMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("copy")#"></input>
+							<input type="submit" name="pMetadata" onclick="pasteMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("paste")#"></input>
+						</div>
+						<div style="float:right;padding-top:25px;">
+							<input type="submit" name="submit" value="#myFusebox.getApplicationData().defaults.trans("button_save")#" class="button">
+						</div>
+					</cfif>
+				</div>
 			</div>
 		</cfif>
 		<cfif qry_detail.detail.link_kind NEQ "url" AND iif(isdate(qry_detail.detail.expiry_date) AND qry_detail.detail.expiry_date LT now(), false, true)>
@@ -486,6 +533,7 @@
 				$("##updatefile").animate({opacity: 1.0}, 3000).fadeTo("slow", 0);
 		   	}
 		});
+		localStorage.removeItem("asset_details_modified");
         return false; 
 	};
 	// Recreate window confirm dialog
@@ -505,7 +553,86 @@
 			}
 		});
 	};
+
+	$("input[name=pMetadata]").ready(function(){
+		if(localStorage.getItem("file_id") && localStorage.getItem("file_id").length > 0 && localStorage.getItem("file_id") !== "#attributes.file_id#")
+			$("input[name=pMetadata]").removeProp("disabled");
+		else
+			$("input[name=pMetadata]").prop("disabled", "disabled");
+	});
+
+	function copyMetadata(){
+		localStorage.setItem("file_id", "#attributes.file_id#");
+	};
+
+	function pasteMetadata(){
+		$(this).load("index.cfm?fa=c.copy_metadata_video_do&file_id="+localStorage.getItem("file_id")+"&idList=#attributes.file_id#&insert_type=replace")
+		//localStorage.removeItem("file_id");
+		//$("input[name=pMetadata]").prop("disabled", "disabled");
+		$(this).load("index.cfm?fa=c.admin_flush_db");
+		showwindow('index.cfm?fa=c.videos_detail&file_id=#attributes.file_id#&what=videos&loaddiv=content&folder_id=#folder_id#&showsubfolders=F&row=3&filecount=10','',1070,1);
+	};
+
 	// Activate Chosen
-	$(".chzn-select").chosen({search_contains: true});
+	$(".chzn-select").chosen({search_contains: true}).next().css('min-width', "390px");
+
+
+	//Gestion du controle de rique de perte de données sans sauvegarde
+	$("##tab_detail").ready(function(){
+		localStorage.removeItem("asset_details_modified");
+		var details = this;
+		setTimeout(function(){
+			$(details).find("input, textarea, select").change(function(){
+				localStorage.setItem("asset_details_modified", "true");
+			});
+			$(".ui-dialog-titlebar-close span").click(function(e){
+				var button = $(e.currentTarget);
+				/*if(localStorage.getItem("asset_details_modified")){
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					$("<div>#myFusebox.getApplicationData().defaults.trans('has_change')#</div>").dialog({
+						resizable: false,
+						height:150,
+						modal: true,
+						buttons: {
+							"#myFusebox.getApplicationData().defaults.trans("has_change_yes")#": function() {
+								localStorage.removeItem("asset_details_modified");
+								button.click();
+								$( this ).dialog( "close" );
+							},
+							"#myFusebox.getApplicationData().defaults.trans("has_change_no")#": function() {
+								$( this ).dialog( "close" );
+							}
+						}
+					});
+				}*/
+			});
+		},1000);
+	});
+
+	function navigate(direction){
+		if(localStorage.getItem("asset_details_modified")){
+			$("<div>#myFusebox.getApplicationData().defaults.trans('has_change')#</div>").dialog({
+				resizable: false, height:150, modal: true,
+				buttons: {
+					"#myFusebox.getApplicationData().defaults.trans("has_change_yes")#": function() {
+						gotoFile(direction);
+						$( this ).dialog( "close" );
+					},
+					"#myFusebox.getApplicationData().defaults.trans("has_change_no")#": function() {$( this ).dialog( "close" );}
+				}
+			});
+		}
+		else {gotoFile(direction);}
+	};
+
+	function gotoFile(direction){	
+		<cfif structKeyExists(attributes,"filecount")>
+			showwindow('#myself#c.detail_proxy&file_id=#attributes.file_id#&what=#attributes.what#&loaddiv=#attributes.loaddiv#&folder_id=#attributes.folder_id#&showsubfolders=#attributes.showsubfolders#&row='+direction+'&filecount=#attributes.filecount#&#file_extension#','',1070,1);
+		</cfif>
+		return false;
+	};
+
+
 </script>
 </cfoutput>

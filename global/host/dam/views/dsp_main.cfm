@@ -165,7 +165,7 @@
 										<button class="awesome big green">#myFusebox.getApplicationData().defaults.trans("header_search")#</button>
 									</div>
 									<div style="float:right;padding-left:20px;padding-top:4px;">
-										<a href="##" onclick="showwindow('#myself#c.search_advanced','#myFusebox.getApplicationData().defaults.trans("link_adv_search")#',500,1);$('##searchselection').toggle();return false;">#myFusebox.getApplicationData().defaults.trans("link_adv_search")#</a>
+										<a href="##" onclick="showwindow('#myself#c.search_advanced','#myFusebox.getApplicationData().defaults.trans("link_adv_search")#',200,1);$('##searchselection').toggle();return false;">#myFusebox.getApplicationData().defaults.trans("link_adv_search")#</a>
 									</div>
 									</form>
 								</div>

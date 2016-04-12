@@ -52,6 +52,11 @@
 		<cfargument name="showrenditions" type="string" required="false" default="true" hint="New since 1.7.5">
 		<!--- Check key --->
 		<cfset var thesession = checkdb(arguments.api_key)>
+
+		<cfif FALSE>
+			<cfset arguments.searchfor = searchforthesaurus(search_value=searchfor)>
+		</cfif>
+		
 		<cfset var thexml ="">
 		<!--- Check to see if session is valid --->
 		<cfif thesession>
@@ -246,106 +251,10 @@
 		<cfset var cachetoken = getcachetoken(arguments.istruct.api_key,"search")>
 		<!--- Query --->
 		<cfquery datasource="#application.razuna.api.dsn#" name="qry_img" cachedwithin="1" region="razcache">
-			SELECT /* #cachetoken#search_images_api */ <cfif application.razuna.api.thedatabase EQ "oracle">to_char(NVL(i.img_id, 0))<cfelseif application.razuna.api.thedatabase EQ "mysql" OR application.razuna.api.thedatabase EQ "h2">cast(ifnull(i.img_id, 0) AS char)<cfelseif application.razuna.api.thedatabase EQ "mssql">isnull(cast(i.img_id as varchar(100)), '0')</cfif> id, 
-			i.img_filename filename, 
-			i.folder_id_r folder_id, 
-			fo.folder_name,
-			i.img_extension extension, 
-			'dummy' as video_image,
-			i.img_filename_org filename_org, 
-			'img' as kind, 
-			i.thumb_extension extension_thumb, 
-			i.path_to_asset, 
-			i.cloud_url, 
-			i.cloud_url_org,
-			<cfif application.razuna.api.thedatabase EQ "oracle">to_char(NVL(i.img_size, 0))<cfelseif application.razuna.api.thedatabase EQ "mysql" OR application.razuna.api.thedatabase EQ "h2">cast(ifnull(i.img_size, 0) AS char)<cfelseif application.razuna.api.thedatabase EQ "mssql">isnull(cast(i.img_size as varchar(100)), '0')</cfif> AS size, cast(i.img_size as decimal(12,0))  AS size_num,
-			i.img_width AS width,
-			i.img_height AS height,
-			'0' AS isalias,
-			it.img_description description, 
-			it.img_keywords keywords,
-			i.img_create_time dateadd,
-			i.img_change_time datechange,
-			CASE WHEN NOT (i.img_group is null OR i.img_group='') THEN (SELECT expiry_date FROM #application.razuna.api.prefix["#arguments.istruct.api_key#"]#images WHERE img_id=i.img_group) ELSE i.expiry_date END  expiry_date_actual,
-	        <cfif application.razuna.api.thedatabase EQ "oracle" OR application.razuna.api.thedatabase EQ "mysql" OR application.razuna.api.thedatabase EQ "h2">
-			    concat('#application.razuna.api.thehttp##cgi.HTTP_HOST#/#application.razuna.api.dynpath#/assets/#application.razuna.api.hostid["#arguments.istruct.api_key#"]#/',i.path_to_asset,'/',i.img_filename_org) AS local_url_org,
-			    CASE WHEN (i.img_group is null OR i.img_group='')
-			    	THEN
-						concat('#application.razuna.api.thehttp##cgi.HTTP_HOST#/#application.razuna.api.dynpath#/assets/#application.razuna.api.hostid["#arguments.istruct.api_key#"]#/',i.path_to_asset,'/','thumb_',i.img_id,'.',i.thumb_extension)
-					ELSE
-						concat('#application.razuna.api.thehttp##cgi.HTTP_HOST#/#application.razuna.api.dynpath#/assets/#application.razuna.api.hostid["#arguments.istruct.api_key#"]#/',i.path_to_asset,'/','thumb_',i.img_group,'.',i.thumb_extension)
-				END as local_url_thumb,
-	        <cfelseif application.razuna.api.thedatabase EQ "mssql">
-	            '#application.razuna.api.thehttp##cgi.HTTP_HOST#/#application.razuna.api.dynpath#/assets/#application.razuna.api.hostid["#arguments.istruct.api_key#"]#/' + i.path_to_asset + '/'  + i.img_filename_org AS local_url_org,
-	            CASE WHEN (i.img_group is null OR i.img_group='')
-			    	THEN
-						'#application.razuna.api.thehttp##cgi.HTTP_HOST#/#application.razuna.api.dynpath#/assets/#application.razuna.api.hostid["#arguments.istruct.api_key#"]#/' + i.path_to_asset + '/' + 'thumb_' + i.img_id + '.' + i.thumb_extension
-					ELSE
-						'#application.razuna.api.thehttp##cgi.HTTP_HOST#/#application.razuna.api.dynpath#/assets/#application.razuna.api.hostid["#arguments.istruct.api_key#"]#/' + i.path_to_asset + '/' + 'thumb_' + i.img_group + '.' + i.thumb_extension
-				END as local_url_thumb,
-	        </cfif>
-	    	<cfif application.razuna.api.thedatabase EQ "mysql" OR application.razuna.api.thedatabase EQ "h2">
-	    		(
-	    			SELECT GROUP_CONCAT(DISTINCT ic.col_id_r ORDER BY ic.col_id_r SEPARATOR ',') AS col_id
-	    			FROM #application.razuna.api.prefix["#arguments.istruct.api_key#"]#collections_ct_files ic
-	    			WHERE ic.file_id_r = i.img_id
-	    			AND ic.in_trash = <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="F">
-	    		) AS colid
-	    	<cfelseif application.razuna.api.thedatabase EQ "mssql">
-	    		STUFF(
-	    			(
-	    				SELECT ', ' + ic.col_id_r
-	    				FROM #application.razuna.api.prefix["#arguments.istruct.api_key#"]#collections_ct_files ic
-	    	         	WHERE ic.file_id_r = i.img_id
-	    	         	AND ic.in_trash = <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="F">
-	    	          	FOR XML PATH ('')
-	              	)
-	              	, 1, 1, ''
-	    		) AS colid
-	    	<cfelseif application.razuna.api.thedatabase EQ "oracle">
-	    		(
-	    			SELECT wmsys.wm_concat(ic.col_id_r) AS col_id
-	    			FROM #application.razuna.api.prefix["#arguments.istruct.api_key#"]#collections_ct_files ic
-	    			WHERE ic.file_id_r = i.img_id
-	    			AND ic.in_trash = <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="F">
-	    		) AS colid
-	    	</cfif>
-	    	,
-			x.colorspace,
-			x.xres AS xdpi,
-			x.yres AS ydpi,
-			x.resunit AS unit,
-			i.hashtag AS md5hash,
-			lower(i.img_filename) filename_forsort,
-			<cfif qryluceneimg.recordcount EQ 0>'0'<cfelse>'#qryluceneimg.searchcount#'</cfif> as cnt,
-			i.img_create_time date_create,
-			i.img_change_time date_change,
-			CASE 
-				WHEN (i.img_group is null OR i.img_group='') THEN 'original'
-				ELSE 'rendition'
-			END as file_type
-			<!--- for UI --->
-			<cfif arguments.istruct.ui>
-				,
-				i.img_group groupid,
-				i.folder_id_r,
-				i.thumb_extension ext,
-				i.is_available,
-				i.link_kind, 
-				i.link_path_url,
-				'0' as vwidth, 
-				'0' as vheight,
-				i.hashtag,
-				'' as labels,
-				'#session.customaccess#' as permfolder,
-				<cfif application.razuna.api.thedatabase EQ "mssql">i.img_id + '-img'<cfelse>concat(i.img_id,'-img')</cfif> as listid
-				<cfif arguments.istruct.cs.images_metadata NEQ "">
-					<cfloop list="#arguments.istruct.cs.images_metadata#" index="m" delimiters=",">
-						,<cfif m CONTAINS "keywords" OR m CONTAINS "description">it
-						<cfelseif m CONTAINS "_id" OR m CONTAINS "_time" OR m CONTAINS "_width" OR m CONTAINS "_height" OR m CONTAINS "_size" OR m CONTAINS "_filename">i
-						<cfelse>x
-						</cfif>.#m#
-					</cfloop>
+		<!--- TEST from Nitai's email <cfquery datasource="#application.razuna.api.dsn#" name="qry_img">--->
+			<cfloop from="#pos_start#" to="#pos_end#" index="i">
+				<cfif q_start NEQ 1>
+					UNION ALL
 				</cfif>
 				<cfif arguments.istruct.cs.videos_metadata NEQ "">
 					<cfloop list="#arguments.istruct.cs.videos_metadata#" index="m" delimiters=",">
@@ -638,6 +547,19 @@
 			GROUP BY i.img_id, i.img_filename, ct.folder_id_r, fo.folder_name, i.img_extension, i.img_filename_org, i.thumb_extension, i.path_to_asset, i.cloud_url, i.cloud_url_org, i.img_size, i.img_width, i.img_height, i.img_create_time, i.img_change_time, it.img_description, it.img_keywords, x.colorspace, x.xres, x.yres, x.resunit, i.hashtag, fo.folder_name, lower(i.img_filename), i.img_group, i.expiry_date
 			<cfif arguments.istruct.ui>, i.is_available, i.link_kind, i.link_path_url</cfif>
 			ORDER BY #session.sortby#
+			<!--- ATTENTION PAS DE TEST SUR LE TYPE DE BASE DE DONNEES --->
+	        <cfif structKeyExists(arguments.istruct, "maxrows") AND arguments.istruct.maxrows NEQ 0>
+	        	LIMIT #arguments.istruct.maxrows#
+	        </cfif>
+		</cfquery>
+		<!--- Add the amount of assets to the query --->
+		<cfset var amount = ArrayNew(1)>
+		<cfset amount[1] = qry_img.recordcount>
+		<!---J2S<cfset QueryAddcolumn(qry_img, "cnt", "integer", amount)>--->	
+		<cfif not IsDefined("qry_img.cnt")><cfset QueryAddcolumn(qry_img, "cnt", "integer", amount)></cfif>
+		<!--- If no records in query returned then a null row is inserted by the QueryAddColumn above so filter it out --->
+		<cfquery name="qry_img" dbtype="query">
+			SELECT * FROM qry_img WHERE id IS NOT NULL
 		</cfquery>
 		<!--- Return --->
 		<cfreturn qry_img />
@@ -1074,6 +996,18 @@
 		GROUP BY v.vid_id, v.vid_filename, ct.folder_id_r, fo.folder_name, v.vid_extension, v.vid_name_image, v.vid_name_org, v.vid_name_image, v.path_to_asset, v.cloud_url, v.cloud_url_org, v.vid_size, v.vid_width, v.vid_height, vt.vid_description, vt.vid_keywords, v.vid_create_time, v.vid_change_time, v.hashtag, fo.folder_name, lower(v.vid_filename), v.vid_group, v.expiry_date
 			<cfif arguments.vstruct.ui>, v.is_available, v.link_kind, v.link_path_url</cfif>
 			ORDER BY #session.sortby# 
+			<cfif structKeyExists(arguments.vstruct, "maxrows") AND arguments.vstruct.maxrows NEQ 0>
+	        	LIMIT #arguments.vstruct.maxrows#
+	        </cfif>
+		</cfquery>
+
+		<!--- Add the amount of assets to the query --->
+		<cfset var amount = ArrayNew(1)>
+		<cfset amount[1] = qry_vid.recordcount>
+		<!---J2S<cfset QueryAddcolumn(qry_vid, "cnt", "integer", amount)>--->
+		<cfif not IsDefined("qry_vid.cnt")><cfset QueryAddcolumn(qry_vid, "cnt", "integer", amount)></cfif>
+		<cfquery name="qry_vid" dbtype="query">
+			SELECT * FROM qry_vid WHERE id IS NOT NULL
 		</cfquery>
 		<!--- Return --->
 		<cfreturn qry_vid />
@@ -1490,14 +1424,39 @@
 				<cfif arguments.astruct.datechangeparam EQ "between">
 					AND <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.astruct.datechangestop#">
 				</cfif>
-			</cfif>
-		</cfif>
-		<!--- If we have a folderid --->
-		<cfif arguments.astruct.folderid NEQ "" AND arguments.astruct.folderid NEQ 0>
-			AND ct.folder_id_r IN (<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.astruct.folderid#" list="true">)
-		</cfif>
-		GROUP BY a.aud_id, a.aud_name, ct.folder_id_r, fo.folder_name, a.aud_extension, a.aud_name_org, a.aud_extension, a.path_to_asset, a.cloud_url, a.cloud_url_org, a.aud_size, aut.aud_description, aut.aud_keywords, a.aud_create_time, a.aud_change_time, a.hashtag, fo.folder_name, lower(a.aud_name), a.aud_group, a.expiry_date<cfif arguments.astruct.ui>, a.is_available, a.link_kind, a.link_path_url</cfif>
-		ORDER BY #session.sortby#
+				<cfif arguments.astruct.datecreateparam NEQ "">
+					AND a.aud_create_time #arguments.astruct.datecreateparam# <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.astruct.datecreatestart#">
+					<cfif arguments.astruct.datecreateparam EQ "between">
+						AND <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.astruct.datecreatestop#">
+					</cfif>
+				</cfif>
+				<cfif arguments.astruct.datechangeparam NEQ "">
+					AND a.aud_change_time #arguments.astruct.datechangeparam# <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.astruct.datechangestart#">
+					<cfif arguments.astruct.datechangeparam EQ "between">
+						AND <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.astruct.datechangestop#">
+					</cfif>
+				</cfif>
+				<!--- If we have a folderid --->
+				<cfif arguments.astruct.folderid NEQ "" AND arguments.astruct.folderid NEQ 0>
+					AND ct.folder_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.astruct.folderid#">
+				</cfif>
+				GROUP BY a.aud_id, a.aud_name, ct.folder_id_r, fo.folder_name, a.aud_extension, a.aud_name_org, a.aud_extension, a.path_to_asset, a.cloud_url, a.cloud_url_org, a.aud_size, aut.aud_description, aut.aud_keywords, a.aud_create_time, a.aud_change_time, a.hashtag, fo.folder_name, lower(a.aud_name), a.aud_group, a.expiry_date<cfif arguments.astruct.ui>, a.is_available, a.link_kind, a.link_path_url</cfif>
+			<cfset q_start = q_end + 1>
+		    	<cfset q_end = q_end + 990>
+			</cfloop>
+			
+			ORDER BY #session.sortby#
+			<cfif structKeyExists(arguments.astruct, "maxrows") AND arguments.astruct.maxrows NEQ 0>
+	        	LIMIT #arguments.astruct.maxrows#
+	        </cfif>
+		</cfquery>
+		<!--- Add the amount of assets to the query --->
+		<cfset var amount = ArrayNew(1)>
+		<cfset amount[1] = qry_aud.recordcount>
+		<!---J2S<cfset QueryAddcolumn(qry_aud, "cnt", "integer", amount)>--->
+		<cfif not IsDefined("qry_aud.cnt")><cfset QueryAddcolumn(qry_aud, "cnt", "integer", amount)></cfif>
+		<cfquery name="qry_aud" dbtype="query">
+			SELECT * FROM qry_aud WHERE id IS NOT NULL
 		</cfquery>
 		<!--- Return --->
 		<cfreturn qry_aud />
@@ -1931,17 +1890,34 @@
 				<cfif arguments.fstruct.datechangeparam EQ "between">
 					AND <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.fstruct.datechangestop#">
 				</cfif>
-			</cfif>
-		</cfif>
-		<!--- If we have a folderid --->
-		<cfif arguments.fstruct.folderid NEQ "" AND arguments.fstruct.folderid NEQ 0>
-			AND ct.folder_id_r IN (<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.fstruct.folderid#" list="true">)
-		</cfif>
-		GROUP BY f.file_id, f.file_name, ct.folder_id_r, fo.folder_name, f.file_extension, f.file_name_org, f.file_extension, f.path_to_asset, 
-		f.cloud_url, f.cloud_url_org, f.file_size, ft.file_desc, ft.file_keywords, f.file_create_time, f.file_change_time, 
-		f.hashtag, fo.folder_name, lower(f.file_name), f.expiry_date
-		<cfif arguments.fstruct.ui>, f.is_available, f.link_kind, f.link_path_url</cfif>
-        ORDER BY #session.sortby#
+				<cfif arguments.fstruct.datecreateparam NEQ "">
+					AND f.file_create_time #arguments.fstruct.datecreateparam# <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.fstruct.datecreatestart#">
+					<cfif arguments.fstruct.datecreateparam EQ "between">
+						AND <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.fstruct.datecreatestop#">
+					</cfif>
+				</cfif>
+				<cfif arguments.fstruct.datechangeparam NEQ "">
+					AND f.file_change_time #arguments.fstruct.datechangeparam# <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.fstruct.datechangestart#">
+					<cfif arguments.fstruct.datechangeparam EQ "between">
+						AND <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.fstruct.datechangestop#">
+					</cfif>
+				</cfif>
+				<!--- If we have a folderid --->
+				<cfif arguments.fstruct.folderid NEQ "" AND arguments.fstruct.folderid NEQ 0>
+					AND ct.folder_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.fstruct.folderid#">
+				</cfif>
+				GROUP BY f.file_id, f.file_name, ct.folder_id_r, fo.folder_name, f.file_extension, f.file_name_org, f.file_extension, f.path_to_asset, 
+				f.cloud_url, f.cloud_url_org, f.file_size, ft.file_desc, ft.file_keywords, f.file_create_time, f.file_change_time, 
+				f.hashtag, fo.folder_name, lower(f.file_name), f.expiry_date
+				<cfset q_start = q_end + 1>
+		    		<cfset q_end = q_end + 990>
+			</cfloop>
+			
+			<cfif arguments.fstruct.ui>, f.is_available, f.link_kind, f.link_path_url</cfif>
+	        ORDER BY #session.sortby#
+	        <cfif structKeyExists(arguments.fstruct, "maxrows") AND arguments.fstruct.maxrows NEQ 0>
+	        	LIMIT #arguments.fstruct.maxrows#
+	        </cfif>
 		</cfquery>
 		<!--- If we query for doc only and have a filetype we filter the results --->
 		<cfif arguments.fstruct.show NEQ "all" AND arguments.fstruct.show EQ "doc" AND arguments.fstruct.doctype NEQ "">
@@ -1970,6 +1946,14 @@
 			</cfswitch>
 			</cfquery>
 		</cfif>
+		<!--- Add the amount of assets to the query --->
+		<cfset var amount = ArrayNew(1)>
+		<cfset amount[1] = qry_doc.recordcount>
+		<!---J2S<cfset QueryAddcolumn(qry_doc, "cnt", "integer", amount)>--->
+		<cfif not IsDefined("qry_doc.cnt")><cfset QueryAddcolumn(qry_doc, "cnt", "integer", amount)></cfif>
+		<cfquery name="qry_doc" dbtype="query">
+			SELECT * FROM qry_doc WHERE id IS NOT NULL
+		</cfquery>
 		<!--- Return --->
 		<cfreturn qry_doc />
 	</cffunction>

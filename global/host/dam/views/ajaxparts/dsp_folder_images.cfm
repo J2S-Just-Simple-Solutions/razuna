@@ -83,11 +83,24 @@
 										</cfif>
 									});
 									</script>
+
+									<!--- Je modifie le filename sur le tenant phototheque (id photothèque = 5) avec la valeur du numéro d'inventaire:3A5A7EB0-F844-4B14-83A6DF40AF5C4EC2 --->					
+									<cfif #session.hostid# EQ 5>
+										<cfquery datasource="mysql" name="qry">
+											SELECT cf_value
+											FROM raz1_custom_fields_values
+											WHERE cf_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="3A5A7EB0-F844-4B14-83A6DF40AF5C4EC2">
+											AND asset_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="#id#">
+										</cfquery>
+										<cfset var inventory=#qry.cf_value#/>
+									<cfelse><cfset var inventory="">	
+									</cfif>
+							
 									<!--- custom metadata fields to show --->
 									<cfloop list="#attributes.cs_place.top.image#" index="m" delimiters=",">
 										<span class="assetbox_title">#myFusebox.getApplicationData().defaults.trans("#listlast(m," ")#")#</span>
 										<cfif m CONTAINS "_filename">
-											<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','',1000,1);return false;"><strong>#evaluate(listlast(m," "))#</strong></a>
+											<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#;#img_filename#", ";" ))#',1070,1);return false;"><strong>#evaluate(listlast(m," "))#</strong></a>
 										<cfelseif m CONTAINS "_size">
 											#myFusebox.getApplicationData().global.converttomb('#evaluate(listlast(m," "))#')# MB
 										<cfelseif m CONTAINS "_time">
@@ -115,7 +128,7 @@
 										</cfif>
 									</cfloop>
 									<br/><br/>
-									<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','',1000,1);return false;">
+									<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#;#img_filename#", ";" ))#',1070,1);return false;">
 										<div id="draggable#img_id#" type="#img_id#-img" class="theimg">
 											<!--- Show assets --->
 											<cfif link_kind NEQ "url">
@@ -161,13 +174,14 @@
 									<div style="clear:left;"></div>
 									<!--- custom metadata fields to show --->
 									<cfif attributes.cs.images_metadata EQ "">
-										<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','',1000,1);return false;"><strong>#left(img_filename,50)#</strong></a>
+										<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#;#img_filename#", ";" ))#',1070,1);return false;">
+												<cfif inventory NEQ ""><strong>#left(inventory,50)#</strong><cfelse><strong>#left(img_filename,50)#</strong></cfif></a>
 									<cfelse>
 										<br />
 										<cfloop list="#attributes.cs_place.bottom.image#" index="m" delimiters=",">
 											<span class="assetbox_title">#myFusebox.getApplicationData().defaults.trans("#listlast(m," ")#")#</span>
 											<cfif m CONTAINS "_filename">
-												<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','',1000,1);return false;"><strong>#evaluate(listlast(m," "))#</strong></a>
+												<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(ListFirst( "#inventory#;#img_filename#", ";" ))#',1070,1);return false;"><strong>#evaluate(listlast(m," "))#</strong></a>
 											<cfelseif m CONTAINS "_size">
 												#myFusebox.getApplicationData().global.converttomb('#evaluate(listlast(m," "))#')# MB
 											<cfelseif m CONTAINS "_time">
@@ -202,12 +216,12 @@
 										<div style="clear:both;"></div>
 									</cfif>
 								<cfelse>
-									The upload of "#img_filename#" is still in progress!
+									"#img_filename#" en cours de traitement !
 									<br /><br>
 									#myFusebox.getApplicationData().defaults.trans("date_created")#:<br>
 									#dateformat(img_create_time, "#myFusebox.getApplicationData().defaults.getdateformat()#")# #timeformat(img_create_time, "HH:mm")#
 									<br><br>
-									<a href="##" onclick="showwindow('#myself#ajax.remove_record&id=#img_id#&what=images&loaddiv=img&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(myFusebox.getApplicationData().defaults.trans("remove"))#',400,1);return false;">Delete</a>
+									<a href="##" onclick="showwindow('#myself#ajax.remove_record&id=#img_id#&what=images&loaddiv=img&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(myFusebox.getApplicationData().defaults.trans("remove"))#',400,1);return false;">#myFusebox.getApplicationData().defaults.trans("delete")#</a>
 								</cfif>
 							</div>
 						</cfloop>
@@ -248,7 +262,7 @@
 					<tr class="thumbview">
 						<td valign="top" width="1%" nowrap="true">
 							<cfif is_available>
-								<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','',1000,1);return false;">
+								<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(filename)#',1070,1);return false;">
 									<div id="draggable#img_id#" type="#img_id#-img">
 										<!--- Show assets --->
 										<cfif link_kind EQ "">
@@ -273,7 +287,7 @@
 									<div style="clear:both;"></div>
 								</cfif>
 							<cfelse>
-								The upload of "#img_filename#" is still in progress!
+								"#img_filename#" en cours de traitement !
 								<br /><br>
 								#myFusebox.getApplicationData().defaults.trans("date_created")#:<br>
 								#dateformat(img_create_time, "#myFusebox.getApplicationData().defaults.getdateformat()#")# #timeformat(img_create_time, "HH:mm")#
@@ -365,10 +379,21 @@
 						</cfif>
 					});
 					</script>
+					<!--- Je modifie le filename sur le tenant phototheque (id photothèque = 5) avec la valeur du numéro d'inventaire:3A5A7EB0-F844-4B14-83A6DF40AF5C4EC2 --->
+					<cfif #session.hostid# EQ 1>
+						<cfquery datasource="mysql" name="qry">
+							SELECT cf_value
+							FROM raz1_custom_fields_values
+							WHERE cf_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="3A5A7EB0-F844-4B14-83A6DF40AF5C4EC2">
+							AND asset_id_r = <cfqueryparam cfsqltype="cf_sql_varchar" value="#id#">
+						</cfquery>
+						<cfset var inventory=#qry.cf_value#/>
+					<cfelse><cfset var inventory="">
+					</cfif>
 					<tr class="list thumbview">
 						<td align="center">
 							<cfif is_available>
-								<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','',1000,1);return false;">
+								<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#&row=#mycurrentRow#&filecount=#qry_filecount.thetotal#','#Jsstringformat(filename)#',1070,1);return false;">
 									<!--- Show assets --->
 									<div id="draggable#img_id#-img" type="#img_id#-img">
 										<cfif link_kind NEQ "url">
@@ -393,12 +418,12 @@
 									<div style="clear:both;"></div>
 								</cfif>
 							<cfelse>
-								The upload of "#img_filename#" is still in progress!
+								"#img_filename#" en cours de traitement !
 								<br />
 							</cfif>
 						</td>
 						<td width="100%" valign="top">
-							<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(img_filename)#',1000,1);return false;"><strong>#img_filename#</strong></a>
+							<a href="##" onclick="showwindow('#myself##xfa.assetdetail#&file_id=#img_id#&what=images&loaddiv=#kind#&folder_id=#folder_id#&showsubfolders=#attributes.showsubfolders#','#Jsstringformat(img_filename)#',1070,1);return false;"><cfif inventory NEQ ""><strong>#inventory#</strong><cfelse><strong>#img_filename#</strong></cfif></a>
 							<br />
 							<!--- Icons --->
 							<div style="float:left;padding-top:5px;">

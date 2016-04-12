@@ -86,7 +86,7 @@
 						</cfif>
 						<!--- Search --->
 						<cfif cs.icon_search>
-							<a href="##" onclick="showwindow('#myself#c.search_advanced&folder_id=#attributes.folder_id#','#myFusebox.getApplicationData().defaults.trans("folder_search")#',500,1);return false;" title="#myFusebox.getApplicationData().defaults.trans("folder_search")#">
+							<a href="##" onclick="showwindow('#myself#c.search_advanced&folder_id=#attributes.folder_id#','#myFusebox.getApplicationData().defaults.trans("folder_search")#',550,1);return false;" title="#myFusebox.getApplicationData().defaults.trans("folder_search")#">
 								<!--- <div style="float:left;padding-top:5px;">
 									<img src="#dynpath#/global/host/dam/images/system-search-3.png" width="16" height="16" border="0" />
 								</div> --->
@@ -109,7 +109,7 @@
 				<cfif attributes.folderaccess NEQ "R">
 					<!--- More actions menu --->	
 					<div>
-						<div id="drop#thediv#" class="ddselection_header" style="width:200px;z-index:100;position:absolute;top:100px;left:<cfif attributes.folderaccess NEQ "R">358<cfelse>251</cfif>px;">
+						<div id="drop#thediv#" class="ddselection_header" style="width:230px;z-index:100;position:absolute;top:100px;left:<cfif attributes.folderaccess NEQ "R">358<cfelse>251</cfif>px;">
 							<!--- Add Subfolder --->
 							<cfif attributes.folderaccess NEQ "R" AND cs.icon_create_subfolder>
 								<p>
@@ -128,7 +128,7 @@
 										<div style="float:left;padding-right:5px;">
 											<img src="#dynpath#/global/host/dam/images/folder-favorites.png" width="16" height="16" border="0" />
 										</div>
-										<div style="padding-top:2px;">Add folder to favorites</div>
+										<div style="padding-top:2px;">#myFusebox.getApplicationData().defaults.trans("add_folder_to_favorites")#</div>
 									</a>
 								</p>
 							</cfif>

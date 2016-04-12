@@ -381,6 +381,9 @@
 	<fuseaction name="search_advanced">
   		<include template="win_search_advanced" />
 	</fuseaction>
+	<fuseaction name="search_advanced_token">
+  		<include template="win_search_advanced_token" />
+	</fuseaction>
 	
 	
 	<!-- CHOOSE: Choose Folder Window -->

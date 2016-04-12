@@ -40,6 +40,10 @@
 <script type="text/javascript" src="#dynpath#/global/js/plupload/plupload.full.js?_v=#attributes.cachetag#"></script>
 <script type="text/javascript" src="#dynpath#/global/js/plupload/jquery.plupload.queue/jquery.plupload.queue.js?_v=#attributes.cachetag#"></script>
 <script type="text/javascript" src="#dynpath#/global/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js?_v=#attributes.cachetag#"></script>
+<!-- activate EN translation -->
+<script type="text/javascript" src="#dynpath#/global/js/plupload/i18n/en.js"></script>
+<!-- activate FR translation -->
+<script type="text/javascript" src="#dynpath#/global/js/plupload/i18n/fr.js"></script>
 <style type="text/css">
 body {
 	background: white;
@@ -188,8 +192,10 @@ $('##uploader').pluploadQueue().bind('QueueChanged',
 			<select id="upl_template_chooser">
 				<option value="0" selected="selected">#myFusebox.getApplicationData().defaults.trans("choose_rend_template")#</option>
 				<option value="0">---</option>
-				<cfloop query="qry_templates">
-					<option value="#upl_temp_id#">#upl_name#</option>
+				<cfset index=0 />
+				<cfloop query="qry_templates" >
+					<option value="#upl_temp_id#" <cfif index EQ 0> selected="selected"</cfif>>#upl_name#</option>
+					<cfset index=1 />
 				</cfloop>
 			</select>
 		</div>

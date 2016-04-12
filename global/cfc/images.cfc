@@ -1386,7 +1386,7 @@
 				</cfif>
 				<cfset var theimarguments = "#densitySettings# #theoriginalasset# #csarguments# #alpha#-resize #newImgWidth#x#newImgHeight#  -density #arguments.thestruct.xres#x#arguments.thestruct.yres# -units pixelsperinch #theflatten##theformatconv#">
 			<cfelse>
-				<cfif  theformat NEQ 'eps'>
+				<cfif theformat NEQ 'eps'>
 					<cfset var theimarguments = "#densitySettings# #theoriginalasset# #csarguments# #alpha# -resize #newImgWidth#x#newImgHeight#  #forTransparentImages##theformatconv#">
 				<cfelse>
 					<cfset var theimarguments = "#densitySettings# #theoriginalasset# #csarguments# #alpha# -resize #newImgWidth#x#newImgHeight#  #theflatten##theformatconv#">
@@ -1420,7 +1420,7 @@
 				<cfset var theimargumentsthumb = "#densitySettings# #theoriginalasset# #csarguments# -resize #resizeargs# #theflatten##thethumbtconv#"> 
 			</cfif>
 		<cfelse>
-			<cfif  theformat NEQ 'eps'>
+			<cfif theformat NEQ 'eps'>
 				<cfset var theimargumentsthumb = "#densitySettings# #theformatconv# #csarguments# -resize #resizeargs# #forTransparentImages##thethumbtconv#">
 			<cfelse>
 				<cfset var theimargumentsthumb = "#densitySettings# #theformatconv# #csarguments# -resize #resizeargs# #theflatten##thethumbtconv#">
@@ -1443,21 +1443,21 @@
 		<!--- If we are a RAW image --->
 		<cfswitch expression="#arguments.thestruct.qry_detail.img_extension#">
 			<cfcase value="nef,x3f,arw,mrw,crw,cr2,3fr,ari,srf,sr2,bay,cap,iiq,eip,dcs,dcr,drf,k25,kdc,erf,fff,mef,mos,nrw,ptx,pef,pxn,r3d,raf,raw,rw2,rwl,dng,rwz">
-				<cfset var  checkwidth = 0>
-				<cfset var  dclist = 0>
-				<cfset var  thmbwidth = 0>
-				<cfset var  fullwidth = 1000>
+				<cfset var checkwidth = 0>
+				<cfset var dclist = 0>
+				<cfset var thmbwidth = 0>
+				<cfset var fullwidth = 1000>
 				<cftry>
 					<!--- Get embedded thumb and actual image width information for comparision --->
 					<cfexecute name="#thedcraw#" arguments="-i -v #theoriginalasset#" variable="checkwidth" timeout="120"/>
 					<cfset dclist = REReplace(checkwidth,"#chr(13)#|#chr(9)#|\n|\r","@","ALL")>
 					<cfset dclist = REReplace(dclist,":","@@","ALL")>
 					<cfset var thmbsizeidx = listfindnocase(dclist,'Thumb size','@@')>
-					<cfset  thmbwidth = gettoken(dclist,thmbsizeidx+1,'@@')>
-					<cfset  thmbwidth = gettoken(thmbwidth,1,'x')>
-					<cfset  var fullsizeidx = listfindnocase(dclist,'Full size','@@')>
-					<cfset  fullwidth = gettoken(dclist,fullsizeidx+1,'@@')>
-					<cfset  fullwidth = gettoken(fullwidth,1,'x')>
+					<cfset thmbwidth = gettoken(dclist,thmbsizeidx+1,'@@')>
+					<cfset thmbwidth = gettoken(thmbwidth,1,'x')>
+					<cfset var fullsizeidx = listfindnocase(dclist,'Full size','@@')>
+					<cfset fullwidth = gettoken(dclist,fullsizeidx+1,'@@')>
+					<cfset fullwidth = gettoken(fullwidth,1,'x')>
 				<cfcatch></cfcatch>
 				</cftry>
 				<!--- Check if embedded thumb is close to full size. If not then extract from actual image (much slower). --->
@@ -1485,10 +1485,13 @@
 		<cfthread action="join" name="1#thescript#" />
 		<!--- Before we create thumb apply watermark if any --->
 		<cfif structKeyExists(arguments.thestruct,"convert_wm_#theformat#") AND #arguments.thestruct["convert_wm_" & #theformat#]# NEQ "">
+
 			<cfif "convert_wm_#theformat#" NEQ "" >
 				<cfset var err = "">
 				<cfif thewm.wmval.wm_use_image>
+					<cfset arguments.thestruct.rootpath = "#ExpandPath('../..')#">					
 					<cfexecute name="#thecomposite#" arguments="-dissolve #thewm.wmval.wm_image_opacity#% -gravity #thewm.wmval.wm_image_position# #arguments.thestruct.rootpath#global/host/watermark/#session.hostid#/#thewm.wmval.wm_image_path# #theformatconv# #theformatconv#" timeout="90" errorVariable="err"/>
+					<!--- <cfexecute name="#thecomposite#" arguments="-dissolve #thewm.wmval.wm_image_opacity#% -gravity #thewm.wmval.wm_image_position# /opt/razuna_tomcat_1_7/tomcat/webapps/razuna/global/host/watermark/#session.hostid#/#thewm.wmval.wm_image_path# #theformatconv# #theformatconv#" timeout="90" errorVariable="err"/> --->
 				</cfif>
 				<cfif thewm.wmval.wm_use_text>
 					<!--- Opacity --->
@@ -2263,6 +2266,11 @@
 		WHERE id_r = <cfqueryparam value="#arguments.thestruct.file_id#" cfsqltype="cf_sql_varchar" >
 		AND host_id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#session.hostid#">
 	</cfquery>
+	<cfquery name="select_custom" datasource="#application.razuna.datasource#">
+		SELECT cf_id_r, cf_value FROM #session.hostdbprefix#custom_fields_values
+		WHERE asset_id_r = <cfqueryparam value="#arguments.thestruct.file_id#" cfsqltype="cf_sql_varchar" >
+		AND host_id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#session.hostid#">
+	</cfquery>
 	<!--- Update the tables --->
 	<cfif arguments.thestruct.insert_type EQ 'replace'>
 		<cfloop query = "select_images_text">
@@ -2274,6 +2282,37 @@
 				AND host_id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#session.hostid#">
 				AND lang_id_r = <cfqueryparam cfsqltype="cf_sql_numeric" value="#select_images_text.lang_id_r#">
 			</cfquery>
+		</cfloop>
+		<cfloop list="#arguments.thestruct.idList#" index="id" delimiters=",">
+			<cfloop query = "select_custom">
+				<cfquery name="count_custom" datasource="#application.razuna.datasource#">
+					SELECT asset_id_r FROM #session.hostdbprefix#custom_fields_values 
+					WHERE asset_id_r = <cfqueryparam value="#id#" cfsqltype="cf_sql_varchar">
+					AND cf_id_r = <cfqueryparam value="#select_custom.cf_id_r#" cfsqltype="cf_sql_varchar">
+					AND host_id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#session.hostid#">
+				</cfquery>
+				<cfif count_custom.RecordCount>
+					<cfquery name="updateimges_text" datasource="#application.razuna.datasource#">
+						UPDATE #session.hostdbprefix#custom_fields_values SET 
+						cf_value = <cfqueryparam value="#select_custom.cf_value#" cfsqltype="cf_sql_varchar">
+						WHERE asset_id_r = <cfqueryparam value="#id#" cfsqltype="cf_sql_varchar">
+						AND cf_id_r = <cfqueryparam value="#select_custom.cf_id_r#" cfsqltype="cf_sql_varchar">
+						AND host_id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#session.hostid#">
+					</cfquery>
+				<cfelse>
+					<cfquery datasource="#variables.dsn#">
+						INSERT IGNORE INTO #session.hostdbprefix#custom_fields_values
+						( cf_id_r, asset_id_r, cf_value, HOST_ID, rec_uuid)
+						VALUES(
+						<cfqueryparam value="#select_custom.cf_id_r#" cfsqltype="cf_sql_varchar">,
+						<cfqueryparam value="#id#" cfsqltype="cf_sql_varchar">, 
+						<cfqueryparam value="#select_custom.cf_value#" cfsqltype="cf_sql_varchar">, 
+						<cfqueryparam value="#session.hostid#" cfsqltype="cf_sql_numeric">, 
+						<cfqueryparam value="#createuuid()#" cfsqltype="cf_sql_varchar">
+						)
+					</cfquery>
+				</cfif>
+			</cfloop>
 		</cfloop>
 		<cfquery name="updateimges_text" datasource="#application.razuna.datasource#" >
 			UPDATE #session.hostdbprefix#xmp

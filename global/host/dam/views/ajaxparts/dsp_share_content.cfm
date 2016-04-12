@@ -91,7 +91,7 @@
 						</cfif>
 					</div>
 					<div id="showselect" style="display:none;float:left;padding-top:3px;"><a href="##" id="checkallnone">#myFusebox.getApplicationData().defaults.trans('deselect_all')#</a><a href="##" style="padding-left:10px;" id="allinbasket">#myFusebox.getApplicationData().defaults.trans("put_files_basket")#</a></div>
-					<div id="showselectall" style="display:none;;float:left;padding-left:15px;padding-top:3px;"><strong>All files in this share have been selected!</strong></div>
+					<div id="showselectall" style="display:none;;float:left;padding-left:15px;padding-top:3px;"><strong><!---All files in this share have been selected!--->Tous les fichiers de ce dossier partagé ont été sélectionnés !</strong></div>
 				</td>
 			</tr>
 			<tr>
@@ -149,7 +149,7 @@
 									<br>
 									<strong>#left(filename,50)#</strong>
 								<cfelse>
-									The upload of "#left(filename,50)#" is still in progress!
+									"#left(filename,50)#" en cours de traitement !
 								</cfif>
 							<!--- Videos --->
 							<cfelseif kind EQ "vid">
@@ -171,7 +171,7 @@
 									<br>
 									<strong>#left(filename,50)#</strong>
 								<cfelse>
-									The upload of "#left(filename,50)#" is still in progress!
+									"#left(filename,50)#" en cours de traitement !
 								</cfif>
 							<!--- Audios --->
 							<cfelseif kind EQ "aud">
@@ -191,7 +191,7 @@
 									<br>
 									<strong>#left(filename,50)#</strong>
 								<cfelse>
-									The upload of "#left(filename,50)#" is still in progress!
+									"#left(filename,50)#" en cours de traitement !
 								</cfif>
 							<!--- All other files --->
 							<cfelse>
@@ -218,7 +218,7 @@
 									<br>
 									<strong>#left(filename,50)#</strong>
 								<cfelse>
-									The upload of "#left(filename,50)#" is still in progress!
+									"#left(filename,50)#" en cours de traitement !
 								</cfif>
 							</cfif>
 						</div>
@@ -242,7 +242,7 @@
 							#qry.qry_filecount.thetotal# #myFusebox.getApplicationData().defaults.trans("share_content_count")#
 							<!--- BreadCrumb --->
 							<cfif structkeyexists(url,"folder_id_r")>
-								| Folder: <cfloop list="#qry_breadcrumb#" delimiters=";" index="i"> / <a href="##" onclick="loadcontent('rightside','#myself#c.share_content&fid=#session.fid#&folder_id=#ListGetAt(i,2,"|")#&folder_id_r=#ListGetAt(i,3,"|")#&jsessionid=#session.SessionID#');">#ListGetAt(i,1,"|")#</a> </cfloop>
+								| Dossier: <cfloop list="#qry_breadcrumb#" delimiters=";" index="i"> / <a href="##" onclick="loadcontent('rightside','#myself#c.share_content&fid=#session.fid#&folder_id=#ListGetAt(i,2,"|")#&folder_id_r=#ListGetAt(i,3,"|")#&jsessionid=#session.SessionID#');">#ListGetAt(i,1,"|")#</a> </cfloop>
 							</cfif>
 						</div>
 						<div style="float:right;">

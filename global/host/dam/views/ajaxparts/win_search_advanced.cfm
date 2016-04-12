@@ -26,15 +26,16 @@
 <cfparam default="0" name="attributes.folder_id">
 <cfset myvar = structnew()>
 <cfoutput>
+	Historique de recherche : <select name="history"><option></option></select><br><br>
 	<div id="searchadvanced">
 		<ul>
-			<li><a href="##all_assets">#myFusebox.getApplicationData().defaults.trans("search_for_allassets")#</a></li>
+			<li><a href="##all_assets" value="all">#myFusebox.getApplicationData().defaults.trans("search_for_allassets")#</a></li>
 			<!--- RAZ-3241 Hide all tabs except the 'All Assets' tab --->
 			<cfif !cs.hide_search_tabs>
-				<li><a href="##adv_files">#myFusebox.getApplicationData().defaults.trans("documents")#</a></li>
-				<li><a href="##adv_images">#myFusebox.getApplicationData().defaults.trans("folder_images")#</a></li>
-				<li><a href="##adv_videos">#myFusebox.getApplicationData().defaults.trans("folder_videos")#</a></li>
-				<li><a href="##adv_audios">#myFusebox.getApplicationData().defaults.trans("folder_audios")#</a></li>
+				<li><a href="##adv_files" value="doc">#myFusebox.getApplicationData().defaults.trans("documents")#</a></li>
+				<li><a href="##adv_images" value="img">#myFusebox.getApplicationData().defaults.trans("folder_images")#</a></li>
+				<li><a href="##adv_videos" value="vid">#myFusebox.getApplicationData().defaults.trans("folder_videos")#</a></li>
+				<li><a href="##adv_audios" value="aud">#myFusebox.getApplicationData().defaults.trans("folder_audios")#</a></li>
 			</cfif>
 		</ul>
 		<!--- Loading Bars --->
@@ -418,8 +419,6 @@
 				</form>
 			</div>
 		</cfif>
-		<!--- Loading Bars --->
-		<div id="loading_searchadv2" style="width:100%;text-align:center;"></div>
 	</div>
 	<!--- Activate the Tabs --->
 	<script language="JavaScript" type="text/javascript">
@@ -428,6 +427,39 @@
 		jqtabs("searchadvanced");
 		// Focus
 		$('##searchforadv_all').focus();
+
+		//L'historique
+		$("select[name=history]").ready(function(){
+			var exclude = ["now","thetype","andor","doctype"];
+			var lastSearch = localStorage.getItem("last_search")
+			//Je la parse, si elle n'existe pas je la crée
+			if(lastSearch){
+				lastSearch = JSON.parse(lastSearch);
+				$.each(lastSearch, function(i, search){
+					var values = []
+					console.log(search)
+					$.each(search, function(i, field){
+						console.log(field)
+						if(field.value != "" && exclude.indexOf(field.name) == -1){values.push(field.value);}
+					})
+					var date = new Date(search[search.length-1].value);
+					var str = search[0].value.replace(/all/, "Tous") + " : " + values.join(", ");
+					$("select[name=history]").append("<option>["+date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()+"] "+str+"</option>");
+				})
+			}
+		}).on("change", function(event){
+			var lastSearch = localStorage.getItem("last_search")
+			if(lastSearch){
+				lastSearch = JSON.parse(lastSearch);
+				var selected = lastSearch[event.target.selectedIndex-1];
+				if(selected){
+					$("##searchadvanced a[value="+selected[0].value+"]").click();
+					$.each(selected, function(i, item){
+						$("*[name="+item.name+"]").val(item.value);
+					});
+				}
+			}
+		})
 	</script>	
 </cfoutput>
 	

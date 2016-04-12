@@ -82,6 +82,14 @@
 										<option value="radio">#myFusebox.getApplicationData().defaults.trans("radio_btn")#</option>
 										<option value="select">#myFusebox.getApplicationData().defaults.trans("select")#</option>
 										<option value="select_multi">#myFusebox.getApplicationData().defaults.trans("select")# (Multiple)</option>
+										<option value="select-search">#myFusebox.getApplicationData().defaults.trans("select-search")#</option>
+										<option value="select-search-multi">#myFusebox.getApplicationData().defaults.trans("select-search-multi")#</option>
+										<option value="select-category">#myFusebox.getApplicationData().defaults.trans("select-category")#</option>
+										<option value="select-sub-category">#myFusebox.getApplicationData().defaults.trans("select-sub-category")#</option>
+										<option value="descriptor">#myFusebox.getApplicationData().defaults.trans("descriptor")#</option>
+										<option value="candidate-descriptor">#myFusebox.getApplicationData().defaults.trans("candidate-descriptor")#</option>
+										<option value="inventory">#myFusebox.getApplicationData().defaults.trans("inventory")#</option>
+
 									</select>
 								</td>
 							</tr>

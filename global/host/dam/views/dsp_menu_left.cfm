@@ -44,7 +44,7 @@
 			<img src="#dynpath#/global/host/dam/images/arrow_dropdown.gif" width="16" height="16" border="0" onclick="$('##mainselection').toggle();" class="ddicon">
 		</div>
 		<div id="mainselection" class="ddselection_header" style="display:none;top:17px;margin-left:10px;">
-			<p><a href="##" onclick="switchmainselection('folders','Folders');"><div id="section_folders" style="float:left;padding-right:2px;padding-top:3px;"><img src="#dynpath#/global/host/dam/images/arrow_selected.jpg" width="14" height="14" border="0"></div>#myFusebox.getApplicationData().defaults.trans("log_header_folders")#</a></p>
+			<p><a href="##" onclick="switchmainselection('folders','#myFusebox.getApplicationData().defaults.trans("log_header_folders")#');"><div id="section_folders" style="float:left;padding-right:2px;padding-top:3px;"><img src="#dynpath#/global/host/dam/images/arrow_selected.jpg" width="14" height="14" border="0"></div>#myFusebox.getApplicationData().defaults.trans("log_header_folders")#</a></p>
 			<p><a href="##" onclick="switchmainselection('smart_folders','#myFusebox.getApplicationData().defaults.trans("customization_explorer_smartfolder")#');"><div id="section_smart_folders" style="float:left;padding-right:14px;">&nbsp;</div>#myFusebox.getApplicationData().defaults.trans('customization_explorer_smartfolder')#</a></p>
 			<cfif cs.tab_collections>
 				<p><a href="##" onclick="switchmainselection('collections','#myFusebox.getApplicationData().defaults.trans("header_collections")#');"><div id="section_collections" style="float:left;padding-right:14px;">&nbsp;</div>#myFusebox.getApplicationData().defaults.trans('customization_explorer_collections')#</a></p>

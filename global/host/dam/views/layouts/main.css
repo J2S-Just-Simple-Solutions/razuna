@@ -1057,3 +1057,78 @@ font-weight: bold;
 .ltgrey{color:#666666;}
 a:link .nolink{text-decoration: none;}
 
+.j2s-metadata {
+	padding-right: 0 !important
+}
+.j2s-metadata-fields {
+	display: inline-block !important;
+    border-width: 0;
+    padding: 1em 1.4em;
+    background: none;
+    width: 556px;
+    height: 500px;
+    overflow: auto;
+    overflow-x: hidden;
+}
+.j2s-preview{
+	width: 360px;
+    display: inline-block;
+    float: left;
+}
+.j2s-preview a{
+    display: block;
+    line-height: 500px;
+}
+.j2s-preview img{
+    width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+
+.thesaurus-drop{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1010;
+    width: 300px;
+    border: 1px solid #aaa;
+    background: #fff;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
+}
+.thesaurus-drop * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.thesaurus-results{
+    color: #444;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin: 0 4px 4px 0;
+    padding: 0 0 0 4px;
+    max-height: 240px;
+}
+.thesaurus-results li {
+	margin: 0;
+    padding: 5px 6px;
+    list-style: none;
+    line-height: 15px;
+    word-wrap: break-word;
+}
+.thesaurus-result{
+    padding-left : 15px;
+}
+.thesaurus-result:hover{
+    background-color: #3875d7;
+    color: white;
+}
+.thesaurus-result-group{
+	display: list-item;
+    font-weight: bold;
+    cursor: default;
+    
+}
+input[disabled]{
+	opacity:.5;
+}

@@ -49,10 +49,10 @@
 	<!--- Show tabs --->
 	<div id="tab_detail#file_id#">
 		<ul>
-			<li><a href="##detailinfo" onclick="loadcontent('additionalversions','#myself#c.av_load&file_id=#attributes.file_id#&folder_id=#attributes.folder_id#&isdoc=yes');">#myFusebox.getApplicationData().defaults.trans("asset_information")#</a></li>
 			<cfif cs.tab_metadata>
-				<li><a href="##meta">Metadata</a></li>
+				<li><a href="##meta">#myFusebox.getApplicationData().defaults.trans("metadata")#</a></li>
 			</cfif>
+			<li><a href="##detailinfo" onclick="loadcontent('additionalversions','#myself#c.av_load&file_id=#attributes.file_id#&folder_id=#attributes.folder_id#&isdoc=yes');">#myFusebox.getApplicationData().defaults.trans("asset_information")#</a></li>
 			<!--- Comments --->
 			<cfif cs.tab_comments>
 				<li><a href="##divcomments" onclick="loadcontent('divcomments','#myself#c.comments&file_id=#attributes.file_id#&type=#attributes.cf_show#&folder_id=#qry_detail.detail.folder_id_r#');">#myFusebox.getApplicationData().defaults.trans("comments")# (#qry_comments_total#)</a></li>
@@ -77,7 +77,7 @@
 			<!--- Hide these for R-groups --->
 			<cfif attributes.folderaccess NEQ "R">
 				<cfif cs.tab_history>
-					<li><a href="##history" onclick="loadcontent('history','#myself#c.log_history&id=#attributes.file_id#');">History</a></li>
+					<li><a href="##history" onclick="loadcontent('history','#myself#c.log_history&id=#attributes.file_id#');">#myFusebox.getApplicationData().defaults.trans("tab_history")#</a></li>
 				</cfif>
 				<!--- Aliases'd --->
 				<cfif qry_aliases.recordcount NEQ 0>
@@ -193,7 +193,7 @@
 										<!--- Filename --->
 										<tr>
 											<td width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("file_name")#</strong></td>
-											<td width="100%"><input type="text" style="width:400px;" name="fname" id="fname" value="#qry_detail.detail.file_name#" onchange="document.form#attributes.file_id#.file_name.value = document.form#attributes.file_id#.fname.value;<cfif prefs.set2_upc_enabled>if (!isNaN(document.form#attributes.file_id#.fname.value.substr(0,6))) {document.form#attributes.file_id#.file_upc.value = document.form#attributes.file_id#.file_name.value.split('.')[0];}</cfif>"> <cfif cs.show_favorites_part><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=doc');flash_footer('#myFusebox.getApplicationData().defaults.trans("item_favorite")#');return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></cfif></td>
+											<td width="100%"><input type="text" style="width:400px;" name="fname" id="fname" value="#qry_detail.detail.file_name#" onchange="document.form#attributes.file_id#.file_name.value = document.form#attributes.file_id#.fname.value;<cfif prefs.set2_upc_enabled>if (!isNaN(document.form#attributes.file_id#.fname.value.substr(0,6))) {document.form#attributes.file_id#.file_upc.value = document.form#attributes.file_id#.file_name.value.split('.')[0];}</cfif>"></td><cfif cs.show_favorites_part><td><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=doc');flash_footer('#myFusebox.getApplicationData().defaults.trans("item_favorite")#');return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></td></cfif>
 										</tr>
 										<!--- Description & Keywords --->
 										<cfloop query="qry_langs">
@@ -201,14 +201,14 @@
 												<cfset thisid = lang_id>
 												<tr>
 													<td valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
-													<td width="100%"><textarea name="file_desc_#thisid#" id="file_desc_#thisid#" class="text" style="width:400px;height:60px;" <cfif cs.tab_metadata>onchange="document.form#attributes.file_id#.desc_#thisid#.value = document.form#attributes.file_id#.file_desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#file_desc#</cfif></cfloop></textarea></td>
+													<td width="100%"><textarea dir="auto"author name="file_desc_#thisid#" id="file_desc_#thisid#" class="text" style="width:400px;height:60px;" <cfif cs.tab_metadata>onchange="document.form#attributes.file_id#.desc_#thisid#.value = document.form#attributes.file_id#.file_desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#file_desc#</cfif></cfloop></textarea></td>
 												</tr>
 												<tr>
 													<td valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
 													<td width="100%"><textarea name="file_keywords_#thisid#" id="file_keywords_#thisid#" class="text" style="width:400px;height:30px;" <cfif cs.tab_metadata>onchange="document.form#attributes.file_id#.keywords_#thisid#.value = document.form#attributes.file_id#.file_keywords_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#file_keywords#</cfif></cfloop></textarea></td>
 												</tr>
 											</cfif>
-										</cfloop>
+										</cfloop> 
 										<!--- Labels --->
 										<cfif cs.tab_labels>
 											<tr>
@@ -242,7 +242,7 @@
 															</cfloop>
 															</select>
 															<cfif  flag EQ 1 OR (Request.securityobj.CheckSystemAdminUser() OR Request.securityobj.CheckAdministratorUser())>
-																<a href="##" onclick="showwindow('#myself#c.admin_labels_add&label_id=0&closewin=2','Create new label',450,2);return false"><img src="#dynpath#/global/host/dam/images/list-add-3.png" width="24" height="24" border="0" style="margin-left:-2px;" /></a>
+																<a href="##" onclick="showwindow('#myself#c.admin_labels_add&label_id=0&closewin=2','#myFusebox.getApplicationData().defaults.trans('create_new_label')#',450,2);return false"><img src="#dynpath#/global/host/dam/images/list-add-3.png" width="24" height="24" border="0" style="margin-left:-2px;" /></a>
 															</cfif>
 														<cfelse>
 															<!--- Label text area --->
@@ -259,7 +259,7 @@
 																</div>
 																
 																<cfif flag EQ 1 OR (Request.securityobj.CheckSystemAdminUser() OR Request.securityobj.CheckAdministratorUser())>
-																	<a href="##" onclick="showwindow('#myself#c.admin_labels_add&label_id=0&closewin=2','Create new label',450,2);return false" style="float:left;"><img src="#dynpath#/global/host/dam/images/list-add-3.png" width="24" height="24" border="0" style="margin-left:-2px;" /></a>
+																	<a href="##" onclick="showwindow('#myself#c.admin_labels_add&label_id=0&closewin=2','#myFusebox.getApplicationData().defaults.trans('create_new_label')#',450,2);return false" style="float:left;"><img src="#dynpath#/global/host/dam/images/list-add-3.png" width="24" height="24" border="0" style="margin-left:-2px;" /></a>
 																</cfif>
 																<!--- Select label button --->
 																<br /><br /><a onclick="showwindow('#myself#c.select_label_popup&file_id=#attributes.file_id#&file_type=doc&closewin=2','Choose Labels',600,2);return false;" href="##"><button class="awesome big green">#myFusebox.getApplicationData().defaults.trans("select_labels")#</button></a>
@@ -340,103 +340,141 @@
 		<div id="divcomments"></div>
 		<!--- Meta Data --->
 		<cfif cs.tab_metadata>
-			<div id="meta" class="collapsable">
-				<!--- Description & Keywords --->
-				<a href="##" onclick="$('##detaildesc').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("asset_desc")#</div></a>
-					<div id="detaildesc" style="padding-top:10px;">
-						<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
-							<tr>
-								<td>
-									<div style="float:left;">
-										<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
-											<!--- Filename --->
-											<tr>
-												<td width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("file_name")#</strong></td>
-												<td width="100%"><input type="text" style="width:280px;" name="file_name" value="#qry_detail.detail.file_name#" onchange="document.form#attributes.file_id#.fname.value = document.form#attributes.file_id#.file_name.value;"> <cfif cs.show_favorites_part><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=doc');flash_footer('#myFusebox.getApplicationData().defaults.trans("item_favorite")#');return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></cfif>
-												</td>
-											</tr>
-											<cfloop query="qry_langs">
-												<cfset thisid = lang_id>
-												<tr>
-													<td class="td2" valign="top" width="1%" nowrap="true"><strong><cfif qry_langs.recordcount NEQ 1>#lang_name#: </cfif>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
-													<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>file_</cfif>desc_#thisid#" class="text" style="width:300px;height:40px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.file_desc_#thisid#.value = document.form#attributes.file_id#.desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#file_desc#</cfif></cfloop></textarea></td>
-												</tr>
-												<tr>
-													<td class="td2" valign="top" width="1%" nowrap="true"><strong><cfif qry_langs.recordcount NEQ 1>#lang_name#: </cfif>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
-													<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>file_</cfif>keywords_#thisid#" class="text" style="width:300px;height:40px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.file_keywords_#thisid#.value = document.form#attributes.file_id#.keywords_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#file_keywords#</cfif></cfloop></textarea></td>
-												</tr>
-											</cfloop>
-										</table>
-									</div>
-									<!--- If we are a PDF we show additional XMP fields --->
-									<cfif qry_detail.detail.file_extension EQ "PDF">
-										<div style="float:right;">
+			<div id="meta" class="collapsable j2s-metadata">
+				<div class="j2s-preview">
+					<!--- Show the thumbnail --->
+					<cfset thethumb = replacenocase(qry_detail.detail.file_name_org, ".#qry_detail.detail.file_extension#", ".jpg", "all")>
+					<cfif application.razuna.storage EQ "amazon" AND qry_detail.detail.cloud_url NEQ "">
+						<img src="#qry_detail.detail.cloud_url#" border="0" img-tt="img-tt" style="width: 360px;">
+					<cfelseif application.razuna.storage EQ "local" AND FileExists("#attributes.assetpath#/#session.hostid#/#qry_detail.detail.path_to_asset#/#thethumb#") >
+						<img src="#cgi.context_path#/assets/#session.hostid#/#qry_detail.detail.path_to_asset#/#thethumb#?#uniqueid#" border="0"  style="width: 360px;">
+					<cfelse>
+						<img src="#dynpath#/global/host/dam/images/icons/icon_#qry_detail.detail.file_extension#.png" width="128" height="128" border="0" onerror = "this.src='#dynpath#/global/host/dam/images/icons/icon_txt.png'"  style="width: 360px;">
+					</cfif>
+
+					<cfif qry_detail.detail.link_kind EQ "url">
+						<br /><a href="#qry_detail.detail.link_path_url#" target="_blank">#qry_detail.detail.link_path_url#</a>
+					<cfelseif qry_detail.detail.link_kind EQ "lan">
+						<br />#qry_detail.detail.link_path_url#
+					</cfif>
+				</div>
+				<div class="j2s-metadata-fields">
+					<!--- copy metadata link --->
+						<div style="display:block; padding-bottom:10px;">
+							<!--- http://wiki.dev.j2s.net/ticket/5515 <button onclick="showwindow('#myself#c.copy_metaData&what=#attributes.what#&file_id=#attributes.file_id#','#JSStringFormat(myFusebox.getApplicationData().defaults.trans("add_file"))#',650,1);return false;" class="button" title="#myFusebox.getApplicationData().defaults.trans("copy_meta_data_title")#">#myFusebox.getApplicationData().defaults.trans("copy_meta_data")#</button> --->
+							<input type="submit" name="cMetadata" onclick="copyMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("copy")#"></input>
+							<input type="submit" name="pMetadata" onclick="pasteMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("paste")#"></input>
+							<input type="submit" name="submit" value="#myFusebox.getApplicationData().defaults.trans("button_save")#" class="button" style="float:right;">
+						</div>
+					<!--- Description & Keywords --->
+					<a href="##" onclick="$('##detaildesc').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("asset_desc2")#</div></a>
+						<div id="detaildesc" style="padding-top:10px;">
+							<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
+								<tr style="width: 100%;">
+									<td>
+										<div >
 											<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
+												<!--- Filename --->
 												<tr>
-													<td><strong>Author</strong></td>
-													<td><input type="text" style="width:330px;" name="author" value="#qry_detail.pdfxmp.author#"></td>
-												</tr>
-												<tr>
-													<td><strong>Author Title</strong></td>
-													<td><input type="text" style="width:330px;" name="authorsposition" value="#qry_detail.pdfxmp.authorsposition#"></td>
-												</tr>
-												<tr>
-													<td nowrap="nowrap"><strong>Description Writer</strong></td>
-													<td><input type="text" style="width:330px;" name="captionwriter" value="#qry_detail.pdfxmp.captionwriter#"></td>
-												</tr>
-												<tr>
-													<td nowrap="nowrap"><strong>Copyright Status</strong></td>
-													<td>
-													<select name="rightsmarked">
-														<option value=""<cfif qry_detail.pdfxmp.rightsmarked EQ ""> selected="selected"</cfif>>Unknown</option>
-														<option value="true"<cfif qry_detail.pdfxmp.rightsmarked EQ "true"> selected="selected"</cfif>>Copyrighted</option>
-														<option value="false"<cfif qry_detail.pdfxmp.rightsmarked EQ "false"> selected="selected"</cfif>>Public Domain</option>
-													</select>
+													<td width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("file_name")#</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+													<td width="100%"><input type="text" style="width:280px;" name="file_name" value="#qry_detail.detail.file_name#" onchange="document.form#attributes.file_id#.fname.value = document.form#attributes.file_id#.file_name.value;"> <cfif cs.show_favorites_part><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=doc');flash_footer('#myFusebox.getApplicationData().defaults.trans("item_favorite")#');return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></cfif>
 													</td>
 												</tr>
-												<tr>
-													<td nowrap="nowrap" valign="top"><strong>Copyright Notice</strong></td>
-													<td><textarea name="rights" class="text" style="width:330px;height:40px;">#qry_detail.pdfxmp.rights#</textarea></td>
-												</tr>
-												<tr>
-													<td nowrap="nowrap"><strong>Copyright URL</strong></td>
-													<td><input type="text" style="width:330px;" name="webstatement" value="#qry_detail.pdfxmp.webstatement#"></td>
-												</tr>
+												<!--- Description dans chaque langue --->
+												<cfloop query="qry_langs">
+													<cfset thisid = lang_id>
+													<!--- FL http://wiki.dev.j2s.net/ticket/5512
+													<tr>
+														<td class="td2" valign="top" width="1%" nowrap="true"><strong><cfif qry_langs.recordcount NEQ 1>#lang_name#: </cfif>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
+														<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>file_</cfif>desc_#thisid#" class="text" style="width:335px;height:40px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.file_desc_#thisid#.value = document.form#attributes.file_id#.desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#file_desc#</cfif></cfloop></textarea></td>
+													</tr>
+													<tr>
+														<td class="td2" valign="top" width="1%" nowrap="true"><strong><cfif qry_langs.recordcount NEQ 1>#lang_name#: </cfif>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
+														<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>file_</cfif>keywords_#thisid#" class="text" style="width:335px;height:40px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.file_keywords_#thisid#.value = document.form#attributes.file_id#.keywords_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#file_keywords#</cfif></cfloop></textarea></td>
+													</tr>--->
+													<tr style="<cfif thisid NEQ 1>display:none;</cfif>">
+														<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
+														<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>file_</cfif>desc_#thisid#" class="text" style="width:335px;height:40px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.file_desc_#thisid#.value = document.form#attributes.file_id#.desc_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#file_desc#</cfif></cfloop></textarea></td>
+													</tr>
+													<tr style="<cfif thisid NEQ 1>display:none;</cfif>">
+														<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
+														<td class="td2" width="100%"><textarea name="<cfif lang_id NEQ 1>file_</cfif>keywords_#thisid#" class="text" style="width:335px;height:40px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.file_keywords_#thisid#.value = document.form#attributes.file_id#.keywords_#thisid#.value;"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#file_keywords#</cfif></cfloop></textarea></td>
+													</tr>
+												</cfloop>
 											</table>
 										</div>
-									</cfif>
-								</td>
-							</tr>
-						</table>
-					</div>
-				<div stlye="clear:both;"></div>
-				<!--- Custom fields --->
-				<cfif qry_cf.recordcount NEQ 0 AND cs.tab_custom_fields>
-					<br />
-					<a href="##" onclick="$('##customfields').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("custom_fields_asset")#</div></a>
-					<div id="customfields" style="padding-top:10px;">
-						<cfinclude template="inc_custom_fields.cfm">
-					</div>
+										<!--- If we are a PDF we show additional XMP fields --->
+										<cfif qry_detail.detail.file_extension EQ "PDF">
+											<div >
+												<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
+													<tr>
+														<td><strong>#myFusebox.getApplicationData().defaults.trans("author")#</strong></td>
+ 														<td><input type="text" dir="auto" style="width:330px;" name="author" value="#qry_detail.pdfxmp.author#"></td>
+ 													</tr>
+ 													<tr>
+														<td><strong>#myFusebox.getApplicationData().defaults.trans("author_title")#</strong></td>
+ 														<td><input type="text" dir="auto" style="width:330px;" name="authorsposition" value="#qry_detail.pdfxmp.authorsposition#"></td>
+ 													</tr>
+ 													<tr>
+														<td nowrap="nowrap"><strong>#myFusebox.getApplicationData().defaults.trans("description_writer")#</strong></td>
+ 														<td><input type="text" dir="auto" style="width:330px;" name="captionwriter" value="#qry_detail.pdfxmp.captionwriter#"></td>
+ 													</tr>
+ 													<tr>
+														<td nowrap="nowrap"><strong>#myFusebox.getApplicationData().defaults.trans("copyright_status")#</strong></td>
+ 														<td>
+ 														<select name="rightsmarked">
+															<option value=""<cfif qry_detail.pdfxmp.rightsmarked EQ ""> selected="selected"</cfif>>#myFusebox.getApplicationData().defaults.trans("unknown")#</option>
+															<option value="true"<cfif qry_detail.pdfxmp.rightsmarked EQ "true"> selected="selected"</cfif>>#myFusebox.getApplicationData().defaults.trans("copyrighted")#</option>
+															<option value="false"<cfif qry_detail.pdfxmp.rightsmarked EQ "false"> selected="selected"</cfif>>#myFusebox.getApplicationData().defaults.trans("public_domain")#</option>
+ 														</select>
+ 														</td>
+ 													</tr>
+													<tr>
+														<td nowrap="nowrap" valign="top"><strong>#myFusebox.getApplicationData().defaults.trans("copyright_notice")#</strong></td>
+														<td><textarea name="rights" class="text" style="width:330px;height:40px;">#qry_detail.pdfxmp.rights#</textarea></td>
+													</tr>
+													<tr>
+														<td nowrap="nowrap"><strong>Copyright URL</strong></td>
+														<td><input type="text" style="width:330px;" name="webstatement" value="#qry_detail.pdfxmp.webstatement#"></td>
+													</tr>
+												</table>
+											</div>
+										</cfif>
+									</td>
+								</tr>
+							</table>
+						</div>
 					<div stlye="clear:both;"></div>
-				</cfif>
-				<!--- Raw Metadata --->
-				<cfif qry_detail.detail.link_kind NEQ "url">
-					<br />
-					<a href="##" onclick="$('##rawmetadata').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("raw_metadata")#</div></a>
-					<div id="rawmetadata" style="display:none;padding-top:10px;">
-						<div style="height:400px;overflow:auto;">#ParagraphFormat(qry_detail.detail.file_meta)#</div>
-					</div>
-				</cfif>
-				<!--- Submit Button --->
-				<cfif attributes.folderaccess NEQ "R">
-					<!--- copy metadata link --->
-					<div style="float:left;padding-top:25px;">
-						<button onclick="showwindow('#myself#c.copy_metaData&what=#attributes.what#&file_id=#attributes.file_id#','#JSStringFormat(myFusebox.getApplicationData().defaults.trans("add_file"))#',650,1);return false;" class="button">#myFusebox.getApplicationData().defaults.trans("copy_meta_data")#</button>
-					</div>
-					<div style="float:right;padding-top:25px;">
-						<input type="submit" name="submit" value="#myFusebox.getApplicationData().defaults.trans("button_save")#" class="button">
-					</div>
-				</cfif>
+					<!--- Custom fields --->
+					<cfif qry_cf.recordcount NEQ 0 AND cs.tab_custom_fields>
+						<br />
+						<a href="##" onclick="$('##customfields').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("custom_fields_asset")#</div></a>
+						<div id="customfields" style="padding-top:10px;">
+							<cfinclude template="inc_custom_fields.cfm">
+						</div>
+						<div stlye="clear:both;"></div>
+					</cfif>
+					<!--- Raw Metadata --->
+					<cfif qry_detail.detail.link_kind NEQ "url">
+						<br />
+						<a href="##" onclick="$('##rawmetadata').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("raw_metadata")#</div></a>
+						<div id="rawmetadata" style="display:none;padding-top:10px;">
+							<div style="height:400px;overflow:auto;">#ParagraphFormat(qry_detail.detail.file_meta)#</div>
+						</div>
+					</cfif>
+					<!--- Submit Button --->
+					<cfif attributes.folderaccess NEQ "R">
+						<!--- copy metadata link --->
+						<div style="float:left;padding-top:25px;">
+							<!--- http://wiki.dev.j2s.net/ticket/5515 <button onclick="showwindow('#myself#c.copy_metaData&what=#attributes.what#&file_id=#attributes.file_id#','#JSStringFormat(myFusebox.getApplicationData().defaults.trans("add_file"))#',650,1);return false;" class="button" title="#myFusebox.getApplicationData().defaults.trans("copy_meta_data_title")#">#myFusebox.getApplicationData().defaults.trans("copy_meta_data")#</button> --->
+							<input type="submit" name="cMetadata" onclick="copyMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("copy")#"></input>
+							<input type="submit" name="pMetadata" onclick="pasteMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("paste")#"></input>
+						</div>
+						<div style="float:right;padding-top:25px;">
+							<input type="submit" name="submit" value="#myFusebox.getApplicationData().defaults.trans("button_save")#" class="button">
+						</div>
+					</cfif>
+				</div>
 			</div>			
 		</cfif>
 		
@@ -541,9 +579,89 @@
 				$("##updatefile").animate({opacity: 1.0}, 3000).fadeTo("slow", 0);
 		   	}
 		});
+		localStorage.removeItem("asset_details_modified");
         return false; 
 	};
+
+	$("input[name=pMetadata]").ready(function(){
+		if(localStorage.getItem("file_id") && localStorage.getItem("file_id").length > 0 && localStorage.getItem("file_id") !== "#attributes.file_id#")
+			$("input[name=pMetadata]").removeProp("disabled");
+		else
+			$("input[name=pMetadata]").prop("disabled", "disabled");
+	});
+
+	function copyMetadata(){
+		localStorage.setItem("file_id", "#attributes.file_id#");
+	};
+
+	function pasteMetadata(){
+		$(this).load("index.cfm?fa=c.copy_metadata_files_do&file_id="+localStorage.getItem("file_id")+"&idList=#attributes.file_id#&insert_type=replace")
+		//localStorage.removeItem("file_id");
+		//$("input[name=pMetadata]").prop("disabled", "disabled");
+		$(this).load("index.cfm?fa=c.admin_flush_db");
+		showwindow('index.cfm?fa=c.files_detail&file_id=#attributes.file_id#&what=files&loaddiv=content&folder_id=#folder_id#&showsubfolders=F&row=3&filecount=10','',1070,1);
+	};
+
 	// Activate Chosen
-	$(".chzn-select").chosen({search_contains: true});
+	$(".chzn-select").chosen({search_contains: true}).next().css('min-width', "390px");
+
+
+	//Gestion du controle de rique de perte de données sans sauvegarde
+	$("##tab_detail").ready(function(){
+		localStorage.removeItem("asset_details_modified");
+		var details = this;
+		setTimeout(function(){
+			$(details).find("input, textarea, select").change(function(){
+				localStorage.setItem("asset_details_modified", "true");
+			});
+			$(".ui-dialog-titlebar-close span").click(function(e){
+				var button = $(e.currentTarget);
+				/*if(localStorage.getItem("asset_details_modified")){
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					$("<div>#myFusebox.getApplicationData().defaults.trans('has_change')#</div>").dialog({
+						resizable: false,
+						height:150,
+						modal: true,
+						buttons: {
+							"#myFusebox.getApplicationData().defaults.trans("has_change_yes")#": function() {
+								localStorage.removeItem("asset_details_modified");
+								button.click();
+								$( this ).dialog( "close" );
+							},
+							"#myFusebox.getApplicationData().defaults.trans("has_change_no")#": function() {
+								$( this ).dialog( "close" );
+							}
+						}
+					});
+				}*/
+			});
+		},1000);
+	});
+
+	function navigate(direction){
+		if(localStorage.getItem("asset_details_modified")){
+			$("<div>#myFusebox.getApplicationData().defaults.trans('has_change')#</div>").dialog({
+				resizable: false, height:150, modal: true,
+				buttons: {
+					"#myFusebox.getApplicationData().defaults.trans("has_change_yes")#": function() {
+						gotoFile(direction);
+						$( this ).dialog( "close" );
+					},
+					"#myFusebox.getApplicationData().defaults.trans("has_change_no")#": function() {$( this ).dialog( "close" );}
+				}
+			});
+		}
+		else {gotoFile(direction);}
+	};
+
+	function gotoFile(direction){	
+		<cfif structKeyExists(attributes,"filecount")>
+			showwindow('#myself#c.detail_proxy&file_id=#attributes.file_id#&what=#attributes.what#&loaddiv=#attributes.loaddiv#&folder_id=#attributes.folder_id#&showsubfolders=#attributes.showsubfolders#&row='+direction+'&filecount=#attributes.filecount#&#file_extension#','',1070,1);
+		</cfif>
+		return false;
+	};
+
+
 	</script>
 </cfoutput>

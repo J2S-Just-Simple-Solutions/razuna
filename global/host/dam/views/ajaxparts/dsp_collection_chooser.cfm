@@ -28,11 +28,11 @@
 	<table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding-top:15px;">
 		<cfif qry_col_list.collist.recordcount EQ 0>
 			<tr>
-				<td>There are no collections here. <cfif attributes.folderaccess NEQ "R"><a href="##" onclick="showwindow('#myself#c.saveascollection_form&folder_id=#attributes.folder_id#&coladd=T&norefresh=true','#myFusebox.getApplicationData().defaults.trans("collection_create")#',600,2);">Maybe create one now?</a></cfif></td>
+				<td>#myFusebox.getApplicationData().defaults.trans("no_collection_here")#<cfif attributes.folderaccess NEQ "R"><a href="##" onclick="showwindow('#myself#c.saveascollection_form&folder_id=#attributes.folder_id#&coladd=T&norefresh=true','#myFusebox.getApplicationData().defaults.trans("collection_create")#',600,2);">#myFusebox.getApplicationData().defaults.trans("create_collection_now")#</a></cfif></td>
 			</tr>
 		<cfelse>
 			<tr>
-				<td>Please choose in which Collection you want to save your asset(s):</td>
+				<td>#myFusebox.getApplicationData().defaults.trans("choose_collection_to_add_assets")#</td>
 			</tr>
 			<cfloop query="qry_col_list.collist">
 				<tr>

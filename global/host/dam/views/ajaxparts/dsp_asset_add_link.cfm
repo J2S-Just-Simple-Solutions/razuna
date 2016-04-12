@@ -48,8 +48,9 @@
 			 	<cfset csshide= "">
 			</cfif>
 			<tr>
-				<td><input name="link_kind" type="radio" value="url" checked="true" onclick="togglefileinput(1)"> On public URL <input name="link_kind" type="radio" value="urlvideo" onclick="togglefileinput(1)"> Video with embedded player <cfif !application.razuna.isp>
-				<span  #csshide#><input name="link_kind" type="radio" value="lan" onclick="togglefileinput(0)"> Available on my local network</span>
+				<!--- TODO: mettre les chaines dans les fichiers de ressources --->
+				<td><input name="link_kind" type="radio" value="url" checked="true" onclick="togglefileinput(1)"> Sur une URL publique <input name="link_kind" type="radio" value="urlvideo" onclick="togglefileinput(1)"> Vidéo avec lecteur intégré <cfif !application.razuna.isp>
+				<span  #csshide#><input name="link_kind" type="radio" value="lan" onclick="togglefileinput(0)"> Disponible sur mon réseau local </span>
 				</cfif></td>
 			</tr>
 			<tr>

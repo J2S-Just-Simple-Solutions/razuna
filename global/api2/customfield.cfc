@@ -25,6 +25,30 @@
 --->
 <cfcomponent output="false" extends="authentication">
 		
+	<!--- J2S/FL - Update "cf_select_list" from a Custom Field --->
+    <cffunction name="updateSelectListOfCustomField" access="remote" output="false" returntype="string"  >
+        <cfargument name="prefix" required="true" type="string">
+        <cfargument name="cf_id" required="true" type="string">
+        <cfargument name="value" required="true" type="string">
+            <cfquery datasource="#application.razuna.datasource#" name="qry_select_list">
+            SELECT cf_select_list
+            FROM #prefix#custom_fields
+            WHERE cf_id = <cfqueryparam cfsqltype="cf_sql_varchar" value="#cf_id#">
+            </cfquery>
+        <cfloop query="qry_select_list" >
+            <cfset result=#cf_select_list#>
+        </cfloop>
+        <!--- Add value if not exist in list --->
+        <cfif FindNoCase(value, result) IS False>
+            <cfset new_list=#result# & "," & #value#>
+			<cfquery datasource="#application.razuna.datasource#" name="qry">
+                UPDATE #prefix#custom_fields
+                SET cf_select_list = <cfqueryparam cfsqltype="cf_sql_varchar" value="#new_list#">
+                WHERE CF_ID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#cf_id#" >
+        </cfquery>                
+        </cfif>
+    </cffunction/>
+
 	<!--- Get all custom fields --->
 	<cffunction name="getall" access="remote" output="false" returntype="query" returnformat="json">
 		<cfargument name="api_key" required="true">
@@ -305,6 +329,8 @@
 		<!--- Check to see if session is valid --->
 		<cfif thesession>
 			<!--- Query --->
+			<!--- Ajout du 'AND c.cf_id != "61A9CFB5-850E-48F6-86DFC7500D935704"' afin de ne pas remonter les champ contenu (PDF) 
+				  dans le frontal Web --->
 			<cfquery datasource="#application.razuna.api.dsn#" name="thexml">
 			SELECT DISTINCT ct.cf_id_r field_id, ct.cf_text field_text, cv.cf_value field_value, c.cf_order, cv.asset_id_r file_id
 			FROM #application.razuna.api.prefix["#arguments.api_key#"]#custom_fields_text ct, #application.razuna.api.prefix["#arguments.api_key#"]#custom_fields c, #application.razuna.api.prefix["#arguments.api_key#"]#custom_fields_values cv
@@ -313,6 +339,7 @@
 			AND c.cf_id = ct.cf_id_r
 			AND ct.lang_id_r = <cfqueryparam cfsqltype="cf_sql_numeric" value="#arguments.lang_id#">
 			AND cv.host_id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#application.razuna.api.hostid["#arguments.api_key#"]#">
+			AND c.cf_id != "61A9CFB5-850E-48F6-86DFC7500D935704" 
 			ORDER BY c.cf_order
 			</cfquery>
 		<!--- No session found --->

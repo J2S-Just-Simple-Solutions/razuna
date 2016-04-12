@@ -33,7 +33,12 @@
 <cfparam name="session.view" default="">
 <cfparam name="session.sortby" default="name">
 
-<!--- Set the session for the language --->
+<!--- Set the session for the language 
+FL: pour choisir le français par défaut
+<cfparam name="session.thelang" default="French">
+<cfparam name="session.thelangid" default="3">
+<cfparam name="session.locale" type="string" default="fr">
+--->
 <cfparam name="session.thelang" default="English">
 <cfparam name="session.thelangid" default="1">
 <cfparam name="session.locale" type="string" default="en">

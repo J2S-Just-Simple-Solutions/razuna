@@ -421,6 +421,7 @@ function checkentry(){
 	// Parse the entry
 	var theentry = $('#simplesearchtext').val();
 	var thetype = $('#simplesearchthetype').val();
+	var descriptor = $('#simplesearchwithdescriptor').prop("checked");
 	// Grab the folder id
 	var folder_id = $('#qs_folder_id').val();
 	if (typeof folder_id !== 'undefined' && folder_id !== '') {
@@ -440,7 +441,7 @@ function checkentry(){
 			// Show loading bar
 			$("body").append('<div id="bodyoverlay"><img src="' + dynpath + '/global/host/dam/images/loading-bars.gif" border="0" style="padding:10px;"></div>');
 			// We are now using POST for the search field (much more compatible then a simple load for foreign chars)
-			$('#rightside').load('index.cfm?fa=c.search_simple', { searchtext: encodeURIComponent(theentry), folder_id: thefolderid, thetype: thetype }, function(){
+			$('#rightside').load('index.cfm?fa=c.search_simple', { searchtext: encodeURIComponent(theentry), folder_id: thefolderid, thetype: thetype, descriptor : descriptor }, function(){
 				$("#bodyoverlay").remove();
 			});
 		}
