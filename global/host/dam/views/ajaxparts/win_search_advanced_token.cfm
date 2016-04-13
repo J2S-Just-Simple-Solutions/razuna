@@ -38,7 +38,7 @@
 				// TODO: gérer un historique des requêtes
 				
 				// Je décompose ma recherche
-				value = value.replace(/[\w-]+:"[\w\s']+"/g, function(match, contents){
+				value = value.replace(/[\w-]+:"[^"]+"/g, function(match, contents){
 					var operation = match.split(":");
 					// On supprime les - de l'ID du customfield
 					var operationField = operation[0].replace(/-/g,"");
@@ -68,7 +68,6 @@
 
 			//Je crée mon champ de recherche
 			$("iframe").richTokenEditor({fields : fields.DATA, callback : searchHandler});	
-
 			
 		});
 	</script>	
