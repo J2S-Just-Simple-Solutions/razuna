@@ -45,7 +45,7 @@
 					if(operationField === "ALL")return "(description:("+operationValue+") OR customfieldvalue:("+operationValue+"))";
 					else if(operation[0] === "ALLFIELDS")return "customfieldvalue:("+operationValue+")";
 					else if(operation[0] === "description")return "description:("+operationValue+")";
-					else return "customfieldvalue:(+"+operationField+"+"+operationValue+")";
+					else return "customfieldvalue:("+operationField+operationValue+")";
 				});
 
 				//Je lance la recherche
