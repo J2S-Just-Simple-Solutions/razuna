@@ -35,20 +35,30 @@
 		$(document).ready( function(){
 			var fields = <cfoutput>#serializeJson(qry_fields)#</cfoutput>;
 			var searchHandler = function(value){
-				// TODO
-				// Gèrer un historique des requetes
-				//Je décompose ma recherche en customfield
-				value = value.replace(/[\w-]+:"[\w\s]+"/g, function(match, contents){
+				// TODO: gérer un historique des requêtes
+				
+				// Je décompose ma recherche
+				value = value.replace(/[\w-]+:"[\w\s']+"/g, function(match, contents){
 					var operation = match.split(":");
-					var operationValue = operation[1].replace(/\'/g, "");
+					// On supprime les - de l'ID du customfield
 					var operationField = operation[0].replace(/-/g,"");
-					if(operationField === "ALL")return "(description:("+operationValue+") OR customfieldvalue:("+operationValue+"))";
-					else if(operation[0] === "ALLFIELDS")return "customfieldvalue:("+operationValue+")";
-					else if(operation[0] === "description")return "description:("+operationValue+")";
-					else return "customfieldvalue:("+operationField+operationValue+")";
+					// On supprime les ' 
+					var operationValue = operation[1].replace(/\'/g, "");
+					if(operationField === "ALL") {
+						return "(description:("+operationValue+") OR customfieldvalue:("+operationValue+"))";
+					}
+					else if(operation[0] === "ALLFIELDS") {
+						return "customfieldvalue:("+operationValue+")";
+					}
+					else if(operation[0] === "description") {
+						return "description:("+operationValue+")";
+					}
+					else {
+						return "customfieldvalue:("+operationField+operationValue+")";
+					}
 				});
 
-				//Je lance la recherche
+				// Je lance la recherche
 				$("input[name=simplesearchtext]").val(value);
 				$("##form_simplesearch button").click();
 				//$("input[name=simplesearchtext]").val("");
