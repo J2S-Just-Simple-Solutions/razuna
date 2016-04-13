@@ -56,7 +56,7 @@
 						var operationValue = operation[1].replace(/\"/g, "");
 						// On remplace les espaces par espace+ID 
 						operationValue = operationValue.replace(/\s/g, " "+operationField);
-						return "customfieldvalue:("+operationField+operationValue+")";
+						return "customfieldvalue:(\""+operationField+operationValue+"\")";
 					}
 				});
 
