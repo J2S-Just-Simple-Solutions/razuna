@@ -89,7 +89,6 @@
 										<option value="descriptor">#myFusebox.getApplicationData().defaults.trans("descriptor")#</option>
 										<option value="candidate-descriptor">#myFusebox.getApplicationData().defaults.trans("candidate-descriptor")#</option>
 										<option value="inventory">#myFusebox.getApplicationData().defaults.trans("inventory")#</option>
-
 									</select>
 								</td>
 							</tr>

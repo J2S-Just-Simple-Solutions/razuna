@@ -299,7 +299,7 @@
 			VALUES(
 			<cfqueryparam value="#newfolderid#" cfsqltype="CF_SQL_VARCHAR">, 
 			<cfqueryparam value="1" cfsqltype="cf_sql_numeric">, 
-			<cfqueryparam value="Dossier pubic de téléchargements" cfsqltype="cf_sql_varchar">,
+			<cfqueryparam value="Dossier public de téléchargements" cfsqltype="cf_sql_varchar">,
 			<cfqueryparam cfsqltype="cf_sql_numeric" value="#session.hostid#">,
 			<cfqueryparam value="#createuuid()#" CFSQLType="CF_SQL_VARCHAR">
 			)

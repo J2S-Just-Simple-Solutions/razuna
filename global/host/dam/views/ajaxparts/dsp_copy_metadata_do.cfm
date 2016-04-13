@@ -1,4 +1,4 @@
-﻿<!---
+<!---
 *
 * Copyright (C) 2005-2008 Razuna
 *
@@ -38,19 +38,11 @@
 	</cfif>
 </cfoutput>
 <hr />
-
-
-<!--- Razuna Code --->
+<cfoutput>
 <!---<p align="right"><input type="radio" checked="checked" name="insert_type" value="replace"> replace or <input type="radio" name="insert_type" value="append"> append to existing records.&nbsp;   
 <input type="submit" name="submit" disabled="true" id="apply" value="Apply" onclick="completed();"></p>--->
-
-
-<!--- J2S Code --->
-<!---<cfoutput>--->
 <p align="right"><input type="radio" checked="checked" name="insert_type" value="replace" hidden> <input type="submit" name="submit" disabled="true" id="apply" value="#myFusebox.getApplicationData().defaults.trans("apply")#" onclick="completed();"></p>
-<!---</cfoutput>--->
-
-
+</cfoutput>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('.idList').click(function(){

@@ -23,8 +23,7 @@
 * along with Razuna. If not, see <http://www.razuna.com/licenses/>.
 *
 --->
-<cfcomponent output="false" extends="authentication">
-		
+<cfcomponent output="false" extends="authentication">	
 	<!--- J2S/FL - Update "cf_select_list" from a Custom Field --->
     <cffunction name="updateSelectListOfCustomField" access="remote" output="false" returntype="string"  >
         <cfargument name="prefix" required="true" type="string">

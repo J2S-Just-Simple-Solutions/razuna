@@ -1930,7 +1930,6 @@
 		WHERE asset_id_r = <cfqueryparam value="#arguments.thestruct.file_id#" cfsqltype="cf_sql_varchar" >
 		AND host_id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#session.hostid#">
 	</cfquery>
-
 	<cfif arguments.thestruct.insert_type EQ 'replace'>
 		<!--- replace the metadata --->
 		<!--- update audio name --->

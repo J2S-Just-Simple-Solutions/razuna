@@ -24,7 +24,7 @@
 *
 --->
 <cfcomponent extends="extQueryCaching">
-	
+
 	<!--- Modifie la valeur de la recherche via les synonymes de la table thesaurus --->
 	<cffunction name="searchforthesaurus" access="remote" returntype="string">
 	<!--- If no total search or multi search --->
@@ -60,7 +60,7 @@
 			<cfreturn search_value_encoded/>
 		</cfif>	
 	</cffunction>
-	
+
 	<cffunction name="newSearch" output="true">
 		<cfargument name="thestruct" type="struct">
 
@@ -118,6 +118,12 @@
 		<cfif arguments.thestruct.searchtext EQ "">
 			<cfset arguments.thestruct.searchtext = "*">
 		</cfif>
+
+		<cfif IsDefined("arguments.thestruct.descriptor") AND arguments.thestruct.descriptor>
+			<cfset arguments.thestruct.searchtext = searchforthesaurus(search_value=thestruct.searchtext)>
+			<cfset arguments.thestruct.descriptor = false />
+		</cfif>
+
 		<!--- if we come from all set the category --->
 		<cfif arguments.thestruct.thetype EQ "all">
 			<cfset var thetype = "doc,vid,img,aud" />
