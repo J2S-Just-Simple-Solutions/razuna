@@ -42,6 +42,8 @@
 					var operation = match.split(":");
 					// On supprime les - de l'ID du customfield
 					var operationField = operation[0].replace(/-/g,"");
+					// On récupère la valeur 
+					var operationValue = operation[1];
 					if(operationField === "ALL") {
 						return "(description:("+operationValue+") OR customfieldvalue:("+operationValue+"))";
 					}
@@ -53,7 +55,7 @@
 					}
 					else {
 						// On supprime les guillemets qui entouraient la valeur 
-						var operationValue = operation[1].replace(/\"/g, "");
+						operationValue = operation[1].replace(/\"/g, "");
 						// On remplace les espaces par espace+ID 
 						operationValue = operationValue.replace(/\s/g, " "+operationField);
 						return "customfieldvalue:(\""+operationField+operationValue+"\")";
