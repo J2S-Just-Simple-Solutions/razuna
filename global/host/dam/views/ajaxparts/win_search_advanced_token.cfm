@@ -40,12 +40,12 @@
 				//Je décompose ma recherche en customfield
 				value = value.replace(/[\w-]+:'[\w\s]+'/g, function(match, contents){
 					var operation = match.split(":");
-					var operationValue = operation[1].replace(/\'/g, "").replace(/\s/g, "+");
-					var operationField = operation[0];
+					var operationValue = operation[1].replace(/\'/g, "");
+					var operationField = operation[0].replace(/-/g,"");
 					if(operationField === "ALL")return "(description:("+operationValue+") OR customfieldvalue:("+operationValue+"))";
 					else if(operation[0] === "ALLFIELDS")return "customfieldvalue:("+operationValue+")";
 					else if(operation[0] === "description")return "description:("+operationValue+")";
-					else return "customfieldvalue:(+"+operationField+"+"+operationValue+")";
+					else return "customfieldvalue:("+operationField+operationValue+")";
 				});
 
 				//Je lance la recherche

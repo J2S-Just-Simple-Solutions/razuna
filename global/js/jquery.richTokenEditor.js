@@ -24,9 +24,9 @@
 		<option value="description">Dans le champ Description</option>\n\
 		<option disabled>───────────────────────────</option>\n\
 		</select>\n\
-		<button value="AND" action contentEditable="false">Et</button>\n\
-		<button value="OR" action contentEditable="false">Ou</button>\n\
-		<button value="NOT" action contentEditable="false">Sauf</button>\n\
+		<button value="AND" action contentEditable="false">ET</button>\n\
+		<button value="OR" action contentEditable="false">OU</button>\n\
+		<button value="NOT" action contentEditable="false">SAUF</button>\n\
 		<div class="editor"/>\n\
 		<button id="search">Rechercher</button>';
 		
@@ -49,7 +49,7 @@
 			    return 0;
 			});
 			_.each(options.fields, function(field){
-				$(content).find('select').append("<option value='"+field[0]+"''>"+field[5]+" commence par</option>");
+				$(content).find('select').append("<option value='"+field[0]+"''>"+field[5]+" contient</option>");
 			})
 			
 			//------------------------------------------------------------------
