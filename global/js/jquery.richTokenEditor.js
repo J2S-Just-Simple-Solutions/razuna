@@ -18,7 +18,7 @@
 	//------------------------------------------------------------------
 	//Mes controles	
 	var _controlTokenEditor = 
-		'<select contentEditable="false"><option value="" selected>Sélectionner un champ</option>\n\
+		'<select contentEditable="false" class="button"><option value="" selected>Sélectionner un champ</option>\n\
 		<option value="ALL">Dans tous les champs</option>\n\
 		<option value="ALLFIELDS">Dans tous les champs personnalisés</option>\n\
 		<option value="description">Dans le champ Description</option>\n\
@@ -28,7 +28,7 @@
 		<button value="OR" action contentEditable="false">OU</button>\n\
 		<button value="NOT" action contentEditable="false">SAUF</button>\n\
 		<div class="editor"/>\n\
-		<button id="search">Rechercher</button>';
+		<button id="search" class="button">Rechercher</button>';
 		
 	//------------------------------------------------------------------
 	//Ma feuille de style
@@ -83,6 +83,7 @@
 				}, this);
 				content.execCommand("insertHTML", false, "&nbsp;"+$select.outerHTML+"&nbsp;");
 				this.selectedIndex = 0;
+				$(content).focus();
 			});
 			
 			//------------------------------------------------------------------
@@ -96,6 +97,17 @@
 			//search
 			$(content).find('#search').on('click', function(event) {
 				options.callback.call(null, getValueText());
+			});
+
+			//------------------------------------------------------------------
+			//sur enter, on ne fait pas le retour a la ligne et on appel la callback
+			$(content).on("keydown", function(event){
+				console.log(event)
+				if(event.keyCode === 13){
+					event.preventDefault();
+					options.callback.call(null, getValueText());
+					return false;
+				}
 			});
 		});		
     };

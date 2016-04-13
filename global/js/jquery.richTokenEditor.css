@@ -22,7 +22,8 @@ body {
 .editor {
 	margin-top: 5px;
 	margin-bottom: 5px;
-	width: calc(100% - 5px);
+	margin-left: 5px;
+	width: calc(100% - 10px);
 	overflow: auto;
 	height: calc(100% - 60px);
 	border: 1px solid grey;
@@ -49,6 +50,18 @@ pre{
 .underline {
 	text-decoration: underline;
 }
+button {
+    border: 1px solid #AAAAAA;
+    border-radius: 4px 4px 4px 4px;
+    padding: 2px 20px;
+    position: relative;
+    color: #706961;
+}
 #search{
+	border-radius: 4px;
 	float: right;
+	color: white;
+    padding: 4px 7px 5px;
+    font-size: 10px;
+    background-color: #579E31 !important;
 }
