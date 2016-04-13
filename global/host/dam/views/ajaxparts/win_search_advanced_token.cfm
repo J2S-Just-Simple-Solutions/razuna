@@ -38,7 +38,7 @@
 				// TODO
 				// Gèrer un historique des requetes
 				//Je décompose ma recherche en customfield
-				value = value.replace(/[\w-]+:'[\w\s]+'/g, function(match, contents){
+				value = value.replace(/[\w-]+:"[\w\s]+"/g, function(match, contents){
 					var operation = match.split(":");
 					var operationValue = operation[1].replace(/\'/g, "");
 					var operationField = operation[0].replace(/-/g,"");

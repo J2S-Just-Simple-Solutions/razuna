@@ -66,7 +66,7 @@
 					}
 					else {
 						if(trim(content.textContent) != "")
-						text += "'" + trim(content.textContent) + "'";
+						text += '"' + trim(content.textContent) + '"';
 					}
 				});
 				return text;
