@@ -26,8 +26,7 @@
 <cfparam default="0" name="attributes.folder_id">
 <cfset myvar = structnew()>
 <cfoutput>
-	Recherche par champs : 
-	<br>
+    <h3>Recherche par champs</h3>
 	<iframe style="border:none;width:100%;"></iframe>
 	<script data-main="underscore" src="/razuna/global/js/underscore-min.js"></script>
 	<script data-main="rte" src="/razuna/global/js/jquery.richTokenEditor.js"></script>
