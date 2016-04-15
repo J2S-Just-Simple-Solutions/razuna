@@ -50,6 +50,9 @@ pre{
 .underline {
 	text-decoration: underline;
 }
+select {   
+     width: 230px;
+}
 button {
     border: 1px solid #AAAAAA;
     border-radius: 4px 4px 4px 4px;
