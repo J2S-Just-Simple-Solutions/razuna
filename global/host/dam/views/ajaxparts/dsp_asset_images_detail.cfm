@@ -89,10 +89,10 @@
 				</cfif>
 				<!--- Aliases'd --->
 				<cfif qry_aliases.recordcount NEQ 0>
-					<li><a href="##alias" onclick="loadcontent('alias','#myself#c.usage_alias&id=#attributes.file_id#&folder_id=#attributes.folder_id#');">Alias</a></li>
+					<li><a href="##alias" onclick="loadcontent('alias','#myself#c.usage_alias&id=#attributes.file_id#&folder_id=#attributes.folder_id#');">#myFusebox.getApplicationData().defaults.trans("tab_alias")#</a></li>
 				</cfif>
 				<!--- Collections --->
-				<li><a href="##ass_col" onclick="loadcontent('ass_col','#myself#c.usage_collection&id=#attributes.file_id#&folder_id=#attributes.folder_id#');">Associated Collections</a></li>
+				<li><a href="##ass_col" onclick="loadcontent('ass_col','#myself#c.usage_collection&id=#attributes.file_id#&folder_id=#attributes.folder_id#');">#myFusebox.getApplicationData().defaults.trans("tab_associated_collections")#</a></li>
 				<!--- Plugin being shows with add_tab_detail_wx  --->
 				<cfif structKeyExists(plwx,"pview")>
 					<cfloop list="#plwx.pview#" delimiters="," index="i">
@@ -142,7 +142,7 @@
 						<cfelse>
 							<a href="#qry_detail.detail.link_path_url#" target="_blank" border="0" ><img src="#qry_detail.detail.link_path_url#" border="0"></a><br /><a href="#qry_detail.detail.link_path_url#" target="_blank" border="0">#qry_detail.detail.link_path_url#</a>
 						</cfif>
-						<!--- Je modifie le filename sur le tenant phototheque (id photothèque = 5) avec la valeur du numéro d'inventaire:3A5A7EB0-F844-4B14-83A6DF40AF5C4EC2 --->
+						<!--- Je modifie le titre de la fenêtre pour la phototheque (id = 5) avec la valeur du numéro d'inventaire: 	  cf_id = 3A5A7EB0-F844-4B14-83A6DF40AF5C4EC2 --->
 						<cfif #session.hostid# EQ 5>
 							<cfquery datasource="mysql" name="qry">
 								SELECT cf_value
@@ -157,11 +157,13 @@
 					</td>
 					<td width="100%" valign="top" colspan="2" style="padding-top:20px;" valign="top">
 						<table border="0" width="100%" cellpadding="0" cellspacing="0" class="grid">
-							<!--- Filename --->
-							<tr>
-								<td width="1%" nowrap="true" style="font-weight:bold;"><cfif #session.hostid# NEQ 666>#myFusebox.getApplicationData().defaults.trans("file_name")#<cfelse>Gesco</cfif></td>
-								<td width="100%" nowrap="true"><input type="text" style="width:400px;" name="fname" id="fname" value="#qry_detail.detail.img_filename#" onchange="document.form#attributes.file_id#.file_name.value = document.form#attributes.file_id#.fname.value; <cfif prefs.set2_upc_enabled>if (!isNaN(document.form#attributes.file_id#.fname.value.substr(0,6))) {document.form#attributes.file_id#.img_upc.value = document.form#attributes.file_id#.fname.value.split('.')[0];}</cfif>"> <cfif cs.show_favorites_part><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=img');flash_footer('#myFusebox.getApplicationData().defaults.trans("item_favorite")#');return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></cfif></td>
-							</tr>
+							<cfif #session.hostid# NEQ 5>
+								<!--- Filename --->
+								<tr>
+									<td width="1%" nowrap="true" style="font-weight:bold;">#myFusebox.getApplicationData().defaults.trans("file_name")#</td>
+									<td width="100%" nowrap="true"><input type="text" style="width:400px;" name="fname" id="fname" value="#qry_detail.detail.img_filename#" onchange="document.form#attributes.file_id#.file_name.value = document.form#attributes.file_id#.fname.value; <cfif prefs.set2_upc_enabled>if (!isNaN(document.form#attributes.file_id#.fname.value.substr(0,6))) {document.form#attributes.file_id#.img_upc.value = document.form#attributes.file_id#.fname.value.split('.')[0];}</cfif>"> <cfif cs.show_favorites_part><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=img');flash_footer('#myFusebox.getApplicationData().defaults.trans("item_favorite")#');return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></cfif></td>
+								</tr>
+							</cfif>
 							<!--- Description & Keywords 
 							FL: http://wiki.dev.j2s.net/ticket/5512 --->
 							<cfloop query="qry_langs">

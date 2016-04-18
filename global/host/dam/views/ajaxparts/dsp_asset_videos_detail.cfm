@@ -97,10 +97,10 @@
 				</cfif>
 				<!--- Aliases'd --->
 				<cfif qry_aliases.recordcount NEQ 0>
-					<li><a href="##alias" onclick="loadcontent('alias','#myself#c.usage_alias&id=#attributes.file_id#&folder_id=#attributes.folder_id#');">Alias</a></li>
+					<li><a href="##alias" onclick="loadcontent('alias','#myself#c.usage_alias&id=#attributes.file_id#&folder_id=#attributes.folder_id#');">#myFusebox.getApplicationData().defaults.trans("tab_alias")#</a></li>
 				</cfif>
 				<!--- Collections --->
-				<li><a href="##ass_col" onclick="loadcontent('ass_col','#myself#c.usage_collection&id=#attributes.file_id#&folder_id=#attributes.folder_id#');">Associated Collections</a></li>
+				<li><a href="##ass_col" onclick="loadcontent('ass_col','#myself#c.usage_collection&id=#attributes.file_id#&folder_id=#attributes.folder_id#');">#myFusebox.getApplicationData().defaults.trans("tab_associated_collections")#</a></li>
 				<!--- Plugin being shows with add_tab_detail_wx  --->
 				<cfif structKeyExists(plwx,"pview")>
 					<cfloop list="#plwx.pview#" delimiters="," index="i">
