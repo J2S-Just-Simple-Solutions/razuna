@@ -24,8 +24,10 @@
 *
 --->
 <cfoutput>
-	<h2>Find below a list of collection(s) that this file is associated with</h2>
-	<p>Click on collection below to jump to the collection itself.</p>
+	<!--- <h2>Find below a list of collection(s) that this file is associated with</h2> 
+	<p>Click on collection below to jump to the collection itself.</p>--->
+	<h2>Trouvez ci-dessous une liste de collection(s) avec lesquelles ce fichier est associé</h2>
+	<p>Cliquez sur l'une des collections pour accéder directment à cette collection.</p>
 	<cfloop query="qry_usage">
 		<h3>
 			<a href="##" onclick="loadCol('#col_id_r#', '#folder_id_r#')">#col_name#</a></h3>
