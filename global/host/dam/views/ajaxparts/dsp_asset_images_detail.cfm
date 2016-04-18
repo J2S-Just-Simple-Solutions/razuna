@@ -360,13 +360,15 @@
 					<a href="##" onclick="$('##detaildesc').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("asset_desc2")#</div></a>
 					<div id="detaildesc" style="padding-top:10px;">
 						<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
-							<!--- Filename --->
-							<tr>
-								<td width="1%" nowrap="true" style="font-weight:bold;"><cfif #session.hostid# NEQ 666>#myFusebox.getApplicationData().defaults.trans("file_name")#<cfelse>Gesco</cfif></td>
-								<td width="100%" nowrap="true">
-									<input type="text" style="width:400px;" name="file_name" value="#qry_detail.detail.img_filename#" onchange="document.form#attributes.file_id#.fname.value = document.form#attributes.file_id#.file_name.value;"> <cfif cs.show_favorites_part><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=img');flash_footer();return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></cfif>
-								</td>
-							</tr>
+							<cfif #session.hostid# NEQ 5>
+								<!--- Filename --->
+								<tr>
+									<td width="1%" nowrap="true" style="font-weight:bold;">#myFusebox.getApplicationData().defaults.trans("file_name")#</td>
+									<td width="100%" nowrap="true">
+										<input type="text" style="width:400px;" name="file_name" value="#qry_detail.detail.img_filename#" onchange="document.form#attributes.file_id#.fname.value = document.form#attributes.file_id#.file_name.value;"> <cfif cs.show_favorites_part><a href="##" onclick="loadcontent('thedropfav','#myself##xfa.tofavorites#&favid=#attributes.file_id#&favtype=file&favkind=img');flash_footer();return false;"><img src="#dynpath#/global/host/dam/images/favs_16.png" width="16" height="16" border="0" /></a></cfif>
+									</td>
+								</tr>
+							</cfif>
 							<!--- Description dans chaque langue 
 							FL: http://wiki.dev.j2s.net/ticket/5512
 							<cfloop query="qry_langs">
