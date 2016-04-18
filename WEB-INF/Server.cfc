@@ -5,19 +5,10 @@
     <cfset console("------------SERVER STARTUP------------------")>
     
     <cfset console("---START: Cache Setup---")>
-    <!--- Create the cache --->
-    <cfset cacheregionnew(
-      region="razcache",
-      props=
-      {
-        type : 'memorydisk'
-      }
-    )>
 
     <!--- READ the documentation at http://wiki.razuna.com/display/ecp/Configure+Caching !!! --->
 
     <!--- Memcached / CouchBase --->
-    <!--- 
     <cfset cacheregionnew(
     region="razcache",
     props=
@@ -27,7 +18,6 @@
         waittimeseconds : 5
         }
     )>
-    --->
     
     <!--- MongoDB --->
     <!--- 

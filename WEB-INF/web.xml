@@ -5,6 +5,18 @@
 
 	<display-name>OpenBD WebApp</display-name>
 
+<!-- Added by FL
+<filter>
+    <filter-name>UrlRewriteFilter</filter-name>
+    <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+</filter>
+<filter-mapping>
+    <filter-name>UrlRewriteFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+</filter-mapping>-->
+
 	<!-- Configuration of this filter in order to support search engine friendly 
 		URLs like http://127.0.0.1/bdj2eeregr/index.cfm/path/info. -->
 	<filter>
@@ -68,7 +80,8 @@
 		<url-pattern>*.cfc</url-pattern>
 	</servlet-mapping>
 	<session-config>
-		<session-timeout>240</session-timeout>
+		<!-- FL <session-timeout>240</session-timeout> -->
+		<session-timeout>40</session-timeout>
 	</session-config>
 	<listener>
 		<listener-class>com.naryx.tagfusion.cfm.application.cfHttpSessionListener</listener-class>

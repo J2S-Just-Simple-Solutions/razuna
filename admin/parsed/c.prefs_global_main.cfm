@@ -59,8 +59,9 @@
 		</cfif>
 	</cflock>
 </cfif>
-<!--- do action="ajax.prefs_global_main" --->
 <cfset myFusebox.thisPhase = "requestedFuseaction">
+<cfset qry_taskserver = myFusebox.getApplicationData().Settings.prefs_taskserver() >
+<!--- do action="ajax.prefs_global_main" --->
 <cfset myFusebox.thisCircuit = "ajax">
 <cftry>
 <cfoutput><cfinclude template="../views/ajaxparts/dsp_pref_global_main.cfm"></cfoutput>
