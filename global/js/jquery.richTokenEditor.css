@@ -13,14 +13,14 @@ iframe {
 	width: 100%;
 }
 body {
-	height: 150px;
-	margin: 0;
-	overflow: hidden;
-	border: none;
-	width: 100%;
+    height: 140px;
+    margin: 10px 0 0 0;
+    overflow: hidden;
+    border: none;
+    width: 100%;
 }
 .editor {
-	margin-top: 5px;
+	margin-top: 7px;
 	margin-bottom: 5px;
 	margin-left: 5px;
 	width: calc(100% - 10px);
@@ -67,4 +67,7 @@ button {
     padding: 4px 7px 5px;
     font-size: 10px;
     background-color: #579E31 !important;
+}
+#delete {
+	float: right;
 }

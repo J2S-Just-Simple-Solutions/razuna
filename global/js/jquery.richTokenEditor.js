@@ -27,8 +27,9 @@
 		<button value="AND" action contentEditable="false">ET</button>\n\
 		<button value="OR" action contentEditable="false">OU</button>\n\
 		<button value="NOT" action contentEditable="false">SAUF</button>\n\
+		<button id="delete">Effacer</button>\n\
 		<div class="editor"/>\n\
-		<button id="search" class="button">Rechercher</button>';
+		<button id="search" class="button">Chercher</button>';
 		
 	//------------------------------------------------------------------
 	//Ma feuille de style
@@ -71,6 +72,20 @@
 				});
 				return text;
 			};
+
+			var getInnerHTML = function(){
+				return $(content).find("div")[0].innerHTML;
+			};
+			var getText = function(){
+				var text = "";
+				_.each($(content).find("div").contents(),function(content){
+					if(content === "&nbsp;"){return;}
+					else if(content.nodeName === "SELECT"){text += $(content).find(":selected").text();}
+					else if(content.nodeName === "BUTTON"){text += " " + $(content).text() + " ";}
+					else {if(trim(content.textContent) != "")text += ' "' + trim(content.textContent) + '"';}
+				});
+				return text;
+			};
 			
 			//------------------------------------------------------------------
 			//Ajout champ
@@ -96,7 +111,13 @@
 			//------------------------------------------------------------------
 			//search
 			$(content).find('#search').on('click', function(event) {
-				options.callback.call(null, getValueText());
+				options.callback.call(null, getValueText(), getInnerHTML(), getText());
+			});
+
+			//------------------------------------------------------------------
+			//On efface
+			$(content).find('#delete').on('click', function(event) {
+				$(content).find("div").empty();
 			});
 
 			//------------------------------------------------------------------
@@ -105,7 +126,7 @@
 				console.log(event)
 				if(event.keyCode === 13){
 					event.preventDefault();
-					options.callback.call(null, getValueText());
+					options.callback.call(null, getValueText(), getInnerHTML(), getText());
 					return false;
 				}
 			});
