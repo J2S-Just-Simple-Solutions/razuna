@@ -436,11 +436,11 @@
 												// on dispatche l'event pour que le composant se mette à jour 
 												selectDescriptor.trigger("chosen:updated");
 												//
-												inputDescriptor.val(getSelected().join(","));	
+												inputDescriptor.val(getSelected().join(", "));	
 											}
 											// Suppression d'un descripteur
 											else {
-												inputDescriptor.val(getSelected().join(","));
+												inputDescriptor.val(getSelected().join(", "));
 											}
 											//console.log(inputDescriptor.val());								
 											drop.css("display", "none");
@@ -609,7 +609,7 @@
 									descriptor.append(tdGroup, tgGroup, taGroup, tsGroup);
 									//Je construit mon Cchamp multiple avec les valeurs initiale
 									descriptor.chosen().change(function(event, params){
-										input.val(getSelected().join(","));
+										input.val(getSelected().join(", "));
 										/*if(params.deselected)setTimeout(function(){descriptor.next(".chosen-container").find("ul").trigger("mousedown").trigger("click");},0);
 										else*/ descriptor.next(".chosen-container").find("ul").trigger("mousedown").trigger("click");									
 									});
@@ -732,7 +732,7 @@
 									select.chosen({add_contains: true, no_results_text : ""}).change(function(){
 										var values = []; 
 										$.each(select[0].selectedOptions, function(index, item){values.push(item.text)})
-										inputDescriptorCandidate.val(values.join(","));
+										inputDescriptorCandidate.val(values.join(", "));
 									});		
 
 									var chosen = select.next(".chosen-container");
