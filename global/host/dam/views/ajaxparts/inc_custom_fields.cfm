@@ -345,7 +345,7 @@
 
 										//La liste complète
 										var #toScript(category, "values")#
-										var list = values.join(";").split(";");
+										var list = values.join(",").split(",");
 										var categoryList = [];
 
 										//Je nettoie
@@ -355,7 +355,7 @@
 										//Je récupère les catégories sélectionnées
 										for ( var j = 0 ; j < category[0].selectedOptions.length ; j++) {
 											var cat = values[category[0].selectedOptions[j].index - 1];
-											categoryList = categoryList.concat(cat? cat.split(";") : "");
+											categoryList = categoryList.concat(cat? cat.split(",") : "");
 										}
 
 										//Pour chaque valeur
