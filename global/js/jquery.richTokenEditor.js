@@ -18,11 +18,10 @@
 	//------------------------------------------------------------------
 	//Mes controles	
 	var _controlTokenEditor = 
-		'<select contentEditable="false" class="button"><option value="" selected>Sélectionner un champ</option>\n\
+		'<select contentEditable="false" class="button"><option value="">Sélectionner un champ</option>\n\
 		<option value="ALL">Dans tous les champs</option>\n\
-		<option value="ALLFIELDS">Dans tous les champs personnalisés</option>\n\
-		<option value="description">Dans le champ Description</option>\n\
 		<option disabled>───────────────────────────</option>\n\
+		<option value="description">Dans le champ Description</option>\n\
 		</select>\n\
 		<button value="AND" action contentEditable="false">ET</button>\n\
 		<button value="OR" action contentEditable="false">OU</button>\n\
@@ -33,7 +32,7 @@
 		
 	//------------------------------------------------------------------
 	//Ma feuille de style
-	var _style = '<link type="text/css" rel="Stylesheet" href="/razuna/global/js/jquery.richTokenEditor.css" />';
+	var _style = '<link type="text/css" rel="Stylesheet" href="/razuna-dev/global/js/jquery.richTokenEditor.css" />';
 			
 	$.fn.richTokenEditor = function(options) {		
 		//Je remplace mon textArea pas un richTokenEditor
@@ -59,15 +58,21 @@
 				var text = "";
 				_.each($(content).find("div").contents(),function(content){
 					if(content === "&nbsp;"){return;}
+					//Si c'est un field
 					else if(content.nodeName === "SELECT"){
 						text += $(content).val() + ":";
 					}
+					//Si c'est u opérateur
 					else if(content.nodeName === "BUTTON"){
 						text += " " + $(content).val() + " ";
 					}
+					//Sinon c'est une valeur
 					else {
+						//console.log(content.textContent)
+						//Si c'est un select, il faut gèrer aussi ( cas des photographe )
 						if(trim(content.textContent) != "")
-						text += '"' + trim(content.textContent) + '"';
+							text += '"' + trim(content.textContent) + '"';
+
 					}
 				});
 				return text;
@@ -127,6 +132,18 @@
 				if(event.keyCode === 13){
 					event.preventDefault();
 					options.callback.call(null, getValueText(), getInnerHTML(), getText());
+					return false;
+				}
+				if(event.keyCode === 53){
+					content.execCommand("insertHTML", false, "&nbsp;<button value='(' contentEditable='false'>(</button>&nbsp;");
+						$(content).find("button").prop("contenteditable", false);
+						$(content).focus();
+					return false;
+
+				}
+				if(event.keyCode === 189){
+					content.execCommand("insertHTML", false, "&nbsp;<button value=')' contentEditable='false'>)</button>&nbsp;");
+					$(content).find("button").prop("contenteditable", false);
 					return false;
 				}
 			});

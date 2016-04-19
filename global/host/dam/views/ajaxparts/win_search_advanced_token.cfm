@@ -26,7 +26,7 @@
 <cfparam default="0" name="attributes.folder_id">
 <cfset myvar = structnew()>
 <cfoutput>
-	Historique de recherche : <select name="historyAdv"><option></option></select>
+	<select name="historyAdv"><option value="-1">Historique de recherche</option></select>
 	<br>
 	<iframe style="border:none;width:100%;"></iframe>
 	<script data-main="underscore" src="/razuna/global/js/underscore-min.js"></script>
@@ -36,11 +36,32 @@
 			//localStorage.setItem("last_search_adv", "");
 			var lastSearch = null;
 			var fields = <cfoutput>#serializeJson(qry_fields)#</cfoutput>;
+			var descriptorId = "E4A5059A-F630-4C55-B7746C332D6BA0C6";
+
+			$.ajaxSetup({
+			    async: false
+			});
+
+			//appelle du thesaurus
+			var getDescriptor = function(operationValues) {	
+				_.each(operationValues, function(value, i){
+					$.getJSON("http://ima.j2s.net/Thesaurus_WS/ForSearch.php?uniterm="+value, 
+					function(result){
+						//J'ai un résultat
+						if(result.err === 200){
+							console.log(result)
+							operationValues[i] = result.values.join(" ");
+						}
+					});
+				});						
+			}
+
 			var searchHandler = function(value, html, text){
 				// TODO: gérer un historique des requêtes
 				
 				// Je décompose ma recherche
-				value = value.replace(/[\w-]+:"[^"]+"/g, function(match, contents){
+				console.log(value)
+				value = value.replace(/[\w-]+:"[^"()]+"/g, function(match, contents){
 					var operation = match.split(":");
 					// On supprime les - de l'ID du customfield
 					var operationField = operation[0].replace(/-/g,"");
@@ -70,7 +91,11 @@
 					}
 					else {
 						// On supprime les guillemets qui entouraient la valeur 
-						operationValue = operation[1].replace(/\"/g, "");
+						var operationValues = operation[1].replace(/\"/g, "").split(" ");
+						// On traite le thésaurus ( SI je suis sur le champ thesaurus)
+						if(operationField === descriptorId.replace(/-/g,"")){getDescriptor(operationValues);}
+						// On fusionne les tableaux
+						operationValue = operationValues.join(" ");
 						// On remplace les espaces par espace+ID 
 						operationValue = operationValue.replace(/\s/g, " "+operationField);
 						return "customfieldvalue:(\""+operationField+operationValue+"\")";
@@ -103,12 +128,16 @@
 					lastSearch = JSON.parse(lastSearch);
 					$.each(lastSearch, function(i, search){
 						$("select[name=historyAdv]").append("<option value='"+i+"'>"+search.label+"</option>");
-					})
+					});
+					//Sélection auto du premier
+					var content = $("iframe")[0].contentDocument;
+					console.log(_.last(lastSearch).value)
+					$(content).find("div").html(_.last(lastSearch).value);
 				}
 			}).on("change", function(event){
 				var content = $("iframe")[0].contentDocument;
 				$(content).find("div").html(lastSearch[$(event.currentTarget).val()].value)
-				this.selectedIndex = -1;
+				this.selectedIndex = 0;
 			});		
 			
 		});
