@@ -280,13 +280,13 @@
 									category.chosen({no_results_text:"<cfoutput>#myFusebox.getApplicationData().defaults.trans("no_match")#</cfoutput>"}).change(function(){
 										var values = []; 
 										$.each(category[0].selectedOptions, function(index, item){values.push(item.text)})
-										input.val(values.join(","));
+										input.val(values.join(", "));
 									});
 								})(this);
 							</script>
 						</cfoutput>
 					<!----------------------->			
-					<!--- select-category --->
+					<!--- select-sub-category --->
 					<!----------------------->
 					<cfelseif cf_type EQ "select-sub-category">
 						<!--- Variable --->
@@ -328,7 +328,7 @@
 									subCategory.chosen({no_results_text:"<cfoutput>#myFusebox.getApplicationData().defaults.trans("no_match")#</cfoutput>"}).change(function(){
 										var values = []; 
 										$.each(subCategory[0].selectedOptions, function(index, item){values.push(item.text)})
-										input.val(values.join(","));
+										input.val(values.join(", "));
 									});
 
 									//La catégorie parente change, je charge la sous-catégorie
