@@ -118,7 +118,7 @@
 								<option value="" selected="selected"></option>
 							</cfif>
 							<!--- #ltrim(ListSort(cf_select_list, 'text', 'asc', ','))# --->
-							<cfloop list="#ltrim(ListSort(replace(cf_select_list,', ',',','ALL'), 'text', 'asc', ','))#" index="i">
+							<cfloop list="#ltrim(ListSort(REReplace(cf_select_list, ',\s?', ';', 'ALL'), 'text', 'asc', ';'))#" index="i" delimiters=";">
 								<option value="#i#">#i#</option>
 							</cfloop>
 						</select>
