@@ -79,13 +79,24 @@ Page output starts here
 				        <td style="padding-bottom:10px;padding-top:10px;"><div id="janrainEngageEmbed"></div></td>
 				    </tr>
 				</cfif>
-				<cfif qry_langs.recordcount NEQ 1>
+				<!---<cfif qry_langs.recordcount NEQ 1>
 					<tr>
 				        <td style="padding-bottom:10px;padding-top:10px;">
 							<select name="app_lang" onChange="javascript:changelang('form_login');">
 								<option value="javascript:void();" selected>#myFusebox.getApplicationData().defaults.trans("changelang")#</option>
 								<cfloop query="qry_langs">
 								<option value="#myself##xfa.switchlang#&to=index&thelang=#lang_name#">#lang_name#</option>
+								</cfloop>
+							</select>
+						</td>
+				    </tr>
+				</cfif>--->
+				<cfif qry_langs.recordcount NEQ 0>
+					<tr>
+				        <td style="padding-bottom:10px;padding-top:10px;">
+							<select name="app_lang" onChange="javascript:changelang('form_login');">
+								<cfloop query="qry_langs">
+								<option value="#myself##xfa.switchlang#&to=index&thelang=#lang_name#" selected>#lang_name#</option>
 								</cfloop>
 							</select>
 						</td>
