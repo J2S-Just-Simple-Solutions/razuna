@@ -36,7 +36,7 @@
 			//localStorage.setItem("last_search_adv", "");
 			var lastSearch = null;
 			var fields = <cfoutput>#serializeJson(qry_fields)#</cfoutput>;
-			var descriptorId = "E4A5059A-F630-4C55-B7746C332D6BA0C6";
+			var descriptorId = "13748320-7D1A-4CD0-B1EAB9BCD413B5A9";
 
 			$.ajaxSetup({
 			    async: false
