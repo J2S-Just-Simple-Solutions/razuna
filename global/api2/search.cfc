@@ -307,7 +307,7 @@
 						,'' AS #listlast(m," ")#
 					</cfloop>
 				</cfif>
-			</cfif>
+			</cfloop>
 			FROM #application.razuna.api.prefix["#arguments.istruct.api_key#"]#images i 
 			LEFT JOIN #application.razuna.api.prefix["#arguments.istruct.api_key#"]#images_text it ON i.img_id = it.img_id_r AND it.lang_id_r = 1
 			LEFT JOIN #application.razuna.api.prefix["#arguments.istruct.api_key#"]#xmp x ON x.id_r = i.img_id
