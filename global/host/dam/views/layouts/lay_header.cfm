@@ -95,8 +95,8 @@
 					<!--- Search button --->
 					<div style="float:left;padding-left:2px;padding-top:1px;">
 						<button class="awesome big green">#myFusebox.getApplicationData().defaults.trans('header_search')#</button>
-						<input id="simplesearchwithdescriptor" type="checkbox">#myFusebox.getApplicationData().defaults.trans('with_descriptor')#</input>
-						<!--- <img src="#dynpath#/global/host/dam/images/search_16.png" width="16" height="16" border="0" onclick="checkentry();" class="ddicon"> --->
+						<!--- <input id="simplesearchwithdescriptor" type="checkbox">#myFusebox.getApplicationData().defaults.trans('with_descriptor')#</input>
+						<img src="#dynpath#/global/host/dam/images/search_16.png" width="16" height="16" border="0" onclick="checkentry();" class="ddicon"> --->
 					</div>
 				</div>
 
