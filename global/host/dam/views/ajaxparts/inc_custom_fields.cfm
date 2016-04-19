@@ -196,7 +196,7 @@
 						</cfif>
 						<select name="cf_#cf_id#" id="cf_select_#listlast(cf_id,'-')#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_an_option")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<option value=""></option>
-							<cfloop list="#ltrim(ListSort(REReplace(cf_select_list, ",(?![^()]+\))\s?" ,';','ALL'), 'text', 'asc', ';'))#" index="i" delimiters=";">
+							<cfloop list="#ltrim(ListSort(cf_select_list, 'text', 'asc', ','))#" index="i" delimiters=",">
 								<option value="#i#"<cfif i EQ "#cf_value#"> selected="selected"</cfif>>#i#</option>
 							</cfloop>
 						</select>
@@ -465,7 +465,7 @@
 														// le terme est-il un terme interdit ?
 														var isBanTerm = term !== replacement;// index 0 -> mot interdit, index 1 -> le terme remplaçant	
 														// le terme est-il sélectionné ?
-														var isSelected = selectedList.split(",").indexOf(term) > -1;
+														var isSelected = selectedList.split(", ").indexOf(term) > -1;
 
 														// style des termes interdits
 														var banTermStyle = isBanTerm ? "style='color: red'" : "";
@@ -717,7 +717,7 @@
 						<input type="text" dir="auto" style="width:300px;" id="cf_thesaurus_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
 						<select multiple candidate="cf_#cf_id#" id="cf_select_#listlast(cf_id,'-')#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<option value="" data-placeholder="test"></option>
-							<cfloop list="#ltrim(ListSort(REReplace(cf_select_list, ",(?![^()]+\))\s?" ,';','ALL'), 'text', 'asc', ';'))#" index="i" delimiters=";">
+							<cfloop list="#ltrim(ListSort(cf_select_list, 'text', 'asc', ','))#" index="i" delimiters=",">
 								<option value="#i#" <cfif listFind("#cf_value#", #i#, ",")> selected="selected"</cfif>>#i#</option>
 							</cfloop>
 						</select>
