@@ -32,7 +32,7 @@
 		
 	//------------------------------------------------------------------
 	//Ma feuille de style
-	var _style = '<link type="text/css" rel="Stylesheet" href="/razuna-dev/global/js/jquery.richTokenEditor.css" />';
+	var _style = '<link type="text/css" rel="Stylesheet" href="/razuna/global/js/jquery.richTokenEditor.css" />';
 			
 	$.fn.richTokenEditor = function(options) {		
 		//Je remplace mon textArea pas un richTokenEditor
