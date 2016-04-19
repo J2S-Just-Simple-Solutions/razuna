@@ -313,7 +313,7 @@
 							<cfset list = "#cf_select_list#"> 
 							<cfset category = listToArray(list, ";", true)>							
 							<cfloop array=#category# index="i" delimiters=";" item="name">								
-								<cfset category[#i#] = "#ltrim(ListSort(REReplace(name, ",(?![^()]+\))\s?" ,';','ALL'), 'text', 'asc', ';'))#" />
+								<cfset category[#i#] = "#ltrim(ListSort(name, 'text', 'asc', ','))#" />
 							</cfloop>					
 						</select>
 						<cfoutput>
@@ -323,7 +323,6 @@
 									var input = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 									var category = $("select[type=category]");
 									var subCategory = $("select[sub-category='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
-
 									
 									subCategory.chosen({no_results_text:"<cfoutput>#myFusebox.getApplicationData().defaults.trans("no_match")#</cfoutput>"}).change(function(){
 										var values = []; 
@@ -795,7 +794,7 @@
 						<input type="text" dir="auto" style="width:300px;" id="cf_thesaurus_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
 						<select multiple selecSearchMulti="cf_#cf_id#" id="cf_select_#listlast(cf_id,'-')#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<option value="" data-placeholder="test"></option>
-							<cfloop list="#ltrim(ListSort(REReplace(cf_select_list, ",(?![^()]+\))\s?" ,';','ALL'), 'text', 'asc', ';'))#" index="i" delimiters=";">
+							<cfloop list="#ltrim(ListSort(cf_select_list, 'text', 'asc', ','))#" index="i" delimiters=",">
 								<option value="#i#" <cfif listFind("#cf_value#", #i#, ",")> selected="selected"</cfif>>#i#</option>
 							</cfloop>
 						</select>
@@ -811,7 +810,7 @@
 										var values = []; 
 										$.each(select[0].selectedOptions, function(index, item){values.push(item.text)})
 										console.log(values)
-										input.val(values.join(","));
+										input.val(values.join(", "));
 									});		
 
 									var chosen = select.next(".chosen-container");
