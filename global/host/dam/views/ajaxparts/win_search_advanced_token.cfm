@@ -38,12 +38,8 @@
 			var fields = <cfoutput>#serializeJson(qry_fields)#</cfoutput>;
 			var descriptorId = "13748320-7D1A-4CD0-B1EAB9BCD413B5A9";
 
-			$.ajaxSetup({
-			    async: false
-			});
-
-			//appelle du thesaurus
 			var getDescriptor = function(operationValues) {	
+				$.ajaxSetup({async: false});
 				_.each(operationValues, function(value, i){
 					$.getJSON("http://ima.j2s.net/Thesaurus_WS/ForSearch.php?uniterm="+value, 
 					function(result){
@@ -52,10 +48,10 @@
 							console.log(result)
 							operationValues[i] = result.values.join(" ");
 						}
+						$.ajaxSetup({async: true});
 					});
 				});						
 			}
-
 			var searchHandler = function(value, html, text){
 				// TODO: gérer un historique des requêtes
 				
