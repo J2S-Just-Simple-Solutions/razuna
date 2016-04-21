@@ -28,6 +28,7 @@ Page output starts here
  --->
 <cfoutput>
 <div id="login_div" style="text-align:center;">
+	<cfset session.thelang = "French"> 
 	<span class="loginform_header">
 		<cfif fileexists("#ExpandPath("../..")#global/host/logo/#session.hostid#/logo.jpg")>
 			<img src="#dynpath#/global/host/logo/#session.hostid#/logo.jpg" border="0" style="padding:5px 0px 5px 0px;" />
