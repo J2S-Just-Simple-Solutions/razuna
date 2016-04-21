@@ -106,8 +106,8 @@
 					</div>				
 
 				<div style="float:right;padding-left:20px;padding-top:8px;">
-					<a href="##" onclick="loadcontent('rightside','#myself#c.search_advanced&folder_id=0');$('##searchselection').toggle();return false;">#myFusebox.getApplicationData().defaults.trans("link_adv_search")#</a>
-					<!--- <a href="##" style="padding-left:15px;" onclick="loadcontent('rightside','#myself#c.updater_tool');return false;"><strong style="color:red;">FILE RE-UPLOAD!</strong></a> --->
+					<!--- <a href="##" onclick="loadcontent('rightside','#myself#c.search_advanced&folder_id=0');$('##searchselection').toggle();return false;">#myFusebox.getApplicationData().defaults.trans("link_adv_search")#</a>
+					<a href="##" style="padding-left:15px;" onclick="loadcontent('rightside','#myself#c.updater_tool');return false;"><strong style="color:red;">FILE RE-UPLOAD!</strong></a> --->
 				</div>
 
 				<!--- Enabled UPC search --->

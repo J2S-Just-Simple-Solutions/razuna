@@ -878,9 +878,8 @@
 							<script language="JavaScript" type="text/javascript">
 								(function(self){
 									var input = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
-
 									input.on("input", function(){
-										$.get("../../global/api2/J2S.cfc?method=getInventory&value=" + input.val() + "&cf_id=" + "#qry_cf.cf_id#", 
+										$.get("../../global/api2/search.cfc?method=searchassets&searchfor=customfieldvalue:(3A5A7EB0F8444B1483A6DF40AF5C4EC2"+input.val()+")&api_key=BFF1B5BAEDDE433D975C502C3C79EE55", 
 										function(result){
 											var data = JSON.parse(result).DATA;
 											if(data.length > 0){input.addClass("inventory-error");}
