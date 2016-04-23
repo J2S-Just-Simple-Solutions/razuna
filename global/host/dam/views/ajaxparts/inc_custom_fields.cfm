@@ -264,10 +264,12 @@
 							<cfset allowed = true>
 						</cfif>
 						<input type="text" dir="auto" style="width:300px;" id="cf_thesaurus_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
+						<cfset cf_value2="#REReplace(cf_value, ",\s", ",", "ALL")#">
+						<!---<cfdump var="-#cf_value2#-"> --->
 						<select multiple type="category" category="cf_#cf_id#" id="cf_select_category_#listlast(cf_id,'-')#" value="#cf_value#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<option value=""></option>
-							<cfloop list="#ltrim(replace(cf_select_list,', ',',','ALL'))#" index="word">
-								<option value="#word#" <cfif ListFind("#cf_value#", #word#, ",")> selected="selected"</cfif>>#word#</option>
+							<cfloop list="#cf_select_list#" index="word">
+								<option value="#word#" <cfif ListFind("#cf_value2#", #word#, ",")> selected="selected"</cfif>>#word#</option>
 							</cfloop>						
 						</select>						
 						<cfoutput>
@@ -792,10 +794,13 @@
 							<cfset allowed = true>
 						</cfif>
 						<input type="text" dir="auto" style="width:300px;" id="cf_thesaurus_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
+						<!---<cfdump var="-#cf_value#-">--->
+						<cfset cf_value2="#REReplace(cf_value, ",\s", ",", "ALL")#">
+						<!---<cfdump var="-#cf_value2#-">--->
 						<select multiple selecSearchMulti="cf_#cf_id#" id="cf_select_#listlast(cf_id,'-')#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<option value="" data-placeholder="test"></option>
 							<cfloop list="#ltrim(ListSort(cf_select_list, 'text', 'asc', ','))#" index="i" delimiters=",">
-								<option value="#i#" <cfif listFind(REReplace(cf_value, ",\s?" , ',', 'ALL'), #i#, ",")> selected="selected"</cfif>>#i#</option>
+								<option value="#i#" <cfif listFind(cf_value2, #i#, ",")> selected="selected"</cfif>>#i#</option>
 							</cfloop>
 						</select>
 						<cfoutput>
