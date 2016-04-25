@@ -427,10 +427,10 @@
 									selectDescriptor.chosen({no_results_text:"<cfoutput>#myFusebox.getApplicationData().defaults.trans("no_match")#</cfoutput>"})
 										//Changement
 										.change(function(event, params){
-											var term = params.selected;
-											var replacement = $(event.target).find("option[value='"+term+"']").attr("replacement");
 											// Ajout d'un descripteur
 											if (params && params['selected']) {
+												var term = params.selected;
+												var replacement = $(event.target).find("option[value='"+term+"']").attr("replacement");
 												// on désélectionne l'option correspondant au mot interdit...
 												selectDescriptor.find("option[value='"+term+"']").removeProp("selected");
 												// ...pour sélectionner le terme remplaçant à la place
@@ -548,6 +548,7 @@
 														selectDescriptor.find("option[value='"+$(hovered).text()+"']").removeProp("selected");
 														selectDescriptor.find("option[value='"+$(this).text()+"']").prop("selected", true);
 														selectDescriptor.trigger("chosen:updated");
+														selectDescriptor.trigger("change");
 														drop.css("display", "none");
 														setTimeout(hoverListener,100);
 													})
