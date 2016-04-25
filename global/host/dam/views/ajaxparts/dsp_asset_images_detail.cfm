@@ -409,7 +409,7 @@
 						</div>
 						<div stlye="clear:both;"></div>
 					</cfif>
-					<cfif qry_detail.detail.link_kind NEQ "url">
+					<cfif qry_detail.detail.link_kind NEQ "url" AND #session.hostid# NEQ 5>
 						<!--- XMP Description --->
 						<cfif cs.tab_xmp_description>
 							<br />
