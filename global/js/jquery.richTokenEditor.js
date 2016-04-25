@@ -126,27 +126,30 @@
 			});
 
 			//------------------------------------------------------------------
-			//sur enter, on ne fait pas le retour a la ligne et on appel la callback
-			$(content).on("keydown", function(event){
-				console.log(event)
-				if(event.keyCode === 13){
-					event.preventDefault();
-					options.callback.call(null, getValueText(), getInnerHTML(), getText());
-					return false;
-				}
-				if(event.keyCode === 53){
-					content.execCommand("insertHTML", false, "&nbsp;<button value='(' contentEditable='false'>(</button>&nbsp;");
-						$(content).find("button").prop("contenteditable", false);
-						$(content).focus();
-					return false;
+			// Gestionnaire des touches de clavier
+            $(content).on("keypress", function(event){
+                    //console.log(event.which+":"+String.fromCharCode(event.which));
+					// sur enter, on ne fait pas le retour a la ligne et on appelle la callback
+                    if(event.keyCode === 13){
+                            event.preventDefault();
+                            options.callback.call(null, getValueText(), getInnerHTML(), getText());
+                            return false;
+                    }
+                    // on intercepte la "("
+                    if(event.keyCode === 40){
+                            content.execCommand("insertHTML", false, "&nbsp;<button value='(' contentEditable='false'>(</button>&nbsp;");
+                                    $(content).find("button").prop("contenteditable", false);
+                                    $(content).focus();
+                            return false;
 
-				}
-				if(event.keyCode === 189){
-					content.execCommand("insertHTML", false, "&nbsp;<button value=')' contentEditable='false'>)</button>&nbsp;");
-					$(content).find("button").prop("contenteditable", false);
-					return false;
-				}
-			});
+                    }
+                    // on intercepte la ")"
+                    if(event.keyCode === 41 ){
+                            content.execCommand("insertHTML", false, "&nbsp;<button value=')' contentEditable='false'>)</button>&nbsp;");
+                            $(content).find("button").prop("contenteditable", false);
+                            return false;
+                    }
+            });
 		});		
     };
 
