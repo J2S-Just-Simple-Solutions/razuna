@@ -26,7 +26,7 @@
 <cfparam default="0" name="attributes.folder_id">
 <cfset myvar = structnew()>
 <cfoutput>
-	<select name="historyAdv"><option value="-1">Historique de recherche</option></select>
+	<select name="historyAdv"><option value="-1" disabled>Historique de recherche</option></select>
 	<br>
 	<iframe style="border:none;width:100%;"></iframe>
 	<script data-main="underscore" src="/razuna/global/js/underscore-min.js"></script>
@@ -51,10 +51,8 @@
 						$.ajaxSetup({async: true});
 					});
 				});						
-			}
+			};
 			var searchHandler = function(value, html, text){
-				// TODO: gérer un historique des requêtes
-				
 				// Je décompose ma recherche
 				console.log(value)
 				value = value.replace(/[\w-]+:"[^"()]+"/g, function(match, contents){
@@ -108,10 +106,16 @@
 				if(history)history = JSON.parse(history);
 				else history = [];
 				var currentSearch = {value : html, label : text}
-				history.push(currentSearch);
+				history.unshift(currentSearch);
 				//J'enregistre en localstorage les 15 derniers
-				localStorage.setItem("last_search_adv", JSON.stringify(history.slice(-15)));
-			}
+				localStorage.setItem("last_search_adv", JSON.stringify(history.slice(0, 15)));
+			};
+			var setSelectorControl = function(){
+				var content = $("iframe")[0].contentDocument;
+				$(content).find(".editor select").unbind("change").bind("change", function(event){
+					$(event.target).find("option:selected").attr("selected", true).siblings().removeAttr("selected");
+				});
+			};
 
 			//Je crée mon champ de recherche
 			$("iframe").richTokenEditor({fields : fields.DATA, callback : searchHandler});	
@@ -127,13 +131,16 @@
 					});
 					//Sélection auto du premier
 					var content = $("iframe")[0].contentDocument;
-					console.log(_.last(lastSearch).value)
-					$(content).find("div").html(_.last(lastSearch).value);
+					$(content).find("div").html(_.first(lastSearch).value);
+					//on écoute les changements sur les SELECT
+					setSelectorControl();
 				}
 			}).on("change", function(event){
 				var content = $("iframe")[0].contentDocument;
 				$(content).find("div").html(lastSearch[$(event.currentTarget).val()].value)
 				this.selectedIndex = 0;
+				//on écoute les changements sur les SELECT
+				setSelectorControl();
 			});		
 			
 		});

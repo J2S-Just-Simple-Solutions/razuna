@@ -77,7 +77,6 @@
 				});
 				return text;
 			};
-
 			var getInnerHTML = function(){
 				return $(content).find("div")[0].innerHTML;
 			};
@@ -91,6 +90,11 @@
 				});
 				return text;
 			};
+			var setSelectorControl = function(){
+				$(content).find(".editor select").unbind("change").bind("change", function(event){
+					$(event.target).find("option:selected").attr("selected", true).siblings().removeAttr("selected");
+				})
+			};
 			
 			//------------------------------------------------------------------
 			//Ajout champ
@@ -103,7 +107,9 @@
 				}, this);
 				content.execCommand("insertHTML", false, "&nbsp;"+$select.outerHTML+"&nbsp;");
 				this.selectedIndex = 0;
+
 				$(content).focus();
+				setSelectorControl();			
 			});
 			
 			//------------------------------------------------------------------
