@@ -26,7 +26,7 @@
 <cfparam default="0" name="attributes.folder_id">
 <cfset myvar = structnew()>
 <cfoutput>
-	<select name="historyAdv"><option value="-1">Historique de recherche</option></select>
+	<select name="historyAdv"><option value="-1" disabled>Historique de recherche</option></select>
 	<br>
 	<iframe style="border:none;width:100%;"></iframe>
 	<script data-main="underscore" src="/razuna/global/js/underscore-min.js"></script>
@@ -106,9 +106,9 @@
 				if(history)history = JSON.parse(history);
 				else history = [];
 				var currentSearch = {value : html, label : text}
-				history.push(currentSearch);
+				history.unshift(currentSearch);
 				//J'enregistre en localstorage les 15 derniers
-				localStorage.setItem("last_search_adv", JSON.stringify(history.slice(-15)));
+				localStorage.setItem("last_search_adv", JSON.stringify(history.slice(0, 15)));
 			};
 			var setSelectorControl = function(){
 				var content = $("iframe")[0].contentDocument;
@@ -131,8 +131,7 @@
 					});
 					//Sélection auto du premier
 					var content = $("iframe")[0].contentDocument;
-					console.log(_.last(lastSearch).value)
-					$(content).find("div").html(_.last(lastSearch).value);
+					$(content).find("div").html(_.first(lastSearch).value);
 					//on écoute les changements sur les SELECT
 					setSelectorControl();
 				}
