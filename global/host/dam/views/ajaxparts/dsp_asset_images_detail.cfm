@@ -369,7 +369,6 @@
 					<a href="##" onclick="$('##detaildesc').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("asset_desc2")#</div></a>
 					<div id="detaildesc" style="padding-top:10px;">
 						<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
-							<cfdump var="#session.hostid#" />
 							<cfif #session.hostid# NEQ 5>
 								<!--- Filename --->
 								<tr>
