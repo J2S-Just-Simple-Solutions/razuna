@@ -369,6 +369,7 @@
 					<a href="##" onclick="$('##detaildesc').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("asset_desc2")#</div></a>
 					<div id="detaildesc" style="padding-top:10px;">
 						<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
+							<cfdump var="#session.hostid#" />
 							<cfif #session.hostid# NEQ 5>
 								<!--- Filename --->
 								<tr>
@@ -386,7 +387,7 @@
 								<cfset thisid = 1>
 								<tr>
 									<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
-									<td class="td2" width="100%"><textarea dir="auto" name="<cfif lang_id NEQ 1>img_</cfif>desc_#thisid#" class="text" style="width:400px;height:50px;" <cfif lang_id EQ 1>onchange="<cfif qry_detail.detail.link_kind EQ ''>document.form#attributes.file_id#.iptc_content_description_#thisid#.value = document.form#attributes.file_id#.<cfif lang_id NEQ 1>img_</cfif>desc_#thisid#.value;</cfif>document.form#attributes.file_id#.img_desc_#thisid#.value = document.form#attributes.file_id#.<cfif lang_id NEQ 1>img_</cfif>desc_#thisid#.value"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#img_description#</cfif></cfloop></textarea></td>
+									<td class="td2" width="100%"><textarea dir="auto" name="<cfif lang_id NEQ 1>img_</cfif>desc_#thisid#" class="text" style="width:400px;height:50px;" <cfif lang_id EQ 1>onchange="document.form#attributes.file_id#.img_desc_#thisid#.value = document.form#attributes.file_id#.<cfif lang_id NEQ 1>img_</cfif>desc_#thisid#.value"</cfif>><cfloop query="qry_detail.desc"><cfif lang_id_r EQ thisid>#img_description#</cfif></cfloop></textarea></td>
 								</tr>
 								<cfif #session.hostid# NEQ 5>
 									<tr>
@@ -541,6 +542,7 @@
 				var val_filename = $('##fname').val();
 				if (val_filename == '') reqfield = true;
 			</cfif>
+			console.log("<cfoutput>#cs.req_description#</cfoutput>");
 			<cfif cs.req_description>
 				var val_desc = $('##desc_1').val();
 				if (val_desc == '') reqfield = true;
