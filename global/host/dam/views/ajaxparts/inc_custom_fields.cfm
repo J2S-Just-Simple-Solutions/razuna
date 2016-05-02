@@ -800,7 +800,7 @@
 						<!---<cfdump var="-#cf_value2#-">--->
 						<select multiple selecSearchMulti="cf_#cf_id#" id="cf_select_#listlast(cf_id,'-')#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<option value="" data-placeholder="test"></option>
-							<cfloop list="#ltrim(ListSort(cf_select_list, 'text', 'asc', ','))#" index="i" delimiters=",">
+							<cfloop list="#ltrim(ListSort(listremoveduplicates(cf_select_list), 'text', 'asc', ','))#" index="i" delimiters=",">
 								<option value="#i#" <cfif listFind(cf_value2, #i#, ",")> selected="selected"</cfif>>#i#</option>
 							</cfloop>
 						</select>
