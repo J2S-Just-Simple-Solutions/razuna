@@ -396,10 +396,12 @@
 								</cfif>
 								
 							<!---</cfloop>--->
-							<tr>
-								<td class="td2"></td>
-								<td class="td2">#myFusebox.getApplicationData().defaults.trans("comma_seperated")#</td>
-							</tr>
+							<cfif #session.hostid# NEQ 5>
+								<tr>
+									<td class="td2"></td>
+									<td class="td2">#myFusebox.getApplicationData().defaults.trans("comma_seperated")#</td>
+								</tr>
+							</cfif>	
 						</table>
 					</div>
 					<div stlye="clear:both;"></div>
@@ -540,7 +542,7 @@
 				if (val_filename == '') reqfield = true;
 			</cfif>
 			<cfif cs.req_description>
-				var val_desc = $('##img_desc_1').val();
+				var val_desc = $('##desc_1').val();
 				if (val_desc == '') reqfield = true;
 			</cfif>
 			<cfif cs.req_keywords>
