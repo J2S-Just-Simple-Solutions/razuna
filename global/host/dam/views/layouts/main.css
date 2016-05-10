@@ -1066,9 +1066,10 @@ a:link .nolink{text-decoration: none;}
     padding: 1em 1.4em;
     background: none;
     width: 556px;
-    height: 500px;
+    width: calc(100% - 394px);
+/*    height: 500px;
     overflow: auto;
-    overflow-x: hidden;
+    overflow-x: hidden;*/
 }
 .j2s-preview{
 	width: 360px;
@@ -1131,4 +1132,20 @@ a:link .nolink{text-decoration: none;}
 }
 input[disabled]{
 	opacity:.5;
+}
+
+div[aria-describedby="thewindowcontent1"]{
+   top: 0px;
+   left: 0;
+   overflow: hidden;
+   right: 0;
+}
+#thewindowcontent1 > form{
+    height: 100%;
+    overflow: auto;
+}
+
+#thewindowcontent1 > form > .ui-tabs {
+    height: calc(100% - 36px);
+    overflow: auto;
 }
