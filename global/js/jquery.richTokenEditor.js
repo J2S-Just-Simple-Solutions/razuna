@@ -49,7 +49,7 @@
 			    return 0;
 			});
 			_.each(options.fields, function(field){
-				$(content).find('select').append("<option value='"+field[0]+"''>"+field[5]+" contient</option>");
+				$(content).find('select').append("<option value='"+field[0]+"''>"+field[5]+"</option>");
 			})
 			
 			//------------------------------------------------------------------
