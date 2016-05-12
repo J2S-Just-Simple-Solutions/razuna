@@ -410,9 +410,9 @@
 					<div stlye="clear:both;"></div>
 					<!--- Custom fields --->
 					<cfif qry_cf.recordcount NEQ 0 AND cs.tab_custom_fields>
-						<br />
 
 						<cfif #session.hostid# NEQ 5>
+							<br />
 							<a href="##" onclick="$('##customfields').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("custom_fields_asset")#</div></a>
 						</cfif>
 
