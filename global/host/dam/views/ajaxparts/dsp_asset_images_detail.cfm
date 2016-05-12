@@ -364,9 +364,12 @@
 						<input type="submit" name="cMetadata" onclick="copyMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("copy")#"></input>
 						<input type="submit" name="pMetadata" onclick="pasteMetadata(); return false;" class="button" value="#myFusebox.getApplicationData().defaults.trans("paste")#"></input>
 						<input type="submit" name="submit" value="#myFusebox.getApplicationData().defaults.trans("button_save")#" class="button" style="float:right;">
-					</div>
+					</div>					
 					<!--- Description & Keywords  --->
-					<a href="##" onclick="$('##detaildesc').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("asset_desc2")#</div></a>
+					<!-- FL-12/05/2016: on cache le titre pour la photothèque -->
+					<cfif #session.hostid# NEQ 5>
+						<a href="##" onclick="$('##detaildesc').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("asset_desc2")#</div></a>
+					</cfif>
 					<div id="detaildesc" style="padding-top:10px;">
 						<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
 							<cfif #session.hostid# NEQ 5>
@@ -408,7 +411,11 @@
 					<!--- Custom fields --->
 					<cfif qry_cf.recordcount NEQ 0 AND cs.tab_custom_fields>
 						<br />
-						<a href="##" onclick="$('##customfields').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("custom_fields_asset")#</div></a>
+
+						<cfif #session.hostid# NEQ 5>
+							<a href="##" onclick="$('##customfields').slideToggle('slow');return false;"><div class="headers">#myFusebox.getApplicationData().defaults.trans("custom_fields_asset")#</div></a>
+						</cfif>
+
 						<div id="customfields" style="padding-top:10px;">
 							<cfinclude template="inc_custom_fields.cfm">
 						</div>
