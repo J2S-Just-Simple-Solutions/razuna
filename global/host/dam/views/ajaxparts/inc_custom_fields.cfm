@@ -748,23 +748,21 @@
 									var select = $("td select[candidate='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 									var oldValues = null;
 
-									select.select2({tags: true, tokenSeparators: [',', ' '] }).change(function(){
+									select.select2({tags: true, tokenSeparators: [','] }).change(function(){
 										var values = []; 
 										var newValues = [];
 										$.each(select[0].selectedOptions, function(index, item){
 											values.push(item.text);
 											if($(item).attr("data-select2-tag")){newValues.push(item.text);}
 										})
-										console.log(values);
-										console.log(_.difference(newValues, oldValues));
 										inputDescriptorCandidate.val(values.join(", "));
-										oldValues = newValues;
 
 										$.get(
-											"../../global/api2/J2S.cfc?method=appendCustomField&select_list=," + newValues.join(",") + "&cf_id=" + "#qry_cf.cf_id#" + "&prefix=" + prefix + "&user_id=#session.theuserid#", 
+											"../../global/api2/J2S.cfc?method=appendCustomField&select_list=," + _.difference(newValues, oldValues).join(",") + "&cf_id=" + "#qry_cf.cf_id#" + "&prefix=" + prefix + "&user_id=#session.theuserid#", 
 												// NITA Modif ajout du user id
 											function(result){}
 										);
+										oldValues = newValues;
 									});
 
 									/*select.chosen({add_contains: true, no_results_text : ""}).change(function(){
@@ -846,26 +844,25 @@
 									var prefix = "<cfoutput>#session.hostdbprefix#</cfoutput>";
 									var input = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 									var select = $("td select[selecSearchMulti='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+									var oldValues = null;
 
-									select.select2({tags: true, tokenSeparators: [','] }).change(function(event){
-										console.log(event)
+									select.select2({tags: true, tokenSeparators: [','] }).change(function(){
 										var values = []; 
-										$.each(select[0].selectedOptions, function(index, item){values.push(item.text)})
-										console.log(values)
+										var newValues = [];
+										$.each(select[0].selectedOptions, function(index, item){
+											values.push(item.text);
+											if($(item).attr("data-select2-tag")){newValues.push(item.text);}
+										})
 										input.val(values.join(", "));
-
-										//Je mets à jour le serveur
-										var values = [];
-										$.each(select.find("option"), function(index, item){
-											if($(item).html().length > 0)
-												values.push($(item).html())
-										});
+										
 										$.get(
-											"../../global/api2/J2S.cfc?method=updateCustomField&select_list=" + values.join(",") + "&cf_id=" + "#qry_cf.cf_id#" + "&prefix=" + prefix + "&user_id=#session.theuserid#", 
+											"../../global/api2/J2S.cfc?method=appendCustomField&select_list=," + _.difference(newValues, oldValues).join(",") + "&cf_id=" + "#qry_cf.cf_id#" + "&prefix=" + prefix + "&user_id=#session.theuserid#", 
 												// NITA Modif ajout du user id
 											function(result){}
 										);
-									});		
+										oldValues = newValues;
+									});
+											
 								})(this);
 							</script>
 						</cfoutput>
