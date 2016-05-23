@@ -206,6 +206,21 @@
 								(function(self){
 									var prefix = "<cfoutput>#session.hostdbprefix#</cfoutput>";
 									var select = $("td select[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+
+									/*select.select2({tags: true, tokenSeparators: [',', ' '] }).change(function(){
+										//Je mets à jour le serveur
+										var values = [];
+										$.each(select.find("option"), function(index, item){
+											if($(item).html().length > 0)
+												values.push($(item).html())
+										});
+										$.get(
+											"../../global/api2/J2S.cfc?method=updateCustomField&select_list=" + values.join(",") + "&cf_id=" + "#qry_cf.cf_id#" + "&prefix=" + prefix + "&user_id=#session.theuserid#", 
+												// NITA Modif ajout du user id
+											function(result){}
+										);
+									});*/
+
 									select.chosen({add_contains: true, no_results_text:"<cfoutput>#myFusebox.getApplicationData().defaults.trans("no_match")#</cfoutput>"});		
 
 									var chosen = select.next(".chosen-container");
@@ -731,8 +746,28 @@
 									var prefix = "<cfoutput>#session.hostdbprefix#</cfoutput>";
 									var inputDescriptorCandidate = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 									var select = $("td select[candidate='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+									var oldValues = null;
 
-									select.chosen({add_contains: true, no_results_text : ""}).change(function(){
+									select.select2({tags: true, tokenSeparators: [',', ' '] }).change(function(){
+										var values = []; 
+										var newValues = [];
+										$.each(select[0].selectedOptions, function(index, item){
+											values.push(item.text);
+											if($(item).attr("data-select2-tag")){newValues.push(item.text);}
+										})
+										console.log(values);
+										console.log(_.difference(newValues, oldValues));
+										inputDescriptorCandidate.val(values.join(", "));
+										oldValues = newValues;
+
+										$.get(
+											"../../global/api2/J2S.cfc?method=appendCustomField&select_list=," + newValues.join(",") + "&cf_id=" + "#qry_cf.cf_id#" + "&prefix=" + prefix + "&user_id=#session.theuserid#", 
+												// NITA Modif ajout du user id
+											function(result){}
+										);
+									});
+
+									/*select.chosen({add_contains: true, no_results_text : ""}).change(function(){
 										var values = []; 
 										$.each(select[0].selectedOptions, function(index, item){values.push(item.text)})
 										inputDescriptorCandidate.val(values.join(", "));
@@ -744,7 +779,7 @@
 										//J'ajoute à la liste							
 										if(ev.keyCode === 13 && (chosen.find(".chosen-results .active-result").length === 0) ){
 											//Je mets à jour ma liste
-											var currentValue = $(this).val()/*.toUpperCase()*/;
+											var currentValue = $(this).val();//.toUpperCase();
 											var current = $('<option value="'+currentValue+'" selected>'+currentValue+'</option>');
 											select.append(current);								
 											select.trigger("chosen:updated");
@@ -766,7 +801,7 @@
 										else {
 											chosen.find(".chosen-results .no-results").html("<cfoutput>#myFusebox.getApplicationData().defaults.trans("select_no_match")#</cfoutput>");
 										}
-									})
+									})*/
 								})(this);
 							</script>
 						</cfoutput>
@@ -812,42 +847,25 @@
 									var input = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 									var select = $("td select[selecSearchMulti='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 
-									select.chosen({add_contains: true, no_results_text : ""}).change(function(){
+									select.select2({tags: true, tokenSeparators: [','] }).change(function(event){
+										console.log(event)
 										var values = []; 
 										$.each(select[0].selectedOptions, function(index, item){values.push(item.text)})
 										console.log(values)
 										input.val(values.join(", "));
-									});		
 
-									var chosen = select.next(".chosen-container");
-									//Sur entrée
-									chosen.find("input").on("keyup", function(ev){	
-										//J'ajoute à la liste							
-										if(ev.keyCode === 13 && (chosen.find(".chosen-results .active-result").length === 0) ){
-											//Je mets à jour ma liste
-											var currentValue = $(this).val();
-											var current = $('<option value="'+currentValue+'" selected>'+currentValue+'</option>');
-											select.append(current);								
-											select.trigger("chosen:updated");
-											select.trigger("chosen:activate");
-											//Je mets à jour le serveur
-											var values = [];
-											$.each(select.find("option"), function(index, item){
-												if($(item).html().length > 0)
-													values.push($(item).html())
-											})
-											var self = this;
-											$.get(
-												"../../global/api2/J2S.cfc?method=updateCustomField&select_list=" + values.join(",") + "&cf_id=" + "#qry_cf.cf_id#" + "&prefix=" + prefix + "&user_id=#session.theuserid#", 
-													// NITA Modif ajout du user id
-												function(result){}
-											);
-											select.trigger("change")	
-										}
-										else {
-											chosen.find(".chosen-results .no-results").html("<cfoutput>#myFusebox.getApplicationData().defaults.trans("select_no_match")#</cfoutput>");
-										}
-									})
+										//Je mets à jour le serveur
+										var values = [];
+										$.each(select.find("option"), function(index, item){
+											if($(item).html().length > 0)
+												values.push($(item).html())
+										});
+										$.get(
+											"../../global/api2/J2S.cfc?method=updateCustomField&select_list=" + values.join(",") + "&cf_id=" + "#qry_cf.cf_id#" + "&prefix=" + prefix + "&user_id=#session.theuserid#", 
+												// NITA Modif ajout du user id
+											function(result){}
+										);
+									});		
 								})(this);
 							</script>
 						</cfoutput>

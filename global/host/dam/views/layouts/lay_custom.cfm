@@ -54,6 +54,7 @@
 <link rel="stylesheet" type="text/css" href="#dynpath#/global/host/dam/views/layouts/tagit.css" />
 <link rel="stylesheet" type="text/css" href="#dynpath#/global/js/notification/sticky.min.css" />
 <link rel="stylesheet" type="text/css" href="#dynpath#/global/js/chosen/chosen.css" />
+<link rel="stylesheet" type="text/css" href="#dynpath#/global/js/select2/dist/css/select2.css" />
 <!--- JS --->
 <script type="text/javascript" src="#dynpath#/global/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="#dynpath#/global/js/jquery.validate.min.js"></script>
@@ -65,8 +66,11 @@
 <script type="text/javascript" src="#dynpath#/global/js/tag/js/tag-it.js"></script>
 <script type="text/javascript" src="#dynpath#/global/js/notification/sticky.min.js"></script>
 <script type="text/javascript" src="#dynpath#/global/js/chosen/chosen.jquery.min.js"></script>
+<script type="text/javascript" src="#dynpath#/global/js/select2/dist/js/select2.js"></script>
 <script type="text/javascript" src="#dynpath#/global/js/jquery.formparams.js"></script>
 <script type="text/javascript" src="#dynpath#/global/js/jqtree/jquery.tree.min.js"></script>
+<script type="text/javascript" src="#dynpath#/global/js/underscore-min.js"></script>
+<script type="text/javascript" src="#dynpath#/global/js/jquery.richTokenEditor.js"></script>
 <!--- Favicon --->
 <cfif fileexists("#ExpandPath("../..")#global/host/favicon/#session.hostid#/favicon.ico")>
 	<link rel="SHORTCUT ICON" href="#dynpath#/global/host/favicon/#session.hostid#/favicon.ico" />
