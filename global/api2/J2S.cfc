@@ -196,6 +196,48 @@
 
 	</cffunction/>
 
+	<cffunction name="appendCustomField" access="remote" output="false" returntype="string"  >
+		<!--- Je récupère mes arguments --->
+		<cfargument name="prefix" required="true" type="string">
+		<cfargument name="cf_id" required="true" type="string">
+		<cfargument name="select_list" required="true" type="string">
+<!-- NITA modif -->
+		<cfargument name="user_id" required="true" type="string">
+<!-- NITA modif -->		
+
+		<cfquery datasource="#application.razuna.datasource#" name="qry_user">
+		SELECT user_api_key
+		FROM users
+		WHERE user_id = <cfqueryparam cfsqltype="cf_sql_varchar" value="#user_id#">
+		</cfquery>
+<!-- NITA modif -->
+		<cfset checkdb(qry_user.user_api_key)>
+<!-- NITA modif -->
+		<cfquery datasource="#application.razuna.datasource#" name="qry">
+			UPDATE #prefix#custom_fields
+			SET 
+			CF_SELECT_LIST = concat(ifnull(CF_SELECT_LIST,""), <cfqueryparam cfsqltype="cf_sql_varchar" value="#select_list#">)
+			WHERE CF_ID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#cf_id#" >
+		</cfquery>
+
+		<cfquery datasource="#application.razuna.api.dsn#" name="qry">
+			SELECT CF_SELECT_LIST
+			FROM #prefix#custom_fields
+			WHERE CF_ID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#CF_ID#">
+		</cfquery>
+
+		<cfloop query="qry" >
+			<cfset result = #CF_SELECT_LIST#>
+		</cfloop>
+<!-- NITA modif -->
+		<!--- Flush Cache --->
+		<cfset resetcachetoken(qry_user.user_api_key, "general")>
+<!-- NITA modif -->
+		<!--- Return --->
+		<cfreturn result>
+
+	</cffunction/>
+
 
 	<!--- getMandatoryFields
 

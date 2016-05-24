@@ -29,8 +29,6 @@
 	<select name="historyAdv"><option value="-1" disabled>Historique de recherche</option></select>
 	<br>
 	<iframe style="border:none;width:100%;"></iframe>
-	<script data-main="underscore" src="/razuna/global/js/underscore-min.js"></script>
-	<script data-main="rte" src="/razuna/global/js/jquery.richTokenEditor.js"></script>
 	<script type="text/javascript">
 		$(document).ready( function(){
 			//localStorage.setItem("last_search_adv", "");
