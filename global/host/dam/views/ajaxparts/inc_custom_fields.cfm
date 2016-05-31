@@ -465,37 +465,48 @@
 										})
 										//Le composant est prêt
 										.ready(function(){
-											$.getJSON(
-											"http://ima.j2s.net/Thesaurus_WS/AllTerms.php", 
-											function(result){
-												if(result.err === 200){
-													var selectedList = "<cfoutput>#cf_value#</cfoutput>";
-													
-													//console.log("selectedList: "+selectedList);
 
-													$.each(result.values.sort(), function(index, item){
-														var term = item[0];
-														var replacement = item[1];
+											var doThesaurus = function(values){
+												var selectedList = "<cfoutput>#cf_value#</cfoutput>";
 
-														//console.log("item:"+item+"  0:"+item[0]+"   1:"+item[1]);
+												$.each(values.sort(), function(index, item){
+													var term = item[0];
+													var replacement = item[1];
 
-														// le terme est-il un terme interdit ?
-														var isBanTerm = term !== replacement;// index 0 -> mot interdit, index 1 -> le terme remplaçant	
-														// le terme est-il sélectionné ?
-														var isSelected = selectedList.split(", ").indexOf(term) > -1;
+													// le terme est-il un terme interdit ?
+													var isBanTerm = term !== replacement;// index 0 -> mot interdit, index 1 -> le terme remplaçant	
+													// le terme est-il sélectionné ?
+													var isSelected = selectedList.split(", ").indexOf(term) > -1;
 
-														// style des termes interdits
-														var banTermStyle = isBanTerm ? "style='color: red'" : "";
-														// Termes sélectionnés
-														var selectedAttr = isSelected ? "selected='selected'" : "";
+													// style des termes interdits
+													var banTermStyle = isBanTerm ? "style='color: red'" : "";
+													// Termes sélectionnés
+													var selectedAttr = isSelected ? "selected='selected'" : "";
 
-														// Ajout de l'option
-														selectDescriptor.append("<option "+banTermStyle+" value='"+term+"' replacement='"+replacement+"' "+selectedAttr+" >"+term+"</option>");
-													});
-													selectDescriptor.trigger("chosen:updated");
-													setTimeout(hoverListener,100);	
-												}
-											});
+													// Ajout de l'option
+													selectDescriptor.append("<option "+banTermStyle+" value='"+term+"' replacement='"+replacement+"' "+selectedAttr+" >"+term+"</option>");
+												});
+												selectDescriptor.trigger("chosen:updated");
+												setTimeout(hoverListener,100);
+											};
+
+											var thesaurusValues = localStorage.getItem("thesaurusValues");
+											//Si j'ai en cache, je traite tous de suite
+											if(thesaurusValues){doThesaurus(JSON.parse(thesaurusValues));}
+											//Sinon je demande au serveur
+											else {
+												$.ajaxSetup({timeout: 10000});
+												$.getJSON(
+												"http://ima.j2s.net/Thesaurus_WS/AllTerms.php", 
+												function(result){
+													//Si j'ai bien une réponse, j'enregistre et traite
+													if(result.err === 200){
+														localStorage.setItem("thesaurusValues", JSON.stringify(result.values));
+														doThesaurus(result.values);
+													}
+												});
+											}
+										   
 										})
 										//J'affiche la liste
 										.on("chosen:showing_dropdown", function(){setTimeout(hoverListener,100);});
