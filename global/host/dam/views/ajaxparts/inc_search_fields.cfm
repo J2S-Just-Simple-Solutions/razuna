@@ -136,16 +136,30 @@
 									if(!descriptorSearch.prop("ready")) {
 										descriptorSearch.prop("ready", true);
 										descriptorSearch.chosen({allow_single_deselect:true});
-										$.getJSON(
-										"http://ima.j2s.net/Thesaurus_WS/AllTerms.php", 
-										function(result){
-											if(result.err === 200){
-												$.each(result.values.sort(), function(index, item){
-													descriptorSearch.append("<option value='"+item+"'>"+item+"</option>");
-												});
-												descriptorSearch.trigger("chosen:updated");
-											}
-										});
+
+										var doThesaurus = function(values){
+											$.each(values.sort(), function(index, item){
+												descriptorSearch.append("<option value='"+item+"'>"+item+"</option>");
+											});
+											descriptorSearch.trigger("chosen:updated");
+										}
+
+										var thesaurusValues = localStorage.getItem("thesaurusValues");
+										//Si j'ai en cache, je traite tous de suite
+										if(thesaurusValues){doThesaurus(JSON.parse(thesaurusValues));}
+										//Sinon je demande au serveur
+										else {
+											$.ajaxSetup({timeout: 10000});
+											$.getJSON(
+											"http://ima.j2s.net/Thesaurus_WS/AllTerms.php", 
+											function(result){
+												//Si j'ai bien une réponse, j'enregistre et traite
+												if(result.err === 200){
+													localStorage.setItem("thesaurusValues", JSON.stringify(result.values));
+													doThesaurus(result.values);
+												}
+											});
+										}
 									}
 								})
 
