@@ -156,7 +156,6 @@
 			// Get values
 			var url = formaction("form0");
 			var items = formserialize("form0");
-			alert(JSON.stringify(items))
 			// Submit Form
 			$.ajax({
 				type: "POST",
