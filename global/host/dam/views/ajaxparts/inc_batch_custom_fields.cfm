@@ -52,6 +52,323 @@
 								<option value="#i#">#i#</option>
 							</cfloop>
 						</select>
+					<!--- Inventory --->
+					<cfelseif cf_type EQ "inventory">
+						<span>Modification non autorisée (contrainte d'unicité)</span>
+					<!--- Select-search-multi --->
+					<cfelseif cf_type EQ "select-search-multi">
+						<!--- Variable --->
+						<cfset allowed = false>
+						<!--- Check for Groups --->
+						<cfloop list="#session.thegroupofuser#" index="i">
+							<cfif listfind(cf_edit,i)>
+								<cfset allowed = true>
+								<cfbreak>
+							</cfif>
+						</cfloop>
+						<!--- Check for users --->
+						<cfloop list="#session.theuserid#" index="i">
+							<cfif listfind(cf_edit,i)>
+								<cfset allowed = true>
+								<cfbreak>
+							</cfif>
+						</cfloop>
+						<cfif !isnumeric(cf_edit) AND cf_edit EQ "true">
+							<cfset allowed = true>
+						</cfif>
+						<input type="text" dir="auto" style="width:300px;" id="cf_thesaurus_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
+						<!---<cfdump var="-#cf_value#-">--->
+						<cfset cf_value2="#REReplace(cf_value, ",\s", ",", "ALL")#">
+						<!---<cfdump var="-#cf_value2#-">--->
+						<select multiple selecSearchMulti="cf_#cf_id#" id="cf_select_#listlast(cf_id,'-')#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
+							<option value="" data-placeholder="test"></option>
+							<cfloop list="#ltrim(ListSort(listremoveduplicates(cf_select_list), 'text', 'asc', ','))#" index="i" delimiters=",">
+								<option value="#i#" <cfif listFind(cf_value2, #i#, ",")> selected="selected"</cfif>>#i#</option>
+							</cfloop>
+						</select>
+						<cfoutput>
+							<!--- JS --->
+							<script language="JavaScript" type="text/javascript">
+								(function(self){
+									var prefix = "<cfoutput>#session.hostdbprefix#</cfoutput>";
+									var input = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+									var select = $("td select[selecSearchMulti='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+									var oldValues = null;
+
+									select.select2({tags: true, tokenSeparators: [','] }).change(function(){
+										var values = []; 
+										var newValues = [];
+										$.each(select[0].selectedOptions, function(index, item){
+											values.push(item.text);
+											if($(item).attr("data-select2-tag")){newValues.push(item.text);}
+										})
+										input.val(values.join(", "));
+										
+										$.get(
+											"../../global/api2/J2S.cfc?method=appendCustomField&select_list=," + _.difference(newValues, oldValues).join(",") + "&cf_id=" + "#qry_cf.cf_id#" + "&prefix=" + prefix + "&user_id=#session.theuserid#", 
+												// NITA Modif ajout du user id
+											function(result){}
+										);
+										oldValues = newValues;
+									});
+											
+								})(this);
+							</script>
+						</cfoutput>	
+					<!--- Descripteur --->
+					<cfelseif cf_type EQ "descriptor">
+						<!--- Variable --->
+						<cfset allowed = false>
+						<!--- Check for Groups --->
+						<cfloop list="#session.thegroupofuser#" index="i">
+							<cfif listfind(cf_edit,i)>
+								<cfset allowed = true>
+								<cfbreak>
+							</cfif>
+						</cfloop>
+						<!--- Check for users --->
+						<cfloop list="#session.theuserid#" index="i">
+							<cfif listfind(cf_edit,i)>
+								<cfset allowed = true>
+								<cfbreak>
+							</cfif>
+						</cfloop>
+						<cfif !isnumeric(cf_edit) AND cf_edit EQ "true">
+							<cfset allowed = true>
+						</cfif>
+						<input type="text" dir="auto" style="width:300px;" id="cf_descriptor_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
+						<select multiple type="descriptor" descriptor="cf_#cf_id#" id="cf_select_descriptor_#listlast(cf_id,'-')#" value="#cf_value#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
+							<option value=""></option>					
+						</select>						
+						<cfoutput>
+							<!--- JS --->
+							<script language="JavaScript" type="text/javascript">
+								(function(self){
+									$(document).ready(function(){
+									// identifiants des composants du champ "Descripteurs"
+									var inputDescriptor = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+									var selectDescriptor = $("select[descriptor='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+									var tgGroup = $('<optgroup label="<cfoutput>#myFusebox.getApplicationData().defaults.trans("TG")#</cfoutput>" >');
+									var taGroup = $('<optgroup label="<cfoutput>#myFusebox.getApplicationData().defaults.trans("TA")#</cfoutput>" >');
+									var tsGroup = $('<optgroup label="<cfoutput>#myFusebox.getApplicationData().defaults.trans("TS")#</cfoutput>" >');
+
+									//Je construis mon champ multiple avec les valeurs initiales
+									selectDescriptor.chosen({no_results_text:"<cfoutput>#myFusebox.getApplicationData().defaults.trans("no_match")#</cfoutput>"})
+										//Changement
+										.change(function(event, params){
+											// Ajout d'un descripteur
+											if (params && params['selected']) {
+												var term = params.selected;
+												var replacement = $(event.target).find("option[value='"+term+"']").attr("replacement");
+												// on désélectionne l'option correspondant au mot interdit...
+												selectDescriptor.find("option[value='"+term+"']").removeProp("selected");
+												// ...pour sélectionner le terme remplaçant à la place
+												selectDescriptor.find("option[value='"+replacement+"']").prop("selected", true);
+												// on dispatche l'event pour que le composant se mette à jour 
+												selectDescriptor.trigger("chosen:updated");
+												//
+												inputDescriptor.val(getSelected().join(", "));	
+											}
+											// Suppression d'un descripteur
+											else {
+												inputDescriptor.val(getSelected().join(", "));
+											}
+											//console.log(inputDescriptor.val());								
+											drop.css("display", "none");
+											setTimeout(hoverListener,100);								
+										})
+										//Le composant est prêt
+										.ready(function(){
+
+											var doThesaurus = function(values){
+												var selectedList = "<cfoutput>#cf_value#</cfoutput>";
+
+												$.each(values.sort(), function(index, item){
+													var term = item[0];
+													var replacement = item[1];
+
+													// le terme est-il un terme interdit ?
+													var isBanTerm = term !== replacement;// index 0 -> mot interdit, index 1 -> le terme remplaçant	
+													// le terme est-il sélectionné ?
+													var isSelected = selectedList.split(", ").indexOf(term) > -1;
+
+													// style des termes interdits
+													var banTermStyle = isBanTerm ? "style='color: red'" : "";
+													// Termes sélectionnés
+													var selectedAttr = isSelected ? "selected='selected'" : "";
+
+													// Ajout de l'option
+													selectDescriptor.append("<option "+banTermStyle+" value='"+term+"' replacement='"+replacement+"' "+selectedAttr+" >"+term+"</option>");
+												});
+												selectDescriptor.trigger("chosen:updated");
+												setTimeout(hoverListener,100);
+											};
+
+											var thesaurusValues = localStorage.getItem("thesaurusValues");
+											//Si j'ai en cache, je traite tous de suite
+											if(thesaurusValues){doThesaurus(JSON.parse(thesaurusValues));}
+											//Sinon je demande au serveur
+											else {
+												$.ajaxSetup({timeout: 10000});
+												$.getJSON(
+												"http://ima.j2s.net/Thesaurus_WS/AllTerms.php", 
+												function(result){
+													//Si j'ai bien une réponse, j'enregistre et traite
+													if(result.err === 200){
+														localStorage.setItem("thesaurusValues", JSON.stringify(result.values));
+														doThesaurus(result.values);
+													}
+												});
+											}
+										   
+										})
+										//J'affiche la liste
+										.on("chosen:showing_dropdown", function(){setTimeout(hoverListener,100);});
+
+									//Je tape des caractères, j'écoute le hover sur les éléments
+									selectDescriptor.next(".chosen-container").find("input").keyup(function(){setTimeout(hoverListener,100);});
+									
+									$("body").click(
+										function(){
+											drop.css("display", "none");
+										}
+									);
+									var drop = $(
+										'<div class="thesaurus-drop"><ul class="thesaurus-results">'+
+										'<li class="thesaurus-result-group tg"><cfoutput>#myFusebox.getApplicationData().defaults.trans("TG")#</cfoutput></li>'+
+										'<li class="thesaurus-result-group ta"><cfoutput>#myFusebox.getApplicationData().defaults.trans("TA")#</cfoutput></li>'+
+										'<li class="thesaurus-result-group ts"><cfoutput>#myFusebox.getApplicationData().defaults.trans("TS")#</cfoutput></li>'+
+										'</ul></div>');
+									var hovered = null;
+									var hoverTimer = null;
+									var hoverHandler = function(ev){
+										cleartHoverTimer();
+										hovered = this;
+										drop.css("display", "none");
+										hoverTimer = setTimeout(function(){hoverShow(ev);}, 1000);
+									};
+									var hoverListener = function(){
+										selectDescriptor.next(".chosen-container").find("li").unbind().hover(hoverHandler, cleartHoverTimer);
+									};									
+									var cleartHoverTimer = function(ev){
+										if(hoverTimer){
+											clearTimeout(hoverTimer);
+										}
+									};
+									var hoverShow = function(ev){
+										$("body").append(drop);
+										drop.find(".thesaurus-result").remove();
+										$.getJSON(
+										"http://ima.j2s.net/Thesaurus_WS/ForDescriptor.php?uniterm="+ $(hovered).text(), 
+											function(result){
+												//J'ai un résultat
+												if(result.err === 200){
+													if(result.TG.length > 0 || result.TA.length > 1 || result.TS.length > 0 ) {
+														drop.css("display", "block").css("top", ev.pageY).css("left", ev.pageX-300);
+														drop.find(".ta,.tg,.ts").hide();
+														//TG
+														if(result.TG.length > 0){
+															drop.find(".tg").show().after('<li class="thesaurus-result" value="'+result.TG+'">'+result.TG+'</li>');
+														}
+														//TA
+														if(result.TA.length > 0){
+															$.each(result.TA.reverse(), function(i,TA){
+																drop.find(".ta").show().after('<li class="thesaurus-result" value="'+TA+'">'+TA+'</li>');
+															});
+														}
+														//TS
+														if(result.TS.length > 0){
+															$.each(result.TS.reverse(), function(i,TS){
+																drop.find(".ts").show().after('<li class="thesaurus-result" value="'+TS+'">'+TS+'</li>');
+															});
+														}
+													}
+													//J'écoute la sélection
+													drop.find(".thesaurus-result").click(function(){
+														selectDescriptor.find("option[value='"+$(hovered).text()+"']").removeProp("selected");
+														selectDescriptor.find("option[value='"+$(this).text()+"']").prop("selected", true);
+														selectDescriptor.trigger("chosen:updated");
+														selectDescriptor.trigger("change");
+														drop.css("display", "none");
+														setTimeout(hoverListener,100);
+													})
+												}
+											}
+										);
+									}
+
+									//Demande la sélection
+									var getSelected = function() {
+										var values = []; 
+										console.log("getSelected:");
+										$.each(selectDescriptor[0].selectedOptions, function(index, item){
+											console.log("  "+item.text);
+											values.push(item.text);
+										});
+										return values;
+									}
+									});
+
+								})(this);
+							</script>
+						</cfoutput>	
+
+					<!--- Candidat descripteur --->
+					<cfelseif cf_type EQ "candidate-descriptor">
+						<!--- Variable --->
+						<cfset allowed = false>
+						<!--- Check for Groups --->
+						<cfloop list="#session.thegroupofuser#" index="i">
+							<cfif listfind(cf_edit,i)>
+								<cfset allowed = true>
+								<cfbreak>
+							</cfif>
+						</cfloop>
+						<!--- Check for users --->
+						<cfloop list="#session.theuserid#" index="i">
+							<cfif listfind(cf_edit,i)>
+								<cfset allowed = true>
+								<cfbreak>
+							</cfif>
+						</cfloop>
+						<cfif !isnumeric(cf_edit) AND cf_edit EQ "true">
+							<cfset allowed = true>
+						</cfif>
+						<input type="text" dir="auto" style="width:300px;" id="cf_thesaurus_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
+						<select multiple candidate="cf_#cf_id#" id="cf_select_#listlast(cf_id,'-')#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
+							<option value="" data-placeholder="test"></option>
+							<cfloop list="#ltrim(ListSort(cf_select_list, 'text', 'asc', ','))#" index="i" delimiters=",">
+								<option value="#i#" <cfif listFind(REReplace(cf_value, ",\s?" , ',', 'ALL'), #i#, ",")> selected="selected"</cfif>>#i#</option>
+							</cfloop>
+						</select>
+						<cfoutput>
+							<!--- JS --->
+							<script language="JavaScript" type="text/javascript">
+								(function(self){
+									var prefix = "<cfoutput>#session.hostdbprefix#</cfoutput>";
+									var inputDescriptorCandidate = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+									var select = $("td select[candidate='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+									var oldValues = null;
+
+									select.select2({tags: true, tokenSeparators: [','] }).change(function(){
+										var values = []; 
+										var newValues = [];
+										$.each(select[0].selectedOptions, function(index, item){
+											values.push(item.text);
+											if($(item).attr("data-select2-tag")){newValues.push(item.text);}
+										})
+										inputDescriptorCandidate.val(values.join(", "));
+
+										$.get(
+											"../../global/api2/J2S.cfc?method=appendCustomField&select_list=," + _.difference(newValues, oldValues).join(",") + "&cf_id=" + "#qry_cf.cf_id#" + "&prefix=" + prefix + "&user_id=#session.theuserid#", 
+												// NITA Modif ajout du user id
+											function(result){}
+										);
+										oldValues = newValues;
+									});
+								})(this);
+							</script>
+						</cfoutput>
 					</cfif>
 				</td>
 			</tr>
