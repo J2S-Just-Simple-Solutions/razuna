@@ -42,29 +42,33 @@
 		<div id="tabs_batch">
 			<ul>
 				<li tabindex="0"><a href="##batch_desc">#myFusebox.getApplicationData().defaults.trans("asset_desc")#</a></li>
-				<cfif attributes.what EQ "img" OR session.thefileid CONTAINS "-img">
-					<cfif cs.tab_xmp_description><li tabindex="1"><a href="##batch_xmp">XMP Description</a></li></cfif>
-					<cfif cs.tab_iptc_contact><li tabindex="2"><a href="##iptc_contact">IPTC Contact</a></li></cfif>
-					<cfif cs.tab_iptc_image><li tabindex="3"><a href="##iptc_image">IPTC Image</a></li></cfif>
-					<cfif cs.tab_iptc_content><li tabindex="4"><a href="##iptc_content">IPTC Content</a></li></cfif>
-					<cfif cs.tab_iptc_status><li tabindex="5"><a href="##iptc_status">IPTC Status</a></li></cfif>
-					<cfif cs.tab_origin><li tabindex="6"><a href="##iptc_origin">Origin</a></li></cfif>
+				<cfif attributes.what EQ "img" OR session.thefileid CONTAINS "-img" >
+					<cfif cs.tab_xmp_description><li tabindex="1"<cfif #session.hostid# EQ 5> hidden</cfif>><a href="##batch_xmp">XMP Description</a></li></cfif>
+					<cfif cs.tab_iptc_contact><li tabindex="2"<cfif #session.hostid# EQ 5> hidden</cfif>><a href="##iptc_contact">IPTC Contact</a></li></cfif>
+					<cfif cs.tab_iptc_image><li tabindex="3"<cfif #session.hostid# EQ 5> hidden</cfif>><a href="##iptc_image">IPTC Image</a></li></cfif>
+					<cfif cs.tab_iptc_content><li tabindex="4"<cfif #session.hostid# EQ 5> hidden</cfif>><a href="##iptc_content">IPTC Content</a></li></cfif>
+					<cfif cs.tab_iptc_status><li tabindex="5"<cfif #session.hostid# EQ 5> hidden</cfif>><a href="##iptc_status">IPTC Status</a></li></cfif>
+					<cfif cs.tab_origin><li tabindex="6"<cfif #session.hostid# EQ 5> hidden</cfif>><a href="##iptc_origin">Origin</a></li></cfif>
 				</cfif>
-				<cfif cs.tab_labels><li tabindex="7"><a href="##batch_labels" onclick="activatechosen();">#myFusebox.getApplicationData().defaults.trans("labels")#</a></li></cfif>
+				<cfif cs.tab_labels><li tabindex="7"<cfif #session.hostid# EQ 5> hidden</cfif>><a href="##batch_labels" onclick="activatechosen();">#myFusebox.getApplicationData().defaults.trans("labels")#</a></li></cfif>
 				<cfif cs.tab_custom_fields AND qry_cf.recordcount><li tabindex="8"><a href="##batch_custom">#myFusebox.getApplicationData().defaults.trans("custom_fields_header")#</a></li></cfif>
 			</ul>
 			<!--- Descriptions & Keywords --->
 			<div id="batch_desc">
 				<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
 					<cfloop query="qry_langs">
-						<tr>
-							<td class="td2" valign="top" width="1%" nowrap="true"><strong>#lang_name#: #myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
-							<td class="td2" width="100%"><textarea name="<cfif what EQ "doc">file<cfelseif what EQ "vid">vid<cfelseif what EQ "img">img<cfelseif what EQ "aud">aud<cfelseif what EQ "all">all</cfif>_desc_#lang_id#" class="text" rows="2" cols="50"<cfif attributes.what EQ "img"> onchange="javascript:document.form#attributes.file_id#.iptc_content_description_#lang_id#.value = document.form#attributes.file_id#.img_desc_#lang_id#.value"</cfif>></textarea></td>
-						</tr>
-						<tr>
-							<td class="td2" valign="top" width="1%" nowrap="true"><strong>#lang_name#: #myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
-							<td class="td2" width="100%"><textarea name="<cfif what EQ "doc">file<cfelseif what EQ "vid">vid<cfelseif what EQ "img">img<cfelseif what EQ "aud">aud<cfelseif what EQ "all">all</cfif>_keywords_#lang_id#" class="text" rows="2" cols="50"<cfif attributes.what EQ "img"> onchange="javascript:document.form#attributes.file_id#.iptc_content_keywords_#lang_id#.value = document.form#attributes.file_id#.img_keywords_#lang_id#.value"</cfif>></textarea></td>
-						</tr>
+						<cfif lang_id EQ 1>
+							<cfset thisid = lang_id>
+							<tr>
+								<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
+								<td class="td2" width="100%"><textarea name="<cfif what EQ "doc">file<cfelseif what EQ "vid">vid<cfelseif what EQ "img">img<cfelseif what EQ "aud">aud<cfelseif what EQ "all">all</cfif>_desc_#lang_id#" class="text" rows="2" cols="50"<cfif attributes.what EQ "img"> onchange="javascript:document.form#attributes.file_id#.iptc_content_description_#lang_id#.value = document.form#attributes.file_id#.img_desc_#lang_id#.value"</cfif>></textarea></td>
+							</tr>
+							<tr>
+								<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
+								<td class="td2" width="100%"><textarea name="<cfif what EQ "doc">file<cfelseif what EQ "vid">vid<cfelseif what EQ "img">img<cfelseif what EQ "aud">aud<cfelseif what EQ "all">all</cfif>_keywords_#lang_id#" class="text" rows="2" cols="50"<cfif attributes.what EQ "img"> onchange="javascript:document.form#attributes.file_id#.iptc_content_keywords_#lang_id#.value = document.form#attributes.file_id#.img_keywords_#lang_id#.value"</cfif>></textarea></td>
+							</tr>
+						</cfif>
+						
 					</cfloop>
 					<!--- Expiry date field --->
 					<tr>

@@ -36,12 +36,15 @@
 					<!--- For text --->
 					<cfif cf_type EQ "text">
 						<input type="text" style="width:300px;" id="cf_#cf_id#" name="cf_#cf_id#" <cfif structKeyExists(variables,"cf_inline")> placeholder="#cf_text#"</cfif><cfif cf_edit NEQ "true" AND (NOT listfind(cf_edit,session.theuserid) AND NOT listfind(cf_edit,session.thegroupofuser))> disabled="disabled"</cfif>>
+
 					<!--- Radio --->
 					<cfelseif cf_type EQ "radio">
 						<input type="radio" name="cf_#cf_id#" value="T"<cfif cf_edit NEQ "true" AND (NOT listfind(cf_edit,session.theuserid) AND NOT listfind(cf_edit,session.thegroupofuser))> disabled="disabled"</cfif>>#myFusebox.getApplicationData().defaults.trans("yes")# <input type="radio" name="cf_#cf_id#" value="F"<cfif cf_edit NEQ "true" AND (NOT listfind(cf_edit,session.theuserid) AND NOT listfind(cf_edit,session.thegroupofuser))> disabled="disabled"</cfif>>#myFusebox.getApplicationData().defaults.trans("no")#
+
 					<!--- Textarea --->
 					<cfelseif cf_type EQ "textarea">
 						<textarea name="cf_#cf_id#" style="width:310px;height:60px;"<cfif structKeyExists(variables,"cf_inline")> placeholder="#cf_text#"</cfif><cfif cf_edit NEQ "true" AND (NOT listfind(cf_edit,session.theuserid) AND NOT listfind(cf_edit,session.thegroupofuser))> disabled="disabled"</cfif>></textarea>
+
 					<!--- Select --->
 					<cfelseif cf_type EQ "select" OR cf_type EQ "select_multi">
 						<select name="cf_#cf_id#" style="width:300px;"<cfif cf_edit NEQ "true" AND (NOT listfind(cf_edit,session.theuserid,",") AND NOT listfind(cf_edit,session.thegroupofuser,","))> disabled="disabled"</cfif><cfif cf_type EQ "select_multi"> multiple="multiple"</cfif>>
@@ -52,9 +55,11 @@
 								<option value="#i#">#i#</option>
 							</cfloop>
 						</select>
+
 					<!--- Inventory --->
 					<cfelseif cf_type EQ "inventory">
 						<span>Modification non autorisée (contrainte d'unicité)</span>
+
 					<!--- Select-search-multi --->
 					<cfelseif cf_type EQ "select-search-multi">
 						<!--- Variable --->
@@ -115,6 +120,7 @@
 								})(this);
 							</script>
 						</cfoutput>	
+						
 					<!--- Descripteur --->
 					<cfelseif cf_type EQ "descriptor">
 						<!--- Variable --->
@@ -369,6 +375,147 @@
 								})(this);
 							</script>
 						</cfoutput>
+
+					<!--- select-category --->
+					<cfelseif cf_type EQ "select-category">
+						<!--- Variable --->
+						<cfset allowed = false>
+						<!--- Check for Groups --->
+						<cfloop list="#session.thegroupofuser#" index="i">
+							<cfif listfind(cf_edit,i)>
+								<cfset allowed = true>
+								<cfbreak>
+							</cfif>
+						</cfloop>
+						<!--- Check for users --->
+						<cfloop list="#session.theuserid#" index="i">
+							<cfif listfind(cf_edit,i)>
+								<cfset allowed = true>
+								<cfbreak>
+							</cfif>
+						</cfloop>
+						<cfif !isnumeric(cf_edit) AND cf_edit EQ "true">
+							<cfset allowed = true>
+						</cfif>
+						<input type="text" dir="auto" style="width:300px;" id="cf_thesaurus_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
+						<cfset cf_value2="#REReplace(cf_value, ",\s", ",", "ALL")#">
+						<!---<cfdump var="-#cf_value2#-"> --->
+						<select multiple type="category" category="cf_#cf_id#" id="cf_select_category_#listlast(cf_id,'-')#" value="#cf_value#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
+							<option value=""></option>
+							<cfloop list="#cf_select_list#" index="word">
+								<option value="#word#" <cfif ListFind("#cf_value2#", #word#, ",")> selected="selected"</cfif>>#word#</option>
+							</cfloop>						
+						</select>						
+						<cfoutput>
+							<!--- JS --->
+							<script language="JavaScript" type="text/javascript">
+								(function(self){
+									var input = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+									var category = $("select[category='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+
+									category.chosen({no_results_text:"<cfoutput>#myFusebox.getApplicationData().defaults.trans("no_match")#</cfoutput>"}).change(function(){
+										var values = []; 
+										$.each(category[0].selectedOptions, function(index, item){values.push(item.text)})
+										input.val(values.join(", "));
+									});
+								})(this);
+							</script>
+						</cfoutput>
+		
+					<!--- select-sub-category --->
+					<cfelseif cf_type EQ "select-sub-category">
+						<!--- Variable --->
+						<cfset allowed = false>
+						<!--- Check for Groups --->
+						<cfloop list="#session.thegroupofuser#" index="i">
+							<cfif listfind(cf_edit,i)>
+								<cfset allowed = true>
+								<cfbreak>
+							</cfif>
+						</cfloop>
+						<!--- Check for users --->
+						<cfloop list="#session.theuserid#" index="i">
+							<cfif listfind(cf_edit,i)>
+								<cfset allowed = true>
+								<cfbreak>
+							</cfif>
+						</cfloop>
+						<cfif !isnumeric(cf_edit) AND cf_edit EQ "true">
+							<cfset allowed = true>
+						</cfif>
+						<input type="text" dir="auto" style="width:300px;" id="cf_thesaurus_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" hidden>
+						<select  multiple type="sub-category" sub-category="cf_#cf_id#" id="cf_select_sub_category_#listlast(cf_id,'-')#" value="#cf_value#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
+							<cfset list = "#cf_select_list#"> 
+							<cfset category = listToArray(list, ";", true)>							
+							<cfloop array=#category# index="i" delimiters=";" item="name">								
+								<cfset category[#i#] = "#ltrim(ListSort(name, 'text', 'asc', ','))#" />
+							</cfloop>					
+						</select>
+						<cfoutput>
+							<!--- JS --->
+							<script language="JavaScript" type="text/javascript">
+								(function(self){
+									var input = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+									var category = $("select[type=category]");
+									var subCategory = $("select[sub-category='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
+									
+									subCategory.chosen({no_results_text:"<cfoutput>#myFusebox.getApplicationData().defaults.trans("no_match")#</cfoutput>"}).change(function(){
+										var values = []; 
+										$.each(subCategory[0].selectedOptions, function(index, item){values.push(item.text)})
+										input.val(values.join(", "));
+									});
+
+									//La catégorie parente change, je charge la sous-catégorie
+									var categoryChangeHandler = function(event){
+										//les valeurs sélectionnées
+										var selectedList = [];
+										$.each( subCategory[0].selectedOptions, 
+											function(index, item){
+												selectedList.push(item.text)
+											}
+										);
+										if(selectedList.length === 0 ){
+											selectedList = "<cfoutput>#cf_value#</cfoutput>";
+										}
+
+										//La liste complète
+										var #toScript(category, "values")#
+										var list = values.join(",").split(",");
+										var categoryList = [];
+
+										//Je nettoie
+										subCategory.val("");
+										subCategory.empty();
+										
+										//Je récupère les catégories sélectionnées
+										for ( var j = 0 ; j < category[0].selectedOptions.length ; j++) {
+											var cat = values[category[0].selectedOptions[j].index - 1];
+											categoryList = categoryList.concat(cat? cat.split(",") : "");
+										}
+
+										//Pour chaque valeur
+										for(var i = 0 ; i < list.length ; i++){
+											var item = list[i];
+											//Si elle est dans la liste des catégories
+											if(categoryList.indexOf(item) > - 1 ) {
+												//Je l'ajoute avec l'option selected si elle est sélectionnée
+												if(selectedList.indexOf(item) > -1) {
+													subCategory.append("<option value="+item+" selected=selected>"+item+"</option>");
+												}
+												else {
+													subCategory.append("<option value="+item+" >"+item+"</option>");
+												}
+											}			
+										}
+										//je mets à jour
+										subCategory.trigger("chosen:updated").trigger("change");										
+									};
+
+									category.chosen().change(categoryChangeHandler);
+									categoryChangeHandler();
+								})(this);
+							</script>
+						</cfoutput>	
 					</cfif>
 				</td>
 			</tr>
