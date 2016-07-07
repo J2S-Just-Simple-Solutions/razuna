@@ -160,6 +160,7 @@
 			// Get values
 			var url = formaction("form0");
 			var items = formserialize("form0");
+
 			// Submit Form
 			$.ajax({
 				type: "POST",
