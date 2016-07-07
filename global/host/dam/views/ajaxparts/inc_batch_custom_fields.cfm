@@ -25,7 +25,7 @@
 --->
 <cfoutput>
 	<cfif !structKeyExists(variables,"cf_inline")><table border="0" cellpadding="0" cellspacing="0" width="450" class="grid"></cfif>
-		<cfloop query="qry_cf">
+			<cfloop query="qry_cf">
 			<tr>
 				<cfif !structKeyExists(variables,"cf_inline")>
 					<td width="130" nowrap="true"<cfif cf_type EQ "textarea"> valign="top"</cfif>><strong>#cf_text#</strong></td>
@@ -88,7 +88,7 @@
 						<select multiple selecSearchMulti="cf_#cf_id#" id="cf_select_#listlast(cf_id,'-')#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<option value="" data-placeholder="test"></option>
 							<cfloop list="#ltrim(ListSort(listremoveduplicates(cf_select_list), 'text', 'asc', ','))#" index="i" delimiters=",">
-								<option value="#i#" <cfif listFind(cf_value2, #i#, ",")> selected="selected"</cfif>>#i#</option>
+								<option value="#i#" <!---<cfif listFind(cf_value2, #i#, ",")> selected="selected"</cfif>---> >#i#</option>
 							</cfloop>
 						</select>
 						<cfoutput>
@@ -107,7 +107,7 @@
 											values.push(item.text);
 											if($(item).attr("data-select2-tag")){newValues.push(item.text);}
 										})
-										input.val(values.join(", "));
+										input.val(", "+values.join(", "));<!--- TODO: comment ", "+ --->
 										
 										$.get(
 											"../../global/api2/J2S.cfc?method=appendCustomField&select_list=," + _.difference(newValues, oldValues).join(",") + "&cf_id=" + "#qry_cf.cf_id#" + "&prefix=" + prefix + "&user_id=#session.theuserid#", 
@@ -173,11 +173,11 @@
 												// on dispatche l'event pour que le composant se mette à jour 
 												selectDescriptor.trigger("chosen:updated");
 												//
-												inputDescriptor.val(getSelected().join(", "));	
+												inputDescriptor.val(", "+getSelected().join(", "));<!--- TODO: comment ", "+ --->	
 											}
 											// Suppression d'un descripteur
 											else {
-												inputDescriptor.val(getSelected().join(", "));
+												inputDescriptor.val(", "+getSelected().join(", "));<!--- TODO: comment ", "+ --->
 											}
 											//console.log(inputDescriptor.val());								
 											drop.css("display", "none");
@@ -344,7 +344,7 @@
 						<select multiple candidate="cf_#cf_id#" id="cf_select_#listlast(cf_id,'-')#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<option value="" data-placeholder="test"></option>
 							<cfloop list="#ltrim(ListSort(cf_select_list, 'text', 'asc', ','))#" index="i" delimiters=",">
-								<option value="#i#" <cfif listFind(REReplace(cf_value, ",\s?" , ',', 'ALL'), #i#, ",")> selected="selected"</cfif>>#i#</option>
+								<option value="#i#" <!--- <cfif listFind(REReplace(cf_value, ",\s?" , ',', 'ALL'), #i#, ",")> selected="selected"</cfif>---> >#i#</option>
 							</cfloop>
 						</select>
 						<cfoutput>
@@ -363,7 +363,7 @@
 											values.push(item.text);
 											if($(item).attr("data-select2-tag")){newValues.push(item.text);}
 										})
-										inputDescriptorCandidate.val(values.join(", "));
+										inputDescriptorCandidate.val(", "+values.join(", "));<!--- TODO: comment ", "+ --->
 
 										$.get(
 											"../../global/api2/J2S.cfc?method=appendCustomField&select_list=," + _.difference(newValues, oldValues).join(",") + "&cf_id=" + "#qry_cf.cf_id#" + "&prefix=" + prefix + "&user_id=#session.theuserid#", 
@@ -403,7 +403,7 @@
 						<select multiple type="category" category="cf_#cf_id#" id="cf_select_category_#listlast(cf_id,'-')#" value="#cf_value#" style="width:300px;" data-placeholder="#myFusebox.getApplicationData().defaults.trans("select_some_options")#"<cfif !allowed> disabled="disabled"</cfif>>
 							<option value=""></option>
 							<cfloop list="#cf_select_list#" index="word">
-								<option value="#word#" <cfif ListFind("#cf_value2#", #word#, ",")> selected="selected"</cfif>>#word#</option>
+								<option value="#word#" <!---<cfif ListFind("#cf_value2#", #word#, ",")> selected="selected"</cfif>---> >#word#</option>
 							</cfloop>						
 						</select>						
 						<cfoutput>
@@ -416,7 +416,7 @@
 									category.chosen({no_results_text:"<cfoutput>#myFusebox.getApplicationData().defaults.trans("no_match")#</cfoutput>"}).change(function(){
 										var values = []; 
 										$.each(category[0].selectedOptions, function(index, item){values.push(item.text)})
-										input.val(values.join(", "));
+										input.val(", "+values.join(", "));<!--- TODO: comment ", "+ --->										
 									});
 								})(this);
 							</script>
@@ -462,7 +462,7 @@
 									subCategory.chosen({no_results_text:"<cfoutput>#myFusebox.getApplicationData().defaults.trans("no_match")#</cfoutput>"}).change(function(){
 										var values = []; 
 										$.each(subCategory[0].selectedOptions, function(index, item){values.push(item.text)})
-										input.val(values.join(", "));
+										input.val(", "+values.join(", "));<!--- TODO: comment ", "+ --->
 									});
 
 									//La catégorie parente change, je charge la sous-catégorie
