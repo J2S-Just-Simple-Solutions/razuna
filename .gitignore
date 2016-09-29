@@ -3,7 +3,11 @@ bluedragon.xml
 *.db
 admin/parsed/
 WEB-INF/bluedragon/
-raz1/
+raz1/**
+raz2/**
+raz3/**
+raz4/**
+raz5/**
 global/config/keys.cfm
 assets/
-
+WEB-INF/**
