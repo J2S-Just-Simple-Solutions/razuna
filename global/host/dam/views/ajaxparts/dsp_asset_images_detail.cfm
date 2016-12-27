@@ -626,7 +626,7 @@
 			var front = $("input[name='cf_C8F68B05-ADED-457C-801C3741CAD9BA8F'][value='"+(copyright.val().indexOf("IMA") == 0 ? "T" : "F")+"']");
 			//Je la sélectionne
 			if(front.length > 0){
-				front.click();
+				//front.click();
 			}
 		}		
 
