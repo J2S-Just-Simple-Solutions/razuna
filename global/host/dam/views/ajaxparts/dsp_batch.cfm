@@ -57,6 +57,7 @@
 			<div id="batch_desc">
 				<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
 					<cfloop query="qry_langs">
+						<cfif session.hostid NEQ 5>
 						<!---<cfif lang_id EQ 1>--->
 							<cfset thisid = lang_id>
 							<tr <cfif lang_id NEQ 1>hidden</cfif>>
@@ -68,6 +69,7 @@
 								<td class="td2" width="100%"><textarea name="<cfif what EQ "doc">file<cfelseif what EQ "vid">vid<cfelseif what EQ "img">img<cfelseif what EQ "aud">aud<cfelseif what EQ "all">all</cfif>_keywords_#lang_id#" class="text" rows="2" cols="50"<cfif attributes.what EQ "img"> onchange="javascript:document.form#attributes.file_id#.iptc_content_keywords_#lang_id#.value = document.form#attributes.file_id#.img_keywords_#lang_id#.value"</cfif>></textarea></td>
 							</tr>
 						<!---</cfif>---->
+						</cfif>
 						
 					</cfloop>
 					<!--- Expiry date field --->
