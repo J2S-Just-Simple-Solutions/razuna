@@ -154,7 +154,7 @@
 		<cfif session.hostid NEQ 5>
 			<div style="float:right;padding:10px;">#myFusebox.getApplicationData().defaults.trans("batch_desc_1")# <input type="radio" name="batch_replace" value="true" onclick="$('##dialog').dialog();"/> #myFusebox.getApplicationData().defaults.trans("batch_desc_2")# <input type="radio" name="batch_replace" value="false" checked="checked" /> #myFusebox.getApplicationData().defaults.trans("batch_desc_3")#. <input type="submit" name="submit" value="#myFusebox.getApplicationData().defaults.trans("batch_recs")#" class="button"></div>
 		<cfelse>
-			<div style="float:right;padding:10px;">#myFusebox.getApplicationData().defaults.trans("batch_desc_1")# <input type="radio" name="batch_replace" value="true" onclick="$('##dialog').dialog();"/> #myFusebox.getApplicationData().defaults.trans("batch_desc_2")# <input type="radio" name="batch_replace" value="false" checked="checked" /> #myFusebox.getApplicationData().defaults.trans("batch_desc_3")#. <input type="submit" name="submit" value="#myFusebox.getApplicationData().defaults.trans("batch_recs")#" class="button"></div>
+			<div style="float:right;padding:10px;">#myFusebox.getApplicationData().defaults.trans("batch_desc_1")# <input type="radio" name="batch_replace" value="true" /> #myFusebox.getApplicationData().defaults.trans("batch_desc_2")# <input type="radio" name="batch_replace" value="false" checked="checked" /> #myFusebox.getApplicationData().defaults.trans("batch_desc_3")#. <input type="submit" name="submit" value="#myFusebox.getApplicationData().defaults.trans("batch_recs")#" class="button"></div>
 		</cfif>
 		<div id="updatebatch" style="float:left;padding:10px;color:green;font-weight:bold;display:none;"></div>
 	</form>
