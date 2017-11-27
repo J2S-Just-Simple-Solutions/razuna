@@ -901,6 +901,7 @@
 							<cfset allowed = true>
 						</cfif>
 						<form><input type="text" dir="auto" style="width:300px;" id="cf_text_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" inventory="true"<cfif structKeyExists(variables,"cf_inline")> placeholder="#cf_text#"</cfif><cfif !allowed> disabled="disabled"</cfif>></form>
+						<cfset qry_api_key = myFusebox.getApplicationData().users.getapikey(session.theuserid,false) >
 						<cfoutput>
 							<!--- JS --->
 							<style type="text/css">
@@ -913,11 +914,15 @@
 								(function(self){
 									var input = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 									input.on("input", function(){
-										$.get("../../global/api2/search.cfc?method=searchassets&searchfor=customfieldvalue:(3A5A7EB0F8444B1483A6DF40AF5C4EC2"+input.val()+")&api_key=BFF1B5BAEDDE433D975C502C3C79EE55", 
+										$.get("../../global/api2/search.cfc?method=searchassets&searchfor=customfieldvalue:(3A5A7EB0F8444B1483A6DF40AF5C4EC2"+input.val()+")&api_key=<cfoutput>#qry_api_key#</cfoutput>", 
 										function(result){
 											var data = JSON.parse(result).DATA;
-											if(data.length > 0){input.addClass("inventory-error");}
-											else{input.removeClass("inventory-error");}
+											if((data.length === 1 && data[0].length === 2)|| data.length === 0) {
+												input.removeClass("inventory-error");
+											}
+											else {
+												input.addClass("inventory-error");
+											}
 										});
 									})
 								})(this);
