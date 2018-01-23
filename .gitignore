@@ -3,6 +3,7 @@ bluedragon.xml
 *.db
 admin/parsed/
 WEB-INF/bluedragon/
+<<<<<<< HEAD
 raz1/
 raz2/
 raz3/
@@ -11,3 +12,13 @@ raz5/
 global/config/keys.cfm
 assets/
 node_modules/
+=======
+raz1/**
+raz2/**
+raz3/**
+raz4/**
+raz5/**
+global/config/keys.cfm
+assets/
+WEB-INF/**
+>>>>>>> 1a97de3d875ebf6eebb7645586539a6661bd9920

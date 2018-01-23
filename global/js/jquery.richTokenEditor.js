@@ -42,7 +42,7 @@
 			$(content).find("div").prop("contentEditable", true).html($(this).text()).focus();
 			$(content).find("head").append(_style);	
 
-			//Je rempli ma liste de champ
+			//Je remplis ma liste de champ
 			var fields = options.fields.sort(function (a, b) {
 			    if (a[5].toLowerCase() > b[5].toLowerCase())return 1;
 			    if (a[5].toLowerCase() < b[5].toLowerCase())return -1;
@@ -62,14 +62,14 @@
 					else if(content.nodeName === "SELECT"){
 						text += $(content).val() + ":";
 					}
-					//Si c'est u opérateur
+					//Si c'est un opérateur
 					else if(content.nodeName === "BUTTON"){
 						text += " " + $(content).val() + " ";
 					}
 					//Sinon c'est une valeur
 					else {
 						//console.log(content.textContent)
-						//Si c'est un select, il faut gèrer aussi ( cas des photographe )
+						//Si c'est un select, il faut gérer aussi ( cas des photographes )
 						if(trim(content.textContent) != "")
 							text += '"' + trim(content.textContent) + '"';
 

@@ -62,13 +62,14 @@
 <!--- do action="first_time_final_include" --->
 <cfset myFusebox.thisPhase = "requestedFuseaction">
 <cfset myFusebox.thisFuseaction = "first_time_final_include">
+<cfset session.firsttime.database = "#session.firsttime.database_type#" />
 <cfset application.razuna.theschema = "#session.firsttime.db_schema#" />
-<cfset application.razuna.thedatabase = "#session.firsttime.database#" />
-<cfset application.razuna.datasource = "#session.firsttime.database#" />
-<cfset attributes.dsn = "#session.firsttime.database#" />
+<cfset application.razuna.thedatabase = "#session.firsttime.database_type#" />
+<cfset application.razuna.datasource = "#session.firsttime.database_type#" />
+<cfset attributes.dsn = "#session.firsttime.database_type#" />
 <cfset attributes.theschema = "#session.firsttime.db_schema#" />
 <cfset attributes.host_db_prefix = "raz1_" />
-<cfset attributes.database = "#session.firsttime.database#" />
+<cfset attributes.database = "#session.firsttime.database_type#" />
 <cfset attributes.host_lang = "1" />
 <cfset attributes.langs_selected = "1_English" />
 <cfset attributes.pathhere = "#thispath#" />
@@ -84,15 +85,18 @@
 <cfset attributes.dcraw = "#session.firsttime.path_dcraw#" />
 <cfset attributes.mp4box = "#session.firsttime.path_mp4box#" />
 <cfset attributes.ghostscript = "#session.firsttime.path_ghostscript#" />
-<cfset attributes.conf_database = "#session.firsttime.database#" />
+<cfset attributes.conf_database = "#session.firsttime.database_type#" />
 <cfset attributes.conf_schema = "#session.firsttime.db_schema#" />
-<cfset attributes.conf_datasource = "#session.firsttime.database#" />
-<cfset myFusebox.getApplicationData().settings.update_global(attributes) >
-<cfset myFusebox.getApplicationData().hosts.cleardb() >
+<cfset attributes.conf_datasource = "#session.firsttime.database_type#" />
+<cfset attributes.conf_storage = "local" />
+<cfset myFusebox.getApplicationData().hosts.cleardb(thedatabase=session.firsttime.database_type) >
 <cfset myFusebox.getApplicationData().hosts.setupdb(attributes) >
+<cfset myFusebox.getApplicationData().settings.update_global(attributes) >
 <cfset myFusebox.getApplicationData().settings.update_tools(attributes) >
 <cfset myFusebox.getApplicationData().settings.firsttime_false('false') >
 <cfset myFusebox.getApplicationData().update.setoptionupdate() >
+<cfset attributes.db_path = "#expandpath('..')#db" />
+<cfset myFusebox.getApplicationData().settings.indexingDbInfoPrepare(db_path=attributes.db_path) >
 <cfset session.firsttime.database = "razuna_client" />
 <cfset session.firsttime.database_type = "mysql" />
 <cfset session.firsttime.db_name = "razuna_clients" />

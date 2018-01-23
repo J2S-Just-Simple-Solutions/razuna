@@ -541,7 +541,7 @@ min-height: 230px;
 -webkit-border-radius: 5px;
 -moz-border-radius: 5px;
 border-radius: 5px;
-word-wrap: break-word;
+/*word-wrap: break-word;*/
 width: 120px;
 color: #717171;
 }

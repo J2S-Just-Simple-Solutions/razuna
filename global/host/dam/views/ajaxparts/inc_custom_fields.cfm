@@ -240,7 +240,7 @@
 											})
 											var self = this;
 											$.get(
-												"../../global/api2/J2S.cfc?method=updateCustomField&select_list=" + values.join(",") + "&cf_id=" + "#qry_cf.cf_id#" + "&prefix=" + prefix + "&user_id=#session.theuserid#", 
+												"../../global/api2/J2S.cfc?method=updateCustomField&select_list=" + _.compact(values).join(",") + "&cf_id=" + "#qry_cf.cf_id#" + "&prefix=" + prefix + "&user_id=#session.theuserid#", 
 													// NITA Modif ajout du user id
 												function(result){}
 											);
@@ -297,7 +297,7 @@
 									category.chosen({no_results_text:"<cfoutput>#myFusebox.getApplicationData().defaults.trans("no_match")#</cfoutput>"}).change(function(){
 										var values = []; 
 										$.each(category[0].selectedOptions, function(index, item){values.push(item.text)})
-										input.val(values.join(", "));
+										input.val(_.compact(values).join(", "));
 									});
 								})(this);
 							</script>
@@ -344,7 +344,7 @@
 									subCategory.chosen({no_results_text:"<cfoutput>#myFusebox.getApplicationData().defaults.trans("no_match")#</cfoutput>"}).change(function(){
 										var values = []; 
 										$.each(subCategory[0].selectedOptions, function(index, item){values.push(item.text)})
-										input.val(values.join(", "));
+										input.val(_.compact(values).join(", "));
 									});
 
 									//La catégorie parente change, je charge la sous-catégorie
@@ -360,9 +360,9 @@
 											selectedList = "<cfoutput>#cf_value#</cfoutput>";
 										}
 
-										//La liste complète
+										//La lijoin complète
 										var #toScript(category, "values")#
-										var list = values.join(",").split(",");
+										var list = _.compact(values).join(",").split(",");
 										var categoryList = [];
 
 										//Je nettoie
@@ -453,11 +453,11 @@
 												// on dispatche l'event pour que le composant se mette à jour 
 												selectDescriptor.trigger("chosen:updated");
 												//
-												inputDescriptor.val(getSelected().join(", "));	
+												inputDescriptor.val(_.compact(getSelected()).join(", "));	
 											}
 											// Suppression d'un descripteur
 											else {
-												inputDescriptor.val(getSelected().join(", "));
+												inputDescriptor.val(_.compact(getSelected()).join(", "));
 											}
 											//console.log(inputDescriptor.val());								
 											drop.css("display", "none");
@@ -766,13 +766,14 @@
 											values.push(item.text);
 											if($(item).attr("data-select2-tag")){newValues.push(item.text);}
 										})
-										inputDescriptorCandidate.val(values.join(", "));
-
-										$.get(
-											"../../global/api2/J2S.cfc?method=appendCustomField&select_list=," + _.difference(newValues, oldValues).join(",") + "&cf_id=" + "#qry_cf.cf_id#" + "&prefix=" + prefix + "&user_id=#session.theuserid#", 
-												// NITA Modif ajout du user id
-											function(result){}
-										);
+										inputDescriptorCandidate.val(_.compact(values).join(", "));
+										if(_.compact(_.difference(newValues, oldValues)).join(",") != ""){
+											$.get(
+												"../../global/api2/J2S.cfc?method=appendCustomField&select_list=," + _.compact(_.difference(newValues, oldValues)).join(",") + "&cf_id=" + "#qry_cf.cf_id#" + "&prefix=" + prefix + "&user_id=#session.theuserid#", 
+													// NITA Modif ajout du user id
+												function(result){}
+											);
+										}
 										oldValues = newValues;
 									});
 
@@ -864,13 +865,14 @@
 											values.push(item.text);
 											if($(item).attr("data-select2-tag")){newValues.push(item.text);}
 										})
-										input.val(values.join(", "));
-										
-										$.get(
-											"../../global/api2/J2S.cfc?method=appendCustomField&select_list=," + _.difference(newValues, oldValues).join(",") + "&cf_id=" + "#qry_cf.cf_id#" + "&prefix=" + prefix + "&user_id=#session.theuserid#", 
-												// NITA Modif ajout du user id
-											function(result){}
-										);
+										input.val(_.compact(values).join(", "));
+										if(_.compact(_.difference(newValues, oldValues)).join(",") != ""){
+											$.get(
+												"../../global/api2/J2S.cfc?method=appendCustomField&select_list=," + _.compact(_.difference(newValues, oldValues)).join(",") + "&cf_id=" + "#qry_cf.cf_id#" + "&prefix=" + prefix + "&user_id=#session.theuserid#", 
+													// NITA Modif ajout du user id
+												function(result){}
+											);
+										}
 										oldValues = newValues;
 									});
 											
@@ -899,6 +901,7 @@
 							<cfset allowed = true>
 						</cfif>
 						<form><input type="text" dir="auto" style="width:300px;" id="cf_text_#listlast(cf_id,'-')#" name="cf_#cf_id#" value="#cf_value#" inventory="true"<cfif structKeyExists(variables,"cf_inline")> placeholder="#cf_text#"</cfif><cfif !allowed> disabled="disabled"</cfif>></form>
+						<cfset qry_api_key = myFusebox.getApplicationData().users.getapikey(session.theuserid,false) >
 						<cfoutput>
 							<!--- JS --->
 							<style type="text/css">
@@ -911,11 +914,15 @@
 								(function(self){
 									var input = $("input[name='cf_"+"<cfoutput>#cf_id#</cfoutput>"+"']");
 									input.on("input", function(){
-										$.get("../../global/api2/search.cfc?method=searchassets&searchfor=customfieldvalue:(3A5A7EB0F8444B1483A6DF40AF5C4EC2"+input.val()+")&api_key=BFF1B5BAEDDE433D975C502C3C79EE55", 
+										$.get("../../global/api2/search.cfc?method=searchassets&searchfor=customfieldvalue:(3A5A7EB0F8444B1483A6DF40AF5C4EC2"+input.val()+")&api_key=<cfoutput>#qry_api_key#</cfoutput>", 
 										function(result){
 											var data = JSON.parse(result).DATA;
-											if(data.length > 0){input.addClass("inventory-error");}
-											else{input.removeClass("inventory-error");}
+											if((data.length === 1 && data[0].length === 2)|| data.length === 0) {
+												input.removeClass("inventory-error");
+											}
+											else {
+												input.addClass("inventory-error");
+											}
 										});
 									})
 								})(this);
