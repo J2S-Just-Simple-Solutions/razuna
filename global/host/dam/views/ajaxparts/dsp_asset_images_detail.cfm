@@ -618,20 +618,25 @@
 		// Gestion des custom fileds "Copyright" et "Image partagée au public"		
     	// 85C370DA-F2D2-4063-8CCBB70AC652C29B is the id of the custom field "Copyright" 
     	// C8F68B05-ADED-457C-801C3741CAD9BA8F is the id of the custom field "Image partagée au public" 
-    	// Ce champ sera automatiquement coché à Oui si le champ "Copyright" commence par « IMA/… », dans les autres cas il vaudra Non
-		var copyright = $("input[name='cf_85C370DA-F2D2-4063-8CCBB70AC652C29B']");
-		//J'ai un copyright
-		if(copyright.length > 0 ){
-			// Je récupère la bonne checkbox
-			var front = $("input[name='cf_C8F68B05-ADED-457C-801C3741CAD9BA8F'][value='"+(copyright.val().indexOf("IMA") == 0 ? "T" : "F")+"']");
-			//Je la sélectionne
-			if(front.length > 0){
-				front.click();
-			}
-		}		
+    	// Ce champ sera automatiquement coché à Oui si le champ "Copyright" commence par « IMA/… », dans les autres cas il vaudra Non  	
+    	if (false) { // FL: On désactive ce contrôle 
+    		var copyright = $("input[name='cf_85C370DA-F2D2-4063-8CCBB70AC652C29B']");
+			//J'ai un copyright
+			if(copyright.length > 0 ){
+				// Je récupère la bonne checkbox
+				var front = $("input[name='cf_C8F68B05-ADED-457C-801C3741CAD9BA8F'][value='"+(copyright.val().indexOf("IMA") == 0 ? "T" : "F")+"']");
+				//Je la sélectionne
+				if(front.length > 0){
+					front.click();
+				}
+			}		
+		}
 
+		//FL: on arrive à la fin de la fonction "formchecks" et tout s'est bien passé: on peut donc retourner true
 		return true;
 	}
+	
+	
 	// Submit form
 	function filesubmit(){
 		$("##updatefile").css("display","");
