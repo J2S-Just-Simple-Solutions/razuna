@@ -615,7 +615,7 @@
 			return false;		
 		}
 
-		// Gestion des custom fileds "Copyright" et "Image partagée au public"		
+		// Gestion des custom fields "Copyright" et "Image partagée au public"		
     	// 85C370DA-F2D2-4063-8CCBB70AC652C29B is the id of the custom field "Copyright" 
     	// C8F68B05-ADED-457C-801C3741CAD9BA8F is the id of the custom field "Image partagée au public" 
     	// Ce champ sera automatiquement coché à Oui si le champ "Copyright" commence par « IMA/… », dans les autres cas il vaudra Non  	
