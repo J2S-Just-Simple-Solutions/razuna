@@ -360,7 +360,7 @@
 											selectedList = "<cfoutput>#cf_value#</cfoutput>";
 										}
 
-										//La liste complète
+										//La lijoin complète
 										var #toScript(category, "values")#
 										var list = _.compact(values).join(",").split(",");
 										var categoryList = [];

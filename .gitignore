@@ -2,7 +2,9 @@ global/host/dam/views/layouts/custom
 bluedragon.xml
 *.db
 admin/parsed/
-WEB-INF/bluedragon/
+WEB-INF/**
+WEB-INF/bluedragon/**
+WEB-INF/bluedragon/bluedragon.xml
 raz1/
 raz2/
 raz3/
@@ -11,5 +13,3 @@ raz5/
 global/config/keys.cfm
 assets/
 node_modules/
-WEB-INF/bluedragon/bluedragon.xml
-WEB-INF/bluedragon/bluedragon.xml

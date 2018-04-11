@@ -636,7 +636,6 @@
 		return true;
 	}
 	
-	
 	// Submit form
 	function filesubmit(){
 		$("##updatefile").css("display","");

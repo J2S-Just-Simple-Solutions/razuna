@@ -41,41 +41,47 @@
 	<input type="hidden" name="customfields" value="#qry_cf.recordcount#">
 		<div id="tabs_batch">
 			<ul>
-				<li tabindex="0"><a href="##batch_desc">#myFusebox.getApplicationData().defaults.trans("asset_desc")#</a></li>
-				<cfif attributes.what EQ "img" OR session.thefileid CONTAINS "-img" >
-					<cfif cs.tab_xmp_description><li tabindex="1"<cfif #session.hostid# EQ 5> hidden</cfif>><a href="##batch_xmp">XMP Description</a></li></cfif>
-					<cfif cs.tab_iptc_contact><li tabindex="2"<cfif #session.hostid# EQ 5> hidden</cfif>><a href="##iptc_contact">IPTC Contact</a></li></cfif>
-					<cfif cs.tab_iptc_image><li tabindex="3"<cfif #session.hostid# EQ 5> hidden</cfif>><a href="##iptc_image">IPTC Image</a></li></cfif>
-					<cfif cs.tab_iptc_content><li tabindex="4"<cfif #session.hostid# EQ 5> hidden</cfif>><a href="##iptc_content">IPTC Content</a></li></cfif>
-					<cfif cs.tab_iptc_status><li tabindex="5"<cfif #session.hostid# EQ 5> hidden</cfif>><a href="##iptc_status">IPTC Status</a></li></cfif>
-					<cfif cs.tab_origin><li tabindex="6"<cfif #session.hostid# EQ 5> hidden</cfif>><a href="##iptc_origin">Origin</a></li></cfif>
+				<cfif session.hostid NEQ 5>
+					<li tabindex="0"><a href="##batch_desc">#myFusebox.getApplicationData().defaults.trans("asset_desc")#</a></li>
+					<cfif cs.tab_custom_fields AND qry_cf.recordcount><li tabindex="1"><a href="##batch_custom">#myFusebox.getApplicationData().defaults.trans("custom_fields_header")#</a></li></cfif>
+				<cfelse>
+					<cfif cs.tab_custom_fields AND qry_cf.recordcount><li tabindex="0"><a href="##batch_custom">#myFusebox.getApplicationData().defaults.trans("custom_fields_header")#</a></li></cfif>
 				</cfif>
-				<cfif cs.tab_labels><li tabindex="7"<cfif #session.hostid# EQ 5> hidden</cfif>><a href="##batch_labels" onclick="activatechosen();">#myFusebox.getApplicationData().defaults.trans("labels")#</a></li></cfif>
-				<cfif cs.tab_custom_fields AND qry_cf.recordcount><li tabindex="8"><a href="##batch_custom">#myFusebox.getApplicationData().defaults.trans("custom_fields_header")#</a></li></cfif>
+				
+				<cfif cs.tab_labels><li tabindex="2"<cfif #session.hostid# EQ 5> hidden</cfif>><a href="##batch_labels" onclick="activatechosen();">#myFusebox.getApplicationData().defaults.trans("labels")#</a></li></cfif>
+				<cfif attributes.what EQ "img" OR session.thefileid CONTAINS "-img" >
+					<cfif cs.tab_xmp_description><li tabindex="3"<cfif #session.hostid# EQ 5> hidden</cfif>><a href="##batch_xmp">XMP Description</a></li></cfif>
+					<cfif cs.tab_iptc_contact><li tabindex="4"<cfif #session.hostid# EQ 5> hidden</cfif>><a href="##iptc_contact">IPTC Contact</a></li></cfif>
+					<cfif cs.tab_iptc_image><li tabindex="5"<cfif #session.hostid# EQ 5> hidden</cfif>><a href="##iptc_image">IPTC Image</a></li></cfif>
+					<cfif cs.tab_iptc_content><li tabindex="6"<cfif #session.hostid# EQ 5> hidden</cfif>><a href="##iptc_content">IPTC Content</a></li></cfif>
+					<cfif cs.tab_iptc_status><li tabindex="7"<cfif #session.hostid# EQ 5> hidden</cfif>><a href="##iptc_status">IPTC Status</a></li></cfif>
+					<cfif cs.tab_origin><li tabindex="8"<cfif #session.hostid# EQ 5> hidden</cfif>><a href="##iptc_origin">Origin</a></li></cfif>
+				</cfif>
 			</ul>
 			<!--- Descriptions & Keywords --->
 			<div id="batch_desc">
-				<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
-					<cfloop query="qry_langs">
-						<cfif lang_id EQ 1>
-							<cfset thisid = lang_id>
-							<tr>
-								<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
-								<td class="td2" width="100%"><textarea name="<cfif what EQ "doc">file<cfelseif what EQ "vid">vid<cfelseif what EQ "img">img<cfelseif what EQ "aud">aud<cfelseif what EQ "all">all</cfif>_desc_#lang_id#" class="text" rows="2" cols="50"<cfif attributes.what EQ "img"> onchange="javascript:document.form#attributes.file_id#.iptc_content_description_#lang_id#.value = document.form#attributes.file_id#.img_desc_#lang_id#.value"</cfif>></textarea></td>
-							</tr>
-							<tr>
-								<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
-								<td class="td2" width="100%"><textarea name="<cfif what EQ "doc">file<cfelseif what EQ "vid">vid<cfelseif what EQ "img">img<cfelseif what EQ "aud">aud<cfelseif what EQ "all">all</cfif>_keywords_#lang_id#" class="text" rows="2" cols="50"<cfif attributes.what EQ "img"> onchange="javascript:document.form#attributes.file_id#.iptc_content_keywords_#lang_id#.value = document.form#attributes.file_id#.img_keywords_#lang_id#.value"</cfif>></textarea></td>
-							</tr>
-						</cfif>
-						
-					</cfloop>
-					<!--- Expiry date field --->
-					<tr>
-						<td class="td2" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("expiry_date")#</strong></td>
-						<td class="td2" width="100%"><input name="expiry_date" id="expiry_date"> <span class="smallfont ltgrey">#myFusebox.getApplicationData().defaults.trans("expiry_date_remove")#</span></td>
-					</tr>
-				</table>
+				<cfif session.hostid NEQ 5>
+					<table border="0" cellpadding="0" cellspacing="0" width="100%" class="grid">
+						<cfloop query="qry_langs">
+							<!---<cfif lang_id EQ 1>--->
+								<cfset thisid = lang_id>
+								<tr <cfif lang_id NEQ 1>hidden</cfif>>
+									<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("description")#</strong></td>
+									<td class="td2" width="100%"><textarea name="<cfif what EQ "doc">file<cfelseif what EQ "vid">vid<cfelseif what EQ "img">img<cfelseif what EQ "aud">aud<cfelseif what EQ "all">all</cfif>_desc_#lang_id#" class="text" rows="2" cols="50"<cfif attributes.what EQ "img"> onchange="javascript:document.form#attributes.file_id#.iptc_content_description_#lang_id#.value = document.form#attributes.file_id#.img_desc_#lang_id#.value"</cfif>></textarea></td>
+								</tr>
+								<tr <cfif lang_id NEQ 1>hidden</cfif>>
+									<td class="td2" valign="top" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("keywords")#</strong></td>
+									<td class="td2" width="100%"><textarea name="<cfif what EQ "doc">file<cfelseif what EQ "vid">vid<cfelseif what EQ "img">img<cfelseif what EQ "aud">aud<cfelseif what EQ "all">all</cfif>_keywords_#lang_id#" class="text" rows="2" cols="50"<cfif attributes.what EQ "img"> onchange="javascript:document.form#attributes.file_id#.iptc_content_keywords_#lang_id#.value = document.form#attributes.file_id#.img_keywords_#lang_id#.value"</cfif>></textarea></td>
+								</tr>
+							<!---</cfif>---->							
+						</cfloop>
+						<!--- Expiry date field --->
+						<tr>
+							<td class="td2" width="1%" nowrap="true"><strong>#myFusebox.getApplicationData().defaults.trans("expiry_date")#</strong></td>
+							<td class="td2" width="100%"><input name="expiry_date" id="expiry_date"> <span class="smallfont ltgrey">#myFusebox.getApplicationData().defaults.trans("expiry_date_remove")#</span></td>
+						</tr>
+					</table>
+				</cfif>
 			</div>
 			<cfif attributes.what EQ "img" OR session.thefileid CONTAINS "-img">
 				<!--- XMP Description --->
@@ -145,7 +151,11 @@
 			<p>#myFusebox.getApplicationData().defaults.trans("batch_replace_warning")#</p>
 		</div>
 		<!--- Submit Button --->
-		<div style="float:right;padding:10px;">#myFusebox.getApplicationData().defaults.trans("batch_desc_1")# <input type="radio" name="batch_replace" value="true" onclick="$('##dialog').dialog();"/> #myFusebox.getApplicationData().defaults.trans("batch_desc_2")# <input type="radio" name="batch_replace" value="false" checked="checked" /> #myFusebox.getApplicationData().defaults.trans("batch_desc_3")#. <input type="submit" name="submit" value="#myFusebox.getApplicationData().defaults.trans("batch_recs")#" class="button"></div>
+		<cfif session.hostid NEQ 5>
+			<div style="float:right;padding:10px;">#myFusebox.getApplicationData().defaults.trans("batch_desc_1")# <input type="radio" name="batch_replace" value="true" onclick="$('##dialog').dialog();"/> #myFusebox.getApplicationData().defaults.trans("batch_desc_2")# <input type="radio" name="batch_replace" value="false" checked="checked" /> #myFusebox.getApplicationData().defaults.trans("batch_desc_3")#. <input type="submit" name="submit" value="#myFusebox.getApplicationData().defaults.trans("batch_recs")#" class="button"></div>
+		<cfelse>
+			<div style="float:right;padding:10px;">#myFusebox.getApplicationData().defaults.trans("batch_desc_1")# <input type="radio" name="batch_replace" value="true" /> #myFusebox.getApplicationData().defaults.trans("batch_desc_2")# <input type="radio" name="batch_replace" value="false" checked="checked" /> #myFusebox.getApplicationData().defaults.trans("batch_desc_3")#. <input type="submit" name="submit" value="#myFusebox.getApplicationData().defaults.trans("batch_recs")#" class="button"></div>
+		</cfif>
 		<div id="updatebatch" style="float:left;padding:10px;color:green;font-weight:bold;display:none;"></div>
 	</form>
 	<!--- Activate the Tabs --->
@@ -160,6 +170,7 @@
 			// Get values
 			var url = formaction("form0");
 			var items = formserialize("form0");
+			//alert(JSON.stringify(items))
 
 			// Submit Form
 			$.ajax({
