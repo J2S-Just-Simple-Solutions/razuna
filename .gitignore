@@ -13,3 +13,4 @@ raz5/
 global/config/keys.cfm
 assets/
 node_modules/
+WEB-INF/bluedragon/bluedragon.xml
