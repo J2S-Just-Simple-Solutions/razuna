@@ -1573,6 +1573,7 @@ Comment:<br>
 				<cfset resetcachetoken("files")>
 			</cfif>
 			<!--- Update DB --->
+	    	<cflog file="j2s_update_dates" type="info" text="Update DB - change_time (Before query): #now()#" >
 			<cfquery datasource="#application.razuna.datasource#">
 			UPDATE #session.hostdbprefix##thedb#
 			SET 
@@ -1584,6 +1585,7 @@ Comment:<br>
 				OR #grp# = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.fileid#">
 			</cfif>
 			</cfquery>
+	    	<cflog file="j2s_update_dates" type="info" text="Update DB - change_time (After query): #now()#" >
 		</cfif>
 	</cffunction>
 

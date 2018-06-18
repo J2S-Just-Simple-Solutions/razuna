@@ -299,7 +299,7 @@
 		<!--- Get file detail for log --->
 		<cfinvoke method="filedetail" theid="#arguments.thestruct.id#" thecolumn="img_filename, folder_id_r, img_filename_org filenameorg, lucene_key, link_kind, link_path_url, path_to_asset, thumb_extension, img_group" returnvariable="thedetail">
 		<cfif thedetail.recordcount NEQ 0>
-			<!--- Execute workflow --->
+			<!--- Execute workflow (AFTER REMOVE IMAGE) --->
 			<cfset arguments.thestruct.fileid = arguments.thestruct.id>
 			<cfset arguments.thestruct.file_name = thedetail.img_filename>
 			<cfset arguments.thestruct.thefiletype = "img">
@@ -402,7 +402,7 @@
 		WHERE img_id = <cfqueryparam value="#arguments.thestruct.id#" cfsqltype="CF_SQL_VARCHAR">
 		AND host_id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#session.hostid#">
 		</cfquery>
-		<!--- Execute workflow --->
+		<!--- Execute workflow  (AFTER TRASH IMAGE) --->
 		<cfset arguments.thestruct.fileid = arguments.thestruct.id>
 		<!--- <cfset arguments.thestruct.file_name = thedetail.img_filename> --->
 		<cfset arguments.thestruct.thefiletype = "img">
@@ -437,7 +437,7 @@
 		WHERE img_id = <cfqueryparam value="#i#" cfsqltype="CF_SQL_VARCHAR">
 		AND host_id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#arguments.thestruct.hostid#">
 		</cfquery>
-		<!--- Execute workflow --->
+		<!--- Execute workflow (AFTER TRASH MANY IMAGE) --->
 		<cfset arguments.thestruct.fileid = i>
 		<!--- <cfset arguments.thestruct.file_name = thedetail.img_filename> --->
 		<cfset arguments.thestruct.thefiletype = listlast(i,"-")>
@@ -611,7 +611,7 @@
 		<!--- Get file detail for log --->
 		<cfinvoke method="filedetail" theid="#i#" thecolumn="img_filename, folder_id_r, img_filename_org filenameorg, lucene_key, link_kind, link_path_url, path_to_asset, thumb_extension" returnvariable="thedetail">
 		<cfif thedetail.recordcount NEQ 0>
-			<!--- Execute workflow (but only if we DO NOT come from the remove folder) --->
+			<!--- Execute workflow(AFTER REMOVE MANY IMAGE) (but only if we DO NOT come from the remove folder) --->
 			<cfif !arguments.thestruct.fromfolderremove>
 				<cfset arguments.thestruct.fileid = i>
 				<cfset arguments.thestruct.file_name = thedetail.img_filename>
@@ -904,6 +904,9 @@
 	<cfparam name="arguments.thestruct.frombatch" default="F">
 	<cfparam name="arguments.thestruct.batch_replace" default="true">
 	<cfset var renlist ="-1">
+
+<cflog file="j2s_update_dates" type="info" text="SAVE THE IMAGE DETAILS : #now()#" >
+
 	<!--- RAZ-2837 :: Update Metadata when renditions exists and rendition's metadata option is True --->
 	<cfif (structKeyExists(arguments.thestruct,'qry_related') AND arguments.thestruct.qry_related.recordcount NEQ 0) AND (structKeyExists(arguments.thestruct,'option_rendition_meta') AND arguments.thestruct.option_rendition_meta EQ 'true')>
 		<!--- Get additional renditions --->
@@ -1084,7 +1087,7 @@
 			</cfif>
 		</cfif>
 
-		<!--- Execute workflow --->
+		<!--- Execute workflow (AFTER SAVE THE IMAGE DETAILS) --->
 		<cfset arguments.thestruct.fileid = arguments.thestruct.file_id>
 		<cfset arguments.thestruct.file_name = qryorg.img_filename>
 		<cfset arguments.thestruct.thefiletype = "img">
@@ -2093,7 +2096,7 @@
 					<cfinvoke component="global" method="update_dates" type="img" fileid="#arguments.thestruct.img_id#" />
 					<!--- Move related renditions too --->
 					<cfinvoke method="moverelated" thestruct="#arguments.thestruct#">
-					<!--- Execute workflow --->
+					<!--- Execute workflow (AFTER MOVE IMAGE) --->
 					<cfset arguments.thestruct.fileid = arguments.thestruct.img_id>
 					<cfset arguments.thestruct.file_name = arguments.thestruct.qryimg.img_filename>
 					<cfset arguments.thestruct.thefiletype = "img">

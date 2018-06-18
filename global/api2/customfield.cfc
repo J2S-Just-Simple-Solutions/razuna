@@ -134,6 +134,9 @@
 		<cfset var qry = "">
 		<!--- Check to see if session is valid --->
 		<cfif thesession>
+
+			<cflog file="j2s_update_dates" type="info" text="Update DB - change_date: #now()#" >
+			
 			<!--- Deserialize the JSON back into a struct --->
 			<cfset thejson = DeserializeJSON(arguments.field_values)>
 			<!--- Loop over the assetid --->
@@ -222,6 +225,9 @@
 						<!--- End Nick Ryan Edit --->
 					</cfloop>
 					<!--- update change date (since we don't know the type we simply update all) --->
+
+			<cflog file="j2s_update_dates" type="info" text="Update change date (since we don't know the type we simply update all)" >
+
 					<cfquery datasource="#application.razuna.api.dsn#">
 					Update #application.razuna.api.prefix["#arguments.api_key#"]#images
 					SET 
