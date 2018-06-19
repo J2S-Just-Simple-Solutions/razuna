@@ -7,6 +7,7 @@
     <assert>true</assert>
     <missingtemplatehandler></missingtemplatehandler>
     <tempdirectory>/WEB-INF/bluedragon/work/temp</tempdirectory>
+    <lastfile>/opt/razuna_tomcat_1_7/tomcat/webapps/razuna-dev/WEB-INF/bluedragon/bluedragon.xml.bak.1</lastfile>
     <runtimelogging>true</runtimelogging>
     <deniedips></deniedips>
     <defaultcharset>UTF-8</defaultcharset>
@@ -19,7 +20,7 @@
     <scriptprotect>false</scriptprotect>
     <nativelibdir>/WEB-INF/bin</nativelibdir>
     <errorhandler></errorhandler>
-    <lastupdated>05/Dec/2016 12:46.27</lastupdated>
+    <lastupdated>19/Jun/2018 11:45.08</lastupdated>
     <allowedips></allowedips>
     <whitespacecomp>true</whitespacecomp>
   </system>
@@ -46,6 +47,31 @@
   </fonts>
   <cfquery>
     <cache>true</cache>
+    <datasource name="razuna_client">
+      <displayname>razuna_client</displayname>
+      <password>E5SRlTLMwf1Ay8CNRw==</password>
+      <connectionretries>0</connectionretries>
+      <sqldelete>true</sqldelete>
+      <sqlupdate>true</sqlupdate>
+      <username>razuna_client</username>
+      <drivername>com.mysql.jdbc.Driver</drivername>
+      <sqlstoredprocedures>true</sqlstoredprocedures>
+      <perrequestconnections>false</perrequestconnections>
+      <sqlinsert>true</sqlinsert>
+      <sqlselect>true</sqlselect>
+      <connectiontimeout>120</connectiontimeout>
+      <port>3306</port>
+      <server>db.razuna.com</server>
+      <databasename>razuna_clients</databasename>
+      <description></description>
+      <connectstring>zeroDateTimeBehavior=convertToNull</connectstring>
+      <logintimeout>120</logintimeout>
+      <initstring></initstring>
+      <hoststring>jdbc:mysql://db.razuna.com:3306/razuna_clients?cacheResultSetMetadata=false&amp;autoReconnect=true&amp;useEncoding=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull</hoststring>
+      <maxconnections>3</maxconnections>
+      <name>razuna_client</name>
+    </datasource>
+    <cachecount>1000</cachecount>
     <dbdrivers>
       <driver name="microsoft sql server (jtds)">
         <datasourceconfigpage>sqlserver-jtds.cfm</datasourceconfigpage>
@@ -118,31 +144,6 @@
         <defaultport>5432</defaultport>
       </driver>
     </dbdrivers>
-    <datasource name="razuna_client">
-      <displayname>razuna_client</displayname>
-      <password>E5SRlTLMwf1Ay8CNRw==</password>
-      <connectionretries>0</connectionretries>
-      <sqldelete>true</sqldelete>
-      <sqlupdate>true</sqlupdate>
-      <username>razuna_client</username>
-      <drivername>com.mysql.jdbc.Driver</drivername>
-      <sqlstoredprocedures>true</sqlstoredprocedures>
-      <perrequestconnections>false</perrequestconnections>
-      <sqlinsert>true</sqlinsert>
-      <sqlselect>true</sqlselect>
-      <connectiontimeout>120</connectiontimeout>
-      <port>3306</port>
-      <server>db.razuna.com</server>
-      <databasename>razuna_clients</databasename>
-      <description></description>
-      <connectstring>zeroDateTimeBehavior=convertToNull</connectstring>
-      <logintimeout>120</logintimeout>
-      <initstring></initstring>
-      <hoststring>jdbc:mysql://db.razuna.com:3306/razuna_clients?cacheResultSetMetadata=false&amp;autoReconnect=true&amp;useEncoding=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull</hoststring>
-      <maxconnections>3</maxconnections>
-      <name>razuna_client</name>
-    </datasource>
-    <cachecount>1000</cachecount>
   </cfquery>
   <debugoutput>
     <executiontimes>

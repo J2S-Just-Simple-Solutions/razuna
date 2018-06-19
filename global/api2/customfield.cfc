@@ -129,14 +129,15 @@
 		<cfargument name="api_key" required="true">
 		<cfargument name="assetid" required="true">
 		<cfargument name="field_values" required="true">
+
+<!--- DEBUG J2S --->
+<cflog file="j2s" type="Information" text="customfield.cfc - setfieldvalue - line 134" >
+
 		<!--- Check key --->
 		<cfset var thesession = checkdb(arguments.api_key)>
 		<cfset var qry = "">
 		<!--- Check to see if session is valid --->
 		<cfif thesession>
-
-			<cflog file="j2s_update_dates" type="info" text="Update DB - change_date: #now()#" >
-			
 			<!--- Deserialize the JSON back into a struct --->
 			<cfset thejson = DeserializeJSON(arguments.field_values)>
 			<!--- Loop over the assetid --->
@@ -225,9 +226,6 @@
 						<!--- End Nick Ryan Edit --->
 					</cfloop>
 					<!--- update change date (since we don't know the type we simply update all) --->
-
-			<cflog file="j2s_update_dates" type="info" text="Update change date (since we don't know the type we simply update all)" >
-
 					<cfquery datasource="#application.razuna.api.dsn#">
 					Update #application.razuna.api.prefix["#arguments.api_key#"]#images
 					SET 
@@ -286,6 +284,9 @@
 		<cfreturn thexml>
 	</cffunction>
 	
+<!--- DEBUG J2S --->
+<cflog file="j2s" type="Information" text="customfield.cfc - setfieldvaluebulk - line 288" >
+
 	<!--- Set Custom Field Value in bulk --->
 	<cffunction name="setfieldvaluebulk" access="remote" output="false" returntype="struct" returnformat="json">
 		<cfargument name="api_key" required="true">
@@ -294,6 +295,7 @@
 		<cfset var thesession = checkdb(arguments.api_key)>
 		<!--- Check to see if session is valid --->
 		<cfif thesession>
+		
 			<!--- Set thread --->
 			<cfthread action="run" name="#createuuid()#" intstruct="#arguments#">
 				<!--- Grab the json and deserialize it --->

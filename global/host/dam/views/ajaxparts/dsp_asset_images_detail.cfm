@@ -643,6 +643,7 @@
 		$("##updatefile").fadeTo("fast", 100);
 		var url = formaction("form#attributes.file_id#");
 		var items = formserialize("form#attributes.file_id#");
+
 		// Submit Form
        	$.ajax({
 			type: "POST",
@@ -700,7 +701,7 @@
 	// Activate Chosen
 	$(".chzn-select").chosen({search_contains: true}).next().css('min-width', "390px");
 
-	//Gestion du controle de rique de perte de données sans sauvegarde
+	//Gestion du controle de risque de perte de données sans sauvegarde
 	$("##tab_detail").ready(function(){
 		localStorage.removeItem("asset_details_modified");
 		var details = this;
