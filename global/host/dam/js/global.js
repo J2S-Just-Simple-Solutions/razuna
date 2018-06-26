@@ -435,7 +435,7 @@ function checkentry(){
 		var p1 = theentry.substr(theentry,1);
 		// Now check
 		if (illegalChars.test(p1)){
-			alert('The first character of your search string is an illegal one. Please remove it!');
+			alert('Le premier caractère de votre chaîne de recherche est illégal. Veuillez le retirer s\'il vous plaît !');
 		}
 		else {
 			// Show loading bar
@@ -1261,7 +1261,7 @@ function searchadv_files(theform, thefa, folderid) {
 	var p1 = searchtext.substr(searchtext,1);
 	// Now check
 	if (illegalChars.test(p1)){
-		alert('The first character of your search string is an illegal one. Please remove it!');
+		alert('Le premier caractère de votre chaîne de recherche est illégal. Veuillez le retirer s\'il vous plaît !');
 	}
 	else {
 		// If we come from a folder search we direct into the folder view
@@ -1303,7 +1303,7 @@ function searchadv_videos(theform, thefa, folderid) {
 	var p1 = searchtext.substr(searchtext,1);
 	// Now check
 	if (illegalChars.test(p1)){
-		alert('The first character of your search string is an illegal one. Please remove it!');
+		alert('Le premier caractère de votre chaîne de recherche est illégal. Veuillez le retirer s\'il vous plaît !');
 	}
 	else {
 		// If we come from a folder search we direct into the folder view
@@ -1347,7 +1347,7 @@ function searchadv_images(theform, thefa, folderid) {
 	var p1 = searchtext.substr(searchtext,1);
 	// Now check
 	if (illegalChars.test(p1)){
-		alert('The first character of your search string is an illegal one. Please remove it!');
+		alert('Le premier caractère de votre chaîne de recherche est illégal. Veuillez le retirer s\'il vous plaît !');
 	}
 	else {
 		// If we come from a folder search we direct into the folder view
@@ -1389,7 +1389,7 @@ function searchadv_audios(theform, thefa, folderid) {
 	var p1 = searchtext.substr(searchtext,1);
 	// Now check
 	if (illegalChars.test(p1)){
-		alert('The first character of your search string is an illegal one. Please remove it!');
+		alert('Le premier caractère de votre chaîne de recherche est illégal. Veuillez le retirer s\'il vous plaît !');
 	}
 	else {
 		// If we come from a folder search we direct into the folder view
