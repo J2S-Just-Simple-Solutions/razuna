@@ -941,6 +941,10 @@
 					<cfset var thiskeywords = "img_keywords_#langindex#">
 				<!--- </cfif> --->
 			</cfif>
+
+			<!--- Log  --->
+			<cflog application="no" file="j2s" type="Information" text="Save Image détails"> 
+
 			<cfset var l = langindex>
 			<cfif thisdesc CONTAINS l OR thiskeywords CONTAINS l>
 				<cfloop list="#arguments.thestruct.file_id#" delimiters="," index="f">
