@@ -255,7 +255,8 @@
 			<!--- Remove the cf_ part so we only get the id --->
 			<cfset theid = replacenocase("#i#", "cf_", "", "ALL")>
 			<!--- Remove carriage return and new line --->
-			<cfset thevalue = REReplace(arguments.thestruct[i], "\r\n|\n\r|\n|\r", "", "all")>
+			<!--- IMADEV-21 <cfset thevalue = REReplace(arguments.thestruct[i], "\r\n|\n\r|\n|\r", "", "all")> --->
+			<cfset thevalue = arguments.thestruct[i]>
 			<!--- RAZ-2837 :: Update custom fields when renditions exists and rendition's metadata option is True --->
 			<cfif structKeyExists(arguments.thestruct,'qry_related') AND structKeyExists(arguments.thestruct,'option_rendition_meta') AND arguments.thestruct.option_rendition_meta EQ 'true'>
 				<!--- Get additional renditions --->
