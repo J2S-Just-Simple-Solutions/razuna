@@ -115,7 +115,7 @@
 		<cfargument name="api_key" required="true" type="string">
 		<cfargument name="host_id" required="true" type="string">
 
-		<!--- Les donnée à importer --->
+		<!--- Les données à importer --->
 		<cfset fields = [["#createuuid()#","checkbox",2,"T","all","","","true","true",2,"","ACE42BD2-6177-4371-80C7E047ACFAD517",1,"test pour import",2,"DB17B2CF-F35D-48D7-A68021CEE3494730"]]>
 
 		<!--- Je controle la session --->

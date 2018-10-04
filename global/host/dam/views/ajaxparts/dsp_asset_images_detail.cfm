@@ -548,7 +548,6 @@
 				var val_filename = $('##fname').val();
 				if (val_filename == '') reqfield = true;
 			</cfif>
-			console.log("<cfoutput>#cs.req_description#</cfoutput>");
 			<cfif cs.req_description>
 				var val_desc = $('##desc_1').val();
 				if (val_desc == '') reqfield = true;
@@ -615,7 +614,7 @@
 			return false;		
 		}
 
-		// Gestion des custom fileds "Copyright" et "Image partagée au public"		
+		// Gestion des custom fields "Copyright" et "Image partagée au public"		
     	// 85C370DA-F2D2-4063-8CCBB70AC652C29B is the id of the custom field "Copyright" 
     	// C8F68B05-ADED-457C-801C3741CAD9BA8F is the id of the custom field "Image partagée au public" 
     	// Ce champ sera automatiquement coché à Oui si le champ "Copyright" commence par « IMA/… », dans les autres cas il vaudra Non
@@ -673,8 +672,9 @@
 
 	$("input[name=pMetadata]").ready(function(){
 
-	$("span, button").mouseup(function(e){console.log(e);e.preventDefault();e.stopImmediatePropagation();})
-
+	$("span, button").mouseup(function(e){
+		console.log(e);
+		e.preventDefault();e.stopImmediatePropagation();})
 		if(localStorage.getItem("file_id") && localStorage.getItem("file_id").length > 0 && localStorage.getItem("file_id") !== "#attributes.file_id#")
 			$("input[name=pMetadata]").removeProp("disabled");
 		else
@@ -696,7 +696,7 @@
 	// Activate Chosen
 	$(".chzn-select").chosen({search_contains: true}).next().css('min-width', "390px");
 
-	//Gestion du controle de rique de perte de données sans sauvegarde
+	//Gestion du controle de risque de perte de données sans sauvegarde
 	$("##tab_detail").ready(function(){
 		localStorage.removeItem("asset_details_modified");
 		var details = this;

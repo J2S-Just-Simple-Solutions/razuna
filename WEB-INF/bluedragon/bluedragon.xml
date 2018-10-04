@@ -3,16 +3,12 @@
   <system>
     <buffersize>0</buffersize>
     <strictarraypassbyreference>false</strictarraypassbyreference>
-    <password>x9Bck62</password>
+    <password>admin</password>
     <licensekey></licensekey>
     <assert>true</assert>
     <missingtemplatehandler></missingtemplatehandler>
     <tempdirectory>/WEB-INF/bluedragon/work/temp</tempdirectory>
-<<<<<<< HEAD
-    <lastfile>/opt/razuna_tomcat_1_7/tomcat/webapps/razuna/WEB-INF/bluedragon/bluedragon.xml.bak.1</lastfile>
-=======
     <lastfile>/opt/razuna_tomcat_1_7/tomcat/webapps/razuna-dev/WEB-INF/bluedragon/bluedragon.xml.bak.1</lastfile>
->>>>>>> 1a97de3d875ebf6eebb7645586539a6661bd9920
     <runtimelogging>true</runtimelogging>
     <deniedips></deniedips>
     <defaultcharset>UTF-8</defaultcharset>
@@ -21,18 +17,14 @@
     <scriptsrc>/bluedragon/scripts</scriptsrc>
     <formurlcombined>false</formurlcombined>
     <resourcepath>/WEB-INF/resources</resourcepath>
-    <debug>false</debug>
     <servercfc>/WEB-INF/Server.cfc</servercfc>
+    <debug>false</debug>
     <legacyformvalidation>false</legacyformvalidation>
     <scriptprotect>false</scriptprotect>
     <nativelibdir>/WEB-INF/bin</nativelibdir>
     <errorhandler></errorhandler>
-<<<<<<< HEAD
     <functionscopedvariables>false</functionscopedvariables>
-    <lastupdated>22/Jan/2018 17:48.32</lastupdated>
-=======
-    <lastupdated>27/Nov/2017 14:30.23</lastupdated>
->>>>>>> 1a97de3d875ebf6eebb7645586539a6661bd9920
+    <lastupdated>04/Oct/2018 16:36.47</lastupdated>
     <whitespacecomp>true</whitespacecomp>
     <allowedips></allowedips>
   </system>
@@ -48,36 +40,6 @@
     <trustcache>false</trustcache>
   </file>
   <cfschedule>
-    <task name="razassetexpiry">
-      <porttouse>-1</porttouse>
-      <password></password>
-      <resolvelinks>false</resolvelinks>
-      <username></username>
-      <pause>false</pause>
-      <starttime>00:01:00</starttime>
-      <requesttimeout>30</requesttimeout>
-      <proxyport>80</proxyport>
-      <proxypassword></proxypassword>
-      <publishpath></publishpath>
-      <enddate></enddate>
-<<<<<<< HEAD
-      <urltouse>http://ima-dam.j2s.net/razuna/admin/index.cfm?fa=c.w_asset_expiry_task</urltouse>
-=======
-      <urltouse>https://10.2.100.175/razuna-dev/admin/index.cfm?fa=c.w_asset_expiry_task</urltouse>
->>>>>>> 1a97de3d875ebf6eebb7645586539a6661bd9920
-      <proxyusername></proxyusername>
-      <publish>false</publish>
-      <proxyserver></proxyserver>
-      <publishfile></publishfile>
-      <interval>300</interval>
-<<<<<<< HEAD
-      <startdate>01/22/2018</startdate>
-=======
-      <startdate>11/27/2017</startdate>
->>>>>>> 1a97de3d875ebf6eebb7645586539a6661bd9920
-      <endtime>23:59:00</endtime>
-      <name>razassetexpiry</name>
-    </task>
     <task name="razfoldersubscribe">
       <porttouse>-1</porttouse>
       <password></password>
@@ -90,23 +52,37 @@
       <proxypassword></proxypassword>
       <publishpath></publishpath>
       <enddate></enddate>
-<<<<<<< HEAD
-      <urltouse>http://ima-dam.j2s.net/razuna/admin/index.cfm?fa=c.folder_subscribe_task</urltouse>
-=======
-      <urltouse>https://10.2.100.175/razuna-dev/admin/index.cfm?fa=c.folder_subscribe_task</urltouse>
->>>>>>> 1a97de3d875ebf6eebb7645586539a6661bd9920
+      <urltouse>http://10.2.103.16:8080/razuna-dev/admin/index.cfm?fa=c.folder_subscribe_task</urltouse>
       <proxyusername></proxyusername>
       <publish>false</publish>
       <proxyserver></proxyserver>
       <publishfile></publishfile>
       <interval>500</interval>
-<<<<<<< HEAD
-      <startdate>01/22/2018</startdate>
-=======
-      <startdate>11/27/2017</startdate>
->>>>>>> 1a97de3d875ebf6eebb7645586539a6661bd9920
+      <startdate>10/04/2018</startdate>
       <endtime>23:59:00</endtime>
       <name>razfoldersubscribe</name>
+    </task>
+    <task name="razassetexpiry">
+      <porttouse>-1</porttouse>
+      <password></password>
+      <resolvelinks>false</resolvelinks>
+      <username></username>
+      <pause>false</pause>
+      <starttime>00:01:00</starttime>
+      <requesttimeout>30</requesttimeout>
+      <proxyport>80</proxyport>
+      <proxypassword></proxypassword>
+      <publishpath></publishpath>
+      <enddate></enddate>
+      <urltouse>http://10.2.103.16:8080/razuna-dev/admin/index.cfm?fa=c.w_asset_expiry_task</urltouse>
+      <proxyusername></proxyusername>
+      <publish>false</publish>
+      <proxyserver></proxyserver>
+      <publishfile></publishfile>
+      <interval>300</interval>
+      <startdate>10/04/2018</startdate>
+      <endtime>23:59:00</endtime>
+      <name>razassetexpiry</name>
     </task>
     <task name="razftpnotifications">
       <porttouse>-1</porttouse>
@@ -120,102 +96,17 @@
       <proxypassword></proxypassword>
       <publishpath></publishpath>
       <enddate></enddate>
-<<<<<<< HEAD
-      <urltouse>http://ima-dam.j2s.net/razuna/admin/index.cfm?fa=c.w_ftp_notifications_task</urltouse>
-=======
-      <urltouse>https://10.2.100.175/razuna-dev/admin/index.cfm?fa=c.w_ftp_notifications_task</urltouse>
->>>>>>> 1a97de3d875ebf6eebb7645586539a6661bd9920
+      <urltouse>http://10.2.103.16:8080/razuna-dev/admin/index.cfm?fa=c.w_ftp_notifications_task</urltouse>
       <proxyusername></proxyusername>
       <publish>false</publish>
       <proxyserver></proxyserver>
       <publishfile></publishfile>
       <interval>3600</interval>
-<<<<<<< HEAD
-      <startdate>01/22/2018</startdate>
-      <endtime>23:59:00</endtime>
-      <name>razftpnotifications</name>
-    </task>
-    <task name="razscheduleduploadevent[662ab293-206c-4f7d-a758f41af4873d08]">
-      <porttouse>-1</porttouse>
-      <password></password>
-      <resolvelinks>false</resolvelinks>
-      <username></username>
-      <pause>false</pause>
-      <starttime>00:01:00</starttime>
-      <requesttimeout>30</requesttimeout>
-      <proxyport>80</proxyport>
-      <proxypassword></proxypassword>
-      <publishpath></publishpath>
-      <enddate></enddate>
-      <urltouse>http://ima-razuna1.j2s.net/razuna/raz6/dam/index.cfm?fa=c.scheduler_doit&amp;sched_id=662AB293-206C-4F7D-A758F41AF4873D08</urltouse>
-      <proxyusername></proxyusername>
-      <publish>false</publish>
-      <proxyserver></proxyserver>
-      <publishfile></publishfile>
-      <interval>120</interval>
-      <startdate>11/02/2015</startdate>
-      <endtime>23:59:00</endtime>
-      <name>razscheduleduploadevent[662ab293-206c-4f7d-a758f41af4873d08]</name>
-    </task>
-  </cfschedule>
-  <cfcollection>
-    <collection name="5">
-      <name>5</name>
-      <storebody>false</storebody>
-      <relative>true</relative>
-      <path>/WEB-INF/collections/5</path>
-      <language>english</language>
-    </collection>
-    <collection name="6">
-      <name>6</name>
-      <storebody>false</storebody>
-      <relative>true</relative>
-      <path>/WEB-INF/collections/6</path>
-      <language>english</language>
-    </collection>
-    <collection name="1">
-      <name>1</name>
-      <storebody>false</storebody>
-      <relative>true</relative>
-      <path>/WEB-INF/collections/1</path>
-      <language>english</language>
-    </collection>
-    <collection name="7">
-      <name>7</name>
-      <storebody>false</storebody>
-      <relative>true</relative>
-      <path>/WEB-INF/collections/7</path>
-      <language>english</language>
-    </collection>
-    <collection name="8">
-      <storebody>false</storebody>
-      <name>8</name>
-      <relative>true</relative>
-      <path>/WEB-INF/collections/8</path>
-      <language>english</language>
-    </collection>
-    <collection name="3">
-      <name>3</name>
-      <storebody>false</storebody>
-      <relative>true</relative>
-      <path>/WEB-INF/collections/3</path>
-      <language>english</language>
-    </collection>
-    <collection name="4">
-      <name>4</name>
-      <storebody>false</storebody>
-      <relative>true</relative>
-      <path>/WEB-INF/collections/4</path>
-      <language>english</language>
-    </collection>
-  </cfcollection>
-=======
-      <startdate>11/27/2017</startdate>
+      <startdate>10/04/2018</startdate>
       <endtime>23:59:00</endtime>
       <name>razftpnotifications</name>
     </task>
   </cfschedule>
->>>>>>> 1a97de3d875ebf6eebb7645586539a6661bd9920
   <javacustomtags>
     <classes>/WEB-INF/classes</classes>
   </javacustomtags>
@@ -228,38 +119,55 @@
   </fonts>
   <cfquery>
     <cache>true</cache>
-    <datasource name="oracle">
-      <displayname>oracle</displayname>
-      <password></password>
+    <cachecount>1000</cachecount>
+    <datasource name="razuna_client">
+      <displayname>razuna_client</displayname>
+      <password>E5SRlTLMwf1Ay8CNRw==</password>
       <connectionretries>0</connectionretries>
       <sqldelete>true</sqldelete>
       <sqlupdate>true</sqlupdate>
-      <username>razuna</username>
-      <drivername>oracle.jdbc.OracleDriver</drivername>
+      <username>razuna_client</username>
+      <drivername>com.mysql.jdbc.Driver</drivername>
       <sqlstoredprocedures>true</sqlstoredprocedures>
       <perrequestconnections>false</perrequestconnections>
       <sqlinsert>true</sqlinsert>
       <sqlselect>true</sqlselect>
       <connectiontimeout>120</connectiontimeout>
-      <port>1521</port>
-      <server>127.0.0.1</server>
-      <databasename>orcl</databasename>
+      <port>3306</port>
+      <server>db.razuna.com</server>
+      <databasename>razuna_clients</databasename>
       <description></description>
-      <connectstring></connectstring>
+      <connectstring>zeroDateTimeBehavior=convertToNull</connectstring>
       <initstring></initstring>
       <logintimeout>120</logintimeout>
-      <hoststring>jdbc:oracle:thin:@127.0.0.1:1521:orcl</hoststring>
+      <hoststring>jdbc:mysql://db.razuna.com:3306/razuna_clients?cacheResultSetMetadata=false&amp;autoReconnect=true&amp;useEncoding=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull</hoststring>
+      <maxconnections>3</maxconnections>
+      <name>razuna_client</name>
+    </datasource>
+    <datasource name="razuna_default">
+      <displayname>razuna_default</displayname>
+      <password>E5SRlQSbiM0Ym5HXGJyb3w==</password>
+      <connectionretries>0</connectionretries>
+      <sqldelete>true</sqldelete>
+      <sqlupdate>true</sqlupdate>
+      <username>razuna</username>
+      <drivername>org.h2.Driver</drivername>
+      <sqlstoredprocedures>true</sqlstoredprocedures>
+      <perrequestconnections>false</perrequestconnections>
+      <sqlinsert>true</sqlinsert>
+      <sqlselect>true</sqlselect>
+      <connectiontimeout>120</connectiontimeout>
+      <databasename>razuna_default</databasename>
+      <initstring></initstring>
+      <logintimeout>120</logintimeout>
+      <hoststring>jdbc:h2:/mnt/hgfs/razuna/db/razuna_default;CACHE_SIZE=100000;IGNORECASE=TRUE;MODE=Oracle;AUTO_RECONNECT=TRUE;AUTO_SERVER=TRUE</hoststring>
       <maxconnections>24</maxconnections>
-      <name>oracle</name>
+      <name>razuna_default</name>
     </datasource>
     <datasource name="mysql">
       <displayname>mysql</displayname>
-<<<<<<< HEAD
-=======
       <password>E5SRlQSVncw=</password>
->>>>>>> 1a97de3d875ebf6eebb7645586539a6661bd9920
       <connectionretries>0</connectionretries>
-      <password>E5SRlQSbiM0Ymw==</password>
       <sqldelete>true</sqldelete>
       <sqlupdate>true</sqlupdate>
       <username>root</username>
@@ -270,40 +178,14 @@
       <sqlselect>true</sqlselect>
       <connectiontimeout>120</connectiontimeout>
       <port>3306</port>
-      <server>ima-bdd2</server>
-      <databasename>razuna2</databasename>
-      <description></description>
-      <connectstring>zeroDateTimeBehavior=convertToNull</connectstring>
-      <logintimeout>120</logintimeout>
-<<<<<<< HEAD
-=======
-      <initstring></initstring>
-      <hoststring>jdbc:mysql://127.0.0.1:3306/razuna?cacheResultSetMetadata=false&amp;autoReconnect=true&amp;useEncoding=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull</hoststring>
-      <maxconnections>3</maxconnections>
-      <name>mysql</name>
-    </datasource>
-    <datasource name="psql">
-      <displayname>psql</displayname>
-      <password></password>
-      <connectionretries>0</connectionretries>
-      <sqldelete>true</sqldelete>
-      <sqlupdate>true</sqlupdate>
-      <username>razuna</username>
-      <drivername>org.postgresql.Driver</drivername>
-      <sqlstoredprocedures>true</sqlstoredprocedures>
-      <perrequestconnections>false</perrequestconnections>
-      <sqlinsert>true</sqlinsert>
-      <sqlselect>true</sqlselect>
-      <connectiontimeout>120</connectiontimeout>
-      <port>5432</port>
-      <server>127.0.0.1</server>
-      <databasename>postgres</databasename>
+      <server>localhost</server>
+      <databasename>razuna</databasename>
       <description></description>
       <connectstring></connectstring>
->>>>>>> 1a97de3d875ebf6eebb7645586539a6661bd9920
       <initstring></initstring>
-      <hoststring>jdbc:mysql://ima-bdd2:3306/razuna2?cacheResultSetMetadata=false&amp;autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull</hoststring>
-      <maxconnections>3</maxconnections>
+      <logintimeout>120</logintimeout>
+      <hoststring>jdbc:mysql://localhost:3306/razuna?cacheResultSetMetadata=false&amp;autoReconnect=true</hoststring>
+      <maxconnections>24</maxconnections>
       <name>mysql</name>
     </datasource>
     <slowlog>-1</slowlog>
@@ -379,57 +261,6 @@
         <defaultport>5432</defaultport>
       </driver>
     </dbdrivers>
-<<<<<<< HEAD
-    <datasource name="psql">
-      <displayname>psql</displayname>
-      <password></password>
-      <connectionretries>0</connectionretries>
-      <sqldelete>true</sqldelete>
-      <sqlupdate>true</sqlupdate>
-      <username>razuna</username>
-      <drivername>org.postgresql.Driver</drivername>
-      <sqlstoredprocedures>true</sqlstoredprocedures>
-      <perrequestconnections>false</perrequestconnections>
-      <sqlinsert>true</sqlinsert>
-      <sqlselect>true</sqlselect>
-      <connectiontimeout>120</connectiontimeout>
-      <port>5432</port>
-      <server>127.0.0.1</server>
-      <databasename>postgres</databasename>
-      <description></description>
-      <connectstring></connectstring>
-      <initstring></initstring>
-      <logintimeout>120</logintimeout>
-      <hoststring>jdbc:postgresql://127.0.0.1:5432/postgres</hoststring>
-      <maxconnections>24</maxconnections>
-      <name>psql</name>
-    </datasource>
-    <datasource name="h2">
-      <displayname>h2</displayname>
-      <password>E5SRlQSbiM0Ym5Dc</password>
-      <connectionretries>0</connectionretries>
-      <sqldelete>true</sqldelete>
-      <sqlupdate>true</sqlupdate>
-      <username>razuna</username>
-      <drivername>org.h2.Driver</drivername>
-      <sqlstoredprocedures>true</sqlstoredprocedures>
-      <perrequestconnections>false</perrequestconnections>
-      <sqlinsert>true</sqlinsert>
-      <sqlselect>true</sqlselect>
-      <connectiontimeout>120</connectiontimeout>
-      <port>0</port>
-      <server></server>
-      <databasename>razuna</databasename>
-      <description></description>
-      <connectstring>AUTO_RECONNECT=TRUE;AUTO_SERVER=TRUE</connectstring>
-      <logintimeout>120</logintimeout>
-      <initstring></initstring>
-      <hoststring>jdbc:h2:/opt/razuna_tomcat_1_7/tomcat/webapps/razuna/db/razuna;IGNORECASE=true;MODE=Oracle;AUTO_RECONNECT=TRUE;AUTO_SERVER=TRUE</hoststring>
-      <maxconnections>3</maxconnections>
-      <name>h2</name>
-    </datasource>
-=======
->>>>>>> 1a97de3d875ebf6eebb7645586539a6661bd9920
     <datasource name="razuna_backup">
       <displayname>razuna_backup</displayname>
       <password>E5SRlQSbiM0Ym5ba</password>
@@ -446,87 +277,10 @@
       <databasename>razuna_backup</databasename>
       <initstring></initstring>
       <logintimeout>120</logintimeout>
-<<<<<<< HEAD
-      <hoststring>jdbc:h2:/opt/razuna_tomcat_1_7/tomcat/webapps/razuna/admin/backup/razuna_backup;LOG=0;CACHE_SIZE=300000;IGNORECASE=TRUE;MODE=Oracle;AUTO_RECONNECT=TRUE;AUTO_SERVER=TRUE</hoststring>
-=======
-      <hoststring>jdbc:h2:/mnt/hgfs/Razuna/admin/backup/razuna_backup;LOG=0;CACHE_SIZE=300000;IGNORECASE=TRUE;MODE=Oracle;AUTO_RECONNECT=TRUE;AUTO_SERVER=TRUE</hoststring>
->>>>>>> 1a97de3d875ebf6eebb7645586539a6661bd9920
+      <hoststring>jdbc:h2:/mnt/hgfs/razuna/admin/backup/razuna_backup;LOG=0;CACHE_SIZE=300000;IGNORECASE=TRUE;MODE=Oracle;AUTO_RECONNECT=TRUE;AUTO_SERVER=TRUE</hoststring>
       <maxconnections>24</maxconnections>
       <name>razuna_backup</name>
     </datasource>
-    <datasource name="razuna_default">
-      <displayname>razuna_default</displayname>
-      <password>E5SRlQSbiM0Ym5HXGJyb3w==</password>
-      <connectionretries>0</connectionretries>
-      <sqldelete>true</sqldelete>
-      <sqlupdate>true</sqlupdate>
-      <username>razuna</username>
-      <drivername>org.h2.Driver</drivername>
-      <sqlstoredprocedures>true</sqlstoredprocedures>
-      <perrequestconnections>false</perrequestconnections>
-      <sqlinsert>true</sqlinsert>
-      <sqlselect>true</sqlselect>
-      <connectiontimeout>120</connectiontimeout>
-      <databasename>razuna_default</databasename>
-      <initstring></initstring>
-      <logintimeout>120</logintimeout>
-<<<<<<< HEAD
-      <hoststring>jdbc:h2:/opt/razuna_tomcat_1_7/tomcat/webapps/razuna/db/razuna_default;CACHE_SIZE=100000;IGNORECASE=TRUE;MODE=Oracle;AUTO_RECONNECT=TRUE;AUTO_SERVER=TRUE</hoststring>
-=======
-      <hoststring>jdbc:h2:/mnt/hgfs/Razuna/db/razuna_default;CACHE_SIZE=100000;IGNORECASE=TRUE;MODE=Oracle;AUTO_RECONNECT=TRUE;AUTO_SERVER=TRUE</hoststring>
->>>>>>> 1a97de3d875ebf6eebb7645586539a6661bd9920
-      <maxconnections>24</maxconnections>
-      <name>razuna_default</name>
-    </datasource>
-    <datasource name="mssql">
-      <displayname>mssql</displayname>
-      <password></password>
-      <connectionretries>0</connectionretries>
-      <sqldelete>true</sqldelete>
-      <sqlupdate>true</sqlupdate>
-      <username>razuna</username>
-      <drivername>net.sourceforge.jtds.jdbc.Driver</drivername>
-      <sqlstoredprocedures>true</sqlstoredprocedures>
-      <perrequestconnections>false</perrequestconnections>
-      <sqlinsert>true</sqlinsert>
-      <sqlselect>true</sqlselect>
-      <connectiontimeout>120</connectiontimeout>
-      <port>1433</port>
-      <server>127.0.0.1</server>
-      <databasename>razuna</databasename>
-      <description></description>
-      <connectstring></connectstring>
-      <logintimeout>120</logintimeout>
-      <initstring></initstring>
-      <hoststring>jdbc:jtds:sqlserver://127.0.0.1:1433/razuna</hoststring>
-      <maxconnections>24</maxconnections>
-      <name>mssql</name>
-    </datasource>
-    <datasource name="razuna_client">
-      <displayname>razuna_client</displayname>
-      <password>E5SRlTLMwf1Ay8CNRw==</password>
-      <connectionretries>0</connectionretries>
-      <sqldelete>true</sqldelete>
-      <sqlupdate>true</sqlupdate>
-      <username>razuna_client</username>
-      <drivername>com.mysql.jdbc.Driver</drivername>
-      <sqlstoredprocedures>true</sqlstoredprocedures>
-      <perrequestconnections>false</perrequestconnections>
-      <sqlinsert>true</sqlinsert>
-      <sqlselect>true</sqlselect>
-      <connectiontimeout>120</connectiontimeout>
-      <port>3306</port>
-      <server>db.razuna.com</server>
-      <databasename>razuna_clients</databasename>
-      <description></description>
-      <connectstring>zeroDateTimeBehavior=convertToNull</connectstring>
-      <initstring></initstring>
-      <logintimeout>120</logintimeout>
-      <hoststring>jdbc:mysql://db.razuna.com:3306/razuna_clients?cacheResultSetMetadata=false&amp;autoReconnect=true&amp;useEncoding=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull</hoststring>
-      <maxconnections>3</maxconnections>
-      <name>razuna_client</name>
-    </datasource>
-    <cachecount>1000</cachecount>
   </cfquery>
   <debugoutput>
     <enabled>false</enabled>
@@ -535,13 +289,13 @@
       <highlight>250</highlight>
     </executiontimes>
     <exceptions>
-      <show>true</show>
+      <show>false</show>
     </exceptions>
     <tracepoints>
       <show>false</show>
     </tracepoints>
     <database>
-      <show>true</show>
+      <show>false</show>
     </database>
     <timer>
       <show>false</show>
@@ -575,28 +329,20 @@
     <clientstorage>cookie</clientstorage>
   </cfapplication>
   <openbdadminapi>
-<<<<<<< HEAD
     <version>2.0</version>
-    <lastupdated>28/Nov/2017 17:23:22</lastupdated>
-=======
-    <version>1.3</version>
-    <lastupdated>21/Apr/2016 10:01:23</lastupdated>
->>>>>>> 1a97de3d875ebf6eebb7645586539a6661bd9920
+    <lastupdated>12/Jul/2018 18:24:47</lastupdated>
   </openbdadminapi>
   <cfmail>
-    <usetls>true</usetls>
     <interval>30</interval>
-    <charset>UTF-8</charset>
-    <domain></domain>
-    <smtpport>25</smtpport>
-    <smtpserver>noreply@j2s.net:gY83CvrX6p@smtp.gmail.com:587</smtpserver>
-    <timeout>60</timeout>
-    <usessl>false</usessl>
+    <smtpserver>localhost:25</smtpserver>
     <threads>2</threads>
-    <catchemail></catchemail>
+    <domain></domain>
+    <timeout>60</timeout>
+    <charset>UTF-8</charset>
+    <smtpport>25</smtpport>
   </cfmail>
   <cfcachecontent>
-    <datasource></datasource>
+    <datasource>mysql</datasource>
     <total>1000</total>
   </cfcachecontent>
   <cfmlcustomtags>

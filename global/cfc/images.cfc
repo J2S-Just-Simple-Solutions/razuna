@@ -942,9 +942,6 @@
 				<!--- </cfif> --->
 			</cfif>
 
-			<!--- Log  --->
-			<cflog application="no" file="j2s" type="Information" text="Save Image détails"> 
-
 			<cfset var l = langindex>
 			<cfif thisdesc CONTAINS l OR thiskeywords CONTAINS l>
 				<cfloop list="#arguments.thestruct.file_id#" delimiters="," index="f">
@@ -958,6 +955,12 @@
 						<cfif ishere.recordcount NEQ 0>
 							<cfset tdesc = evaluate(thisdesc)>
 							<cfset tkeywords = evaluate(thiskeywords)>
+
+			<!--- Log --->
+            <cflog application="no" file="j2s_image_cfc" type="Information" text="tdesc = #tdesc#">
+			<cfset var enc = URLEncodedFormat(tdesc)>
+			<cflog application="no" file="j2s_image_cfc" type="Information"  URLEncodedFormat(tdesc)="enc = #enc#">
+
 							<!--- If users chooses to append values --->
 							<cfif !arguments.thestruct.batch_replace>
 								<cfif ishere.img_description NEQ "">
