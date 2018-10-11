@@ -52,7 +52,7 @@
 			};
 			var searchHandler = function(value, html, text){
 				// Je décompose ma recherche
-				console.log(value)
+				// console.log(value)
 				value = value.replace(/[\w-]+:"[^"()]+"/g, function(match, contents){
 					var operation = match.split(":");
 					// On supprime les - de l'ID du customfield
@@ -85,7 +85,7 @@
 						// On supprime les guillemets qui entouraient la valeur 
 						var operationValues = operation[1].replace(/\"/g, "").split(" ");
 						// On traite le thésaurus ( SI je suis sur le champ thesaurus)
-						if(operationField === descriptorId.replace(/-/g,"")){getDescriptor(operationValues);}
+						// if(operationField === descriptorId.replace(/-/g,"")){getDescriptor(operationValues);}
 						// On fusionne les tableaux
 						operationValue = operationValues.join(" ");
 						// On remplace les espaces par espace+ID 
@@ -118,7 +118,7 @@
 			//Je crée mon champ de recherche
 			$("iframe").richTokenEditor({fields : fields.DATA, callback : searchHandler});	
 
-				//L'historique
+			//L'historique
 			$("select[name=historyAdv]").ready(function(){
 				lastSearch = localStorage.getItem("last_search_adv");
 				//Je la parse, si elle n'existe pas je la crée
