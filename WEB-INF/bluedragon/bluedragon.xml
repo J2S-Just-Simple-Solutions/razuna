@@ -17,16 +17,16 @@
     <scriptsrc>/bluedragon/scripts</scriptsrc>
     <formurlcombined>false</formurlcombined>
     <resourcepath>/WEB-INF/resources</resourcepath>
-    <servercfc>/WEB-INF/Server.cfc</servercfc>
     <debug>false</debug>
+    <servercfc>/WEB-INF/Server.cfc</servercfc>
     <legacyformvalidation>false</legacyformvalidation>
     <scriptprotect>false</scriptprotect>
     <nativelibdir>/WEB-INF/bin</nativelibdir>
     <errorhandler></errorhandler>
     <functionscopedvariables>false</functionscopedvariables>
-    <lastupdated>04/Oct/2018 16:36.47</lastupdated>
-    <whitespacecomp>true</whitespacecomp>
+    <lastupdated>12/Oct/2018 13:50.18</lastupdated>
     <allowedips></allowedips>
+    <whitespacecomp>true</whitespacecomp>
   </system>
   <cfmappings>
     <mapping name="/fusebox5">
@@ -40,28 +40,6 @@
     <trustcache>false</trustcache>
   </file>
   <cfschedule>
-    <task name="razfoldersubscribe">
-      <porttouse>-1</porttouse>
-      <password></password>
-      <resolvelinks>false</resolvelinks>
-      <username></username>
-      <pause>false</pause>
-      <starttime>00:01:00</starttime>
-      <requesttimeout>30</requesttimeout>
-      <proxyport>80</proxyport>
-      <proxypassword></proxypassword>
-      <publishpath></publishpath>
-      <enddate></enddate>
-      <urltouse>http://10.2.103.16:8080/razuna-dev/admin/index.cfm?fa=c.folder_subscribe_task</urltouse>
-      <proxyusername></proxyusername>
-      <publish>false</publish>
-      <proxyserver></proxyserver>
-      <publishfile></publishfile>
-      <interval>500</interval>
-      <startdate>10/04/2018</startdate>
-      <endtime>23:59:00</endtime>
-      <name>razfoldersubscribe</name>
-    </task>
     <task name="razassetexpiry">
       <porttouse>-1</porttouse>
       <password></password>
@@ -83,6 +61,28 @@
       <startdate>10/04/2018</startdate>
       <endtime>23:59:00</endtime>
       <name>razassetexpiry</name>
+    </task>
+    <task name="razfoldersubscribe">
+      <porttouse>-1</porttouse>
+      <password></password>
+      <resolvelinks>false</resolvelinks>
+      <username></username>
+      <pause>false</pause>
+      <starttime>00:01:00</starttime>
+      <requesttimeout>30</requesttimeout>
+      <proxyport>80</proxyport>
+      <proxypassword></proxypassword>
+      <publishpath></publishpath>
+      <enddate></enddate>
+      <urltouse>http://10.2.103.16:8080/razuna-dev/admin/index.cfm?fa=c.folder_subscribe_task</urltouse>
+      <proxyusername></proxyusername>
+      <publish>false</publish>
+      <proxyserver></proxyserver>
+      <publishfile></publishfile>
+      <interval>500</interval>
+      <startdate>10/04/2018</startdate>
+      <endtime>23:59:00</endtime>
+      <name>razfoldersubscribe</name>
     </task>
     <task name="razftpnotifications">
       <porttouse>-1</porttouse>
@@ -119,7 +119,6 @@
   </fonts>
   <cfquery>
     <cache>true</cache>
-    <cachecount>1000</cachecount>
     <datasource name="razuna_client">
       <displayname>razuna_client</displayname>
       <password>E5SRlTLMwf1Ay8CNRw==</password>
@@ -138,12 +137,13 @@
       <databasename>razuna_clients</databasename>
       <description></description>
       <connectstring>zeroDateTimeBehavior=convertToNull</connectstring>
-      <initstring></initstring>
       <logintimeout>120</logintimeout>
+      <initstring></initstring>
       <hoststring>jdbc:mysql://db.razuna.com:3306/razuna_clients?cacheResultSetMetadata=false&amp;autoReconnect=true&amp;useEncoding=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull</hoststring>
       <maxconnections>3</maxconnections>
       <name>razuna_client</name>
     </datasource>
+    <cachecount>1000</cachecount>
     <datasource name="razuna_default">
       <displayname>razuna_default</displayname>
       <password>E5SRlQSbiM0Ym5HXGJyb3w==</password>
@@ -182,40 +182,39 @@
       <databasename>razuna</databasename>
       <description></description>
       <connectstring></connectstring>
-      <initstring></initstring>
       <logintimeout>120</logintimeout>
+      <initstring></initstring>
       <hoststring>jdbc:mysql://localhost:3306/razuna?cacheResultSetMetadata=false&amp;autoReconnect=true</hoststring>
       <maxconnections>24</maxconnections>
       <name>mysql</name>
     </datasource>
-    <slowlog>-1</slowlog>
     <dbdrivers>
-      <driver name="other">
-        <datasourceconfigpage>other.cfm</datasourceconfigpage>
-        <version></version>
-        <name>other</name>
-        <driverdescription>Other JDBC Driver</driverdescription>
-        <drivername></drivername>
-        <jdbctype></jdbctype>
-        <provider></provider>
-        <defaultport></defaultport>
-      </driver>
       <driver name="microsoft sql server (jtds)">
         <datasourceconfigpage>sqlserver-jtds.cfm</datasourceconfigpage>
         <version>1.2.2</version>
         <name>microsoft sql server (jtds)</name>
-        <driverdescription>Microsoft SQL Server (jTDS)</driverdescription>
         <drivername>net.sourceforge.jtds.jdbc.Driver</drivername>
+        <driverdescription>Microsoft SQL Server (jTDS)</driverdescription>
         <jdbctype>4</jdbctype>
         <provider>jTDS</provider>
         <defaultport>1433</defaultport>
+      </driver>
+      <driver name="other">
+        <datasourceconfigpage>other.cfm</datasourceconfigpage>
+        <version></version>
+        <name>other</name>
+        <drivername></drivername>
+        <driverdescription>Other JDBC Driver</driverdescription>
+        <jdbctype></jdbctype>
+        <provider></provider>
+        <defaultport></defaultport>
       </driver>
       <driver name="h2 embedded (h2)">
         <datasourceconfigpage>h2-embedded.cfm</datasourceconfigpage>
         <version></version>
         <name>h2 embedded (h2)</name>
-        <driverdescription>H2 Embedded (H2)</driverdescription>
         <drivername>org.h2.Driver</drivername>
+        <driverdescription>H2 Embedded (H2)</driverdescription>
         <jdbctype>4</jdbctype>
         <provider>H2</provider>
         <defaultport></defaultport>
@@ -224,43 +223,44 @@
         <datasourceconfigpage>oracle.cfm</datasourceconfigpage>
         <version>10.2.0.4</version>
         <name>oracle (oracle)</name>
-        <driverdescription>Oracle (Oracle)</driverdescription>
         <drivername>oracle.jdbc.OracleDriver</drivername>
+        <driverdescription>Oracle (Oracle)</driverdescription>
         <jdbctype>4</jdbctype>
         <provider>Oracle</provider>
         <defaultport>1521</defaultport>
-      </driver>
-      <driver name="microsoft sql server 2005 (microsoft)">
-        <datasourceconfigpage>sqlserver2005-ms.cfm</datasourceconfigpage>
-        <version>1.2</version>
-        <name>microsoft sql server 2005 (microsoft)</name>
-        <driverdescription>Microsoft SQL Server 2005 (Microsoft)</driverdescription>
-        <drivername>com.microsoft.sqlserver.jdbc.SQLServerDriver</drivername>
-        <jdbctype>4</jdbctype>
-        <provider>Microsoft</provider>
-        <defaultport>1433</defaultport>
       </driver>
       <driver name="mysql 4/5">
         <datasourceconfigpage>mysql5.cfm</datasourceconfigpage>
         <version>5.1.6</version>
         <name>mysql 4/5</name>
-        <driverdescription>MySQL 4/5 (MySQL)</driverdescription>
         <drivername>com.mysql.jdbc.Driver</drivername>
+        <driverdescription>MySQL 4/5 (MySQL)</driverdescription>
         <jdbctype>4</jdbctype>
         <provider>MySQL</provider>
         <defaultport>3306</defaultport>
+      </driver>
+      <driver name="microsoft sql server 2005 (microsoft)">
+        <datasourceconfigpage>sqlserver2005-ms.cfm</datasourceconfigpage>
+        <version>1.2</version>
+        <name>microsoft sql server 2005 (microsoft)</name>
+        <drivername>com.microsoft.sqlserver.jdbc.SQLServerDriver</drivername>
+        <driverdescription>Microsoft SQL Server 2005 (Microsoft)</driverdescription>
+        <jdbctype>4</jdbctype>
+        <provider>Microsoft</provider>
+        <defaultport>1433</defaultport>
       </driver>
       <driver name="postgresql (postgresql)">
         <datasourceconfigpage>postgresql.cfm</datasourceconfigpage>
         <version>8.3-603</version>
         <name>postgresql (postgresql)</name>
-        <driverdescription>PostgreSQL (PostgreSQL)</driverdescription>
         <drivername>org.postgresql.Driver</drivername>
+        <driverdescription>PostgreSQL (PostgreSQL)</driverdescription>
         <jdbctype>4</jdbctype>
         <provider>PostgreSQL</provider>
         <defaultport>5432</defaultport>
       </driver>
     </dbdrivers>
+    <slowlog>-1</slowlog>
     <datasource name="razuna_backup">
       <displayname>razuna_backup</displayname>
       <password>E5SRlQSbiM0Ym5ba</password>
@@ -283,11 +283,11 @@
     </datasource>
   </cfquery>
   <debugoutput>
-    <enabled>false</enabled>
     <executiontimes>
       <show>false</show>
       <highlight>250</highlight>
     </executiontimes>
+    <enabled>false</enabled>
     <exceptions>
       <show>false</show>
     </exceptions>
@@ -297,9 +297,7 @@
     <database>
       <show>false</show>
     </database>
-    <timer>
-      <show>false</show>
-    </timer>
+    <ipaddresses></ipaddresses>
     <variables>
       <url>true</url>
       <form>true</form>
@@ -308,15 +306,21 @@
       <client>false</client>
       <server>true</server>
       <request>true</request>
-      <session>false</session>
       <application>true</application>
+      <session>false</session>
       <local>true</local>
       <cffile>true</cffile>
       <show>true</show>
       <variables>false</variables>
     </variables>
-    <ipaddresses></ipaddresses>
+    <timer>
+      <show>false</show>
+    </timer>
   </debugoutput>
+  <openbdadminapi>
+    <version>2.0</version>
+    <lastupdated>12/Jul/2018 18:24:47</lastupdated>
+  </openbdadminapi>
   <cfapplication>
     <j2eesession>true</j2eesession>
     <clientglobalupdatesdisabled>true</clientglobalupdatesdisabled>
@@ -328,23 +332,19 @@
     <enabled>true</enabled>
     <clientstorage>cookie</clientstorage>
   </cfapplication>
-  <openbdadminapi>
-    <version>2.0</version>
-    <lastupdated>12/Jul/2018 18:24:47</lastupdated>
-  </openbdadminapi>
-  <cfmail>
-    <interval>30</interval>
-    <smtpserver>localhost:25</smtpserver>
-    <threads>2</threads>
-    <domain></domain>
-    <timeout>60</timeout>
-    <charset>UTF-8</charset>
-    <smtpport>25</smtpport>
-  </cfmail>
   <cfcachecontent>
     <datasource>mysql</datasource>
     <total>1000</total>
   </cfcachecontent>
+  <cfmail>
+    <interval>30</interval>
+    <smtpserver>localhost:25</smtpserver>
+    <threads>2</threads>
+    <timeout>60</timeout>
+    <domain></domain>
+    <smtpport>25</smtpport>
+    <charset>UTF-8</charset>
+  </cfmail>
   <cfmlcustomtags>
     <mapping name="cf">
       <directory></directory>
